@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://cdn.bootcdn.net/ajax/libs/jquery/3.6.0/jquery.js"></script>
+        <style>
+            
+
+            body{
+                background-color: rgb(129, 216, 209);
+                margin: 0;
+                padding: 0;
+            }
+            input{
+                width: 500px;
+                height: 50px;
+                border-radius: 20px;
+                margin-left: 400px;
+                margin-top: 250px;
+                font-size: 16px;
+                padding-left: 15px;
+            }
+            video{
+                margin-left: 30px;
+                margin-top: 72px;
+            }
+            #start_btn{
+                width: 70px;
+                height: 30px;
+                position: absolute;
+                top: 42px;
+                right: 119px;
+                border-radius: 5px;
+            }
+            #end_btn{
+                width: 70px;
+                height: 30px;
+                position: absolute;
+                top: 42px;
+                right: 18px;
+                border-radius: 5px;
+                margin-left: 5px;
+            }
+            #clear_btn{
+                width: 70px;
+                height: 30px;
+                position: absolute;
+                top: 42px;
+                left: 925px;
+                border-radius: 5px;
+            }
+            #start_wraper{
+                position: absolute;
+                right: 101px;
+                top: 85px;
+                border:solid 1px black;
+            }
+            #end_wraper{
+                position: absolute;
+                right: 4px;
+                top: 85px;
+                border:solid 1px black;
+            }
+            #start_item{
+                margin: 10px;
+                text-decoration:underline;
+            }
+            #end_item{
+                margin: 10px;
+                text-decoration:underline;
+            }
+            /* 适配iphonex */
+            @media screen and (max-width: 800px){
+                body {
+                    background-color: bisque;
+                }
+            }
+        </style>
+</head>
+<body>
+    <input 
+        type="text" 
+        value=""
+        placeholder='  tip: mp4链接甩进来呦～'
+        onblur="blur_handler(value)" 
+        onfocus="this.placeholder=''"
+    >
+    <script>
+        //存储待 时间点 的数组
+        var current_arr = []
+        //元素标签
+        let start_btn_ele;
+        let end_btn_ele;
+        let video_ele;
+        //开始与结束按钮的互锁标志位
+        let click_start_flag = true;
+        //搜索框相关封装
+        function blur_handler(value){
+            //判断是否为链接
+            //判断是否为mp4格式
+            //去除搜索框，添加视频标签
+            let video = document.createElement('video');
+            let start_btn = document.createElement('button');
+            let end_btn = document.createElement('button');
+            let clear_btn = document.createElement('button');
+
+            video.src = value;
+            video.controls='controls';
+            video.autoplay='autoplay';
+
+            start_btn.innerHTML="开始";
+            end_btn.innerHTML="结束";
+            clear_btn.innerHTML="清除";
+            start_btn.id='start_btn';
+            end_btn.id='end_btn';
+            clear_btn.id='clear_btn';
+
+
+            let body_ele = document.getElementsByTagName('body')[0];
+            body_ele.innerHTML = '';
+
+            body_ele.appendChild(video);
+            body_ele.appendChild(start_btn);
+            body_ele.appendChild(end_btn);
+            body_ele.appendChild(clear_btn);
+            //append后获取页面元素
+            get_ele_after_append();   
+        }
+
+        //元素加载完后的操作
+        function get_ele_after_append(){
+            start_btn_ele = document.getElementsByTagName('button')[0];
+            end_btn_ele = document.getElementsByTagName('button')[1];
+            clear_btn_ele = document.getElementsByTagName('button')[2];
+            video_ele = document.getElementsByTagName('video')[0];
+
+            clear_btn_ele.onclick = function(){
+                current_arr = [];
+                document.getElementById('start_wraper').innerHTML='';
+                document.getElementById('end_wraper').innerHTML='';
+            }
+            //点击开始按钮记录当前视频时间点
+            start_btn_ele.onclick = function(){
+                //点击一次开始按钮后只有等点击完结束按钮才会继续保存视频时间戳
+                if(click_start_flag){
+                    // 保存当前点击时间
+                    current_arr.push(video_ele.currentTime);
+                    //在渲染current_arr新数据前将老数据清空
+                    if(document.getElementById('start_wraper')){
+                        document.getElementById('start_wraper').innerHTML=''
+                    }
+                    //创建开始时间存放的标签
+                    let wraper = document.createElement('div');
+                    wraper.id='start_wraper';
+                    let body_ele = document.getElementsByTagName('body')[0];
+                    body_ele.appendChild(wraper);
+                    let wraper_ele = document.getElementById('start_wraper');
+                    for(let i=0;i<current_arr.length;i++){
+                        //current_arr的偶数位保存开始时间
+                        if(i%2===0){
+                            let item = document.createElement('div');
+                            item.id='start_item';
+                            // item.href=video_ele.currentTime;
+                            item.innerHTML=current_arr[i];
+                            wraper_ele.appendChild(item);
+                        }
+                    }
+                    click_start_flag=false;
+                }
+                // console.log("开始时间"+video_ele.currentTime);
+            }
+            
+             //点击结束按钮记录当前视频时间点
+            end_btn_ele.onclick = function(){
+                //没有点击开始按钮前点结束按钮不会保存时间戳·
+                if(!click_start_flag){
+                    // 保存当前点击时间
+                    current_arr.push(video_ele.currentTime);
+                    //在渲染current_arr新数据前将老数据清空
+                    if(document.getElementById('end_wraper')){
+                        document.getElementById('end_wraper').innerHTML=''
+                    }
+                    //创建开始时间存放的标签
+                    let wraper = document.createElement('div');
+                    wraper.id='end_wraper';
+                    let body_ele = document.getElementsByTagName('body')[0];
+                    body_ele.appendChild(wraper);
+                    let wraper_ele = document.getElementById('end_wraper');
+                    for(let i=0;i<current_arr.length;i++){
+                        //current_arr的奇数位保存结束时间
+                        if(i%2!=0){
+                            let item = document.createElement('div');
+                            item.id='end_item';
+                            item.innerHTML=current_arr[i];
+                            wraper_ele.appendChild(item);
+                        }
+                    }
+
+                    $.get('http://127.0.0.1:8000/',JSON.stringify(current_arr),function(data,status){
+                        console.log(data)
+                    })
+                    click_start_flag=true;
+                }
+                // console.log("结束时间"+video_ele.currentTime);
+            }
+        }
+    </script>
+</body>
+</html>

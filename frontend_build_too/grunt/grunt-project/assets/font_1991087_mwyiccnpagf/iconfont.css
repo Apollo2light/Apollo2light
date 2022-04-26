@@ -1,0 +1,35 @@
+@font-face {
+  font-family: "iconfont"; /* Project id 1991087 */
+  src: url('iconfont.woff2?t=1649038458117') format('woff2'),
+       url('iconfont.woff?t=1649038458117') format('woff'),
+       url('iconfont.ttf?t=1649038458117') format('truetype');
+}
+
+.iconfont {
+  font-family: "iconfont" !important;
+  font-size: 16px;
+  font-style: normal;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.iconwuranyuan:before {
+  content: "\e639";
+}
+
+.iconspin:before {
+  content: "\e851";
+}
+
+.iconfangdajing:before {
+  content: "\e614";
+}
+
+.iconAa:before {
+  content: "\e636";
+}
+
+.iconPensyumaobi:before {
+  content: "\e708";
+}
+

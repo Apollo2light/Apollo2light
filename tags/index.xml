@@ -2,12 +2,12 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Tags on apollo&#39;s blog</title>
-    <link>https://Apollo2light.github.io/tags/</link>
+    <link>https://Apollo2light.github.io/Apollo2light/tags/</link>
     <description>Recent content in Tags on apollo&#39;s blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     
-	<atom:link href="https://Apollo2light.github.io/tags/index.xml" rel="self" type="application/rss+xml" />
+	<atom:link href="https://Apollo2light.github.io/Apollo2light/tags/index.xml" rel="self" type="application/rss+xml" />
     
     
   </channel>

@@ -1,0 +1,22 @@
+body{
+    margin: 0;
+    padding: 0;
+}
+
+h1{
+    margin-left: 500px;
+    margin-top: 100px;
+    color: brown;
+}
+
+.logo{
+    width: 200px;
+    height: 300px;
+    margin-left: 200px;
+}
+
+#copy_right{
+    position: absolute;
+    left: 550px;
+    top: 280px;
+}

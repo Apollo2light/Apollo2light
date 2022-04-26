@@ -1,0 +1,31 @@
+{
+  "name": "grunt-project",
+  "version": "1.0.0",
+  "description": "51zxw前端构建工具教程，保留所有版权",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "fluidity": "^0.2.3",
+    "grunt": "^1.4.1",
+    "grunt-contrib-clean": "^2.0.0",
+    "grunt-contrib-concat": "^2.1.0",
+    "grunt-contrib-copy": "^1.0.0",
+    "grunt-contrib-cssmin": "^4.0.0",
+    "grunt-contrib-htmlmin": "^3.1.0",
+    "grunt-contrib-imagemin": "^4.0.0",
+    "grunt-contrib-jshint": "^3.2.0",
+    "grunt-contrib-stylus": "^1.2.0",
+    "grunt-contrib-uglify": "^5.1.0",
+    "grunt-contrib-watch": "^1.1.0",
+    "grunt-usemin": "^3.1.1",
+    "imagemin-mozjpeg": "^10.0.0"
+  },
+  "dependencies": {
+    "maxmin": "^4.0.0"
+  }
+}

@@ -6,14 +6,14 @@
     <title> 1.git配置多账号 - apollo&#39;s blog</title>
     <meta name="description" content="1.单客户端多账号 1.1 问题描述 单个客户端如何管理 多个账号在多个代码托管平台的代码拉取推送？
  a用户  github.come gitee.com   b用户  github.com gitee.com    1.2 解决方案  1.本地生成多个账号对应不同平台的ssh公私钥 2.将公钥部署到对应平台 3.本地拉取推送  1.2.1 生成公私钥 #进入公私钥配置地址 cd ~/.ssh/ #生成公私钥,ed25519为生成时使用的算法 ssh-keygen -t ed25519 -C &#34;a@qq.com&#34; ssh-keygen -t ed25519 -C &#34;b@qq.com&#34; #添加到ssh-agent，加快速度 eval &#34;$(ssh-agent -s)&#34; ssh-add -K ~/.ssh/id_a_ed25519 ssh-add -K ~/.ssh/id_b_ed25519 #配置访问时不同用户对应的私钥 vim config #======================== #github gaoyakang Host gaoyakang.github.com HostName github.com IdentityFile ~/.ssh/id_306_ed25519 user git #github apollo Host Apollo2light.github.com HostName github.">
-    <link rel="canonical" href="https://Apollo2light.github.io/tools/1.git%E9%85%8D%E7%BD%AE%E5%A4%9A%E8%B4%A6%E5%8F%B7/">
+    <link rel="canonical" href="https://Apollo2light.github.io/Apollo2light/tools/1.git%E9%85%8D%E7%BD%AE%E5%A4%9A%E8%B4%A6%E5%8F%B7/">
     <meta property="og:title" content="1.git配置多账号">
     <meta property="og:type" content="article">
-    <meta property="og:url" content="https://Apollo2light.github.io/tools/1.git%E9%85%8D%E7%BD%AE%E5%A4%9A%E8%B4%A6%E5%8F%B7/">
+    <meta property="og:url" content="https://Apollo2light.github.io/Apollo2light/tools/1.git%E9%85%8D%E7%BD%AE%E5%A4%9A%E8%B4%A6%E5%8F%B7/">
     <meta property="og:description" content="1.单客户端多账号 1.1 问题描述 单个客户端如何管理 多个账号在多个代码托管平台的代码拉取推送？
  a用户  github.come gitee.com   b用户  github.com gitee.com    1.2 解决方案  1.本地生成多个账号对应不同平台的ssh公私钥 2.将公钥部署到对应平台 3.本地拉取推送  1.2.1 生成公私钥 #进入公私钥配置地址 cd ~/.ssh/ #生成公私钥,ed25519为生成时使用的算法 ssh-keygen -t ed25519 -C &#34;a@qq.com&#34; ssh-keygen -t ed25519 -C &#34;b@qq.com&#34; #添加到ssh-agent，加快速度 eval &#34;$(ssh-agent -s)&#34; ssh-add -K ~/.ssh/id_a_ed25519 ssh-add -K ~/.ssh/id_b_ed25519 #配置访问时不同用户对应的私钥 vim config #======================== #github gaoyakang Host gaoyakang.github.com HostName github.com IdentityFile ~/.ssh/id_306_ed25519 user git #github apollo Host Apollo2light.github.com HostName github.">
     <meta property="og:site_name" content="apollo&#39;s blog">
-    <link rel="stylesheet" href="https://Apollo2light.github.io/css/main.min.7fdf1d02dafd1a6eb5cfd0d707e17e33515b866f5d305a0ab01a4095577484fe.css" integrity="sha256-f98dAtr9Gm61z9DXB&#43;F&#43;M1Fbhm9dMFoKsBpAlVd0hP4=">
+    <link rel="stylesheet" href="https://Apollo2light.github.io/Apollo2light/css/main.min.7fdf1d02dafd1a6eb5cfd0d707e17e33515b866f5d305a0ab01a4095577484fe.css" integrity="sha256-f98dAtr9Gm61z9DXB&#43;F&#43;M1Fbhm9dMFoKsBpAlVd0hP4=">
     <meta name="generator" content="Hugo 0.73.0" />
     <script type="module" src="https://unpkg.com/ionicons@5.1.2/dist/ionicons/ionicons.esm.js"></script>
     <script nomodule="" src="https://unpkg.com/ionicons@5.1.2/dist/ionicons/ionicons.js"></script>
@@ -23,26 +23,26 @@
     <nav class="site-nav" role="navigation" aria-label="breadcrumb">
     <ol itemscope itemtype="https://schema.org/BreadcrumbList" class="breadcrumb"><li class="breadcrumb-item  " 
   itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
-  <a itemtype="https://schema.org/Thing" itemprop="item" href="https://Apollo2light.github.io/">
+  <a itemtype="https://schema.org/Thing" itemprop="item" href="https://Apollo2light.github.io/Apollo2light/">
     <span itemprop="name">apollo&#39;s blog</span>
   </a>
   <meta itemprop="position" content="0" />
 </li>/<li class="breadcrumb-item  " 
   itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
-  <a itemtype="https://schema.org/Thing" itemprop="item" href="https://Apollo2light.github.io/tools/">
+  <a itemtype="https://schema.org/Thing" itemprop="item" href="https://Apollo2light.github.io/Apollo2light/tools/">
     <span itemprop="name">tools</span>
   </a>
   <meta itemprop="position" content="0" />
 </li>/<li class="breadcrumb-item active hidden" aria-current="page"
   itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
-  <a itemtype="https://schema.org/Thing" itemprop="item" href="https://Apollo2light.github.io/tools/1.git%E9%85%8D%E7%BD%AE%E5%A4%9A%E8%B4%A6%E5%8F%B7/">
+  <a itemtype="https://schema.org/Thing" itemprop="item" href="https://Apollo2light.github.io/Apollo2light/tools/1.git%E9%85%8D%E7%BD%AE%E5%A4%9A%E8%B4%A6%E5%8F%B7/">
     <span itemprop="name">1.git%E9%85%8D%E7%BD%AE%E5%A4%9A%E8%B4%A6%E5%8F%B7</span>
   </a>
   <meta itemprop="position" content="1" />
 </li></ol>
     </nav>
     <h1 class="site-title hidden">
-		<a href="https://Apollo2light.github.io">apollo&#39;s blog</a>
+		<a href="https://Apollo2light.github.io/Apollo2light/">apollo&#39;s blog</a>
     </h1>
 </header><main id="content">
 <article role="article" class="content post h-entry" itemscope="" itemtype="http://schema.org/BlogPosting">
@@ -170,7 +170,7 @@ git push
 <div class="pagination">
     
     
-    <div class="next"> <a href="https://Apollo2light.github.io/tools/2.git%E5%8E%9F%E7%90%86/">Next Post</a> </div>
+    <div class="next"> <a href="https://Apollo2light.github.io/Apollo2light/tools/2.git%E5%8E%9F%E7%90%86/">Next Post</a> </div>
     
 </div>
 
