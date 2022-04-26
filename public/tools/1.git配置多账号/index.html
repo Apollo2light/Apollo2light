@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang=en-us><head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title> 1.git配置多账号 - apollo&#39;s blog</title>
+    <meta name="description" content="1.单客户端多账号 1.1 问题描述 单个客户端如何管理 多个账号在多个代码托管平台的代码拉取推送？
+ a用户  github.come gitee.com   b用户  github.com gitee.com    1.2 解决方案  1.本地生成多个账号对应不同平台的ssh公私钥 2.将公钥部署到对应平台 3.本地拉取推送  1.2.1 生成公私钥 #进入公私钥配置地址 cd ~/.ssh/ #生成公私钥,ed25519为生成时使用的算法 ssh-keygen -t ed25519 -C &#34;a@qq.com&#34; ssh-keygen -t ed25519 -C &#34;b@qq.com&#34; #添加到ssh-agent，加快速度 eval &#34;$(ssh-agent -s)&#34; ssh-add -K ~/.ssh/id_a_ed25519 ssh-add -K ~/.ssh/id_b_ed25519 #配置访问时不同用户对应的私钥 vim config #======================== #github gaoyakang Host gaoyakang.github.com HostName github.com IdentityFile ~/.ssh/id_306_ed25519 user git #github apollo Host Apollo2light.github.com HostName github.">
+    <link rel="canonical" href="https://Apollo2light.github.io/tools/1.git%E9%85%8D%E7%BD%AE%E5%A4%9A%E8%B4%A6%E5%8F%B7/">
+    <meta property="og:title" content="1.git配置多账号">
+    <meta property="og:type" content="article">
+    <meta property="og:url" content="https://Apollo2light.github.io/tools/1.git%E9%85%8D%E7%BD%AE%E5%A4%9A%E8%B4%A6%E5%8F%B7/">
+    <meta property="og:description" content="1.单客户端多账号 1.1 问题描述 单个客户端如何管理 多个账号在多个代码托管平台的代码拉取推送？
+ a用户  github.come gitee.com   b用户  github.com gitee.com    1.2 解决方案  1.本地生成多个账号对应不同平台的ssh公私钥 2.将公钥部署到对应平台 3.本地拉取推送  1.2.1 生成公私钥 #进入公私钥配置地址 cd ~/.ssh/ #生成公私钥,ed25519为生成时使用的算法 ssh-keygen -t ed25519 -C &#34;a@qq.com&#34; ssh-keygen -t ed25519 -C &#34;b@qq.com&#34; #添加到ssh-agent，加快速度 eval &#34;$(ssh-agent -s)&#34; ssh-add -K ~/.ssh/id_a_ed25519 ssh-add -K ~/.ssh/id_b_ed25519 #配置访问时不同用户对应的私钥 vim config #======================== #github gaoyakang Host gaoyakang.github.com HostName github.com IdentityFile ~/.ssh/id_306_ed25519 user git #github apollo Host Apollo2light.github.com HostName github.">
+    <meta property="og:site_name" content="apollo&#39;s blog">
+    <link rel="stylesheet" href="https://Apollo2light.github.io/css/main.min.7fdf1d02dafd1a6eb5cfd0d707e17e33515b866f5d305a0ab01a4095577484fe.css" integrity="sha256-f98dAtr9Gm61z9DXB&#43;F&#43;M1Fbhm9dMFoKsBpAlVd0hP4=">
+    <meta name="generator" content="Hugo 0.73.0" />
+    <script type="module" src="https://unpkg.com/ionicons@5.1.2/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule="" src="https://unpkg.com/ionicons@5.1.2/dist/ionicons/ionicons.js"></script>
+    
+</head>
+<body><header class="site-header">
+    <nav class="site-nav" role="navigation" aria-label="breadcrumb">
+    <ol itemscope itemtype="https://schema.org/BreadcrumbList" class="breadcrumb"><li class="breadcrumb-item  " 
+  itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+  <a itemtype="https://schema.org/Thing" itemprop="item" href="https://Apollo2light.github.io/">
+    <span itemprop="name">apollo&#39;s blog</span>
+  </a>
+  <meta itemprop="position" content="0" />
+</li>/<li class="breadcrumb-item  " 
+  itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+  <a itemtype="https://schema.org/Thing" itemprop="item" href="https://Apollo2light.github.io/tools/">
+    <span itemprop="name">tools</span>
+  </a>
+  <meta itemprop="position" content="0" />
+</li>/<li class="breadcrumb-item active hidden" aria-current="page"
+  itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+  <a itemtype="https://schema.org/Thing" itemprop="item" href="https://Apollo2light.github.io/tools/1.git%E9%85%8D%E7%BD%AE%E5%A4%9A%E8%B4%A6%E5%8F%B7/">
+    <span itemprop="name">1.git%E9%85%8D%E7%BD%AE%E5%A4%9A%E8%B4%A6%E5%8F%B7</span>
+  </a>
+  <meta itemprop="position" content="1" />
+</li></ol>
+    </nav>
+    <h1 class="site-title hidden">
+		<a href="https://Apollo2light.github.io">apollo&#39;s blog</a>
+    </h1>
+</header><main id="content">
+<article role="article" class="content post h-entry" itemscope="" itemtype="http://schema.org/BlogPosting">
+    <header class="post-header">        
+        <h2 class="post-title" itemprop="name headline">1.git配置多账号</h2>
+        <span class="post-meta">
+            <time class="date-published" datetime="2022-04-26T18:25:43&#43;07:00" itemprop="datePublished">
+                Tue, 26 Apr 2022
+            </time>
+            
+        </span>
+    </header>
+    <div class="post-content" itemprop="articleBody">
+        <h2 id="1单客户端多账号">1.单客户端多账号</h2>
+<h3 id="11-问题描述">1.1 问题描述</h3>
+<p><code>单个客户端如何管理 多个账号在多个代码托管平台的代码拉取推送？</code></p>
+<ul>
+<li>a用户
+<ul>
+<li>github.come</li>
+<li>gitee.com</li>
+</ul>
+</li>
+<li>b用户
+<ul>
+<li>github.com</li>
+<li>gitee.com</li>
+</ul>
+</li>
+</ul>
+<h3 id="12-解决方案">1.2 解决方案</h3>
+<ul>
+<li>1.本地生成多个账号对应不同平台的ssh公私钥</li>
+<li>2.将公钥部署到对应平台</li>
+<li>3.本地拉取推送</li>
+</ul>
+<h4 id="121-生成公私钥">1.2.1 生成公私钥</h4>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell"><span style="color:#75715e">#进入公私钥配置地址</span>
+cd ~/.ssh/
+
+<span style="color:#75715e">#生成公私钥,ed25519为生成时使用的算法</span>
+ssh-keygen -t ed25519 -C <span style="color:#e6db74">&#34;a@qq.com&#34;</span>
+ssh-keygen -t ed25519 -C <span style="color:#e6db74">&#34;b@qq.com&#34;</span>
+
+<span style="color:#75715e">#添加到ssh-agent，加快速度</span>
+eval <span style="color:#e6db74">&#34;</span><span style="color:#66d9ef">$(</span>ssh-agent -s<span style="color:#66d9ef">)</span><span style="color:#e6db74">&#34;</span>
+ssh-add -K ~/.ssh/id_a_ed25519
+ssh-add -K ~/.ssh/id_b_ed25519
+
+<span style="color:#75715e">#配置访问时不同用户对应的私钥</span>
+vim config
+<span style="color:#75715e">#========================</span>
+<span style="color:#75715e">#github gaoyakang</span>
+Host gaoyakang.github.com
+HostName github.com
+IdentityFile ~/.ssh/id_306_ed25519
+user git
+
+<span style="color:#75715e">#github apollo</span>
+Host Apollo2light.github.com
+HostName github.com
+IdentityFile ~/.ssh/id_214_ed25519
+user git
+
+<span style="color:#75715e">#gitee gaoyakang</span>
+Host gaoyakang.gitee.com
+HostName gitee.com
+IdentityFile ~/.ssh/id_306_gitee_ed25519
+user git
+
+<span style="color:#75715e">#gitee apollo</span>
+Host Apollo2light.gitee.com
+HostName gitee.com
+IdentityFile ~/.ssh/id_214_gitee_ed25519
+user git
+<span style="color:#75715e">#========================</span>
+
+<span style="color:#75715e">#检测是否生效</span>
+ssh -T git@a.github.com
+ssh -T git@b.github.com
+</code></pre></div><h4 id="122-部署公私钥">1.2.2 部署公私钥</h4>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">
+cat ~/.ssh/id_a_ed25519.pub
+cat ~/.ssh/id_b_ed25519.pub
+
+</code></pre></div><p>添加到网站比较简单，在github上<code>settings &gt; SSH and GPG keys &gt; New SSH Keys</code></p>
+<p><img src="https://s3.bmp.ovh/imgs/2022/04/26/f14df3d8064644fd.png" alt=""></p>
+<h4 id="124-本地拉取推送">1.2.4 本地拉取推送</h4>
+<ul>
+<li>Apollo2light用户有Apollo2light仓库,只演示github，gitee同理已经测试过没问题</li>
+<li>gaoyakang用户有mall仓库，只演示github，gitee同理已经测试过没问题</li>
+</ul>
+<p>由于用户a，b将自己公钥添加到了各自的账号，所以：</p>
+<p>1.用户a/b都可以拉取也可以推送代码到自己的远程仓库,只演示1个，另一个也做过测试了</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell"><span style="color:#75715e">#Apollo2light用户拉取自己账号的内容</span>
+git clone git@Apollo2light.github.com:Apollo2light/Apollo2light.git
+
+<span style="color:#75715e">#完成编辑后提交</span>
+touch test.txt
+git add .
+git config --local user.name <span style="color:#e6db74">&#39;Apollo2light&#39;</span>
+git config --local user.email <span style="color:#e6db74">&#39;2141975795@qq.com&#39;</span>
+git push
+</code></pre></div><p>3.用户a可以拉取但不可以推送代码到用户b的远程仓库，,只演示1个，另一个也做过测试了</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell"><span style="color:#75715e">#gaoyakang用户拉取Apollo2light用户账号的内容</span>
+git clone git@gaoyakang.github.com:Apollo2light/Apollo2light.git
+
+<span style="color:#75715e">#完成编辑后提交</span>
+touch test1.txt
+git add .
+git config --local user.email <span style="color:#e6db74">&#39;3060900582@qq.com&#39;</span>
+git config --local user.name <span style="color:#e6db74">&#39;gaoyakang&#39;</span>
+git commit -m <span style="color:#e6db74">&#39;nothings&#39;</span>
+git push
+
+<span style="color:#75715e"># 出现报错</span>
+<span style="color:#75715e">#ERROR: Permission to Apollo2light/Apollo2light.git denied to gaoyakang.</span>
+<span style="color:#75715e">#fatal: Could not read from remote repository.</span>
+
+<span style="color:#75715e">#Please make sure you have the correct access rights</span>
+<span style="color:#75715e">#and the repository exists.</span>
+</code></pre></div>
+    </div>
+</article>
+<div class="pagination">
+    
+    
+    <div class="next"> <a href="https://Apollo2light.github.io/tools/2.git%E5%8E%9F%E7%90%86/">Next Post</a> </div>
+    
+</div>
+
+
+        </main><footer class="site-footer">
+	<span class="right">
+		<em>apollo&#39;s blog</em>
+	</span>
+</footer>
+</body>
+</html>

@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html lang=en-us><head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title> 2.git原理 - apollo&#39;s blog</title>
+    <meta name="description" content="1.分布式版本控制系统 1.1 本质 git是分布式版本控制系统，它与集中式版本控制的本质区别是：
+ 分布式：客户端并不只提取最新版本的文件快照， 而是把代码仓库完整地镜像下来，包括完整的历史记录 集中式：客户端只提取最新版本的文件快照，不包括完整的历史记录  1.2 配置  /etc/gitconfig 文件：系统级别，git config –system对当前操作系统所有用户生效 ~/.gitconfig 文件：用户级别，git config –global 对当前操作系统该用户生效 .git/config 文件：当前文件级别，git config –local仅针对当前项目有效  git config —list #配置列表 git config --global user.name #用户名 git config --global user.email #用户邮箱 1.3 分区 对于任何一个文件，在 Git 内都只有三种状态：
+ 已提交（committed）：该文件已经被安全地保存在本地数据库中了 已修改（modified）：修改了某个文件 已暂存（staged）：已修改的文件放在下次提交时要保存的清单中  因此可以看到 Git 管理项目时，文件流转的三个区域：
+ 工作目录：编辑代码 暂存区域：完成编辑但未提交 本地仓库：.git目录，存放数据和修改信息  HEAD：指向当前所处分支 description：仅供 GitWeb 程序使用，无需关心 info/：全局性排除文件 config：配置文件 hooks/：客户端或服务端的钩子脚本 index：暂存区信息 objects/：所有存储的数据 refs/：存储指向数据（分支、远程仓库和标签等)的提交对象的指针    2.">
+    <link rel="canonical" href="https://Apollo2light.github.io/tools/2.git%E5%8E%9F%E7%90%86/">
+    <meta property="og:title" content="2.git原理">
+    <meta property="og:type" content="article">
+    <meta property="og:url" content="https://Apollo2light.github.io/tools/2.git%E5%8E%9F%E7%90%86/">
+    <meta property="og:description" content="1.分布式版本控制系统 1.1 本质 git是分布式版本控制系统，它与集中式版本控制的本质区别是：
+ 分布式：客户端并不只提取最新版本的文件快照， 而是把代码仓库完整地镜像下来，包括完整的历史记录 集中式：客户端只提取最新版本的文件快照，不包括完整的历史记录  1.2 配置  /etc/gitconfig 文件：系统级别，git config –system对当前操作系统所有用户生效 ~/.gitconfig 文件：用户级别，git config –global 对当前操作系统该用户生效 .git/config 文件：当前文件级别，git config –local仅针对当前项目有效  git config —list #配置列表 git config --global user.name #用户名 git config --global user.email #用户邮箱 1.3 分区 对于任何一个文件，在 Git 内都只有三种状态：
+ 已提交（committed）：该文件已经被安全地保存在本地数据库中了 已修改（modified）：修改了某个文件 已暂存（staged）：已修改的文件放在下次提交时要保存的清单中  因此可以看到 Git 管理项目时，文件流转的三个区域：
+ 工作目录：编辑代码 暂存区域：完成编辑但未提交 本地仓库：.git目录，存放数据和修改信息  HEAD：指向当前所处分支 description：仅供 GitWeb 程序使用，无需关心 info/：全局性排除文件 config：配置文件 hooks/：客户端或服务端的钩子脚本 index：暂存区信息 objects/：所有存储的数据 refs/：存储指向数据（分支、远程仓库和标签等)的提交对象的指针    2.">
+    <meta property="og:site_name" content="apollo&#39;s blog">
+    <link rel="stylesheet" href="https://Apollo2light.github.io/css/main.min.7fdf1d02dafd1a6eb5cfd0d707e17e33515b866f5d305a0ab01a4095577484fe.css" integrity="sha256-f98dAtr9Gm61z9DXB&#43;F&#43;M1Fbhm9dMFoKsBpAlVd0hP4=">
+    <meta name="generator" content="Hugo 0.73.0" />
+    <script type="module" src="https://unpkg.com/ionicons@5.1.2/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule="" src="https://unpkg.com/ionicons@5.1.2/dist/ionicons/ionicons.js"></script>
+    
+</head>
+<body><header class="site-header">
+    <nav class="site-nav" role="navigation" aria-label="breadcrumb">
+    <ol itemscope itemtype="https://schema.org/BreadcrumbList" class="breadcrumb"><li class="breadcrumb-item  " 
+  itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+  <a itemtype="https://schema.org/Thing" itemprop="item" href="https://Apollo2light.github.io/">
+    <span itemprop="name">apollo&#39;s blog</span>
+  </a>
+  <meta itemprop="position" content="0" />
+</li>/<li class="breadcrumb-item  " 
+  itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+  <a itemtype="https://schema.org/Thing" itemprop="item" href="https://Apollo2light.github.io/tools/">
+    <span itemprop="name">tools</span>
+  </a>
+  <meta itemprop="position" content="0" />
+</li>/<li class="breadcrumb-item active hidden" aria-current="page"
+  itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+  <a itemtype="https://schema.org/Thing" itemprop="item" href="https://Apollo2light.github.io/tools/2.git%E5%8E%9F%E7%90%86/">
+    <span itemprop="name">2.git%E5%8E%9F%E7%90%86</span>
+  </a>
+  <meta itemprop="position" content="1" />
+</li></ol>
+    </nav>
+    <h1 class="site-title hidden">
+		<a href="https://Apollo2light.github.io">apollo&#39;s blog</a>
+    </h1>
+</header><main id="content">
+<article role="article" class="content post h-entry" itemscope="" itemtype="http://schema.org/BlogPosting">
+    <header class="post-header">        
+        <h2 class="post-title" itemprop="name headline">2.git原理</h2>
+        <span class="post-meta">
+            <time class="date-published" datetime="2022-04-26T19:01:11&#43;07:00" itemprop="datePublished">
+                Tue, 26 Apr 2022
+            </time>
+            
+        </span>
+    </header>
+    <div class="post-content" itemprop="articleBody">
+        <h2 id="1分布式版本控制系统">1.分布式版本控制系统</h2>
+<h3 id="11-本质">1.1 本质</h3>
+<p>git是分布式版本控制系统，它与集中式版本控制的本质区别是：</p>
+<ul>
+<li>分布式：客户端并不只提取最新版本的文件快照， 而是把代码仓库完整地镜像下来，包括完整的历史记录</li>
+<li>集中式：客户端只提取最新版本的文件快照，不包括完整的历史记录</li>
+</ul>
+<h3 id="12-配置">1.2 配置</h3>
+<ul>
+<li>/etc/gitconfig 文件：系统级别，git config –system对当前操作系统所有用户生效</li>
+<li>~/.gitconfig 文件：用户级别，git config –global 对当前操作系统该用户生效</li>
+<li>.git/config 文件：当前文件级别，git config –local仅针对当前项目有效</li>
+</ul>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">git config —list <span style="color:#75715e">#配置列表</span>
+git config --global user.name <span style="color:#75715e">#用户名</span>
+git config --global user.email <span style="color:#75715e">#用户邮箱</span>
+</code></pre></div><h3 id="13-分区">1.3 分区</h3>
+<p>对于任何一个文件，在 Git 内都只有三种状态：</p>
+<ul>
+<li>已提交（committed）：该文件已经被安全地保存在本地数据库中了</li>
+<li>已修改（modified）：修改了某个文件</li>
+<li>已暂存（staged）：已修改的文件放在下次提交时要保存的清单中</li>
+</ul>
+<p>因此可以看到 Git 管理项目时，文件流转的三个区域：</p>
+<ul>
+<li>工作目录：编辑代码</li>
+<li>暂存区域：完成编辑但未提交</li>
+<li>本地仓库：.git目录，存放数据和修改信息
+<ul>
+<li>HEAD：指向当前所处分支</li>
+<li>description：仅供 GitWeb 程序使用，无需关心</li>
+<li>info/：全局性排除文件</li>
+<li>config：配置文件</li>
+<li>hooks/：客户端或服务端的钩子脚本</li>
+<li>index：暂存区信息</li>
+<li>objects/：所有存储的数据</li>
+<li>refs/：存储指向数据（分支、远程仓库和标签等)的提交对象的指针</li>
+</ul>
+</li>
+</ul>
+<h2 id="2基本操作">2.基本操作</h2>
+<h3 id="21-常用命令">2.1 常用命令</h3>
+<ul>
+<li>将工作区的内容清除：<code>git rm</code></li>
+<li>将暂存区内的内容回退工作区：<code>git reset</code> 或 <code>git rm xx --cached</code></li>
+<li>本次提交取代上次提交：<code>git commit --amend</code></li>
+<li>只拉取不合并：<code>git fetch</code></li>
+<li>拉取并合并：<code>git pull</code></li>
+<li>添加与提交命令合并：<code>git commit -a -m 'message'</code></li>
+<li>列出文件变化状态：<code>git status</code></li>
+<li>比较工作区和暂存区域快照差异：<code>git diff</code></li>
+<li>比较暂存区和提交的快照差异：<code>git diff –cached</code></li>
+</ul>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">git log
+<span style="color:#75715e">#1.默认不用任何参数的话，git log 会按提交时间列出所有的更新，最近的更新排在最上面</span>
+<span style="color:#75715e">#2.-p 选项展开显示每次提交的内容差异，用 -2 则仅显示最近的两次更新</span>
+<span style="color:#75715e">#3.--stat，仅显示简要的增改行数统计</span>
+<span style="color:#75715e">#4.--pretty 选项，可以指定使用完全不同于默认格式的方式展示提交历史</span>
+   <span style="color:#75715e">#4.1 oneline 将每个提交放在一行显示</span>
+   <span style="color:#75715e">#4.2 format 可以定制要显示的记录格式</span>
+   <span style="color:#75715e">#4.3 --graph 展示每个提交所在的分支及其分化衍合情况</span>
+<span style="color:#75715e">#5.--since 和 --until 按照时间作限制的选项</span>
+<span style="color:#75715e">#6.--author 选项显示指定作者的提交</span>
+<span style="color:#75715e">#7.--grep 选项搜索提交说明中的关键字</span>
+</code></pre></div><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">git remote -v <span style="color:#75715e">#列出每个远程库的简短名字</span>
+git remote add <span style="color:#75715e">#名字 地址: 添加远程仓库</span>
+git remote show <span style="color:#75715e">#查看某个远程仓库的详细信息</span>
+git remote rename a b <span style="color:#75715e">#修改某个远程仓库在本地的简称</span>
+</code></pre></div><h2 id="3分支">3.分支</h2>
+<p>分支本质是一个指向 commit 对象的<code>可变指针</code>，是包含commit对象校验和（40 个字符长度 SHA-1 字串）的文件</p>
+<p>默认名为master，在每次提交的时候都会自动向前移动，永远指向最后一次提交对象的 master 分支</p>
+<ul>
+<li><code>git branch</code>: 创建新的分支指针，指向最后一次提交对象，它不会自动切换过去</li>
+<li><code>git checkout</code>: 将HEAD指针(指向正在工作中的本地分支的指针)修改为创建好的新分支指针</li>
+<li><code>git merge</code>: 将两分支末端和它们共同祖先三方合并计算重新生成快照，后创建指向新快照的最终节点</li>
+<li><code>git rebase</code>: 以基底分支最后一个提交对象为起点，将当前分支提交生成的文件补丁逐个应用，生成最终提交对象</li>
+</ul>
+<h2 id="4原理">4.原理</h2>
+<h3 id="41-对象">4.1 对象</h3>
+<p>在git中存在：</p>
+<ul>
+<li>blob对象： 实际存储的数据</li>
+<li>tree对象：可以存储文件名,文件，包含多条tree记录，每一条记录含有一个指向 blob 或子 tree 对象的 SHA-1 指针，并附有该对象的权限模式 (mode)、类型和文件名信息</li>
+<li>commit对象：包含指向暂存内容快照的指针，本次提交的作者等相关附属信息，零个或多个指向该提交对象的父对象指针</li>
+<li>tag对象：</li>
+</ul>
+<h4 id="411-blob对象">4.1.1 blob对象</h4>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell"><span style="color:#75715e">#———————————blob对象————————</span>
+git init
+<span style="color:#75715e">#Git 初始化了 objects 目录，同时在该目录下创建了 pack 和 info 子目录</span>
+<span style="color:#75715e">#objects 目录存储所有数据内容</span>
+<span style="color:#75715e">#refs 存储指向数据 (分支) 的提交对象的指针</span>
+<span style="color:#75715e">#HEAD 文件指向当前分支</span>
+<span style="color:#75715e">#index 文件保存了暂存区域信息</span>
+
+
+
+echo <span style="color:#e6db74">&#39;test&#39;</span> | git hash-object -w --stdin
+d670460b4b4aece5915caf5c68d12f56
+<span style="color:#75715e">#向数据库提交一些数据会返回：</span>
+<span style="color:#75715e">#长度为 40 个字符的校验和(sha-1哈希值)</span>
+
+
+find .git/objects -type f
+<span style="color:#75715e">#objects目录下出现：</span>
+<span style="color:#75715e">#.git/objects/d6/70460b4b4aece5915caf</span>
+
+git cat-file d670460b4b4aece5915ca
+<span style="color:#75715e">#返回“test”内容</span>
+
+echo <span style="color:#e6db74">&#39;hello&#39;</span> | git hash-object -w --stdin
+<span style="color:#75715e">#这步相当于git add . &amp; commit -m &#39;xx&#39;</span>
+<span style="color:#75715e">#返回83baae61804e65cc73a7201a7252</span>
+
+find .git/objects -type f
+<span style="color:#75715e">#objects目录下出现：</span>
+<span style="color:#75715e">#.git/objects/d6/70460b4b4aece5915caf</span>
+<span style="color:#75715e">#.git/objects/83/baae61804e65cc73a720</span>
+<span style="color:#75715e">#前2个字符是文件夹</span>
+<span style="color:#75715e">#后38个字符是存储着所有内容的blob对象</span>
+
+git cat-file -p d670460b4b4aece5915c
+<span style="color:#75715e">#回溯到test内容</span>
+
+</code></pre></div><p>该blob对象是如何创建的呢？</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell"><span style="color:#75715e">#———————对象创建方式————————</span>
+<span style="color:#75715e">#1️⃣需要存储的内容</span>
+content <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;what is up, doc?&#34;</span>
+<span style="color:#75715e">#2️⃣对象头部信息</span>
+header <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;blob #{content.length}\0&#34;</span>
+<span style="color:#75715e">#3️⃣sha-1校验和</span>
+store <span style="color:#f92672">=</span> header + content
+sha1 <span style="color:#f92672">=</span> Digest::SHA1.hexdigest<span style="color:#f92672">(</span>store<span style="color:#f92672">)</span>
+<span style="color:#75715e">#4️⃣压缩</span>
+zlib_content <span style="color:#f92672">=</span> Zlib::Deflate.deflate<span style="color:#f92672">(</span>store<span style="color:#f92672">)</span>
+<span style="color:#75715e">#5️⃣写入磁盘</span>
+path <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;.git/objects/&#39;</span> + sha1<span style="color:#f92672">[</span>0,2<span style="color:#f92672">]</span> + <span style="color:#e6db74">&#39;/&#39;</span> + sha1<span style="color:#f92672">[</span>2,38<span style="color:#f92672">]</span>
+FileUtils.mkdir_p<span style="color:#f92672">(</span>File.dirname<span style="color:#f92672">(</span>path<span style="color:#f92672">))</span>
+File.open<span style="color:#f92672">(</span>path, <span style="color:#e6db74">&#39;w&#39;</span><span style="color:#f92672">)</span> <span style="color:#f92672">{</span> |f| f.write zlib_content <span style="color:#f92672">}</span>
+</code></pre></div><h4 id="412-tree对象">4.1.2 tree对象</h4>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell"><span style="color:#75715e">#———————————tree对象————————</span>
+
+<span style="color:#75715e">#文件模式：</span>
+<span style="color:#75715e">#1️⃣100644普通文件</span>
+<span style="color:#75715e">#2️⃣100755可执行文件</span>
+<span style="color:#75715e">#3️⃣120000 符号链接</span>
+<span style="color:#75715e">#4️⃣040000</span>
+
+git update-index --add --cacheinfo <span style="color:#ae81ff">100644</span>  83baae61804e65cc test.txt
+<span style="color:#75715e">#创建暂存区</span>
+<span style="color:#75715e">#update-index：创建index的指令</span>
+<span style="color:#75715e">#--add ：添加到缓存区</span>
+<span style="color:#75715e">#--cacheinfo ：指定文件位置</span>
+<span style="color:#75715e">#100644  ：文件模式</span>
+<span style="color:#75715e">#83baae61804e65cc ：sha-1值</span>
+<span style="color:#75715e">#test.txt：文件名</span>
+
+git write-tree
+<span style="color:#75715e">#返回tree对象d8329fc1cc938780f579</span>
+<span style="color:#75715e">#将暂存区内容写到tree对象，如果没有tree对象，git会自动根据index状态创建tree对象</span>
+
+git cat-file -p d8329fc1c
+<span style="color:#75715e">#返回100644 blob 83baae61804 test.txt</span>
+
+git cat-file -t d8329fc1cc93
+<span style="color:#75715e">#返回tree，说明tree对象已经创建</span>
+
+echo <span style="color:#e6db74">&#39;new file&#39;</span> &gt; new.txt
+git update-index test.txt
+git update-index --add new.txt
+<span style="color:#75715e">#更新test.txt内容，新建new.txt</span>
+
+git write-tree
+<span style="color:#75715e">#再次写入tree对象，返回新tree对象0155eb4</span>
+
+git cat-file -p 0155eb4229
+<span style="color:#75715e">#返回0155tree对象包含的2记录:</span>
+<span style="color:#75715e">#100644 blob fa49b07797239 new.txt</span>
+<span style="color:#75715e">#100644 blob 1f7a7a472abf3dd test.txt</span>
+
+
+git read-tree --prefix<span style="color:#f92672">=</span>bak d8329fc1c
+git write-tree
+<span style="color:#75715e">#返回：3c4e9cd789d8</span>
+<span style="color:#75715e">#将前面生成的tree对象作为子tree对象读入缓冲区后写进新tree</span>
+
+git cat-file -p 3c4e9cd789d8
+<span style="color:#75715e">#返回：</span>
+<span style="color:#75715e">#040000 tree d8329fc1cc938780ffd bak</span>
+<span style="color:#75715e">#100644 blob fa49b077972391ad new.txt</span>
+<span style="color:#75715e">#100644 blob 1f7a7a472abf3dd9 test.txt</span>
+</code></pre></div><h4 id="413-commit对象">4.1.3 commit对象</h4>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell"><span style="color:#75715e">#——————————commit对象————————</span>
+
+echo <span style="color:#e6db74">&#39;first&#39;</span> | git commit-tree d8329f
+<span style="color:#75715e">#第一棵tree作为顶层</span>
+<span style="color:#75715e">#返回commit对象：fdf4fc3344</span>
+
+git cat-file -p fdf4fc3
+<span style="color:#75715e">#返回：</span>
+<span style="color:#75715e">#tree d8329fc1cc938780ffd</span>
+<span style="color:#75715e">#author 名字  &lt;邮箱&gt; 时间戳</span>
+<span style="color:#75715e">#committer 名字  &lt;邮箱&gt; 时间戳</span>
+
+first commit
+
+echo <span style="color:#e6db74">&#39;second&#39;</span> | git commit-tree 0155eb -p fdf4fc3
+<span style="color:#75715e">#第二棵树</span>
+<span style="color:#75715e">#返回：cac0cab538b9</span>
+
+echo <span style="color:#e6db74">&#39;third&#39;</span> | git commit-tree 3c4e9c -p cac0cab
+<span style="color:#75715e">#第三棵树</span>
+<span style="color:#75715e">#返回：1a410efbd13591</span>
+
+
+git log --stat 1a410e
+<span style="color:#75715e">#查看提交历史</span>
+
+</code></pre></div><h4 id="414-tag对象">4.1.4 tag对象</h4>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell"><span style="color:#75715e">#tags对象包含一个标签，一组数据，一个消息和一个指针，指向一个 commit 对象</span>
+
+git update-ref refs/tags/v1.0 cac0cab53
+<span style="color:#75715e">#创建lightweight tag</span>
+
+</code></pre></div><h4 id="415-refrence对象">4.1.5 refrence对象</h4>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">echo <span style="color:#e6db74">&#34;1a410e&#34;</span> &gt; .git/refs/heads/master
+<span style="color:#75715e">#将最后一次sha-1值加入引用</span>
+
+git log --pretty<span style="color:#f92672">=</span>oneline master
+<span style="color:#75715e">#查看提交记录</span>
+
+<span style="color:#75715e">#——————————HEAD标记————————</span>
+<span style="color:#75715e">#head是指向当前所在分支的引用标识符，本质是一个指向其他引用的指针</span>
+
+cat .git/HEAD
+<span style="color:#75715e">#返回：ref: refs/heads/master</span>
+
+git checkout test &amp; cat .git/HEAD
+<span style="color:#75715e">#返回：ref: refs/heads/test</span>
+
+
+git commit &amp; cat .git/HEAD
+<span style="color:#75715e">#返回：当前commit 对象的父级的指纹</span>
+
+git symbolic-ref HEAD
+<span style="color:#75715e">#读取当前head值</span>
+
+git symbolic-ref HEAD refs/heads/test
+<span style="color:#75715e">#设置当前head值</span>
+
+<span style="color:#75715e">#——————————HEAD标记————————</span>
+</code></pre></div><h2 id="5服务器部署">5.服务器部署</h2>
+<ul>
+<li>1.导出裸仓库 git clone –bare demo_git demo_git.git</li>
+<li>2.裸仓库上传 scp -r demo_git.git root@ip:/opt/git</li>
+<li>3.ubuntu服务器安装git apt-get upgate &amp; install git</li>
+<li>4.修改权限 cd /opt/git git init –bare –shared</li>
+<li>5.本地克隆 git clone root@ip:/opt/git/</li>
+</ul>
+
+    </div>
+</article>
+<div class="pagination">
+    
+    <div class="prev"> <a href="https://Apollo2light.github.io/tools/1.git%E9%85%8D%E7%BD%AE%E5%A4%9A%E8%B4%A6%E5%8F%B7/">Previous Post</a> </div>
+    
+    
+</div>
+
+
+        </main><footer class="site-footer">
+	<span class="right">
+		<em>apollo&#39;s blog</em>
+	</span>
+</footer>
+</body>
+</html>
