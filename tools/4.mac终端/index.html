@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang=en-us><head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title> 4.mac终端 - Apollo&#39;s blog</title>
+    <meta name="description" content="1.终端 0.iTerm2是默认终端的替代品，oh-my-zsh是为了简化zsh的配置的shell
+1.查看所有shell
+cat /etc/shells 2.默认shell
+新版zsh默认zsh：echo $SHELL 更换默认shell：chsh -s /bin/zsh 3.配置文件
+#所有命令失效： export PATH=/usr/bin:/usr/sbin:/bin:/sbin:/usr/X11R6/bin - a. /etc/profile - b. /etc/paths - c. ~/.bash_profile - d. ~/.bash_login - e. ~/.profile - f. ~/.bashrc(启动终端自动加载) 2.配置环境变量 Mac的usr/bin目录是不允许增删文件的，可以通过向usr/local/bin增删文件来实现在终端里直接运行
+#移动软件 sudo mv -f 文件名 /usr/local #添加变量 sudo vim /etc/profile # maven环境变 MAVEN_HOME=&#34;/usr/local/apache-maven-3.8.4&#34; export MAVEN_HOME export PATH=${PATH}:${MAVEN_HOME}/bin source /etc/profile 3.快捷键 1.截图：Command &#43; Shift &#43; 4 2.录屏：Command &#43; Shift &#43; 5 4.常用命令 改主机名: hostnamectl set-hostname npm换源: npm config set registry https://registry.">
+    <link rel="canonical" href="https://Apollo2light.github.io/Apollo2light/tools/4.mac%E7%BB%88%E7%AB%AF/">
+    <meta property="og:title" content="4.mac终端">
+    <meta property="og:type" content="article">
+    <meta property="og:url" content="https://Apollo2light.github.io/Apollo2light/tools/4.mac%E7%BB%88%E7%AB%AF/">
+    <meta property="og:description" content="1.终端 0.iTerm2是默认终端的替代品，oh-my-zsh是为了简化zsh的配置的shell
+1.查看所有shell
+cat /etc/shells 2.默认shell
+新版zsh默认zsh：echo $SHELL 更换默认shell：chsh -s /bin/zsh 3.配置文件
+#所有命令失效： export PATH=/usr/bin:/usr/sbin:/bin:/sbin:/usr/X11R6/bin - a. /etc/profile - b. /etc/paths - c. ~/.bash_profile - d. ~/.bash_login - e. ~/.profile - f. ~/.bashrc(启动终端自动加载) 2.配置环境变量 Mac的usr/bin目录是不允许增删文件的，可以通过向usr/local/bin增删文件来实现在终端里直接运行
+#移动软件 sudo mv -f 文件名 /usr/local #添加变量 sudo vim /etc/profile # maven环境变 MAVEN_HOME=&#34;/usr/local/apache-maven-3.8.4&#34; export MAVEN_HOME export PATH=${PATH}:${MAVEN_HOME}/bin source /etc/profile 3.快捷键 1.截图：Command &#43; Shift &#43; 4 2.录屏：Command &#43; Shift &#43; 5 4.常用命令 改主机名: hostnamectl set-hostname npm换源: npm config set registry https://registry.">
+    <meta property="og:site_name" content="Apollo&#39;s blog">
+    <link rel="stylesheet" href="https://Apollo2light.github.io/Apollo2light/css/main.min.7fdf1d02dafd1a6eb5cfd0d707e17e33515b866f5d305a0ab01a4095577484fe.css" integrity="sha256-f98dAtr9Gm61z9DXB&#43;F&#43;M1Fbhm9dMFoKsBpAlVd0hP4=">
+    <meta name="generator" content="Hugo 0.73.0" />
+    <script type="module" src="https://unpkg.com/ionicons@5.1.2/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule="" src="https://unpkg.com/ionicons@5.1.2/dist/ionicons/ionicons.js"></script>
+    
+</head>
+<body><header class="site-header">
+    <nav class="site-nav" role="navigation" aria-label="breadcrumb">
+    <ol itemscope itemtype="https://schema.org/BreadcrumbList" class="breadcrumb"><li class="breadcrumb-item  " 
+  itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+  <a itemtype="https://schema.org/Thing" itemprop="item" href="https://Apollo2light.github.io/Apollo2light/">
+    <span itemprop="name">Apollo&#39;s blog</span>
+  </a>
+  <meta itemprop="position" content="0" />
+</li>/<li class="breadcrumb-item  " 
+  itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+  <a itemtype="https://schema.org/Thing" itemprop="item" href="https://Apollo2light.github.io/Apollo2light/tools/">
+    <span itemprop="name">tools</span>
+  </a>
+  <meta itemprop="position" content="0" />
+</li>/<li class="breadcrumb-item active hidden" aria-current="page"
+  itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+  <a itemtype="https://schema.org/Thing" itemprop="item" href="https://Apollo2light.github.io/Apollo2light/tools/4.mac%E7%BB%88%E7%AB%AF/">
+    <span itemprop="name">4.mac%E7%BB%88%E7%AB%AF</span>
+  </a>
+  <meta itemprop="position" content="1" />
+</li></ol>
+    </nav>
+    <h1 class="site-title hidden">
+		<a href="https://Apollo2light.github.io/Apollo2light/">Apollo&#39;s blog</a>
+    </h1>
+</header><main id="content">
+<article role="article" class="content post h-entry" itemscope="" itemtype="http://schema.org/BlogPosting">
+    <header class="post-header">        
+        <h2 class="post-title" itemprop="name headline">4.mac终端</h2>
+        <span class="post-meta">
+            <time class="date-published" datetime="2022-04-26T21:45:49&#43;07:00" itemprop="datePublished">
+                Tue, 26 Apr 2022
+            </time>
+            
+        </span>
+    </header>
+    <div class="post-content" itemprop="articleBody">
+        <h2 id="1终端">1.终端</h2>
+<p><code>0.iTerm2是默认终端的替代品，oh-my-zsh是为了简化zsh的配置的shell</code></p>
+<p><code>1.查看所有shell</code></p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">cat /etc/shells
+</code></pre></div><p><code>2.默认shell</code></p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">新版zsh默认zsh：echo $SHELL
+
+更换默认shell：chsh -s /bin/zsh
+</code></pre></div><p><code>3.配置文件</code></p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell"><span style="color:#75715e">#所有命令失效：</span>
+export PATH<span style="color:#f92672">=</span>/usr/bin:/usr/sbin:/bin:/sbin:/usr/X11R6/bin
+- a. /etc/profile
+- b. /etc/paths
+- c. ~/.bash_profile
+- d. ~/.bash_login
+- e. ~/.profile
+- f. ~/.bashrc<span style="color:#f92672">(</span>启动终端自动加载<span style="color:#f92672">)</span>
+</code></pre></div><h2 id="2配置环境变量">2.配置环境变量</h2>
+<p><code>Mac的usr/bin目录是不允许增删文件的，可以通过向usr/local/bin增删文件来实现在终端里直接运行</code></p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell"><span style="color:#75715e">#移动软件</span>
+sudo mv -f 文件名 /usr/local
+
+<span style="color:#75715e">#添加变量</span>
+sudo vim /etc/profile
+
+<span style="color:#75715e"># maven环境变</span>
+MAVEN_HOME<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;/usr/local/apache-maven-3.8.4&#34;</span>
+export MAVEN_HOME
+export PATH<span style="color:#f92672">=</span><span style="color:#e6db74">${</span>PATH<span style="color:#e6db74">}</span>:<span style="color:#e6db74">${</span>MAVEN_HOME<span style="color:#e6db74">}</span>/bin
+source /etc/profile
+</code></pre></div><h2 id="3快捷键">3.快捷键</h2>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">1.截图：Command + Shift + <span style="color:#ae81ff">4</span>
+2.录屏：Command + Shift + <span style="color:#ae81ff">5</span>
+
+</code></pre></div><h2 id="4常用命令">4.常用命令</h2>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">改主机名: hostnamectl set-hostname
+npm换源: npm config set registry https://registry.npm.taobao.org
+增权：Chmod <span style="color:#ae81ff">755</span>
+
+
+</code></pre></div><h2 id="5安装教程">5.安装教程</h2>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">
+1.安装虚拟机
+https://www.cnblogs.com/easyidea/p/10122021.html
+
+
+2.安装单片机程序
+https://www.cnblogs.com/easyidea/p/10122123.html
+
+
+3.安装homebrew
+/bin/zsh -c <span style="color:#e6db74">&#34;</span><span style="color:#66d9ef">$(</span>curl -fsSL https://gitee.com/cunkai/HomebrewCN/raw/master/Homebrew.sh<span style="color:#66d9ef">)</span><span style="color:#e6db74">&#34;</span>
+</code></pre></div>
+    </div>
+    <video id="my_video" style="height: 300px;width:100%" controls="controls"></video>
+
+</article>
+<div class="pagination">
+    
+    <div class="prev"> <a href="https://Apollo2light.github.io/Apollo2light/tools/3.hugo%E5%8D%9A%E5%AE%A2/">Previous Post</a> </div>
+    
+    
+</div>
+
+
+<script>
+    try{
+        
+        let src = document.getElementsByTagName('code')[0].innerText;
+        
+        if(src.indexOf("mp4")!=-1){
+            document.getElementById('my_video').setAttribute("src",src)
+        }else{
+            
+            let video = document.getElementById('my_video');
+            if (video != null){
+                video.parentNode.removeChild(video);
+            }
+        }
+    }catch(e){
+        
+        let video = document.getElementById('my_video');
+        if (video != null){
+            video.parentNode.removeChild(video);
+        }
+    }
+</script>
+
+        </main><footer class="site-footer">
+	<span class="right">
+		<em>Apollo&#39;s blog</em>
+	</span>
+</footer>
+</body>
+    <script>
+        
+    </script>
+</html>

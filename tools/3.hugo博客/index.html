@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang=en-us><head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title> 3.hugo博客 - Apollo&#39;s blog</title>
+    <meta name="description" content="1.步骤  1.申请GitHub账号并配置ssh 2.brew安装hugo后选择主题 3.熟悉常见hugo指令 4.GitHub pages部署博客  2.指令 #安装hugo brew install hugo #新建站点 hugo new site xx #添加主题 cd xx git clone https://github.com/rmsubekti/the-roots-home.git themes/the-roots-home hugo server -t the-roots-home --buildDrafts #打包 hugo --theme=the-roots-home --baseUrl=&#34;https://Apollo2light.github.io&#34; --buildDrafts 3.写博客 #新建页面 cd apo_blog hugo new xx/xx.md #编写内容 code #打包 hugo --theme=the-roots-home --baseUrl=&#34;https://Apollo2light.github.io/Apollo2light/&#34; --buildDrafts #将打包好的public内容复制到apollo_blog #上传到apollo仓库 git add . git config --local user.name &#39;Apollo2light&#39; git config --local user.email &#39;2141975795@qq.com&#39; git commit -m &#39;xxx&#39; git push 4.">
+    <link rel="canonical" href="https://Apollo2light.github.io/Apollo2light/tools/3.hugo%E5%8D%9A%E5%AE%A2/">
+    <meta property="og:title" content="3.hugo博客">
+    <meta property="og:type" content="article">
+    <meta property="og:url" content="https://Apollo2light.github.io/Apollo2light/tools/3.hugo%E5%8D%9A%E5%AE%A2/">
+    <meta property="og:description" content="1.步骤  1.申请GitHub账号并配置ssh 2.brew安装hugo后选择主题 3.熟悉常见hugo指令 4.GitHub pages部署博客  2.指令 #安装hugo brew install hugo #新建站点 hugo new site xx #添加主题 cd xx git clone https://github.com/rmsubekti/the-roots-home.git themes/the-roots-home hugo server -t the-roots-home --buildDrafts #打包 hugo --theme=the-roots-home --baseUrl=&#34;https://Apollo2light.github.io&#34; --buildDrafts 3.写博客 #新建页面 cd apo_blog hugo new xx/xx.md #编写内容 code #打包 hugo --theme=the-roots-home --baseUrl=&#34;https://Apollo2light.github.io/Apollo2light/&#34; --buildDrafts #将打包好的public内容复制到apollo_blog #上传到apollo仓库 git add . git config --local user.name &#39;Apollo2light&#39; git config --local user.email &#39;2141975795@qq.com&#39; git commit -m &#39;xxx&#39; git push 4.">
+    <meta property="og:site_name" content="Apollo&#39;s blog">
+    <link rel="stylesheet" href="https://Apollo2light.github.io/Apollo2light/css/main.min.7fdf1d02dafd1a6eb5cfd0d707e17e33515b866f5d305a0ab01a4095577484fe.css" integrity="sha256-f98dAtr9Gm61z9DXB&#43;F&#43;M1Fbhm9dMFoKsBpAlVd0hP4=">
+    <meta name="generator" content="Hugo 0.73.0" />
+    <script type="module" src="https://unpkg.com/ionicons@5.1.2/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule="" src="https://unpkg.com/ionicons@5.1.2/dist/ionicons/ionicons.js"></script>
+    
+</head>
+<body><header class="site-header">
+    <nav class="site-nav" role="navigation" aria-label="breadcrumb">
+    <ol itemscope itemtype="https://schema.org/BreadcrumbList" class="breadcrumb"><li class="breadcrumb-item  " 
+  itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+  <a itemtype="https://schema.org/Thing" itemprop="item" href="https://Apollo2light.github.io/Apollo2light/">
+    <span itemprop="name">Apollo&#39;s blog</span>
+  </a>
+  <meta itemprop="position" content="0" />
+</li>/<li class="breadcrumb-item  " 
+  itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+  <a itemtype="https://schema.org/Thing" itemprop="item" href="https://Apollo2light.github.io/Apollo2light/tools/">
+    <span itemprop="name">tools</span>
+  </a>
+  <meta itemprop="position" content="0" />
+</li>/<li class="breadcrumb-item active hidden" aria-current="page"
+  itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+  <a itemtype="https://schema.org/Thing" itemprop="item" href="https://Apollo2light.github.io/Apollo2light/tools/3.hugo%E5%8D%9A%E5%AE%A2/">
+    <span itemprop="name">3.hugo%E5%8D%9A%E5%AE%A2</span>
+  </a>
+  <meta itemprop="position" content="1" />
+</li></ol>
+    </nav>
+    <h1 class="site-title hidden">
+		<a href="https://Apollo2light.github.io/Apollo2light/">Apollo&#39;s blog</a>
+    </h1>
+</header><main id="content">
+<article role="article" class="content post h-entry" itemscope="" itemtype="http://schema.org/BlogPosting">
+    <header class="post-header">        
+        <h2 class="post-title" itemprop="name headline">3.hugo博客</h2>
+        <span class="post-meta">
+            <time class="date-published" datetime="2022-04-26T20:59:21&#43;07:00" itemprop="datePublished">
+                Tue, 26 Apr 2022
+            </time>
+            
+        </span>
+    </header>
+    <div class="post-content" itemprop="articleBody">
+        <h2 id="1步骤">1.步骤</h2>
+<ul>
+<li>1.申请GitHub账号并配置ssh</li>
+<li>2.brew安装hugo后选择主题</li>
+<li>3.熟悉常见hugo指令</li>
+<li>4.GitHub pages部署博客</li>
+</ul>
+<h2 id="2指令">2.指令</h2>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell"><span style="color:#75715e">#安装hugo</span>
+brew install hugo
+
+<span style="color:#75715e">#新建站点</span>
+hugo new site xx
+
+<span style="color:#75715e">#添加主题</span>
+cd xx
+git clone https://github.com/rmsubekti/the-roots-home.git themes/the-roots-home
+hugo server -t the-roots-home --buildDrafts
+
+<span style="color:#75715e">#打包</span>
+hugo --theme<span style="color:#f92672">=</span>the-roots-home --baseUrl<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;https://Apollo2light.github.io&#34;</span> --buildDrafts
+</code></pre></div><h2 id="3写博客">3.写博客</h2>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell"><span style="color:#75715e">#新建页面</span>
+cd apo_blog
+hugo new xx/xx.md 
+
+<span style="color:#75715e">#编写内容</span>
+code
+
+<span style="color:#75715e">#打包</span>
+hugo --theme<span style="color:#f92672">=</span>the-roots-home --baseUrl<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;https://Apollo2light.github.io/Apollo2light/&#34;</span> --buildDrafts
+
+<span style="color:#75715e">#将打包好的public内容复制到apollo_blog</span>
+
+
+<span style="color:#75715e">#上传到apollo仓库</span>
+git add .
+git config --local user.name <span style="color:#e6db74">&#39;Apollo2light&#39;</span>
+git config --local user.email <span style="color:#e6db74">&#39;2141975795@qq.com&#39;</span>
+git commit -m <span style="color:#e6db74">&#39;xxx&#39;</span>
+git push
+
+</code></pre></div><h2 id="4支持视频">4.支持视频</h2>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript"><span style="color:#75715e">//直接更改主题，在主题模板里更改
+</span><span style="color:#75715e"></span>
+<span style="color:#75715e">//1.single20行添加video标签
+</span><span style="color:#75715e"></span><span style="color:#f92672">&lt;</span><span style="color:#a6e22e">video</span> <span style="color:#a6e22e">id</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;my_video&#34;</span> <span style="color:#a6e22e">style</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;height: 300px;width:100%&#34;</span> <span style="color:#a6e22e">controls</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;controls&#34;</span><span style="color:#f92672">&gt;&lt;</span><span style="color:#960050;background-color:#1e0010">/video&gt;</span>
+
+<span style="color:#75715e">//2.动态添加视频源
+</span><span style="color:#75715e"></span><span style="color:#f92672">&lt;</span><span style="color:#a6e22e">script</span><span style="color:#f92672">&gt;</span>
+    <span style="color:#66d9ef">try</span>{
+        <span style="color:#75715e">//获得md中写的视频链接
+</span><span style="color:#75715e"></span>        <span style="color:#66d9ef">let</span> <span style="color:#a6e22e">src</span> <span style="color:#f92672">=</span> document.<span style="color:#a6e22e">getElementsByTagName</span>(<span style="color:#e6db74">&#39;code&#39;</span>)[<span style="color:#ae81ff">0</span>].<span style="color:#a6e22e">innerText</span>;
+        <span style="color:#75715e">//如果该链接的内容是视频mp4格式就添加video标签
+</span><span style="color:#75715e"></span>        <span style="color:#66d9ef">if</span>(<span style="color:#a6e22e">src</span>.<span style="color:#a6e22e">indexOf</span>(<span style="color:#e6db74">&#34;mp4&#34;</span>)<span style="color:#f92672">!=-</span><span style="color:#ae81ff">1</span>){
+            document.<span style="color:#a6e22e">getElementById</span>(<span style="color:#e6db74">&#39;my_video&#39;</span>).<span style="color:#a6e22e">setAttribute</span>(<span style="color:#e6db74">&#34;src&#34;</span>,<span style="color:#a6e22e">src</span>)
+        }<span style="color:#66d9ef">else</span>{
+            <span style="color:#75715e">//如果该链接的内容不是视频格式就删除video标签
+</span><span style="color:#75715e"></span>            <span style="color:#66d9ef">let</span> <span style="color:#a6e22e">video</span> <span style="color:#f92672">=</span> document.<span style="color:#a6e22e">getElementById</span>(<span style="color:#e6db74">&#39;my_video&#39;</span>);
+            <span style="color:#66d9ef">if</span> (<span style="color:#a6e22e">video</span> <span style="color:#f92672">!=</span> <span style="color:#66d9ef">null</span>){
+                <span style="color:#a6e22e">video</span>.<span style="color:#a6e22e">parentNode</span>.<span style="color:#a6e22e">removeChild</span>(<span style="color:#a6e22e">video</span>);
+            }
+        }
+    }<span style="color:#66d9ef">catch</span>(<span style="color:#a6e22e">e</span>){
+        <span style="color:#75715e">//如果该链接的内容不是视频格式就删除video标签
+</span><span style="color:#75715e"></span>        <span style="color:#66d9ef">let</span> <span style="color:#a6e22e">video</span> <span style="color:#f92672">=</span> document.<span style="color:#a6e22e">getElementById</span>(<span style="color:#e6db74">&#39;my_video&#39;</span>);
+        <span style="color:#66d9ef">if</span> (<span style="color:#a6e22e">video</span> <span style="color:#f92672">!=</span> <span style="color:#66d9ef">null</span>){
+            <span style="color:#a6e22e">video</span>.<span style="color:#a6e22e">parentNode</span>.<span style="color:#a6e22e">removeChild</span>(<span style="color:#a6e22e">video</span>);
+        }
+    }
+<span style="color:#f92672">&lt;</span><span style="color:#960050;background-color:#1e0010">/script&gt;</span>
+
+<span style="color:#75715e">//3.七牛云生成视频外链
+</span><span style="color:#75715e"></span>
+<span style="color:#75715e">//4.新建页面，将链接直接写在页面即可
+</span></code></pre></div>
+    </div>
+    <video id="my_video" style="height: 300px;width:100%" controls="controls"></video>
+
+</article>
+<div class="pagination">
+    
+    <div class="prev"> <a href="https://Apollo2light.github.io/Apollo2light/tools/1.git%E5%8E%9F%E7%90%86/">Previous Post</a> </div>
+    
+    
+    <div class="next"> <a href="https://Apollo2light.github.io/Apollo2light/tools/4.mac%E7%BB%88%E7%AB%AF/">Next Post</a> </div>
+    
+</div>
+
+
+<script>
+    try{
+        
+        let src = document.getElementsByTagName('code')[0].innerText;
+        
+        if(src.indexOf("mp4")!=-1){
+            document.getElementById('my_video').setAttribute("src",src)
+        }else{
+            
+            let video = document.getElementById('my_video');
+            if (video != null){
+                video.parentNode.removeChild(video);
+            }
+        }
+    }catch(e){
+        
+        let video = document.getElementById('my_video');
+        if (video != null){
+            video.parentNode.removeChild(video);
+        }
+    }
+</script>
+
+        </main><footer class="site-footer">
+	<span class="right">
+		<em>Apollo&#39;s blog</em>
+	</span>
+</footer>
+</body>
+    <script>
+        
+    </script>
+</html>
