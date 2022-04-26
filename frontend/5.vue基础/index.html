@@ -1,0 +1,452 @@
+<!DOCTYPE html>
+<html lang=en-us><head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title> 5.vue基础 - Apollo&#39;s blog</title>
+    <meta name="description" content="0.数据监测和代理 //数据代理：通过vm操作_data中的属性 //vue内部: vm._data = data Object.defineProperty(vm,&#39;a&#39;,{ get(){ return vm._data.a } }) let vm = new Vue({ //等价于vm.$mount(&#39;#root&#39;)  el:&#39;#root&#39;, //函数式必须返回对象  data(){ return{ a:1 } } }) let data = { name:&#39;a&#39;, address:&#39;b&#39; } const obs = new Observer(data); console.log(obs); let vm = {} vm._data = data = obs; function Observer(obj){ const keys = Object.keys(obj); keys.forEach((k) =&gt; { Object.defineProperty(this,k,{ get(){ return obj[k]; }, set(val){ console.log(`${k}被改了,需要解析模版，生成虚拟dom，渲染页面`) obj[k] = val; } }) }) } 添加响应式对象：vm.">
+    <link rel="canonical" href="https://Apollo2light.github.io/Apollo2light/frontend/5.vue%E5%9F%BA%E7%A1%80/">
+    <meta property="og:title" content="5.vue基础">
+    <meta property="og:type" content="article">
+    <meta property="og:url" content="https://Apollo2light.github.io/Apollo2light/frontend/5.vue%E5%9F%BA%E7%A1%80/">
+    <meta property="og:description" content="0.数据监测和代理 //数据代理：通过vm操作_data中的属性 //vue内部: vm._data = data Object.defineProperty(vm,&#39;a&#39;,{ get(){ return vm._data.a } }) let vm = new Vue({ //等价于vm.$mount(&#39;#root&#39;)  el:&#39;#root&#39;, //函数式必须返回对象  data(){ return{ a:1 } } }) let data = { name:&#39;a&#39;, address:&#39;b&#39; } const obs = new Observer(data); console.log(obs); let vm = {} vm._data = data = obs; function Observer(obj){ const keys = Object.keys(obj); keys.forEach((k) =&gt; { Object.defineProperty(this,k,{ get(){ return obj[k]; }, set(val){ console.log(`${k}被改了,需要解析模版，生成虚拟dom，渲染页面`) obj[k] = val; } }) }) } 添加响应式对象：vm.">
+    <meta property="og:site_name" content="Apollo&#39;s blog">
+    <link rel="stylesheet" href="https://Apollo2light.github.io/Apollo2light/css/main.min.7fdf1d02dafd1a6eb5cfd0d707e17e33515b866f5d305a0ab01a4095577484fe.css" integrity="sha256-f98dAtr9Gm61z9DXB&#43;F&#43;M1Fbhm9dMFoKsBpAlVd0hP4=">
+    <meta name="generator" content="Hugo 0.73.0" />
+    <script type="module" src="https://unpkg.com/ionicons@5.1.2/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule="" src="https://unpkg.com/ionicons@5.1.2/dist/ionicons/ionicons.js"></script>
+    
+</head>
+<body><header class="site-header">
+    <nav class="site-nav" role="navigation" aria-label="breadcrumb">
+    <ol itemscope itemtype="https://schema.org/BreadcrumbList" class="breadcrumb"><li class="breadcrumb-item  " 
+  itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+  <a itemtype="https://schema.org/Thing" itemprop="item" href="https://Apollo2light.github.io/Apollo2light/">
+    <span itemprop="name">Apollo&#39;s blog</span>
+  </a>
+  <meta itemprop="position" content="0" />
+</li>/<li class="breadcrumb-item  " 
+  itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+  <a itemtype="https://schema.org/Thing" itemprop="item" href="https://Apollo2light.github.io/Apollo2light/frontend/">
+    <span itemprop="name">frontend</span>
+  </a>
+  <meta itemprop="position" content="0" />
+</li>/<li class="breadcrumb-item active hidden" aria-current="page"
+  itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+  <a itemtype="https://schema.org/Thing" itemprop="item" href="https://Apollo2light.github.io/Apollo2light/frontend/5.vue%E5%9F%BA%E7%A1%80/">
+    <span itemprop="name">5.vue%E5%9F%BA%E7%A1%80</span>
+  </a>
+  <meta itemprop="position" content="1" />
+</li></ol>
+    </nav>
+    <h1 class="site-title hidden">
+		<a href="https://Apollo2light.github.io/Apollo2light/">Apollo&#39;s blog</a>
+    </h1>
+</header><main id="content">
+<article role="article" class="content post h-entry" itemscope="" itemtype="http://schema.org/BlogPosting">
+    <header class="post-header">        
+        <h2 class="post-title" itemprop="name headline">5.vue基础</h2>
+        <span class="post-meta">
+            <time class="date-published" datetime="2022-04-26T22:57:27&#43;07:00" itemprop="datePublished">
+                Tue, 26 Apr 2022
+            </time>
+            
+        </span>
+    </header>
+    <div class="post-content" itemprop="articleBody">
+        <h2 id="0数据监测和代理">0.数据监测和代理</h2>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript"><span style="color:#75715e">//数据代理：通过vm操作_data中的属性
+</span><span style="color:#75715e">//vue内部: vm._data = data
+</span><span style="color:#75715e"></span>Object.<span style="color:#a6e22e">defineProperty</span>(<span style="color:#a6e22e">vm</span>,<span style="color:#e6db74">&#39;a&#39;</span>,{
+    <span style="color:#a6e22e">get</span>(){
+        <span style="color:#66d9ef">return</span> <span style="color:#a6e22e">vm</span>.<span style="color:#a6e22e">_data</span>.<span style="color:#a6e22e">a</span>
+    }
+})
+
+
+<span style="color:#66d9ef">let</span> <span style="color:#a6e22e">vm</span> <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> <span style="color:#a6e22e">Vue</span>({
+        <span style="color:#75715e">//等价于vm.$mount(&#39;#root&#39;)
+</span><span style="color:#75715e"></span>        <span style="color:#a6e22e">el</span><span style="color:#f92672">:</span><span style="color:#e6db74">&#39;#root&#39;</span>,
+        <span style="color:#75715e">//函数式必须返回对象
+</span><span style="color:#75715e"></span>        <span style="color:#a6e22e">data</span>(){
+            <span style="color:#66d9ef">return</span>{
+                <span style="color:#a6e22e">a</span><span style="color:#f92672">:</span><span style="color:#ae81ff">1</span>
+            }
+        }
+    })
+</code></pre></div><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript"><span style="color:#66d9ef">let</span> <span style="color:#a6e22e">data</span> <span style="color:#f92672">=</span> {
+        <span style="color:#a6e22e">name</span><span style="color:#f92672">:</span><span style="color:#e6db74">&#39;a&#39;</span>,
+        <span style="color:#a6e22e">address</span><span style="color:#f92672">:</span><span style="color:#e6db74">&#39;b&#39;</span>
+    }
+
+    <span style="color:#66d9ef">const</span> <span style="color:#a6e22e">obs</span> <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> <span style="color:#a6e22e">Observer</span>(<span style="color:#a6e22e">data</span>);
+    <span style="color:#a6e22e">console</span>.<span style="color:#a6e22e">log</span>(<span style="color:#a6e22e">obs</span>);
+
+    <span style="color:#66d9ef">let</span> <span style="color:#a6e22e">vm</span> <span style="color:#f92672">=</span> {}
+    <span style="color:#a6e22e">vm</span>.<span style="color:#a6e22e">_data</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">data</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">obs</span>;
+
+    <span style="color:#66d9ef">function</span> <span style="color:#a6e22e">Observer</span>(<span style="color:#a6e22e">obj</span>){
+        <span style="color:#66d9ef">const</span> <span style="color:#a6e22e">keys</span> <span style="color:#f92672">=</span> Object.<span style="color:#a6e22e">keys</span>(<span style="color:#a6e22e">obj</span>);
+        <span style="color:#a6e22e">keys</span>.<span style="color:#a6e22e">forEach</span>((<span style="color:#a6e22e">k</span>) =&gt; {
+            Object.<span style="color:#a6e22e">defineProperty</span>(<span style="color:#66d9ef">this</span>,<span style="color:#a6e22e">k</span>,{
+                <span style="color:#a6e22e">get</span>(){
+                    <span style="color:#66d9ef">return</span> <span style="color:#a6e22e">obj</span>[<span style="color:#a6e22e">k</span>];
+                },
+                <span style="color:#a6e22e">set</span>(<span style="color:#a6e22e">val</span>){
+                    <span style="color:#a6e22e">console</span>.<span style="color:#a6e22e">log</span>(<span style="color:#e6db74">`</span><span style="color:#e6db74">${</span><span style="color:#a6e22e">k</span><span style="color:#e6db74">}</span><span style="color:#e6db74">被改了,需要解析模版，生成虚拟dom，渲染页面`</span>)
+                    <span style="color:#a6e22e">obj</span>[<span style="color:#a6e22e">k</span>] <span style="color:#f92672">=</span> <span style="color:#a6e22e">val</span>;
+                }
+            })
+        })
+    }
+</code></pre></div><p>添加响应式对象：<code>vm.$set(vm.student,'sex','男');</code></p>
+<p>添加响应式数组：<code>vm._data.student.hobby.push();</code></p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript"><span style="color:#f92672">&lt;!</span><span style="color:#a6e22e">DOCTYPE</span> <span style="color:#a6e22e">html</span><span style="color:#f92672">&gt;</span>
+<span style="color:#f92672">&lt;</span><span style="color:#a6e22e">html</span> <span style="color:#a6e22e">lang</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;en&#34;</span><span style="color:#f92672">&gt;</span>
+<span style="color:#f92672">&lt;</span><span style="color:#a6e22e">head</span><span style="color:#f92672">&gt;</span>
+    <span style="color:#f92672">&lt;</span><span style="color:#a6e22e">meta</span> <span style="color:#a6e22e">charset</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;UTF-8&#34;</span><span style="color:#f92672">&gt;</span>
+    <span style="color:#f92672">&lt;</span><span style="color:#a6e22e">meta</span> <span style="color:#a6e22e">http</span><span style="color:#f92672">-</span><span style="color:#a6e22e">equiv</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;X-UA-Compatible&#34;</span> <span style="color:#a6e22e">content</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;IE=edge&#34;</span><span style="color:#f92672">&gt;</span>
+    <span style="color:#f92672">&lt;</span><span style="color:#a6e22e">meta</span> <span style="color:#a6e22e">name</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;viewport&#34;</span> <span style="color:#a6e22e">content</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;width=device-width, initial-scale=1.0&#34;</span><span style="color:#f92672">&gt;</span>
+    <span style="color:#f92672">&lt;</span><span style="color:#a6e22e">script</span> <span style="color:#a6e22e">src</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;./vue2.js&#34;</span><span style="color:#f92672">&gt;&lt;</span><span style="color:#960050;background-color:#1e0010">/script&gt;</span>
+    <span style="color:#f92672">&lt;</span><span style="color:#a6e22e">title</span><span style="color:#f92672">&gt;</span><span style="color:#a6e22e">vue2</span><span style="color:#f92672">&lt;</span><span style="color:#960050;background-color:#1e0010">/title&gt;</span>
+<span style="color:#f92672">&lt;</span><span style="color:#960050;background-color:#1e0010">/head&gt;</span>
+<span style="color:#f92672">&lt;</span><span style="color:#a6e22e">body</span><span style="color:#f92672">&gt;</span>
+    
+    <span style="color:#f92672">&lt;</span><span style="color:#a6e22e">div</span> <span style="color:#a6e22e">id</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;root&#34;</span><span style="color:#f92672">&gt;</span>
+        <span style="color:#f92672">&lt;</span><span style="color:#a6e22e">h1</span><span style="color:#f92672">&gt;</span><span style="color:#a6e22e">学生信息</span><span style="color:#f92672">&lt;</span><span style="color:#960050;background-color:#1e0010">/h1&gt;</span>
+        <span style="color:#f92672">&lt;</span><span style="color:#a6e22e">button</span> <span style="color:#960050;background-color:#1e0010">@</span><span style="color:#a6e22e">click</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;addsex&#34;</span><span style="color:#f92672">&gt;</span><span style="color:#a6e22e">性别男</span><span style="color:#f92672">&lt;</span><span style="color:#960050;background-color:#1e0010">/button&gt;</span>
+        <span style="color:#f92672">&lt;</span><span style="color:#a6e22e">button</span> <span style="color:#960050;background-color:#1e0010">@</span><span style="color:#a6e22e">click</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;addfriends&#34;</span><span style="color:#f92672">&gt;</span><span style="color:#a6e22e">朋友</span><span style="color:#f92672">+</span><span style="color:#ae81ff">1</span><span style="color:#f92672">&lt;</span><span style="color:#960050;background-color:#1e0010">/button&gt;</span>
+
+        <span style="color:#f92672">&lt;</span><span style="color:#a6e22e">h3</span><span style="color:#f92672">&gt;</span><span style="color:#a6e22e">性别</span><span style="color:#f92672">:</span>{{<span style="color:#a6e22e">student</span>.<span style="color:#a6e22e">sex</span>}}<span style="color:#f92672">&lt;</span><span style="color:#960050;background-color:#1e0010">/h3&gt;</span>
+        <span style="color:#f92672">&lt;</span><span style="color:#a6e22e">h3</span><span style="color:#f92672">&gt;</span><span style="color:#a6e22e">朋友们</span><span style="color:#960050;background-color:#1e0010">：</span><span style="color:#f92672">&lt;</span><span style="color:#960050;background-color:#1e0010">/h3&gt;</span>
+        <span style="color:#f92672">&lt;</span><span style="color:#a6e22e">ul</span><span style="color:#f92672">&gt;</span>
+            <span style="color:#f92672">&lt;</span><span style="color:#a6e22e">li</span> <span style="color:#a6e22e">v</span><span style="color:#f92672">-</span><span style="color:#66d9ef">for</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;(f,index) in student.friends&#34;</span> <span style="color:#f92672">:</span><span style="color:#a6e22e">key</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;index&#34;</span><span style="color:#f92672">&gt;</span>{{<span style="color:#a6e22e">f</span>.<span style="color:#a6e22e">name</span>}}<span style="color:#f92672">-</span>{{<span style="color:#a6e22e">f</span>.<span style="color:#a6e22e">age</span>}}<span style="color:#f92672">&lt;</span><span style="color:#960050;background-color:#1e0010">/li&gt;</span>
+        <span style="color:#f92672">&lt;</span><span style="color:#960050;background-color:#1e0010">/ul&gt;</span>
+    <span style="color:#f92672">&lt;</span><span style="color:#960050;background-color:#1e0010">/div&gt;</span>
+    <span style="color:#f92672">&lt;</span><span style="color:#a6e22e">script</span><span style="color:#f92672">&gt;</span>
+    
+    <span style="color:#66d9ef">const</span> <span style="color:#a6e22e">vm</span> <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> <span style="color:#a6e22e">Vue</span>({
+        <span style="color:#a6e22e">el</span><span style="color:#f92672">:</span><span style="color:#e6db74">&#39;#root&#39;</span>,
+        <span style="color:#a6e22e">data</span><span style="color:#f92672">:</span>{
+            <span style="color:#a6e22e">student</span><span style="color:#f92672">:</span>{
+                <span style="color:#a6e22e">friends</span><span style="color:#f92672">:</span>[
+                    {<span style="color:#a6e22e">name</span><span style="color:#f92672">:</span><span style="color:#e6db74">&#39;f&#39;</span>,<span style="color:#a6e22e">age</span><span style="color:#f92672">:</span><span style="color:#e6db74">&#39;g&#39;</span>},
+                    {<span style="color:#a6e22e">name</span><span style="color:#f92672">:</span><span style="color:#e6db74">&#39;h&#39;</span>,<span style="color:#a6e22e">age</span><span style="color:#f92672">:</span><span style="color:#e6db74">&#39;i&#39;</span>}
+                ]
+            }
+        },
+        <span style="color:#a6e22e">methods</span><span style="color:#f92672">:</span>{
+            <span style="color:#a6e22e">addsex</span>(){
+                <span style="color:#75715e">//为对象添加响应式数据,Vue.set/vm.$set
+</span><span style="color:#75715e"></span>                <span style="color:#75715e">// Vue.set(this.student,&#39;sex&#39;,&#39;男&#39;)
+</span><span style="color:#75715e"></span>                <span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">$set</span>(<span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">student</span>,<span style="color:#e6db74">&#39;sex&#39;</span>,<span style="color:#e6db74">&#39;男&#39;</span>);
+            },
+            <span style="color:#a6e22e">addfriends</span>(){
+                <span style="color:#75715e">//为数组添加响应式数据,push/pop/shift/unshift/splice/sort/reverse
+</span><span style="color:#75715e"></span>                <span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">student</span>.<span style="color:#a6e22e">friends</span>.<span style="color:#a6e22e">unshift</span>({<span style="color:#a6e22e">name</span><span style="color:#f92672">:</span><span style="color:#e6db74">&#39;j&#39;</span>,<span style="color:#a6e22e">age</span><span style="color:#f92672">:</span><span style="color:#e6db74">&#39;k&#39;</span>})
+            }
+        }
+    })
+
+    <span style="color:#f92672">&lt;</span><span style="color:#960050;background-color:#1e0010">/script&gt;</span>
+<span style="color:#f92672">&lt;</span><span style="color:#960050;background-color:#1e0010">/body&gt;</span>
+<span style="color:#f92672">&lt;</span><span style="color:#960050;background-color:#1e0010">/html&gt;</span>
+
+</code></pre></div><p>=========1.计算属性computed处理同步属性=======</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript"><span style="color:#f92672">&lt;!</span><span style="color:#a6e22e">DOCTYPE</span> <span style="color:#a6e22e">html</span><span style="color:#f92672">&gt;</span>
+<span style="color:#f92672">&lt;</span><span style="color:#a6e22e">html</span> <span style="color:#a6e22e">lang</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;en&#34;</span><span style="color:#f92672">&gt;</span>
+<span style="color:#f92672">&lt;</span><span style="color:#a6e22e">head</span><span style="color:#f92672">&gt;</span>
+    <span style="color:#f92672">&lt;</span><span style="color:#a6e22e">meta</span> <span style="color:#a6e22e">charset</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;UTF-8&#34;</span><span style="color:#f92672">&gt;</span>
+    <span style="color:#f92672">&lt;</span><span style="color:#a6e22e">meta</span> <span style="color:#a6e22e">http</span><span style="color:#f92672">-</span><span style="color:#a6e22e">equiv</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;X-UA-Compatible&#34;</span> <span style="color:#a6e22e">content</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;IE=edge&#34;</span><span style="color:#f92672">&gt;</span>
+    <span style="color:#f92672">&lt;</span><span style="color:#a6e22e">meta</span> <span style="color:#a6e22e">name</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;viewport&#34;</span> <span style="color:#a6e22e">content</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;width=device-width, initial-scale=1.0&#34;</span><span style="color:#f92672">&gt;</span>
+    <span style="color:#f92672">&lt;</span><span style="color:#a6e22e">script</span> <span style="color:#a6e22e">src</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;./vue2.js&#34;</span><span style="color:#f92672">&gt;&lt;</span><span style="color:#960050;background-color:#1e0010">/script&gt;</span>
+    <span style="color:#f92672">&lt;</span><span style="color:#a6e22e">title</span><span style="color:#f92672">&gt;</span><span style="color:#a6e22e">vue2</span><span style="color:#f92672">&lt;</span><span style="color:#960050;background-color:#1e0010">/title&gt;</span>
+<span style="color:#f92672">&lt;</span><span style="color:#960050;background-color:#1e0010">/head&gt;</span>
+<span style="color:#f92672">&lt;</span><span style="color:#a6e22e">body</span><span style="color:#f92672">&gt;</span>
+    
+    <span style="color:#f92672">&lt;</span><span style="color:#a6e22e">div</span> <span style="color:#a6e22e">id</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;root&#34;</span><span style="color:#f92672">&gt;</span>
+        <span style="color:#f92672">&lt;</span><span style="color:#a6e22e">div</span><span style="color:#f92672">&gt;</span><span style="color:#a6e22e">计算属性computed</span><span style="color:#f92672">&lt;</span><span style="color:#960050;background-color:#1e0010">/div&gt;&lt;br&gt;</span>
+        <span style="color:#a6e22e">姓</span><span style="color:#960050;background-color:#1e0010">：</span><span style="color:#f92672">&lt;</span><span style="color:#a6e22e">input</span> <span style="color:#a6e22e">type</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;text&#34;</span> <span style="color:#a6e22e">v</span><span style="color:#f92672">-</span><span style="color:#a6e22e">model</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;firstname&#34;</span><span style="color:#f92672">&gt;&lt;</span><span style="color:#a6e22e">br</span><span style="color:#f92672">&gt;&lt;</span><span style="color:#a6e22e">br</span><span style="color:#f92672">&gt;</span>
+        <span style="color:#a6e22e">名</span><span style="color:#960050;background-color:#1e0010">：</span><span style="color:#f92672">&lt;</span><span style="color:#a6e22e">input</span> <span style="color:#a6e22e">type</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;text&#34;</span> <span style="color:#a6e22e">v</span><span style="color:#f92672">-</span><span style="color:#a6e22e">model</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;lastname&#34;</span><span style="color:#f92672">&gt;&lt;</span><span style="color:#a6e22e">br</span><span style="color:#f92672">&gt;&lt;</span><span style="color:#a6e22e">br</span><span style="color:#f92672">&gt;</span>
+        <span style="color:#a6e22e">全名</span><span style="color:#960050;background-color:#1e0010">：</span><span style="color:#f92672">&lt;</span><span style="color:#a6e22e">span</span><span style="color:#f92672">&gt;</span>{{<span style="color:#a6e22e">fullname</span>}}<span style="color:#f92672">&lt;</span><span style="color:#960050;background-color:#1e0010">/span&gt;</span>
+        <span style="color:#f92672">&lt;</span><span style="color:#a6e22e">hr</span><span style="color:#f92672">&gt;</span>
+    <span style="color:#f92672">&lt;</span><span style="color:#960050;background-color:#1e0010">/div&gt;</span>
+    <span style="color:#f92672">&lt;</span><span style="color:#a6e22e">script</span><span style="color:#f92672">&gt;</span>
+    <span style="color:#66d9ef">new</span> <span style="color:#a6e22e">Vue</span>({
+        <span style="color:#a6e22e">el</span><span style="color:#f92672">:</span><span style="color:#e6db74">&#39;#root&#39;</span>,
+        <span style="color:#a6e22e">data</span><span style="color:#f92672">:</span>{
+            <span style="color:#a6e22e">firstname</span><span style="color:#f92672">:</span><span style="color:#e6db74">&#39;a&#39;</span>,
+            <span style="color:#a6e22e">lastname</span><span style="color:#f92672">:</span><span style="color:#e6db74">&#39;b&#39;</span>
+        },
+        <span style="color:#75715e">//计算属性,处理同步属性变化
+</span><span style="color:#75715e"></span>        <span style="color:#a6e22e">computed</span><span style="color:#f92672">:</span>{
+            <span style="color:#e6db74">&#39;fullname&#39;</span><span style="color:#f92672">:</span>{
+                <span style="color:#75715e">//初次使用或依赖属性发生变化时get自动执行，其余时刻使用缓存
+</span><span style="color:#75715e"></span>                <span style="color:#a6e22e">get</span>(){
+                    <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">firstname</span> <span style="color:#f92672">+</span> <span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">lastname</span>;
+                },
+                <span style="color:#75715e">//fullname值改变时被调用
+</span><span style="color:#75715e"></span>                <span style="color:#a6e22e">set</span>(<span style="color:#a6e22e">value</span>){
+                    <span style="color:#75715e">//value就是改变的值的内容
+</span><span style="color:#75715e"></span>                    <span style="color:#a6e22e">console</span>.<span style="color:#a6e22e">log</span>(<span style="color:#a6e22e">value</span>)
+                }
+            }
+        }
+        
+        
+    })
+    <span style="color:#f92672">&lt;</span><span style="color:#960050;background-color:#1e0010">/script&gt;</span>
+<span style="color:#f92672">&lt;</span><span style="color:#960050;background-color:#1e0010">/body&gt;</span>
+<span style="color:#f92672">&lt;</span><span style="color:#960050;background-color:#1e0010">/html&gt;</span>
+
+
+</code></pre></div><p>=========2.监听属性watch处理异步属性=======</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript">
+<span style="color:#f92672">&lt;!</span><span style="color:#a6e22e">DOCTYPE</span> <span style="color:#a6e22e">html</span><span style="color:#f92672">&gt;</span>
+<span style="color:#f92672">&lt;</span><span style="color:#a6e22e">html</span> <span style="color:#a6e22e">lang</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;en&#34;</span><span style="color:#f92672">&gt;</span>
+<span style="color:#f92672">&lt;</span><span style="color:#a6e22e">head</span><span style="color:#f92672">&gt;</span>
+    <span style="color:#f92672">&lt;</span><span style="color:#a6e22e">meta</span> <span style="color:#a6e22e">charset</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;UTF-8&#34;</span><span style="color:#f92672">&gt;</span>
+    <span style="color:#f92672">&lt;</span><span style="color:#a6e22e">meta</span> <span style="color:#a6e22e">http</span><span style="color:#f92672">-</span><span style="color:#a6e22e">equiv</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;X-UA-Compatible&#34;</span> <span style="color:#a6e22e">content</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;IE=edge&#34;</span><span style="color:#f92672">&gt;</span>
+    <span style="color:#f92672">&lt;</span><span style="color:#a6e22e">meta</span> <span style="color:#a6e22e">name</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;viewport&#34;</span> <span style="color:#a6e22e">content</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;width=device-width, initial-scale=1.0&#34;</span><span style="color:#f92672">&gt;</span>
+    <span style="color:#f92672">&lt;</span><span style="color:#a6e22e">script</span> <span style="color:#a6e22e">src</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;./vue2.js&#34;</span><span style="color:#f92672">&gt;&lt;</span><span style="color:#960050;background-color:#1e0010">/script&gt;</span>
+    <span style="color:#f92672">&lt;</span><span style="color:#a6e22e">title</span><span style="color:#f92672">&gt;</span><span style="color:#a6e22e">vue2</span><span style="color:#f92672">&lt;</span><span style="color:#960050;background-color:#1e0010">/title&gt;</span>
+<span style="color:#f92672">&lt;</span><span style="color:#960050;background-color:#1e0010">/head&gt;</span>
+<span style="color:#f92672">&lt;</span><span style="color:#a6e22e">body</span><span style="color:#f92672">&gt;</span>
+    
+    <span style="color:#f92672">&lt;</span><span style="color:#a6e22e">div</span> <span style="color:#a6e22e">id</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;root&#34;</span><span style="color:#f92672">&gt;</span>
+        <span style="color:#f92672">&lt;</span><span style="color:#a6e22e">div</span><span style="color:#f92672">&gt;</span><span style="color:#a6e22e">监听属性watch</span><span style="color:#f92672">&lt;</span><span style="color:#960050;background-color:#1e0010">/div&gt;&lt;br&gt;</span>
+        <span style="color:#a6e22e">姓</span><span style="color:#960050;background-color:#1e0010">：</span><span style="color:#f92672">&lt;</span><span style="color:#a6e22e">input</span> <span style="color:#a6e22e">type</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;text&#34;</span> <span style="color:#a6e22e">v</span><span style="color:#f92672">-</span><span style="color:#a6e22e">model</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;firstname&#34;</span><span style="color:#f92672">&gt;&lt;</span><span style="color:#a6e22e">br</span><span style="color:#f92672">&gt;&lt;</span><span style="color:#a6e22e">br</span><span style="color:#f92672">&gt;</span>
+        <span style="color:#a6e22e">名</span><span style="color:#960050;background-color:#1e0010">：</span><span style="color:#f92672">&lt;</span><span style="color:#a6e22e">input</span> <span style="color:#a6e22e">type</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;text&#34;</span> <span style="color:#a6e22e">v</span><span style="color:#f92672">-</span><span style="color:#a6e22e">model</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;lastname&#34;</span><span style="color:#f92672">&gt;&lt;</span><span style="color:#a6e22e">br</span><span style="color:#f92672">&gt;&lt;</span><span style="color:#a6e22e">br</span><span style="color:#f92672">&gt;</span>
+        <span style="color:#a6e22e">全名</span><span style="color:#960050;background-color:#1e0010">：</span><span style="color:#f92672">&lt;</span><span style="color:#a6e22e">span</span><span style="color:#f92672">&gt;</span>{{<span style="color:#a6e22e">fullname</span>}}<span style="color:#f92672">&lt;</span><span style="color:#960050;background-color:#1e0010">/span&gt;</span>
+        <span style="color:#f92672">&lt;</span><span style="color:#a6e22e">hr</span><span style="color:#f92672">&gt;</span>
+    <span style="color:#f92672">&lt;</span><span style="color:#960050;background-color:#1e0010">/div&gt;</span>
+
+    <span style="color:#f92672">&lt;</span><span style="color:#a6e22e">script</span><span style="color:#f92672">&gt;</span>
+    <span style="color:#66d9ef">new</span> <span style="color:#a6e22e">Vue</span>({
+        <span style="color:#a6e22e">el</span><span style="color:#f92672">:</span><span style="color:#e6db74">&#39;#root&#39;</span>,
+        <span style="color:#a6e22e">data</span><span style="color:#f92672">:</span>{
+            <span style="color:#a6e22e">firstname</span><span style="color:#f92672">:</span><span style="color:#e6db74">&#39;a&#39;</span>,
+            <span style="color:#a6e22e">lastname</span><span style="color:#f92672">:</span><span style="color:#e6db74">&#39;b&#39;</span>,
+            <span style="color:#a6e22e">fullname</span><span style="color:#f92672">:</span><span style="color:#e6db74">&#39;a-b&#39;</span>
+        },
+        <span style="color:#75715e">//监听属性，处理异步属性变化
+</span><span style="color:#75715e"></span>        <span style="color:#a6e22e">watch</span><span style="color:#f92672">:</span>{
+            <span style="color:#e6db74">&#39;firstname&#39;</span><span style="color:#f92672">:</span>{
+                <span style="color:#75715e">//深度监视多级结构中所有变量的变化
+</span><span style="color:#75715e"></span>                <span style="color:#a6e22e">deep</span><span style="color:#f92672">:</span><span style="color:#66d9ef">true</span>,
+                <span style="color:#75715e">//初始时就调用1次
+</span><span style="color:#75715e"></span>                <span style="color:#a6e22e">immediate</span><span style="color:#f92672">:</span><span style="color:#66d9ef">true</span>,
+                <span style="color:#75715e">//firstName属性改变时调用
+</span><span style="color:#75715e"></span>                <span style="color:#a6e22e">handler</span>(<span style="color:#a6e22e">newValue</span>,<span style="color:#a6e22e">oldValue</span>){
+                    <span style="color:#a6e22e">setTimeout</span>(()=&gt;{
+                        <span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">fullname</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">newValue</span> <span style="color:#f92672">+</span> <span style="color:#e6db74">&#39;-&#39;</span> <span style="color:#f92672">+</span><span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">lastname</span>;
+                    },<span style="color:#ae81ff">1000</span>)
+                }
+            },
+            <span style="color:#a6e22e">lastname</span>(<span style="color:#a6e22e">newValue</span>){
+                <span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">fullname</span> <span style="color:#f92672">=</span> <span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">firstname</span> <span style="color:#f92672">+</span> <span style="color:#e6db74">&#39;-&#39;</span> <span style="color:#f92672">+</span> <span style="color:#a6e22e">newValue</span>;
+            }
+        }
+    })
+    <span style="color:#f92672">&lt;</span><span style="color:#960050;background-color:#1e0010">/script&gt;</span>
+<span style="color:#f92672">&lt;</span><span style="color:#960050;background-color:#1e0010">/body&gt;</span>
+<span style="color:#f92672">&lt;</span><span style="color:#960050;background-color:#1e0010">/html&gt;</span>
+</code></pre></div><p>=========3.绑定样式=======</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript">
+<span style="color:#f92672">&lt;!</span><span style="color:#a6e22e">DOCTYPE</span> <span style="color:#a6e22e">html</span><span style="color:#f92672">&gt;</span>
+<span style="color:#f92672">&lt;</span><span style="color:#a6e22e">html</span> <span style="color:#a6e22e">lang</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;en&#34;</span><span style="color:#f92672">&gt;</span>
+<span style="color:#f92672">&lt;</span><span style="color:#a6e22e">head</span><span style="color:#f92672">&gt;</span>
+    <span style="color:#f92672">&lt;</span><span style="color:#a6e22e">meta</span> <span style="color:#a6e22e">charset</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;UTF-8&#34;</span><span style="color:#f92672">&gt;</span>
+    <span style="color:#f92672">&lt;</span><span style="color:#a6e22e">meta</span> <span style="color:#a6e22e">http</span><span style="color:#f92672">-</span><span style="color:#a6e22e">equiv</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;X-UA-Compatible&#34;</span> <span style="color:#a6e22e">content</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;IE=edge&#34;</span><span style="color:#f92672">&gt;</span>
+    <span style="color:#f92672">&lt;</span><span style="color:#a6e22e">meta</span> <span style="color:#a6e22e">name</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;viewport&#34;</span> <span style="color:#a6e22e">content</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;width=device-width, initial-scale=1.0&#34;</span><span style="color:#f92672">&gt;</span>
+    <span style="color:#f92672">&lt;</span><span style="color:#a6e22e">script</span> <span style="color:#a6e22e">src</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;./vue2.js&#34;</span><span style="color:#f92672">&gt;&lt;</span><span style="color:#960050;background-color:#1e0010">/script&gt;</span>
+    <span style="color:#f92672">&lt;</span><span style="color:#a6e22e">title</span><span style="color:#f92672">&gt;</span><span style="color:#a6e22e">vue2</span><span style="color:#f92672">&lt;</span><span style="color:#960050;background-color:#1e0010">/title&gt;</span>
+    <span style="color:#f92672">&lt;</span><span style="color:#a6e22e">style</span><span style="color:#f92672">&gt;</span>
+        .<span style="color:#a6e22e">basic</span>{
+            <span style="color:#a6e22e">background</span><span style="color:#f92672">-</span><span style="color:#a6e22e">color</span><span style="color:#f92672">:</span> <span style="color:#a6e22e">aqua</span>;
+        }
+
+        .<span style="color:#a6e22e">normal</span>{
+            <span style="color:#a6e22e">background</span><span style="color:#f92672">-</span><span style="color:#a6e22e">color</span><span style="color:#f92672">:</span> <span style="color:#a6e22e">bisque</span>;
+        }
+
+        .<span style="color:#a6e22e">special</span>{
+            <span style="color:#a6e22e">background</span><span style="color:#f92672">-</span><span style="color:#a6e22e">color</span><span style="color:#f92672">:</span> <span style="color:#a6e22e">blueviolet</span>;
+        }
+
+        .<span style="color:#a6e22e">a</span>{
+            <span style="color:#a6e22e">font</span><span style="color:#f92672">-</span><span style="color:#a6e22e">size</span><span style="color:#f92672">:</span> <span style="color:#ae81ff">30</span><span style="color:#a6e22e">px</span>;
+        }
+
+        .<span style="color:#a6e22e">b</span>{
+            <span style="color:#a6e22e">border</span><span style="color:#f92672">:</span> <span style="color:#ae81ff">1</span><span style="color:#a6e22e">px</span> <span style="color:#a6e22e">solid</span> <span style="color:#a6e22e">black</span>;
+        }
+
+        .<span style="color:#a6e22e">c</span>{
+            <span style="color:#a6e22e">color</span><span style="color:#f92672">:</span><span style="color:#a6e22e">blueviolet</span>;
+        }
+    <span style="color:#f92672">&lt;</span><span style="color:#960050;background-color:#1e0010">/style&gt;</span>
+<span style="color:#f92672">&lt;</span><span style="color:#960050;background-color:#1e0010">/head&gt;</span>
+<span style="color:#f92672">&lt;</span><span style="color:#a6e22e">body</span><span style="color:#f92672">&gt;</span>
+    
+    <span style="color:#f92672">&lt;</span><span style="color:#a6e22e">div</span> <span style="color:#a6e22e">id</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;root&#34;</span><span style="color:#f92672">&gt;</span>
+        <span style="color:#f92672">&lt;</span><span style="color:#a6e22e">hr</span><span style="color:#f92672">&gt;</span>
+        <span style="color:#75715e">&lt;!--</span> <span style="color:#a6e22e">class绑定的类名不确定</span> <span style="color:#f92672">--&gt;</span>
+        <span style="color:#f92672">&lt;</span><span style="color:#a6e22e">div</span> <span style="color:#66d9ef">class</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;basic&#34;</span> <span style="color:#f92672">:</span><span style="color:#66d9ef">class</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;color&#34;</span> <span style="color:#960050;background-color:#1e0010">@</span><span style="color:#a6e22e">click</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;change&#34;</span><span style="color:#f92672">&gt;</span>{{<span style="color:#a6e22e">name</span>}}<span style="color:#f92672">&lt;</span><span style="color:#960050;background-color:#1e0010">/div&gt;</span>
+
+        <span style="color:#f92672">&lt;</span><span style="color:#a6e22e">hr</span><span style="color:#f92672">&gt;</span>
+        <span style="color:#75715e">&lt;!--</span> <span style="color:#a6e22e">class绑定的样式个数和名字不确定</span> <span style="color:#f92672">--&gt;</span>
+        <span style="color:#f92672">&lt;</span><span style="color:#a6e22e">div</span> <span style="color:#66d9ef">class</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;basic&#34;</span> <span style="color:#f92672">:</span><span style="color:#66d9ef">class</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;arr&#34;</span><span style="color:#f92672">&gt;</span>{{<span style="color:#a6e22e">name</span>}}<span style="color:#f92672">&lt;</span><span style="color:#960050;background-color:#1e0010">/div&gt;</span>
+        <span style="color:#f92672">&lt;</span><span style="color:#a6e22e">button</span> <span style="color:#960050;background-color:#1e0010">@</span><span style="color:#a6e22e">click</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;change2&#34;</span><span style="color:#f92672">&gt;</span><span style="color:#a6e22e">去除</span><span style="color:#f92672">&lt;</span><span style="color:#960050;background-color:#1e0010">/button&gt;</span>
+
+        <span style="color:#f92672">&lt;</span><span style="color:#a6e22e">hr</span><span style="color:#f92672">&gt;</span>
+        <span style="color:#75715e">&lt;!--</span> <span style="color:#a6e22e">class绑定的样式个数和名字确定</span>, <span style="color:#a6e22e">但要动态决定用不用</span> <span style="color:#f92672">--&gt;</span>
+        <span style="color:#f92672">&lt;</span><span style="color:#a6e22e">div</span> <span style="color:#66d9ef">class</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;basic&#34;</span> <span style="color:#f92672">:</span><span style="color:#66d9ef">class</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;obj&#34;</span><span style="color:#f92672">&gt;</span>{{<span style="color:#a6e22e">name</span>}}<span style="color:#f92672">&lt;</span><span style="color:#960050;background-color:#1e0010">/div&gt;</span>
+        <span style="color:#f92672">&lt;</span><span style="color:#a6e22e">button</span> <span style="color:#960050;background-color:#1e0010">@</span><span style="color:#a6e22e">click</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;change3&#34;</span><span style="color:#f92672">&gt;</span><span style="color:#a6e22e">切换</span><span style="color:#f92672">&lt;</span><span style="color:#960050;background-color:#1e0010">/button&gt;</span>
+
+        <span style="color:#f92672">&lt;</span><span style="color:#a6e22e">hr</span><span style="color:#f92672">&gt;</span>
+        <span style="color:#75715e">&lt;!--</span> <span style="color:#a6e22e">style样式</span> <span style="color:#f92672">--&gt;</span>
+        <span style="color:#f92672">&lt;</span><span style="color:#a6e22e">div</span> <span style="color:#66d9ef">class</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;basic&#34;</span> <span style="color:#f92672">:</span><span style="color:#a6e22e">style</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;obj1&#34;</span><span style="color:#f92672">&gt;</span>{{<span style="color:#a6e22e">name</span>}}<span style="color:#f92672">&lt;</span><span style="color:#960050;background-color:#1e0010">/div&gt;</span>
+
+
+    <span style="color:#f92672">&lt;</span><span style="color:#960050;background-color:#1e0010">/div&gt;</span>
+    <span style="color:#f92672">&lt;</span><span style="color:#a6e22e">script</span><span style="color:#f92672">&gt;</span>
+
+    <span style="color:#66d9ef">let</span> <span style="color:#a6e22e">vm</span> <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> <span style="color:#a6e22e">Vue</span>({
+        <span style="color:#a6e22e">el</span><span style="color:#f92672">:</span><span style="color:#e6db74">&#39;#root&#39;</span>,
+        <span style="color:#a6e22e">data</span>(){
+            <span style="color:#66d9ef">return</span>{
+                <span style="color:#a6e22e">name</span><span style="color:#f92672">:</span><span style="color:#e6db74">&#39;kk&#39;</span>,
+                <span style="color:#a6e22e">color</span><span style="color:#f92672">:</span><span style="color:#e6db74">&#39;basic&#39;</span>,
+                <span style="color:#a6e22e">arr</span><span style="color:#f92672">:</span>[<span style="color:#e6db74">&#39;a&#39;</span>,<span style="color:#e6db74">&#39;b&#39;</span>,<span style="color:#e6db74">&#39;c&#39;</span>],
+                <span style="color:#a6e22e">obj</span><span style="color:#f92672">:</span>{
+                    <span style="color:#e6db74">&#39;a&#39;</span><span style="color:#f92672">:</span><span style="color:#66d9ef">false</span>,
+                    <span style="color:#e6db74">&#39;b&#39;</span><span style="color:#f92672">:</span><span style="color:#66d9ef">false</span>
+                },
+                <span style="color:#a6e22e">obj1</span><span style="color:#f92672">:</span>{
+                    <span style="color:#a6e22e">fontSize</span><span style="color:#f92672">:</span> <span style="color:#e6db74">&#39;80px&#39;</span>
+                }
+            }
+        },
+        <span style="color:#a6e22e">methods</span><span style="color:#f92672">:</span>{
+            <span style="color:#a6e22e">change</span>(){
+                <span style="color:#66d9ef">const</span> <span style="color:#a6e22e">arr</span> <span style="color:#f92672">=</span> [<span style="color:#e6db74">&#39;basic&#39;</span>,<span style="color:#e6db74">&#39;normal&#39;</span>,<span style="color:#e6db74">&#39;special&#39;</span>];
+                <span style="color:#66d9ef">let</span> <span style="color:#a6e22e">index</span> <span style="color:#f92672">=</span> Math.<span style="color:#a6e22e">floor</span>(Math.<span style="color:#a6e22e">random</span>()<span style="color:#f92672">*</span><span style="color:#ae81ff">3</span>);
+                <span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">color</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">arr</span>[<span style="color:#a6e22e">index</span>];
+            },
+            <span style="color:#a6e22e">change2</span>(){
+                <span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">arr</span>.<span style="color:#a6e22e">shift</span>();
+            },
+            <span style="color:#a6e22e">change3</span>(){
+                <span style="color:#66d9ef">let</span> <span style="color:#a6e22e">num</span> <span style="color:#f92672">=</span> Math.<span style="color:#a6e22e">random</span>()<span style="color:#f92672">*</span><span style="color:#ae81ff">3</span>;
+                <span style="color:#66d9ef">if</span>(<span style="color:#a6e22e">num</span><span style="color:#f92672">&gt;</span><span style="color:#ae81ff">1</span>){
+                    <span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">obj</span>.<span style="color:#a6e22e">a</span> <span style="color:#f92672">=</span> <span style="color:#66d9ef">true</span>;
+                    <span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">obj</span>.<span style="color:#a6e22e">b</span> <span style="color:#f92672">=</span> <span style="color:#66d9ef">true</span>;
+                }<span style="color:#66d9ef">else</span>{
+                    <span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">obj</span>.<span style="color:#a6e22e">a</span> <span style="color:#f92672">=</span> <span style="color:#66d9ef">false</span>;
+                    <span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">obj</span>.<span style="color:#a6e22e">b</span> <span style="color:#f92672">=</span> <span style="color:#66d9ef">true</span>;
+                }
+                
+            }
+        }
+    })
+    <span style="color:#f92672">&lt;</span><span style="color:#960050;background-color:#1e0010">/script&gt;</span>
+<span style="color:#f92672">&lt;</span><span style="color:#960050;background-color:#1e0010">/body&gt;</span>
+<span style="color:#f92672">&lt;</span><span style="color:#960050;background-color:#1e0010">/html&gt;</span>
+</code></pre></div><p>=========5.for循环的key=======</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript">
+<span style="color:#f92672">&lt;!</span><span style="color:#a6e22e">DOCTYPE</span> <span style="color:#a6e22e">html</span><span style="color:#f92672">&gt;</span>
+<span style="color:#f92672">&lt;</span><span style="color:#a6e22e">html</span> <span style="color:#a6e22e">lang</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;en&#34;</span><span style="color:#f92672">&gt;</span>
+<span style="color:#f92672">&lt;</span><span style="color:#a6e22e">head</span><span style="color:#f92672">&gt;</span>
+    <span style="color:#f92672">&lt;</span><span style="color:#a6e22e">meta</span> <span style="color:#a6e22e">charset</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;UTF-8&#34;</span><span style="color:#f92672">&gt;</span>
+    <span style="color:#f92672">&lt;</span><span style="color:#a6e22e">meta</span> <span style="color:#a6e22e">http</span><span style="color:#f92672">-</span><span style="color:#a6e22e">equiv</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;X-UA-Compatible&#34;</span> <span style="color:#a6e22e">content</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;IE=edge&#34;</span><span style="color:#f92672">&gt;</span>
+    <span style="color:#f92672">&lt;</span><span style="color:#a6e22e">meta</span> <span style="color:#a6e22e">name</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;viewport&#34;</span> <span style="color:#a6e22e">content</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;width=device-width, initial-scale=1.0&#34;</span><span style="color:#f92672">&gt;</span>
+    <span style="color:#f92672">&lt;</span><span style="color:#a6e22e">script</span> <span style="color:#a6e22e">src</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;./vue2.js&#34;</span><span style="color:#f92672">&gt;&lt;</span><span style="color:#960050;background-color:#1e0010">/script&gt;</span>
+    <span style="color:#f92672">&lt;</span><span style="color:#a6e22e">title</span><span style="color:#f92672">&gt;</span><span style="color:#a6e22e">vue2</span><span style="color:#f92672">&lt;</span><span style="color:#960050;background-color:#1e0010">/title&gt;</span>
+<span style="color:#f92672">&lt;</span><span style="color:#960050;background-color:#1e0010">/head&gt;</span>
+<span style="color:#f92672">&lt;</span><span style="color:#a6e22e">body</span><span style="color:#f92672">&gt;</span>
+    
+    <span style="color:#f92672">&lt;</span><span style="color:#a6e22e">div</span> <span style="color:#a6e22e">id</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;root&#34;</span><span style="color:#f92672">&gt;</span>
+        <span style="color:#f92672">&lt;</span><span style="color:#a6e22e">h2</span><span style="color:#f92672">&gt;</span><span style="color:#a6e22e">遍历数组</span><span style="color:#f92672">&lt;</span><span style="color:#960050;background-color:#1e0010">/h2&gt;</span>
+        <span style="color:#f92672">&lt;</span><span style="color:#a6e22e">button</span> <span style="color:#960050;background-color:#1e0010">@</span><span style="color:#a6e22e">click</span>.<span style="color:#a6e22e">once</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;add&#34;</span><span style="color:#f92672">&gt;</span><span style="color:#a6e22e">添加1人</span><span style="color:#f92672">&lt;</span><span style="color:#960050;background-color:#1e0010">/button&gt;</span>
+        <span style="color:#f92672">&lt;</span><span style="color:#a6e22e">ul</span><span style="color:#f92672">&gt;</span>
+            <span style="color:#f92672">&lt;</span><span style="color:#a6e22e">li</span> <span style="color:#a6e22e">v</span><span style="color:#f92672">-</span><span style="color:#66d9ef">for</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;(p,index) of person&#34;</span> <span style="color:#f92672">:</span><span style="color:#a6e22e">key</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;p.id&#34;</span><span style="color:#f92672">&gt;</span>
+                {{<span style="color:#a6e22e">p</span>.<span style="color:#a6e22e">name</span>}}<span style="color:#f92672">-</span>{{<span style="color:#a6e22e">p</span>.<span style="color:#a6e22e">age</span>}}
+                <span style="color:#f92672">&lt;</span><span style="color:#a6e22e">input</span> <span style="color:#a6e22e">type</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;text&#34;</span><span style="color:#f92672">&gt;</span>
+            <span style="color:#f92672">&lt;</span><span style="color:#960050;background-color:#1e0010">/li&gt;</span>
+            
+        <span style="color:#f92672">&lt;</span><span style="color:#960050;background-color:#1e0010">/ul&gt;</span>
+    <span style="color:#f92672">&lt;</span><span style="color:#960050;background-color:#1e0010">/div&gt;</span>
+    <span style="color:#f92672">&lt;</span><span style="color:#a6e22e">script</span><span style="color:#f92672">&gt;</span>
+
+    <span style="color:#66d9ef">let</span> <span style="color:#a6e22e">vm</span> <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> <span style="color:#a6e22e">Vue</span>({
+        <span style="color:#a6e22e">el</span><span style="color:#f92672">:</span><span style="color:#e6db74">&#39;#root&#39;</span>,
+        <span style="color:#a6e22e">data</span>(){
+            <span style="color:#66d9ef">return</span>{
+                <span style="color:#a6e22e">person</span><span style="color:#f92672">:</span>[
+                    {<span style="color:#a6e22e">id</span><span style="color:#f92672">:</span><span style="color:#e6db74">&#39;001&#39;</span>,<span style="color:#a6e22e">name</span><span style="color:#f92672">:</span><span style="color:#e6db74">&#39;a&#39;</span>,<span style="color:#a6e22e">age</span><span style="color:#f92672">:</span><span style="color:#ae81ff">18</span>},
+                    {<span style="color:#a6e22e">id</span><span style="color:#f92672">:</span><span style="color:#e6db74">&#39;002&#39;</span>,<span style="color:#a6e22e">name</span><span style="color:#f92672">:</span><span style="color:#e6db74">&#39;b&#39;</span>,<span style="color:#a6e22e">age</span><span style="color:#f92672">:</span><span style="color:#ae81ff">33</span>},
+                    {<span style="color:#a6e22e">id</span><span style="color:#f92672">:</span><span style="color:#e6db74">&#39;003&#39;</span>,<span style="color:#a6e22e">name</span><span style="color:#f92672">:</span><span style="color:#e6db74">&#39;c&#39;</span>,<span style="color:#a6e22e">age</span><span style="color:#f92672">:</span><span style="color:#ae81ff">22</span>},
+                ]
+            }
+        },
+        <span style="color:#a6e22e">methods</span><span style="color:#f92672">:</span>{
+            <span style="color:#a6e22e">add</span>(){
+                <span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">person</span>.<span style="color:#a6e22e">unshift</span>({<span style="color:#a6e22e">id</span><span style="color:#f92672">:</span><span style="color:#e6db74">&#34;004&#34;</span>,<span style="color:#a6e22e">name</span><span style="color:#f92672">:</span><span style="color:#e6db74">&#39;d&#39;</span>,<span style="color:#a6e22e">age</span><span style="color:#f92672">:</span><span style="color:#ae81ff">24</span>})
+            }
+        }
+        
+    })
+    <span style="color:#f92672">&lt;</span><span style="color:#960050;background-color:#1e0010">/script&gt;</span>
+<span style="color:#f92672">&lt;</span><span style="color:#960050;background-color:#1e0010">/body&gt;</span>
+<span style="color:#f92672">&lt;</span><span style="color:#960050;background-color:#1e0010">/html&gt;</span>
+</code></pre></div><p><img src="https://pic.dogimg.com/2022/04/18/625cc84c0b13e.png" alt="截屏2022-04-18 上午10.07.34.png"></p>
+<p><img src="https://pic.dogimg.com/2022/04/18/625cc87e8a892.png" alt="for循环key.png"></p>
+
+    </div>
+    <video id="my_video" style="height: 300px;width:100%" controls="controls"></video>
+
+</article>
+<div class="pagination">
+    
+    <div class="prev"> <a href="https://Apollo2light.github.io/Apollo2light/frontend/3.js%E5%9F%BA%E7%A1%80/">Previous Post</a> </div>
+    
+    
+    <div class="next"> <a href="https://Apollo2light.github.io/Apollo2light/frontend/6.react%E5%9F%BA%E7%A1%80/">Next Post</a> </div>
+    
+</div>
+
+
+<script>
+    try{
+        
+        let src = document.getElementsByTagName('code')[0].innerText;
+        
+        if(src.indexOf("mp4")!=-1){
+            document.getElementById('my_video').setAttribute("src",src)
+        }else{
+            
+            let video = document.getElementById('my_video');
+            if (video != null){
+                video.parentNode.removeChild(video);
+            }
+        }
+    }catch(e){
+        
+        let video = document.getElementById('my_video');
+        if (video != null){
+            video.parentNode.removeChild(video);
+        }
+    }
+</script>
+
+        </main><footer class="site-footer">
+	<span class="right">
+		<em>Apollo&#39;s blog</em>
+	</span>
+</footer>
+</body>
+    <script>
+        
+    </script>
+</html>

@@ -1,0 +1,1506 @@
+<!DOCTYPE html>
+<html lang=en-us><head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title> 9.webpack基础 - Apollo&#39;s blog</title>
+    <meta name="description" content="(一) webpack安装使用 1.简介  webpack是个打包工具，它默认处理js文件，同时也能借助loaders实现对其他类型文件的处理，同时还能用插件来简化我们的开发流程。
+ 2.配置环境 先要安装一下准备环境，node，因为webpcak是基于node的打包工具 其次要安装webpack和webpack-cli
+npm init -y npm install webpack webpack-cli -D 3.命令行打包 安装好了以后，我们可以通过命令行直接来进行打包，可以先新建一个index.js文件，然后在命令行:
+npx webpack index.js 打包完成后会有一个默认的打包文件，我们要想看看效果可以新建一个index.html来引入默认的打包文件，然后看效果。
+4.脚本打包 在此之前，我们先来修改一下目录，让结构更加清晰，我们新建一个src目录，将index.js放在里面，然后新建一个dist目录，将index.html放在里面
+4.1 配置webpack.config.js 接着在根目录下新建一个webpack.config.js的文件，然后在里面配置一些打包的参数，
+const path = require(&#39;path&#39;); module.exports = { entry:{ &#39;main&#39;:&#39;./src/index.js&#39; }, output:{ filename:&#39;bundle.js&#39;, path:path.resolve(__dirname,&#39;dist&#39;) } } 4.2 配置package.json 配置好了以后，我们再来配置一下package.json文件，实现脚本打包的功能，
+{ &#34;scripts&#34;: { &#34;bundle&#34;: &#34;webpack&#34; }, } 此时在命令行中直接使用 npm run bundle，等待打包成功后，手动打开我们的index.html文件看看效果，至此我们已经完成了webpack的安装和使用。
+（二）webpack打包资源(loader)  前面我们安装并使用了webpack，我们处理的内容是js文件，那它如何处理其他类型的文件呢？比如说图片，css，字体等等，这就需要用到loaders，也就是说，webpack能认得js文件，但他不认识其他文件，所以需要一个中间人来告诉他该怎么处理. ###1.处理图片资源 首先先来看一下图片文件。首先我们先来截屏一张图片，然后把它放在src/dog.png，然后要把它挂载在index.html上，在index.js中这样来写；
+ import dog from &#39;./dog.png&#39;; var img = new Image(); img.">
+    <link rel="canonical" href="https://Apollo2light.github.io/Apollo2light/frontend/9.webpack%E5%9F%BA%E7%A1%80/">
+    <meta property="og:title" content="9.webpack基础">
+    <meta property="og:type" content="article">
+    <meta property="og:url" content="https://Apollo2light.github.io/Apollo2light/frontend/9.webpack%E5%9F%BA%E7%A1%80/">
+    <meta property="og:description" content="(一) webpack安装使用 1.简介  webpack是个打包工具，它默认处理js文件，同时也能借助loaders实现对其他类型文件的处理，同时还能用插件来简化我们的开发流程。
+ 2.配置环境 先要安装一下准备环境，node，因为webpcak是基于node的打包工具 其次要安装webpack和webpack-cli
+npm init -y npm install webpack webpack-cli -D 3.命令行打包 安装好了以后，我们可以通过命令行直接来进行打包，可以先新建一个index.js文件，然后在命令行:
+npx webpack index.js 打包完成后会有一个默认的打包文件，我们要想看看效果可以新建一个index.html来引入默认的打包文件，然后看效果。
+4.脚本打包 在此之前，我们先来修改一下目录，让结构更加清晰，我们新建一个src目录，将index.js放在里面，然后新建一个dist目录，将index.html放在里面
+4.1 配置webpack.config.js 接着在根目录下新建一个webpack.config.js的文件，然后在里面配置一些打包的参数，
+const path = require(&#39;path&#39;); module.exports = { entry:{ &#39;main&#39;:&#39;./src/index.js&#39; }, output:{ filename:&#39;bundle.js&#39;, path:path.resolve(__dirname,&#39;dist&#39;) } } 4.2 配置package.json 配置好了以后，我们再来配置一下package.json文件，实现脚本打包的功能，
+{ &#34;scripts&#34;: { &#34;bundle&#34;: &#34;webpack&#34; }, } 此时在命令行中直接使用 npm run bundle，等待打包成功后，手动打开我们的index.html文件看看效果，至此我们已经完成了webpack的安装和使用。
+（二）webpack打包资源(loader)  前面我们安装并使用了webpack，我们处理的内容是js文件，那它如何处理其他类型的文件呢？比如说图片，css，字体等等，这就需要用到loaders，也就是说，webpack能认得js文件，但他不认识其他文件，所以需要一个中间人来告诉他该怎么处理. ###1.处理图片资源 首先先来看一下图片文件。首先我们先来截屏一张图片，然后把它放在src/dog.png，然后要把它挂载在index.html上，在index.js中这样来写；
+ import dog from &#39;./dog.png&#39;; var img = new Image(); img.">
+    <meta property="og:site_name" content="Apollo&#39;s blog">
+    <link rel="stylesheet" href="https://Apollo2light.github.io/Apollo2light/css/main.min.7fdf1d02dafd1a6eb5cfd0d707e17e33515b866f5d305a0ab01a4095577484fe.css" integrity="sha256-f98dAtr9Gm61z9DXB&#43;F&#43;M1Fbhm9dMFoKsBpAlVd0hP4=">
+    <meta name="generator" content="Hugo 0.73.0" />
+    <script type="module" src="https://unpkg.com/ionicons@5.1.2/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule="" src="https://unpkg.com/ionicons@5.1.2/dist/ionicons/ionicons.js"></script>
+    
+</head>
+<body><header class="site-header">
+    <nav class="site-nav" role="navigation" aria-label="breadcrumb">
+    <ol itemscope itemtype="https://schema.org/BreadcrumbList" class="breadcrumb"><li class="breadcrumb-item  " 
+  itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+  <a itemtype="https://schema.org/Thing" itemprop="item" href="https://Apollo2light.github.io/Apollo2light/">
+    <span itemprop="name">Apollo&#39;s blog</span>
+  </a>
+  <meta itemprop="position" content="0" />
+</li>/<li class="breadcrumb-item  " 
+  itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+  <a itemtype="https://schema.org/Thing" itemprop="item" href="https://Apollo2light.github.io/Apollo2light/frontend/">
+    <span itemprop="name">frontend</span>
+  </a>
+  <meta itemprop="position" content="0" />
+</li>/<li class="breadcrumb-item active hidden" aria-current="page"
+  itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+  <a itemtype="https://schema.org/Thing" itemprop="item" href="https://Apollo2light.github.io/Apollo2light/frontend/9.webpack%E5%9F%BA%E7%A1%80/">
+    <span itemprop="name">9.webpack%E5%9F%BA%E7%A1%80</span>
+  </a>
+  <meta itemprop="position" content="1" />
+</li></ol>
+    </nav>
+    <h1 class="site-title hidden">
+		<a href="https://Apollo2light.github.io/Apollo2light/">Apollo&#39;s blog</a>
+    </h1>
+</header><main id="content">
+<article role="article" class="content post h-entry" itemscope="" itemtype="http://schema.org/BlogPosting">
+    <header class="post-header">        
+        <h2 class="post-title" itemprop="name headline">9.webpack基础</h2>
+        <span class="post-meta">
+            <time class="date-published" datetime="2022-04-26T23:00:35&#43;07:00" itemprop="datePublished">
+                Tue, 26 Apr 2022
+            </time>
+            
+        </span>
+    </header>
+    <div class="post-content" itemprop="articleBody">
+        <h2 id="一-webpack安装使用">(一) webpack安装使用</h2>
+<h3 id="1简介">1.简介</h3>
+<blockquote>
+<p>webpack是个打包工具，它默认处理js文件，同时也能借助loaders实现对其他类型文件的处理，同时还能用插件来简化我们的开发流程。</p>
+</blockquote>
+<h3 id="2配置环境">2.配置环境</h3>
+<p>先要安装一下准备环境，node，因为webpcak是基于node的打包工具
+其次要安装webpack和webpack-cli</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">npm init -y
+npm install webpack webpack-cli -D
+</code></pre></div><h3 id="3命令行打包">3.命令行打包</h3>
+<p>安装好了以后，我们可以通过命令行直接来进行打包，可以先新建一个index.js文件，然后在命令行:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">npx webpack index.js
+</code></pre></div><p>打包完成后会有一个默认的打包文件，我们要想看看效果可以新建一个index.html来引入默认的打包文件，然后看效果。</p>
+<h3 id="4脚本打包">4.脚本打包</h3>
+<p>在此之前，我们先来修改一下目录，让结构更加清晰，我们新建一个src目录，将index.js放在里面，然后新建一个dist目录，将index.html放在里面</p>
+<h4 id="41-配置webpackconfigjs">4.1 配置webpack.config.js</h4>
+<p>接着在根目录下新建一个webpack.config.js的文件，然后在里面配置一些打包的参数，</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript"><span style="color:#66d9ef">const</span> <span style="color:#a6e22e">path</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">require</span>(<span style="color:#e6db74">&#39;path&#39;</span>);
+<span style="color:#a6e22e">module</span>.<span style="color:#a6e22e">exports</span> <span style="color:#f92672">=</span> {
+	<span style="color:#a6e22e">entry</span><span style="color:#f92672">:</span>{
+		<span style="color:#e6db74">&#39;main&#39;</span><span style="color:#f92672">:</span><span style="color:#e6db74">&#39;./src/index.js&#39;</span>
+	},
+	<span style="color:#a6e22e">output</span><span style="color:#f92672">:</span>{
+		<span style="color:#a6e22e">filename</span><span style="color:#f92672">:</span><span style="color:#e6db74">&#39;bundle.js&#39;</span>,
+		<span style="color:#a6e22e">path</span><span style="color:#f92672">:</span><span style="color:#a6e22e">path</span>.<span style="color:#a6e22e">resolve</span>(<span style="color:#a6e22e">__dirname</span>,<span style="color:#e6db74">&#39;dist&#39;</span>)
+	}
+}
+</code></pre></div><h4 id="42-配置packagejson">4.2 配置package.json</h4>
+<p>配置好了以后，我们再来配置一下package.json文件，实现脚本打包的功能，</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript">{
+	<span style="color:#e6db74">&#34;scripts&#34;</span><span style="color:#f92672">:</span> {
+	    <span style="color:#e6db74">&#34;bundle&#34;</span><span style="color:#f92672">:</span> <span style="color:#e6db74">&#34;webpack&#34;</span>
+	  },
+}
+</code></pre></div><p>此时在命令行中直接使用 npm run bundle，等待打包成功后，手动打开我们的index.html文件看看效果，至此我们已经完成了webpack的安装和使用。</p>
+<h2 id="二webpack打包资源loader">（二）webpack打包资源(loader)</h2>
+<blockquote>
+<p>前面我们安装并使用了webpack，我们处理的内容是js文件，那它如何处理其他类型的文件呢？比如说图片，css，字体等等，这就需要用到loaders，也就是说，webpack能认得js文件，但他不认识其他文件，所以需要一个中间人来告诉他该怎么处理.
+###1.处理图片资源
+首先先来看一下图片文件。首先我们先来截屏一张图片，然后把它放在src/dog.png，然后要把它挂载在index.html上，在index.js中这样来写；</p>
+</blockquote>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript"><span style="color:#66d9ef">import</span> <span style="color:#a6e22e">dog</span> <span style="color:#a6e22e">from</span> <span style="color:#e6db74">&#39;./dog.png&#39;</span>;
+<span style="color:#66d9ef">var</span> <span style="color:#a6e22e">img</span>  <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> <span style="color:#a6e22e">Image</span>();
+<span style="color:#a6e22e">img</span>.<span style="color:#a6e22e">src</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">dog</span>;
+<span style="color:#66d9ef">var</span> <span style="color:#a6e22e">demo</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">ducument</span>.<span style="color:#a6e22e">getElementById</span>(<span style="color:#e6db74">&#39;demo&#39;</span>);
+<span style="color:#a6e22e">demo</span>.<span style="color:#a6e22e">append</span>(<span style="color:#a6e22e">img</span>);
+</code></pre></div><p>写好以后，我们直接来打包肯定会失败，因为webpack不认识这种文件，所以我们还需要来写一下配置文件，在webpack.config,js中这样来写；</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript"><span style="color:#a6e22e">module</span>.<span style="color:#a6e22e">exports</span> <span style="color:#f92672">=</span> {
+	<span style="color:#a6e22e">module</span><span style="color:#f92672">:</span>{
+		<span style="color:#a6e22e">rules</span><span style="color:#f92672">:</span>[
+			{
+				<span style="color:#a6e22e">test</span><span style="color:#f92672">:</span><span style="color:#e6db74">/\.(png|jpg|gif)$/</span>,
+				<span style="color:#a6e22e">use</span><span style="color:#f92672">:</span>{
+					<span style="color:#a6e22e">loader</span><span style="color:#f92672">:</span><span style="color:#e6db74">&#39;file-loader&#39;</span>
+				}
+			}
+		]			
+	}
+}
+</code></pre></div><h4 id="11-file-loader">1.1 file-loader</h4>
+<p>写好了以后我们先来安装一下file-loader，npm install file-loader -D,然后再来打包，npm run bundle，打包完成以后，再来看看index.html的效果，就会发现图片已经能够加载在页面了，我们成功的处理了图片这种资源，此时打包出来的图片的名字一堆乱码，太难看，所以我们可以修改一下</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript"><span style="color:#a6e22e">module</span><span style="color:#f92672">:</span>{
+	<span style="color:#a6e22e">rules</span><span style="color:#f92672">:</span>[
+		{
+			<span style="color:#a6e22e">test</span><span style="color:#f92672">:</span><span style="color:#e6db74">/\.(jpg|png|gif)$/</span>,
+			<span style="color:#a6e22e">use</span><span style="color:#f92672">:</span>{
+				<span style="color:#a6e22e">loader</span><span style="color:#f92672">:</span><span style="color:#e6db74">&#34;file-loader&#34;</span>,
+				<span style="color:#a6e22e">options</span><span style="color:#f92672">:</span>{
+					<span style="color:#a6e22e">name</span><span style="color:#f92672">:</span><span style="color:#e6db74">&#34;[name].[ext]&#34;</span>
+				}
+			}
+		}
+	]
+	
+}
+</code></pre></div><h4 id="12-url-loader">1.2 url-loader</h4>
+<p>除了可以使用file-loader，我们还可以使用另一种loader来处理图片，那就是url-loader，我们来npm install url-loader -D,然后把图片处理规则改成url-loader再来看看效果，先把dist里面的打包文件删除，然后再打包，完成后，会发现并没有像file-loader那样把图片单独打包出来，我们在浏览器看一下它的img的src就会发现它被打包成了base64文件，这是它和file-loader的区别，为什么会有file-loader和url-loader这两种处理方式呢？这是因为图片的大小是不确定的，如果非常大，那就单独处理，这样的话页面的加载就不用等这个图片加完了以后再显示，如果非常小，那就直接包含在打包文件内，这样就会使得减少发送http的请求。
+其实url-loader也可以通过配置来实现分类打包，利用limit来设置，如果小于某kb就打包在bundle.js中，否则的话就单独打包在img中然后引用，配置如下：</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript"><span style="color:#a6e22e">options</span><span style="color:#f92672">:</span>{
+	<span style="color:#a6e22e">name</span><span style="color:#f92672">:</span><span style="color:#e6db74">&#34;[name].[ext]&#34;</span>,
+	<span style="color:#a6e22e">outputPath</span><span style="color:#f92672">:</span><span style="color:#e6db74">&#34;img/&#34;</span>,
+	<span style="color:#a6e22e">limit</span><span style="color:#f92672">:</span><span style="color:#ae81ff">20400</span>	
+}
+</code></pre></div><p>就会发现大于20kb的图片就会直接被分开打包，小于20kb就以base64位的方式打包在bundle.js中。</p>
+<h3 id="2处理css资源">2.处理css资源</h3>
+<p>前面我们已经能处理js和图片资源了，接下来我们来处理一下css，scss等文件，
+其实思路大概都差不多，都是使用对应的loader来进行处理。
+首先我们先新建style.css和style.scss文件，随便写点样式，</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-css" data-lang="css"><span style="color:#f92672">//</span><span style="color:#f92672">style</span>.<span style="color:#a6e22e">css</span>
+<span style="color:#f92672">body</span>{
+	<span style="color:#66d9ef">background</span>:<span style="color:#66d9ef">green</span>
+}
+<span style="color:#f92672">//</span><span style="color:#f92672">style</span>.<span style="color:#a6e22e">scss</span>
+<span style="color:#f92672">body</span>{
+	<span style="color:#66d9ef">transform</span>:translate(<span style="color:#ae81ff">0</span>,<span style="color:#ae81ff">0</span>)
+}
+</code></pre></div><p>然后在index.js中引入并使用</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript"><span style="color:#66d9ef">import</span> <span style="color:#e6db74">&#39;./style.css&#39;</span>;
+</code></pre></div><h4 id="11-cssstyle-loader">1.1 css/style loader</h4>
+<p>引入好了以后，我们需要去配置一下loader，在webpack.config.js中</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript">{
+	<span style="color:#a6e22e">test</span><span style="color:#960050;background-color:#1e0010">：</span><span style="color:#f92672">/</span><span style="color:#960050;background-color:#1e0010">\</span>.<span style="color:#a6e22e">css$</span><span style="color:#f92672">/</span>,
+	<span style="color:#a6e22e">use</span><span style="color:#f92672">:</span>{
+		<span style="color:#a6e22e">loader</span><span style="color:#f92672">:</span>[<span style="color:#e6db74">&#34;css-loader&#34;</span>,<span style="color:#e6db74">&#34;style-loader&#34;</span>]
+	}
+}
+</code></pre></div><h4 id="12-scss-loader">1.2 scss-loader</h4>
+<p>这些lodaer加载时是从后向前加载的，css-loader 是将多个css文件合并成一个，style-loader是将合并完成的css文件挂载在html的head，首先我们先来安装一下，npm install css-loader style-loader -D,然后npm run bundle进行打包，然后打开index,html就会发现页面已经变成了蓝色，说明css这种类型的文件已经能被webpack识别并打包了，我们再来试试scss文件，同样在webpack.config.js中进行配置</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript">{
+	<span style="color:#a6e22e">test</span><span style="color:#f92672">:</span><span style="color:#e6db74">/\.scss$/</span>,
+	<span style="color:#a6e22e">use</span><span style="color:#f92672">:</span>[
+		<span style="color:#e6db74">&#39;style-loader&#39;</span>,
+		<span style="color:#e6db74">&#39;css-loader&#39;</span>,
+		<span style="color:#e6db74">&#39;sass-loader&#39;</span>
+		]
+}
+
+</code></pre></div><p>此时我们再把刚才写好的style.scss文件在index.js中引用</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript"><span style="color:#66d9ef">import</span> <span style="color:#e6db74">&#39;./style.scss&#39;</span>;
+</code></pre></div><p>然后再来安装一下npm install sass-loader -D，后npm run bundle,会发现有报错，这是因为我们缺少了node—sass这个包，安装一下，npm install node-sass -D,然后继续npm run build打包完成后在html中打开，就会发现页面变成了绿色，说明sass文件也能被webpack进行处理了</p>
+<h4 id="13-postcss">1.3 postcss</h4>
+<p>前面是最基础的处理css文件的方法，那除了这样来处理文件我们有时候还需要给不同的css属性添加厂商前缀，这个我们通过postcss-loader来实现，首先我们先来在style.css文件中使用一些css3的属性</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-css" data-lang="css"><span style="color:#f92672">body</span>{
+	<span style="color:#66d9ef">transform</span>: translate(<span style="color:#ae81ff">0</span>,<span style="color:#ae81ff">0</span>);
+}
+</code></pre></div><p>此时我们来打包的时候是不会有厂商前缀的，这就需要我们来写一些规则，</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript">{
+	<span style="color:#a6e22e">test</span><span style="color:#f92672">:</span><span style="color:#e6db74">/\.css$/</span>,
+	<span style="color:#a6e22e">use</span><span style="color:#f92672">:</span>[<span style="color:#e6db74">&#39;style-loader&#39;</span>,<span style="color:#e6db74">&#39;css-loader&#39;</span>,<span style="color:#e6db74">&#39;postcss-loader&#39;</span>]
+
+}
+</code></pre></div><p>配置好了以后，我们还需要新建一个postcss.config.js来对postcss来进行配置，</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript"><span style="color:#75715e">//postcss.config.js
+</span><span style="color:#75715e"></span><span style="color:#a6e22e">module</span>.<span style="color:#a6e22e">exports</span> <span style="color:#f92672">=</span> {
+	<span style="color:#a6e22e">plugins</span><span style="color:#f92672">:</span>[<span style="color:#a6e22e">require</span>(<span style="color:#e6db74">&#39;autoprefixer&#39;</span>)]
+}
+</code></pre></div><p>先来安装postcss-loader，npm install postcss-loader autoprefixer -D,然后npm run build此时再来看看，就会发现里面自动加了前缀</p>
+<h3 id="3处理字体文件">3.处理字体文件</h3>
+<p>至此我们已经可以处理js，css,图片文件，接下来我们处理字体文件，我们平常使用的字体都是默认字体，有时候我们希望使用一些特殊的字体，那webpack是不认识这些文件的，我们就来看看它是如何处理这些文件的,首先我们先下载一种字体，我已经准备好了，大家下载来用就好了，接着我们在样式文件中使用一下</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-css" data-lang="css"><span style="color:#f92672">//</span><span style="color:#f92672">style</span>.<span style="color:#a6e22e">css</span>
+<span style="color:#f92672">font-face</span> {
+ <span style="color:#66d9ef">font-family</span>: <span style="color:#e6db74">&#39;fontnameRegular&#39;</span>;
+ src: url(<span style="color:#e6db74">&#39;fontname.ttf&#39;</span>);
+}
+
+
+<span style="color:#f92672">div</span>{
+	<span style="color:#66d9ef">font-family</span>: fontnameRegular
+}
+</code></pre></div><p>然后在js中引用一下</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript"><span style="color:#66d9ef">import</span> <span style="color:#e6db74">&#39;./style.css&#39;</span>;
+
+<span style="color:#66d9ef">var</span> <span style="color:#a6e22e">demo</span> <span style="color:#f92672">=</span> document.<span style="color:#a6e22e">getElementById</span>(<span style="color:#e6db74">&#39;demo&#39;</span>);
+<span style="color:#66d9ef">var</span> <span style="color:#a6e22e">div</span> <span style="color:#f92672">=</span> document.<span style="color:#a6e22e">createElement</span>(<span style="color:#e6db74">&#39;div&#39;</span>);
+<span style="color:#a6e22e">div</span>.<span style="color:#a6e22e">innerHTML</span> <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;我要自学网&#39;</span>;
+<span style="color:#a6e22e">demo</span>.<span style="color:#a6e22e">append</span>(<span style="color:#a6e22e">div</span>);
+
+</code></pre></div><p>如果此时进行打包，肯定会失败，试一下，果然失败了，那怎么处理呢？</p>
+<h4 id="11-file-loader-1">1.1 file-loader</h4>
+<p>配置一下loader</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript">{
+	<span style="color:#a6e22e">test</span><span style="color:#f92672">:</span><span style="color:#e6db74">/\.(ttf)$/</span>,
+	<span style="color:#a6e22e">use</span><span style="color:#f92672">:</span>{
+		<span style="color:#a6e22e">loader</span><span style="color:#f92672">:</span><span style="color:#e6db74">&#39;file-loader&#39;</span>
+	}
+}
+
+</code></pre></div><p>然后打包试试，npm run bundle，在浏览器查看效果，字体就变化了，这样就成功处理了字体文件</p>
+<h2 id="三webpack实现自动化plugins">（三）webpack实现自动化(plugins)</h2>
+<p>###1.构建流程
+上面我们说的都是关于处理资源的内容，接下来我们来看一下我们是如何通过plugins简化操作流程的，先想一下，我们到目前为止对于打包编译过程里手工做了什么？
+源码-清除-新建-打包-浏览-刷新-报错-定位-转码-切换</p>
+<ul>
+<li>0.新建dist&mdash;&mdash;&mdash;&ndash;output里的path会自动新建dist目录</li>
+<li>1.新建index.html&mdash;&mdash;&mdash;&mdash;&mdash;html（模板）</li>
+<li>2.引入打包后的文件引用到index.html&mdash;&mdash;&ndash;html</li>
+<li>3.修改src源代码后清空上次打包的文件&mdash;&mdash;&mdash;&ndash;clean</li>
+<li>4.再次npm run bundle进行打包&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&ndash;npm run start</li>
+<li>5.将index.html在浏览器打开&mdash;&mdash;&mdash;&mdash;&mdash;open：true</li>
+<li>6.下次有变更刷新页面&mdash;&mdash;&mdash;&mdash;-contentBase:&rsquo;./dist&rsquo;</li>
+<li>7.代码开发完成后切换到线上环境重新配置相关参数&mdash;&mdash;&mdash;&mdash;&mdash;webpack merge</li>
+<li>8.配置babel使得支持es6语法，react语法</li>
+<li>9.配置eslint使得支持智能报错</li>
+</ul>
+<p>这些都可以自动化实现，
+###2.新建模板引入资源
+我们首先来处理1和2自动的新建index.html并引入打包资源,这需要借助插件html-webpack-plugin来实现，先来安装一下，</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">npm install html-webpack-plugin -D
+</code></pre></div><p>安装好了以后，需要在webpack.config.js里配一下,</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript"><span style="color:#66d9ef">const</span> <span style="color:#a6e22e">HtmlWebpackPlugin</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">require</span>(<span style="color:#e6db74">&#39;html-webpack-plugin&#39;</span>);
+
+<span style="color:#a6e22e">plugins</span><span style="color:#f92672">:</span>[<span style="color:#66d9ef">new</span> <span style="color:#a6e22e">HtmlWebpackPlugin</span>({
+	<span style="color:#a6e22e">template</span><span style="color:#f92672">:</span><span style="color:#e6db74">&#39;./src/idex.html&#39;</span>
+})]
+</code></pre></div><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-html" data-lang="html">//src/index.html
+<span style="color:#75715e">&lt;!DOCTYPE html&gt;</span>
+&lt;<span style="color:#f92672">html</span> <span style="color:#a6e22e">lang</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;en&#34;</span>&gt;
+&lt;<span style="color:#f92672">head</span>&gt;
+	&lt;<span style="color:#f92672">meta</span> <span style="color:#a6e22e">charset</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;UTF-8&#34;</span>&gt;
+	&lt;<span style="color:#f92672">title</span>&gt;html模板&lt;/<span style="color:#f92672">title</span>&gt;
+&lt;/<span style="color:#f92672">head</span>&gt;
+&lt;<span style="color:#f92672">body</span>&gt;
+	&lt;<span style="color:#f92672">div</span> <span style="color:#a6e22e">id</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;demo&#34;</span>&gt;&lt;/<span style="color:#f92672">div</span>&gt;
+&lt;/<span style="color:#f92672">body</span>&gt;
+&lt;/<span style="color:#f92672">html</span>&gt;
+</code></pre></div><p>它是一个插件，所以写在plugins里面，它的作用是在每次打包文件的时候读取模板文件然后插入到新生成的index.html然后把打包好的资源引入文件中。此时我们呢npm run bundle发现它果然实现了新建HTML文件并引入打包资源。
+###3.清空打包目录
+接着我们要解决3.自动清空dist目录，你可能会想说，我以前并没有手动的清除过dist目录，在我重新bundle以后还是直接能用啊，那为什么还要来清除呢？我们假想这样的场景，你在打包的时候，把出口的文件名修改了，在打包的时候会生成不同的打包文件，多修改几次就会使得dist目录非常的臃肿，所以我们需要清除。
+清除同样是靠插件clean-webpack-plugin同样来安装一下</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">npm install clean-webpack-plugin -D
+</code></pre></div><p>然后配一下</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript"><span style="color:#a6e22e">plugins</span><span style="color:#f92672">:</span>[
+	<span style="color:#66d9ef">new</span> <span style="color:#a6e22e">CleanWebpackPlugin</span>({
+		<span style="color:#a6e22e">root</span><span style="color:#f92672">:</span><span style="color:#a6e22e">path</span>.<span style="color:#a6e22e">resolve</span>(<span style="color:#a6e22e">__dirname</span>,<span style="color:#e6db74">&#39;dist&#39;</span>)
+	})
+]
+</code></pre></div><p>这个插件会在打包之前被调用然后去清除dist目录下的内容.实现了我们的目的。
+###4.持续监控(devserver)
+接下来我们4.输入一次命令持续监控文件变化，而不是每次修改源码就重复的打包,这个可以借助webpackdevserver来实现，首先先来下载</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">npm install webpack-dev-server -D
+</code></pre></div><p>接着来配一下，</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript"><span style="color:#a6e22e">devServer</span><span style="color:#f92672">:</span>{
+	<span style="color:#a6e22e">contentBase</span><span style="color:#f92672">:</span><span style="color:#e6db74">&#39;./dist&#39;</span>,
+	<span style="color:#a6e22e">open</span><span style="color:#f92672">:</span><span style="color:#66d9ef">true</span>
+}
+</code></pre></div><p>修改一下启动脚本,</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript">{
+	<span style="color:#e6db74">&#34;scripts&#34;</span><span style="color:#f92672">:</span>{
+		<span style="color:#e6db74">&#34;dev&#34;</span><span style="color:#f92672">:</span><span style="color:#e6db74">&#34;webpack-dev-server&#34;</span>
+	}
+}
+</code></pre></div><p>此时再来打包一下,npm run dev,就会发现它打包完成后自动打开了浏览器，然后当我们源码有修改的时候会自动刷新页面.
+为什么要用这个服务器呢？使用server它的协议就会变成http，这有助于我们在开发时避免跨域问题。</p>
+<h3 id="5环境切换">5.环境切换</h3>
+<p>那我们如何来区分这两种环境呢？难道每次切换环境的时候都来修改对应的配置么？那太麻烦了，我们可以把开发环境和线上环境分别写在一个文件里，然后把共有的逻辑写在另一个文件，在切换环境的时候直接调用环境配置文件即可，</p>
+<p>首先是开发环境</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript"><span style="color:#75715e">//webpack.dev.js
+</span><span style="color:#75715e"></span><span style="color:#66d9ef">const</span> <span style="color:#a6e22e">path</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">require</span>(<span style="color:#e6db74">&#39;path&#39;</span>);
+<span style="color:#66d9ef">const</span> <span style="color:#a6e22e">HtmlWebpackPlugin</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">require</span>(<span style="color:#e6db74">&#39;html-webpack-plugin&#39;</span>);
+<span style="color:#66d9ef">const</span> <span style="color:#a6e22e">CleanWebpackPlugin</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">require</span>(<span style="color:#e6db74">&#39;clean-webpack-plugin&#39;</span>);
+<span style="color:#66d9ef">const</span> <span style="color:#a6e22e">webpack</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">require</span>(<span style="color:#e6db74">&#39;webpack&#39;</span>);
+
+
+<span style="color:#a6e22e">module</span>.<span style="color:#a6e22e">exports</span> <span style="color:#f92672">=</span> {
+	<span style="color:#a6e22e">mode</span><span style="color:#f92672">:</span><span style="color:#e6db74">&#34;development&#34;</span>,
+	<span style="color:#a6e22e">devtool</span><span style="color:#f92672">:</span><span style="color:#e6db74">&#34;source-map&#34;</span>,
+	<span style="color:#a6e22e">entry</span><span style="color:#f92672">:</span>{
+		<span style="color:#e6db74">&#34;main&#34;</span><span style="color:#f92672">:</span><span style="color:#e6db74">&#34;./src/index.js&#34;</span>
+	},
+	<span style="color:#a6e22e">devServer</span><span style="color:#f92672">:</span>{
+		<span style="color:#a6e22e">contentBase</span><span style="color:#f92672">:</span><span style="color:#e6db74">&#39;./dist&#39;</span>,
+		<span style="color:#a6e22e">open</span><span style="color:#f92672">:</span> <span style="color:#66d9ef">true</span>,
+		<span style="color:#a6e22e">port</span><span style="color:#f92672">:</span><span style="color:#ae81ff">8080</span>,
+		<span style="color:#a6e22e">hot</span><span style="color:#f92672">:</span><span style="color:#66d9ef">true</span>
+	},
+	<span style="color:#a6e22e">module</span><span style="color:#f92672">:</span>{
+		<span style="color:#a6e22e">rules</span><span style="color:#f92672">:</span>[
+			{
+				<span style="color:#a6e22e">test</span><span style="color:#f92672">:</span><span style="color:#e6db74">/\.js$/</span>,
+				<span style="color:#a6e22e">exclude</span><span style="color:#f92672">:</span><span style="color:#e6db74">&#34;/node_modules/&#34;</span>,
+				<span style="color:#a6e22e">loader</span><span style="color:#f92672">:</span><span style="color:#e6db74">&#34;babel-loader&#34;</span>
+			},
+			{
+				<span style="color:#a6e22e">test</span><span style="color:#f92672">:</span><span style="color:#e6db74">/\.(jpg|png|gif)$/</span>,
+				<span style="color:#a6e22e">use</span><span style="color:#f92672">:</span>{
+					<span style="color:#a6e22e">loader</span><span style="color:#f92672">:</span><span style="color:#e6db74">&#39;url-loader&#39;</span>,
+					<span style="color:#a6e22e">options</span><span style="color:#f92672">:</span>{
+						<span style="color:#a6e22e">name</span><span style="color:#f92672">:</span><span style="color:#e6db74">&#39;[name].[ext]&#39;</span>,
+						<span style="color:#a6e22e">outputPath</span><span style="color:#f92672">:</span><span style="color:#e6db74">&#39;images/&#39;</span>,
+						<span style="color:#a6e22e">limit</span><span style="color:#f92672">:</span><span style="color:#ae81ff">1024</span>
+					}
+				}
+			},
+			{
+				<span style="color:#a6e22e">test</span><span style="color:#f92672">:</span><span style="color:#e6db74">/\.css$/</span>,
+				<span style="color:#a6e22e">use</span><span style="color:#f92672">:</span>[<span style="color:#e6db74">&#39;style-loader&#39;</span>,<span style="color:#e6db74">&#39;css-loader&#39;</span>]
+			},
+			{
+				<span style="color:#a6e22e">test</span><span style="color:#f92672">:</span><span style="color:#e6db74">/\.scss$/</span>,
+				<span style="color:#a6e22e">use</span><span style="color:#f92672">:</span>[<span style="color:#e6db74">&#39;style-loader&#39;</span>,
+				{
+					<span style="color:#a6e22e">loader</span><span style="color:#f92672">:</span><span style="color:#e6db74">&#39;css-loader&#39;</span>,
+					<span style="color:#a6e22e">options</span><span style="color:#f92672">:</span>{
+						<span style="color:#a6e22e">modules</span><span style="color:#f92672">:</span><span style="color:#66d9ef">true</span>
+					}
+				},
+
+				<span style="color:#e6db74">&#39;sass-loader&#39;</span>]
+			},
+			{
+				<span style="color:#a6e22e">test</span><span style="color:#f92672">:</span><span style="color:#e6db74">/\.(ttf)$/</span>,
+				<span style="color:#a6e22e">use</span><span style="color:#f92672">:</span>{
+					<span style="color:#a6e22e">loader</span><span style="color:#f92672">:</span><span style="color:#e6db74">&#39;file-loader&#39;</span>
+				}
+			}
+		]
+
+	},
+	<span style="color:#a6e22e">plugins</span><span style="color:#f92672">:</span>[
+		<span style="color:#66d9ef">new</span> <span style="color:#a6e22e">HtmlWebpackPlugin</span>({
+			<span style="color:#a6e22e">template</span><span style="color:#f92672">:</span><span style="color:#e6db74">&#39;./src/index.html&#39;</span>
+		}),
+		<span style="color:#66d9ef">new</span> <span style="color:#a6e22e">CleanWebpackPlugin</span>({
+			<span style="color:#a6e22e">root</span><span style="color:#f92672">:</span><span style="color:#a6e22e">path</span>.<span style="color:#a6e22e">resolve</span>(<span style="color:#a6e22e">__dirname</span>,<span style="color:#e6db74">&#39;dist&#39;</span>)
+		}),
+		<span style="color:#66d9ef">new</span> <span style="color:#a6e22e">webpack</span>.<span style="color:#a6e22e">HotModuleReplacementPlugin</span>()
+
+	],
+	<span style="color:#a6e22e">optimization</span><span style="color:#f92672">:</span>{
+		<span style="color:#a6e22e">usedExports</span><span style="color:#f92672">:</span> <span style="color:#66d9ef">true</span> 
+	},
+	<span style="color:#a6e22e">output</span><span style="color:#f92672">:</span>{
+		<span style="color:#a6e22e">filename</span><span style="color:#f92672">:</span><span style="color:#e6db74">&#39;bundle.js&#39;</span>,
+		<span style="color:#a6e22e">path</span><span style="color:#f92672">:</span><span style="color:#a6e22e">path</span>.<span style="color:#a6e22e">resolve</span>(<span style="color:#a6e22e">__dirname</span>,<span style="color:#e6db74">&#39;dist&#39;</span>)
+	}
+}
+</code></pre></div><p>接着是线上环境</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript"><span style="color:#75715e">//webpack.prod.js
+</span><span style="color:#75715e"></span><span style="color:#66d9ef">const</span> <span style="color:#a6e22e">path</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">require</span>(<span style="color:#e6db74">&#39;path&#39;</span>);
+<span style="color:#66d9ef">const</span> <span style="color:#a6e22e">HtmlWebpackPlugin</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">require</span>(<span style="color:#e6db74">&#39;html-webpack-plugin&#39;</span>);
+<span style="color:#66d9ef">const</span> <span style="color:#a6e22e">CleanWebpackPlugin</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">require</span>(<span style="color:#e6db74">&#39;clean-webpack-plugin&#39;</span>);
+<span style="color:#66d9ef">const</span> <span style="color:#a6e22e">webpack</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">require</span>(<span style="color:#e6db74">&#39;webpack&#39;</span>);
+
+
+<span style="color:#a6e22e">module</span>.<span style="color:#a6e22e">exports</span> <span style="color:#f92672">=</span> {
+	<span style="color:#a6e22e">mode</span><span style="color:#f92672">:</span><span style="color:#e6db74">&#34;production&#34;</span>,
+	<span style="color:#a6e22e">devtool</span><span style="color:#f92672">:</span><span style="color:#e6db74">&#34;cheap-module-source-map&#34;</span>,
+	<span style="color:#a6e22e">entry</span><span style="color:#f92672">:</span>{
+		<span style="color:#e6db74">&#34;main&#34;</span><span style="color:#f92672">:</span><span style="color:#e6db74">&#34;./src/index.js&#34;</span>
+	},
+
+	<span style="color:#a6e22e">module</span><span style="color:#f92672">:</span>{
+		<span style="color:#a6e22e">rules</span><span style="color:#f92672">:</span>[
+			{
+				<span style="color:#a6e22e">test</span><span style="color:#f92672">:</span><span style="color:#e6db74">/\.js$/</span>,
+				<span style="color:#a6e22e">exclude</span><span style="color:#f92672">:</span><span style="color:#e6db74">&#34;/node_modules/&#34;</span>,
+				<span style="color:#a6e22e">loader</span><span style="color:#f92672">:</span><span style="color:#e6db74">&#34;babel-loader&#34;</span>
+			},
+			{
+				<span style="color:#a6e22e">test</span><span style="color:#f92672">:</span><span style="color:#e6db74">/\.(jpg|png|gif)$/</span>,
+				<span style="color:#a6e22e">use</span><span style="color:#f92672">:</span>{
+					<span style="color:#a6e22e">loader</span><span style="color:#f92672">:</span><span style="color:#e6db74">&#39;url-loader&#39;</span>,
+					<span style="color:#a6e22e">options</span><span style="color:#f92672">:</span>{
+						<span style="color:#a6e22e">name</span><span style="color:#f92672">:</span><span style="color:#e6db74">&#39;[name].[ext]&#39;</span>,
+						<span style="color:#a6e22e">outputPath</span><span style="color:#f92672">:</span><span style="color:#e6db74">&#39;images/&#39;</span>,
+						<span style="color:#a6e22e">limit</span><span style="color:#f92672">:</span><span style="color:#ae81ff">1024</span>
+					}
+				}
+			},
+			{
+				<span style="color:#a6e22e">test</span><span style="color:#f92672">:</span><span style="color:#e6db74">/\.css$/</span>,
+				<span style="color:#a6e22e">use</span><span style="color:#f92672">:</span>[<span style="color:#e6db74">&#39;style-loader&#39;</span>,<span style="color:#e6db74">&#39;css-loader&#39;</span>]
+			},
+			{
+				<span style="color:#a6e22e">test</span><span style="color:#f92672">:</span><span style="color:#e6db74">/\.scss$/</span>,
+				<span style="color:#a6e22e">use</span><span style="color:#f92672">:</span>[<span style="color:#e6db74">&#39;style-loader&#39;</span>,
+				{
+					<span style="color:#a6e22e">loader</span><span style="color:#f92672">:</span><span style="color:#e6db74">&#39;css-loader&#39;</span>,
+					<span style="color:#a6e22e">options</span><span style="color:#f92672">:</span>{
+						<span style="color:#a6e22e">modules</span><span style="color:#f92672">:</span><span style="color:#66d9ef">true</span>
+					}
+				},
+
+				<span style="color:#e6db74">&#39;sass-loader&#39;</span>]
+			},
+			{
+				<span style="color:#a6e22e">test</span><span style="color:#f92672">:</span><span style="color:#e6db74">/\.(ttf)$/</span>,
+				<span style="color:#a6e22e">use</span><span style="color:#f92672">:</span>{
+					<span style="color:#a6e22e">loader</span><span style="color:#f92672">:</span><span style="color:#e6db74">&#39;file-loader&#39;</span>
+				}
+			}
+		]
+	},
+
+	<span style="color:#a6e22e">plugins</span><span style="color:#f92672">:</span>[
+		<span style="color:#66d9ef">new</span> <span style="color:#a6e22e">HtmlWebpackPlugin</span>({
+			<span style="color:#a6e22e">template</span><span style="color:#f92672">:</span><span style="color:#e6db74">&#39;./src/index.html&#39;</span>
+		}),
+		<span style="color:#66d9ef">new</span> <span style="color:#a6e22e">CleanWebpackPlugin</span>({
+			<span style="color:#a6e22e">root</span><span style="color:#f92672">:</span><span style="color:#a6e22e">path</span>.<span style="color:#a6e22e">resolve</span>(<span style="color:#a6e22e">__dirname</span>,<span style="color:#e6db74">&#39;dist&#39;</span>)
+		})
+	],
+
+	<span style="color:#a6e22e">output</span><span style="color:#f92672">:</span>{
+		<span style="color:#a6e22e">filename</span><span style="color:#f92672">:</span><span style="color:#e6db74">&#39;bundle.js&#39;</span>,
+		<span style="color:#a6e22e">path</span><span style="color:#f92672">:</span><span style="color:#a6e22e">path</span>.<span style="color:#a6e22e">resolve</span>(<span style="color:#a6e22e">__dirname</span>,<span style="color:#e6db74">&#39;dist&#39;</span>)
+	}
+}
+</code></pre></div><p>然后我们来看，这两个里面有太多的重复代码，我们可以把他抽离出来放在单独的一个文件中,然后在dev和prod中分别来引用common</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript"><span style="color:#75715e">//wenpack.common.js
+</span><span style="color:#75715e"></span><span style="color:#66d9ef">const</span> <span style="color:#a6e22e">path</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">require</span>(<span style="color:#e6db74">&#39;path&#39;</span>);
+<span style="color:#66d9ef">const</span> <span style="color:#a6e22e">HtmlWebpackPlugin</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">require</span>(<span style="color:#e6db74">&#39;html-webpack-plugin&#39;</span>);
+<span style="color:#66d9ef">const</span> <span style="color:#a6e22e">CleanWebpackPlugin</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">require</span>(<span style="color:#e6db74">&#39;clean-webpack-plugin&#39;</span>);
+
+<span style="color:#a6e22e">module</span>.<span style="color:#a6e22e">exports</span> <span style="color:#f92672">=</span> {
+	<span style="color:#a6e22e">entry</span><span style="color:#f92672">:</span>{
+		<span style="color:#e6db74">&#34;main&#34;</span><span style="color:#f92672">:</span><span style="color:#e6db74">&#34;./src/index.js&#34;</span>
+	},
+
+	<span style="color:#a6e22e">module</span><span style="color:#f92672">:</span>{
+		<span style="color:#a6e22e">rules</span><span style="color:#f92672">:</span>[
+			{
+				<span style="color:#a6e22e">test</span><span style="color:#f92672">:</span><span style="color:#e6db74">/\.js$/</span>,
+				<span style="color:#a6e22e">exclude</span><span style="color:#f92672">:</span><span style="color:#e6db74">&#34;/node_modules/&#34;</span>,
+				<span style="color:#a6e22e">loader</span><span style="color:#f92672">:</span><span style="color:#e6db74">&#34;babel-loader&#34;</span>
+			},
+			{
+				<span style="color:#a6e22e">test</span><span style="color:#f92672">:</span><span style="color:#e6db74">/\.(jpg|png|gif)$/</span>,
+				<span style="color:#a6e22e">use</span><span style="color:#f92672">:</span>{
+					<span style="color:#a6e22e">loader</span><span style="color:#f92672">:</span><span style="color:#e6db74">&#39;url-loader&#39;</span>,
+					<span style="color:#a6e22e">options</span><span style="color:#f92672">:</span>{
+						<span style="color:#a6e22e">name</span><span style="color:#f92672">:</span><span style="color:#e6db74">&#39;[name].[ext]&#39;</span>,
+						<span style="color:#a6e22e">outputPath</span><span style="color:#f92672">:</span><span style="color:#e6db74">&#39;images/&#39;</span>,
+						<span style="color:#a6e22e">limit</span><span style="color:#f92672">:</span><span style="color:#ae81ff">1024</span>
+					}
+				}
+			},
+			{
+				<span style="color:#a6e22e">test</span><span style="color:#f92672">:</span><span style="color:#e6db74">/\.css$/</span>,
+				<span style="color:#a6e22e">use</span><span style="color:#f92672">:</span>[<span style="color:#e6db74">&#39;style-loader&#39;</span>,<span style="color:#e6db74">&#39;css-loader&#39;</span>]
+			},
+			{
+				<span style="color:#a6e22e">test</span><span style="color:#f92672">:</span><span style="color:#e6db74">/\.scss$/</span>,
+				<span style="color:#a6e22e">use</span><span style="color:#f92672">:</span>[<span style="color:#e6db74">&#39;style-loader&#39;</span>,
+				{
+					<span style="color:#a6e22e">loader</span><span style="color:#f92672">:</span><span style="color:#e6db74">&#39;css-loader&#39;</span>,
+					<span style="color:#a6e22e">options</span><span style="color:#f92672">:</span>{
+						<span style="color:#a6e22e">modules</span><span style="color:#f92672">:</span><span style="color:#66d9ef">true</span>
+					}
+				},
+
+				<span style="color:#e6db74">&#39;sass-loader&#39;</span>]
+			},
+			{
+				<span style="color:#a6e22e">test</span><span style="color:#f92672">:</span><span style="color:#e6db74">/\.(ttf)$/</span>,
+				<span style="color:#a6e22e">use</span><span style="color:#f92672">:</span>{
+					<span style="color:#a6e22e">loader</span><span style="color:#f92672">:</span><span style="color:#e6db74">&#39;file-loader&#39;</span>
+				}
+			}
+		]
+
+	},
+
+	<span style="color:#a6e22e">plugins</span><span style="color:#f92672">:</span>[
+		<span style="color:#66d9ef">new</span> <span style="color:#a6e22e">HtmlWebpackPlugin</span>({
+			<span style="color:#a6e22e">template</span><span style="color:#f92672">:</span><span style="color:#e6db74">&#39;./src/index.html&#39;</span>
+		}),
+		<span style="color:#66d9ef">new</span> <span style="color:#a6e22e">CleanWebpackPlugin</span>({
+			<span style="color:#a6e22e">root</span><span style="color:#f92672">:</span><span style="color:#a6e22e">path</span>.<span style="color:#a6e22e">resolve</span>(<span style="color:#a6e22e">__dirname</span>,<span style="color:#e6db74">&#39;dist&#39;</span>)
+		})
+	],
+
+	<span style="color:#a6e22e">output</span><span style="color:#f92672">:</span>{
+		<span style="color:#a6e22e">filename</span><span style="color:#f92672">:</span><span style="color:#e6db74">&#39;bundle.js&#39;</span>,
+		<span style="color:#a6e22e">path</span><span style="color:#f92672">:</span><span style="color:#a6e22e">path</span>.<span style="color:#a6e22e">resolve</span>(<span style="color:#a6e22e">__dirname</span>,<span style="color:#e6db74">&#39;dist&#39;</span>)
+	}
+
+}
+</code></pre></div><p>抽离好了common，接下来就是引用了，这里我们需要使用一个新的插件来完成合并webpack-merge,先来安装一下，</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">npm install webpack-merge -D
+</code></pre></div><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript"><span style="color:#75715e">//dev
+</span><span style="color:#75715e"></span><span style="color:#66d9ef">const</span> <span style="color:#a6e22e">webpack</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">require</span>(<span style="color:#e6db74">&#39;webpack&#39;</span>);
+<span style="color:#66d9ef">const</span> <span style="color:#a6e22e">merge</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">require</span>(<span style="color:#e6db74">&#39;webpack-merge&#39;</span>);
+<span style="color:#66d9ef">const</span> <span style="color:#a6e22e">commonConfig</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">require</span>(<span style="color:#e6db74">&#39;./webpack.common.js&#39;</span>);
+
+
+<span style="color:#66d9ef">const</span> <span style="color:#a6e22e">devConfig</span> <span style="color:#f92672">=</span> {
+	<span style="color:#a6e22e">mode</span><span style="color:#f92672">:</span><span style="color:#e6db74">&#34;development&#34;</span>,
+	<span style="color:#a6e22e">devtool</span><span style="color:#f92672">:</span><span style="color:#e6db74">&#34;source-map&#34;</span>,
+	<span style="color:#a6e22e">devServer</span><span style="color:#f92672">:</span>{
+		<span style="color:#a6e22e">contentBase</span><span style="color:#f92672">:</span><span style="color:#e6db74">&#39;./dist&#39;</span>,
+		<span style="color:#a6e22e">open</span><span style="color:#f92672">:</span> <span style="color:#66d9ef">true</span>,
+		<span style="color:#a6e22e">port</span><span style="color:#f92672">:</span><span style="color:#ae81ff">8080</span>,
+		<span style="color:#a6e22e">hot</span><span style="color:#f92672">:</span><span style="color:#66d9ef">true</span>
+	},
+	
+	<span style="color:#a6e22e">plugins</span><span style="color:#f92672">:</span>[
+		<span style="color:#66d9ef">new</span> <span style="color:#a6e22e">webpack</span>.<span style="color:#a6e22e">HotModuleReplacementPlugin</span>()
+	],
+	<span style="color:#a6e22e">optimization</span><span style="color:#f92672">:</span>{
+		<span style="color:#a6e22e">usedExports</span><span style="color:#f92672">:</span> <span style="color:#66d9ef">true</span> 
+	}
+}
+
+<span style="color:#a6e22e">module</span>.<span style="color:#a6e22e">exports</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">merge</span>(<span style="color:#a6e22e">commonConfig</span>,<span style="color:#a6e22e">devConfig</span>)
+</code></pre></div><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript"><span style="color:#75715e">//prod
+</span><span style="color:#75715e"></span>
+<span style="color:#66d9ef">const</span> <span style="color:#a6e22e">merge</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">require</span>(<span style="color:#e6db74">&#39;webpack-merge&#39;</span>);
+<span style="color:#66d9ef">const</span> <span style="color:#a6e22e">commonConfig</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">require</span>(<span style="color:#e6db74">&#39;./webpack.common.js&#39;</span>)
+
+ <span style="color:#66d9ef">const</span> <span style="color:#a6e22e">prodConfig</span> <span style="color:#f92672">=</span> {
+	<span style="color:#a6e22e">mode</span><span style="color:#f92672">:</span><span style="color:#e6db74">&#34;production&#34;</span>,
+	<span style="color:#a6e22e">devtool</span><span style="color:#f92672">:</span><span style="color:#e6db74">&#34;cheap-module-source-map&#34;</span>
+}
+<span style="color:#a6e22e">module</span>.<span style="color:#a6e22e">exports</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">merge</span>(<span style="color:#a6e22e">commonConfig</span>,<span style="color:#a6e22e">prodConfig</span>)
+</code></pre></div><p>此时根目录下有一堆的配置文件，太杂乱了，所以把他们放在build文件夹下，然后修改脚本路径</p>
+<pre><code>  &quot;scripts&quot;: {
+    &quot;bundle&quot;: &quot;webpack&quot;,
+    &quot;dev&quot;: &quot;webpack-dev-server --config ./build/webpack.dev.js&quot;,
+    &quot;build&quot;: &quot;webpack --config ./build/webpack.prod.js&quot;
+  },
+</code></pre><h3 id="6配置babel">6.配置babel</h3>
+<p>####6.1支持ES6语法
+使用es6代码书写业务，这个需要使用babel来进行转码，我们来写一下
+首先，要使用babel就要先来安装</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">npm install -D babel-loader @babel/core
+
+</code></pre></div><p>然后，配置loader</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript"><span style="color:#a6e22e">module</span>.<span style="color:#a6e22e">exports</span> <span style="color:#f92672">=</span> {
+	<span style="color:#a6e22e">module</span><span style="color:#f92672">:</span>{
+		<span style="color:#a6e22e">rules</span><span style="color:#f92672">:</span>[
+			{
+				<span style="color:#a6e22e">test</span><span style="color:#f92672">:</span><span style="color:#e6db74">/\.js$/</span>,
+				<span style="color:#a6e22e">exclude</span><span style="color:#f92672">:</span><span style="color:#e6db74">&#34;/node_modules/&#34;</span>,
+				<span style="color:#a6e22e">loader</span><span style="color:#f92672">:</span><span style="color:#e6db74">&#34;babel-loader&#34;</span>,
+				<span style="color:#a6e22e">options</span><span style="color:#f92672">:</span>{
+					<span style="color:#a6e22e">presets</span><span style="color:#f92672">:</span>[<span style="color:#e6db74">&#39;@babel/preset-env&#39;</span>]
+				}
+			}
+		]
+	}
+}
+
+</code></pre></div><p>配置好了loader以后，我们还需要安装一个模块，因为loader只是把babel和webpack联系在一起，具体的转换工作还是由下面这个/preset-env 模块来做的,转换出来的内容有时候一些低版本的浏览器同样也不支持，就需要对他进行在此的兼容使用/polyfill 这个模块</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">npm isntall @babel/preset-env -D
+npm install @babel/polyfill --save
+
+</code></pre></div><p>写好了以后，我们来写点es6的代码来试试</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript"><span style="color:#75715e">//index.js
+</span><span style="color:#75715e"></span><span style="color:#66d9ef">import</span> <span style="color:#e6db74">&#39;@babel/polyfill&#39;</span>
+<span style="color:#66d9ef">const</span> <span style="color:#a6e22e">arr</span> <span style="color:#f92672">=</span> [
+	<span style="color:#66d9ef">new</span> Promise(() =&gt; {}),
+	<span style="color:#66d9ef">new</span> Promise(() =&gt; {})
+];
+
+<span style="color:#a6e22e">arr</span>.<span style="color:#a6e22e">map</span>(<span style="color:#a6e22e">item</span> =&gt; {
+	<span style="color:#a6e22e">console</span>.<span style="color:#a6e22e">log</span>(<span style="color:#a6e22e">item</span>);
+});
+</code></pre></div><p>然后就会看到，代码被打包成了可以被低版本浏览器识别的es5代码，但是我们再来考虑一下，我们只用到了仅有的几个es6的语法，但是他在识别的时候把所有的特性都转换了，这根本没必要，另外，有的浏览器默认就支持es6的代码，不需要进行转换就能用 ，根本不用转换就能用啊，这两个点怎么解决呢？我们可以给他添加一些配置来实现，</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript"><span style="color:#a6e22e">options</span><span style="color:#f92672">:</span>{
+		<span style="color:#a6e22e">presets</span><span style="color:#f92672">:</span>[[<span style="color:#e6db74">&#39;@babel/preset-env&#39;</span>,{
+			<span style="color:#a6e22e">targets</span><span style="color:#f92672">:</span>{
+				<span style="color:#a6e22e">chrome</span><span style="color:#f92672">:</span><span style="color:#e6db74">&#34;67&#34;</span>
+			},
+			<span style="color:#a6e22e">useBuiltIns</span><span style="color:#f92672">:</span><span style="color:#e6db74">&#34;usage&#34;</span>
+		}]]
+	}
+</code></pre></div><p>总结一下：
+<code>1.babel-loader @babel/core:使用babel的必要环境，loader负责将babel和webpack联系起来</code>
+<code>2.@babel/preset-env:实际进行代码转换的模块</code>
+<code>3.@babel/polyfill:转化出来的代码在一些低版本浏览器同样不能识别，用这个模块来兼容</code>
+<code>4.targets:{chrome:&quot;67&quot;} :浏览器支持就不用再转换了</code>
+<code>5.useBuiltIns:&quot;usage&quot;:只转换使用到的es6代码特性</code></p>
+<p>至此我们就可以写任意的es6代码了，但是babel本身的配置非常多，如果都写在webpack.config.js中，那会非常的臃肿，所以我们可以把他单独拿出来写在.babelrc中</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript"><span style="color:#75715e">//.babelrc
+</span><span style="color:#75715e"></span>{
+	<span style="color:#e6db74">&#34;presets&#34;</span><span style="color:#f92672">:</span>[
+		[
+			<span style="color:#e6db74">&#34;@babel/preset-env&#34;</span>,
+			{
+				<span style="color:#e6db74">&#34;targets&#34;</span><span style="color:#f92672">:</span>{
+					<span style="color:#e6db74">&#34;chrome&#34;</span><span style="color:#f92672">:</span><span style="color:#e6db74">&#34;67&#34;</span>
+				},
+				<span style="color:#e6db74">&#34;useBuiltIns&#34;</span><span style="color:#f92672">:</span><span style="color:#e6db74">&#34;usage&#34;</span>
+			}
+		]
+	]
+}
+</code></pre></div><p>我们再来打包试一下，npm run bundle 发现没有问题</p>
+<h4 id="62支持react语法">6.2支持react语法</h4>
+<p>最后一个内容就是，如何使用框架来写源码？
+首先，我们先安装框架</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">npm install react react-dom -D
+</code></pre></div><p>接着写配置，</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript"><span style="color:#75715e">//.babelrc
+</span><span style="color:#75715e"></span>{
+	<span style="color:#e6db74">&#34;presets&#34;</span><span style="color:#f92672">:</span>[
+		[
+			<span style="color:#e6db74">&#34;@babel/preset-env&#34;</span>,
+			{
+				<span style="color:#e6db74">&#34;targets&#34;</span><span style="color:#f92672">:</span>{
+					<span style="color:#e6db74">&#34;chrome&#34;</span><span style="color:#f92672">:</span><span style="color:#e6db74">&#34;67&#34;</span>
+				},
+				<span style="color:#e6db74">&#34;useBuiltIns&#34;</span><span style="color:#f92672">:</span><span style="color:#e6db74">&#34;usage&#34;</span>
+			}
+		],
+		<span style="color:#e6db74">&#34;@babel/preset-react&#34;</span>
+	]
+}
+</code></pre></div><p>写点react代码</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript"><span style="color:#66d9ef">import</span> <span style="color:#a6e22e">React</span> ,{ <span style="color:#a6e22e">Component</span> }<span style="color:#a6e22e">from</span> <span style="color:#e6db74">&#39;react&#39;</span>;
+<span style="color:#66d9ef">import</span> <span style="color:#a6e22e">ReactDom</span> <span style="color:#a6e22e">from</span> <span style="color:#e6db74">&#39;react-dom&#39;</span>;
+
+<span style="color:#66d9ef">class</span> <span style="color:#a6e22e">App</span> <span style="color:#66d9ef">extends</span> <span style="color:#a6e22e">Component</span>{
+	<span style="color:#a6e22e">render</span>() {
+		<span style="color:#66d9ef">return</span> <span style="color:#f92672">&lt;</span><span style="color:#a6e22e">div</span><span style="color:#f92672">&gt;</span><span style="color:#a6e22e">hello</span> <span style="color:#a6e22e">world</span><span style="color:#f92672">&lt;</span><span style="color:#960050;background-color:#1e0010">/div&gt;</span>
+	}
+}
+
+<span style="color:#a6e22e">ReactDom</span>.<span style="color:#a6e22e">render</span>(<span style="color:#f92672">&lt;</span><span style="color:#a6e22e">App</span> <span style="color:#f92672">/&gt;</span>,document.<span style="color:#a6e22e">getElementById</span>(<span style="color:#e6db74">&#39;demo&#39;</span>));
+</code></pre></div><p>再来运行npm run dev就能看到react代码了。</p>
+<h4 id="63支持vue语法">6.3支持vue语法</h4>
+<p>同样先来安装框架</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">npm install vue
+</code></pre></div><p>接着安装loader</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">npm install -D vue-loader vue-template-compiler
+
+</code></pre></div><p>配制一下loader</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">module:<span style="color:#f92672">{</span>
+  rules:<span style="color:#f92672">[</span>
+	<span style="color:#f92672">{</span>
+	  test: /<span style="color:#ae81ff">\.</span>vue$/,
+	  loader: <span style="color:#e6db74">&#39;vue-loader&#39;</span>
+	<span style="color:#f92672">}</span>
+	<span style="color:#f92672">]</span>
+<span style="color:#f92672">}</span>,
+plugons:<span style="color:#f92672">[</span>
+	new VueLoaderPlugin<span style="color:#f92672">()</span>
+<span style="color:#f92672">]</span>
+
+</code></pre></div><p>写点vue代码</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript"><span style="color:#75715e">//index.vue
+</span><span style="color:#75715e"></span><span style="color:#f92672">&lt;</span><span style="color:#a6e22e">template</span><span style="color:#f92672">&gt;</span>
+	<span style="color:#f92672">&lt;</span><span style="color:#a6e22e">div</span> <span style="color:#66d9ef">class</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;rest&#34;</span><span style="color:#f92672">&gt;</span>{{<span style="color:#a6e22e">info</span>}}<span style="color:#f92672">&lt;</span><span style="color:#960050;background-color:#1e0010">/div&gt;</span>
+<span style="color:#f92672">&lt;</span><span style="color:#960050;background-color:#1e0010">/template&gt;</span>
+
+
+<span style="color:#f92672">&lt;</span><span style="color:#a6e22e">script</span><span style="color:#f92672">&gt;</span>
+<span style="color:#a6e22e">module</span>.<span style="color:#a6e22e">exports</span> <span style="color:#f92672">=</span> {
+	<span style="color:#a6e22e">data</span>(){
+		<span style="color:#66d9ef">return</span> {
+			<span style="color:#a6e22e">info</span><span style="color:#f92672">:</span><span style="color:#e6db74">&#39;hello&#39;</span>
+		}
+	}
+}
+
+<span style="color:#f92672">&lt;</span><span style="color:#960050;background-color:#1e0010">/script&gt;</span>
+
+
+<span style="color:#f92672">&lt;</span><span style="color:#a6e22e">style</span> <span style="color:#a6e22e">lang</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;stylus&#34;</span> <span style="color:#a6e22e">scoped</span><span style="color:#f92672">&gt;</span>
+.<span style="color:#a6e22e">test</span>
+  <span style="color:#a6e22e">color</span><span style="color:#f92672">:</span><span style="color:#a6e22e">red</span>
+<span style="color:#f92672">&lt;</span><span style="color:#960050;background-color:#1e0010">/style&gt;</span>
+</code></pre></div><p>挂载在页面上</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript"><span style="color:#75715e">//index.js
+</span><span style="color:#75715e"></span><span style="color:#66d9ef">import</span> <span style="color:#a6e22e">Vue</span> <span style="color:#a6e22e">from</span> <span style="color:#e6db74">&#39;vue&#39;</span>;
+<span style="color:#66d9ef">import</span> <span style="color:#a6e22e">App</span> <span style="color:#a6e22e">from</span> <span style="color:#e6db74">&#39;./index.vue&#39;</span>;
+
+<span style="color:#66d9ef">const</span> <span style="color:#a6e22e">root</span> <span style="color:#f92672">=</span> document.<span style="color:#a6e22e">getElementById</span>(<span style="color:#e6db74">&#39;root&#39;</span>);
+
+<span style="color:#66d9ef">new</span> <span style="color:#a6e22e">Vue</span>({
+	<span style="color:#a6e22e">render</span><span style="color:#f92672">:</span>(<span style="color:#a6e22e">h</span>) =&gt; <span style="color:#a6e22e">h</span>(<span style="color:#a6e22e">App</span>)
+
+}).<span style="color:#a6e22e">$mount</span>(<span style="color:#a6e22e">root</span>)
+
+
+</code></pre></div><h3 id="7配置eslint">7.配置Eslint</h3>
+<p>在项目中，为了统一编码规范，我们可以用一些工具来帮我们约束，eslint是最常用的规范工具，我们来使用一下</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">npm instll eslint -D
+npm install babel-eslint -D
+npm install eslint-loader -D
+npx eslint --init
+</code></pre></div><p>现在已经有了一个配置文件.eslint.js，但是对于一些错误没法直接在sublimt中显示，我们就可以用eslint-loader来进行配置，接着我们来配置一下</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript"><span style="color:#75715e">//.eslintrc
+</span><span style="color:#75715e"></span><span style="color:#a6e22e">module</span>.<span style="color:#a6e22e">exports</span> <span style="color:#f92672">=</span> {
+	<span style="color:#e6db74">&#34;parser&#34;</span><span style="color:#f92672">:</span><span style="color:#e6db74">&#34;babel-eslint&#34;</span>
+}
+<span style="color:#a6e22e">rules</span><span style="color:#f92672">:</span>{}
+</code></pre></div><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript"><span style="color:#75715e">//dev
+</span><span style="color:#75715e"></span><span style="color:#a6e22e">devServer</span><span style="color:#f92672">:</span>{
+	<span style="color:#a6e22e">overlay</span><span style="color:#f92672">:</span><span style="color:#66d9ef">true</span>
+}
+</code></pre></div><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript"><span style="color:#75715e">//common
+</span><span style="color:#75715e"></span><span style="color:#a6e22e">module</span><span style="color:#f92672">:</span>{
+	<span style="color:#a6e22e">rules</span><span style="color:#f92672">:</span>[
+		{
+			<span style="color:#a6e22e">test</span><span style="color:#f92672">:</span><span style="color:#e6db74">/\.js$/</span>,
+			<span style="color:#a6e22e">use</span><span style="color:#f92672">:</span>[<span style="color:#e6db74">&#34;babel-loader&#34;</span>,<span style="color:#e6db74">&#34;eslint-loader&#34;</span>]
+		}
+	]
+}
+</code></pre></div><p>此时，只要有错误就会在浏览器上进行弹出。
+至此我们看一下，所有手工操作的内容我们现在都变成了自动操作，大大简化了开发的繁琐，</p>
+<h2 id="四webpack提升性能">（四）webpack提升性能</h2>
+<h3 id="1性能分析">1.性能分析</h3>
+<p>接下来我们要考虑的问题就是性能问题，我们在上面的开发过程中有哪些性能可以提升呢？</p>
+<ul>
+<li>1.源码有修改时不要整页刷新只刷新修改的部分即可(HML)</li>
+<li>2.源码出错时快速定位到出错的位置，不必精确到字符，只要精确到哪一行即可。（sourcemap）</li>
+<li>
+<ol start="3">
+<li></li>
+</ol>
+</li>
+</ul>
+<p>###2.HMR（热更替）
+####2.1 cssHMR
+首先是1.局部刷新更替的代码，这个可以使用HML来进行实现，它的名字叫热替换，当我们开启了HML就会只刷新更改的代码，我们举例来看一下</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript"><span style="color:#75715e">//index.js
+</span><span style="color:#75715e"></span><span style="color:#66d9ef">import</span> <span style="color:#e6db74">&#39;./style.css&#39;</span>
+<span style="color:#66d9ef">var</span> <span style="color:#a6e22e">div</span> <span style="color:#f92672">=</span> document.<span style="color:#a6e22e">createElement</span>(<span style="color:#e6db74">&#39;div&#39;</span>);
+<span style="color:#a6e22e">div</span>.<span style="color:#a6e22e">innerHTML</span> <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;我要自学网&#34;</span>;
+<span style="color:#66d9ef">var</span> <span style="color:#a6e22e">p</span> <span style="color:#f92672">=</span> document.<span style="color:#a6e22e">createElement</span>(<span style="color:#e6db74">&#39;p&#39;</span>);
+<span style="color:#a6e22e">p</span>.<span style="color:#a6e22e">innerHTML</span> <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;51zxw&#34;</span>;
+
+<span style="color:#66d9ef">var</span> <span style="color:#a6e22e">demo</span> <span style="color:#f92672">=</span> document.<span style="color:#a6e22e">getElementById</span>(<span style="color:#e6db74">&#39;demo&#39;</span>);
+<span style="color:#a6e22e">demo</span>.<span style="color:#a6e22e">append</span>(<span style="color:#a6e22e">div</span>);
+<span style="color:#a6e22e">demo</span>.<span style="color:#a6e22e">append</span>(<span style="color:#a6e22e">p</span>);
+</code></pre></div><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-css" data-lang="css"><span style="color:#f92672">//</span><span style="color:#f92672">style</span>.<span style="color:#a6e22e">css</span>
+<span style="color:#f92672">div</span>{
+	<span style="color:#66d9ef">color</span>:<span style="color:#66d9ef">green</span>;
+}
+<span style="color:#f92672">p</span>{
+	<span style="color:#66d9ef">color</span>:<span style="color:#66d9ef">red</span>
+}
+</code></pre></div><p>此时我们npm run dev开启服务器，会发现页面上渲染好了内容，当我们去修改div的颜色的时候，页面会整页刷新，但是实际上p的颜色并没有变啊，它也被重新加载了一遍，如果只有这两个样式那还好说，样式一旦增多，这绝对是极大的资源浪费啊，所以，就需要只刷新div的样式而不去刷新整体的样式，我们需要配一下</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript"><span style="color:#66d9ef">const</span> <span style="color:#a6e22e">webpack</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">require</span>(<span style="color:#e6db74">&#39;webpack&#39;</span>);
+
+<span style="color:#a6e22e">devServer</span><span style="color:#f92672">:</span>{
+	<span style="color:#a6e22e">contentBase</span><span style="color:#f92672">:</span><span style="color:#e6db74">&#39;./dist&#39;</span>,
+	<span style="color:#a6e22e">open</span><span style="color:#f92672">:</span><span style="color:#66d9ef">true</span>,
+	<span style="color:#a6e22e">port</span><span style="color:#f92672">:</span><span style="color:#ae81ff">8080</span>,
+	<span style="color:#a6e22e">hot</span><span style="color:#f92672">:</span><span style="color:#66d9ef">true</span>
+},
+<span style="color:#a6e22e">plugins</span><span style="color:#f92672">:</span>[
+	<span style="color:#66d9ef">new</span> <span style="color:#a6e22e">HtmlWebpackPlugin</span>({
+		<span style="color:#a6e22e">template</span><span style="color:#f92672">:</span><span style="color:#e6db74">&#39;./src/index.html&#39;</span>
+	}),
+	<span style="color:#66d9ef">new</span> <span style="color:#a6e22e">CleanWebpackPlugin</span>({
+		<span style="color:#a6e22e">root</span><span style="color:#f92672">:</span><span style="color:#a6e22e">path</span>.<span style="color:#a6e22e">rasolve</span>(<span style="color:#a6e22e">__dirnam</span>,<span style="color:#e6db74">&#39;dist&#39;</span>)
+	}),
+	<span style="color:#66d9ef">new</span> <span style="color:#a6e22e">webpack</span>.<span style="color:#a6e22e">HotModuleReplacement</span>()	
+]
+</code></pre></div><p>此时我们再来重启服务器，然后在修改div颜色的时候，就会发现它不会再整页刷新而是只替换了修改的代码。</p>
+<h4 id="22jshmr">2.2jsHMR</h4>
+<p>上面是针对css代码的热替换，其实js代码同样也可以，我们举例说明一下</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript"><span style="color:#75715e">//counter.js
+</span><span style="color:#75715e"></span><span style="color:#66d9ef">function</span> <span style="color:#a6e22e">counter</span>(){
+	<span style="color:#66d9ef">var</span> <span style="color:#a6e22e">div</span> <span style="color:#f92672">=</span> document.<span style="color:#a6e22e">createElement</span>(<span style="color:#e6db74">&#39;div&#39;</span>);
+	<span style="color:#a6e22e">div</span>.<span style="color:#a6e22e">setAttribute</span>(<span style="color:#e6db74">&#39;id&#39;</span>,<span style="color:#e6db74">&#39;counter&#39;</span>);
+	<span style="color:#a6e22e">div</span>.<span style="color:#a6e22e">innerHTML</span> <span style="color:#f92672">=</span> <span style="color:#ae81ff">1</span>;
+	<span style="color:#a6e22e">div</span>.<span style="color:#a6e22e">onclick</span> <span style="color:#f92672">=</span> <span style="color:#66d9ef">function</span>(){
+		<span style="color:#a6e22e">div</span>.<span style="color:#a6e22e">innerHTML</span> <span style="color:#f92672">=</span> parseInt(<span style="color:#a6e22e">div</span>.<span style="color:#a6e22e">innerHTML</span>,<span style="color:#ae81ff">10</span>)<span style="color:#f92672">+</span><span style="color:#ae81ff">1</span>;
+	}
+	document.<span style="color:#a6e22e">body</span>.<span style="color:#a6e22e">appendChild</span>(<span style="color:#a6e22e">div</span>)
+}
+<span style="color:#66d9ef">export</span> <span style="color:#66d9ef">default</span> <span style="color:#a6e22e">counter</span>;
+
+</code></pre></div><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript"><span style="color:#75715e">//number.js
+</span><span style="color:#75715e"></span><span style="color:#66d9ef">function</span> <span style="color:#a6e22e">number</span>(){
+	<span style="color:#66d9ef">var</span> <span style="color:#a6e22e">div</span> <span style="color:#f92672">=</span> document.<span style="color:#a6e22e">createElement</span>(<span style="color:#e6db74">&#39;div&#39;</span>);
+	<span style="color:#a6e22e">div</span>.<span style="color:#a6e22e">setAttribute</span>(<span style="color:#e6db74">&#39;id&#39;</span>,<span style="color:#e6db74">&#39;number&#39;</span>);
+	<span style="color:#a6e22e">div</span>.<span style="color:#a6e22e">innerHTML</span> <span style="color:#f92672">=</span> <span style="color:#ae81ff">3</span>;
+	document.<span style="color:#a6e22e">body</span>.<span style="color:#a6e22e">appendChild</span>(<span style="color:#a6e22e">div</span>);
+}
+<span style="color:#66d9ef">export</span> <span style="color:#66d9ef">default</span> <span style="color:#a6e22e">number</span>;
+</code></pre></div><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript"><span style="color:#75715e">//index.js
+</span><span style="color:#75715e"></span><span style="color:#66d9ef">import</span> <span style="color:#a6e22e">counter</span> <span style="color:#a6e22e">from</span> <span style="color:#e6db74">&#39;./counter.js&#39;</span>;
+<span style="color:#66d9ef">import</span> <span style="color:#a6e22e">number</span> <span style="color:#a6e22e">from</span> <span style="color:#e6db74">&#39;./number.js&#39;</span>;
+
+<span style="color:#a6e22e">counter</span>()
+<span style="color:#a6e22e">number</span>()
+
+</code></pre></div><p>在未开启HML的时候，页面第一次加载，显示p和div,当修改div里的内容时，p里的内容没有改变，但也被刷新了
+在开启HML的时候，我们可以指定只刷新a的内容</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript"><span style="color:#75715e">//index.js
+</span><span style="color:#75715e"></span><span style="color:#66d9ef">import</span> <span style="color:#a6e22e">createDiv</span> <span style="color:#a6e22e">from</span> <span style="color:#e6db74">&#39;./a.js&#39;</span>;
+<span style="color:#66d9ef">import</span> <span style="color:#a6e22e">createP</span> <span style="color:#a6e22e">from</span> <span style="color:#e6db74">&#39;./b.js&#39;</span>;
+<span style="color:#a6e22e">createDiv</span>();
+<span style="color:#a6e22e">createP</span>();
+
+<span style="color:#66d9ef">if</span>(<span style="color:#a6e22e">module</span>.<span style="color:#a6e22e">hot</span>){
+	<span style="color:#a6e22e">module</span>.<span style="color:#a6e22e">hot</span>.<span style="color:#a6e22e">accept</span>(<span style="color:#e6db74">&#39;./a.js&#39;</span>,<span style="color:#66d9ef">function</span>(){
+		<span style="color:#66d9ef">var</span> <span style="color:#a6e22e">div</span> <span style="color:#f92672">=</span> document.<span style="color:#a6e22e">getElementById</span>(<span style="color:#e6db74">&#39;d&#39;</span>);
+		document.<span style="color:#a6e22e">body</span>.<span style="color:#a6e22e">remove</span>(<span style="color:#a6e22e">div</span>)
+		<span style="color:#a6e22e">createDiv</span>()
+	})
+}
+</code></pre></div><p>至此就实现了js代码的HML热更替</p>
+<h3 id="3sourcemap源码映射">3.sourceMap(源码映射)</h3>
+<p>接着我们需要定位出错代码的位置，这个要用soucemap来进行定位，但是开发环境下它是默认开启的，所以我们先把他关掉</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript"><span style="color:#75715e">//webpack.config.js
+</span><span style="color:#75715e"></span>	<span style="color:#a6e22e">module</span>.<span style="color:#a6e22e">exports</span> <span style="color:#f92672">=</span> {
+		<span style="color:#a6e22e">devtool</span><span style="color:#f92672">:</span><span style="color:#e6db74">&#34;none&#34;</span>
+	}
+</code></pre></div><p>然后启动服务器，这时候我们故意改错代码</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript"><span style="color:#a6e22e">console</span>.<span style="color:#a6e22e">lo</span>(<span style="color:#e6db74">&#39;51zxw&#39;</span>)
+</code></pre></div><p>这是后当我们点击错误的代码的链接的时候，我们直接跳到了打包文件里去了，而不是定位到源码里，所以我们希望能定位到源码里，我们再来修改一下配置</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript"><span style="color:#a6e22e">module</span>.<span style="color:#a6e22e">exports</span> <span style="color:#f92672">=</span> {
+	<span style="color:#a6e22e">devtool</span><span style="color:#f92672">:</span><span style="color:#e6db74">&#34;source-map&#34;</span>
+}
+</code></pre></div><p>然后重启服务器，再次点击的时候就会定位到具体的出错源码，此时我们会发现，dist目录不见了，其实是webpack为了加快打包速度，把dist目录直接放在了内存中，我们重新npm run bundle来学习一下，就会发现此时dist目录又出现了，但也多了一个map文件，这个就是soucre-map的对应文件，他会把打包资源和源码关系醉成对应放在这个文件里。知道了怎么用，我们接下来说说devtool有哪些参数，各代表什么意思。
+<code>inline-source-map:直接把对应文件map放在打包文件里</code>
+<code>cheap-source-map:只定位到错误行而不是具体错误字符，同时也不处理引入的第三方包带来的错误</code>
+<code>module-source-map:既处理业务代码又处理第三方包的错误</code>
+<code>eval-source-map:速度最快但错误信息不全面</code>
+<em><strong>在开发环境中一般要使用：devtool:cheap-module-eval-source-map</strong></em>
+<em><strong>在生产环境中一般要使用：devtool:cheap-module-source-map</strong></em></p>
+<h3 id="4treeshaking">4.TreeShaking</h3>
+<p>我们在前面已经学会了打包不同的资源和自动化开发流程，同时也做了一点性能优化，但还有很多的地方可以优化，比如，我们在前面配置过&quot;useBuiltIns&rdquo;:&ldquo;usage&rdquo;，这个是为了使得babel在转码的时候只转码我们用到的es6特性而不是把所有的es6特性都转码，那在我们自己写的js代码中，如果我们引入了一个模块，但是只是用了其中导出的一个内容，那其他的内容也会被打包，那有没有办法使得我们用哪些东西就打包哪些，不用的就全去除掉呢？这个就是TreeShaking，es模块未引用的导出内容全部不加载我们来实现一下，</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript"><span style="color:#66d9ef">export</span> <span style="color:#66d9ef">const</span> <span style="color:#a6e22e">add</span> <span style="color:#f92672">=</span> <span style="color:#66d9ef">function</span>(<span style="color:#a6e22e">a</span>,<span style="color:#a6e22e">b</span>){
+	<span style="color:#a6e22e">console</span>.<span style="color:#a6e22e">log</span>(<span style="color:#a6e22e">a</span><span style="color:#f92672">+</span><span style="color:#a6e22e">b</span>)
+}
+
+<span style="color:#66d9ef">export</span> <span style="color:#66d9ef">const</span> <span style="color:#a6e22e">minus</span> <span style="color:#f92672">=</span> <span style="color:#66d9ef">function</span>(<span style="color:#a6e22e">a</span>,<span style="color:#a6e22e">b</span>){
+	<span style="color:#a6e22e">console</span>.<span style="color:#a6e22e">log</span>(<span style="color:#a6e22e">a</span><span style="color:#f92672">-</span><span style="color:#a6e22e">b</span>)
+}
+</code></pre></div><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript"><span style="color:#75715e">//index.js
+</span><span style="color:#75715e"></span><span style="color:#66d9ef">import</span> { <span style="color:#a6e22e">add</span> } <span style="color:#a6e22e">from</span> <span style="color:#e6db74">&#39;./math.js&#39;</span>;
+
+<span style="color:#a6e22e">add</span>(<span style="color:#ae81ff">1</span>,<span style="color:#ae81ff">2</span>)
+
+</code></pre></div><p>此时我们打包的时候，这两个方法都会被打包进bundle.js，我们来配置一下，</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript"><span style="color:#a6e22e">optimization</span><span style="color:#f92672">:</span>{
+	<span style="color:#a6e22e">usedExports</span><span style="color:#f92672">:</span><span style="color:#66d9ef">true</span>
+}
+</code></pre></div><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript">{
+	<span style="color:#e6db74">&#34;sideEffects&#34;</span><span style="color:#f92672">:</span><span style="color:#66d9ef">false</span>
+}
+</code></pre></div><p>在线上环境基本上默认开启treeshaking，开发环境使用optionzation来进行触发。</p>
+<h3 id="5codesplitting代码分割">5.CodeSplitting(代码分割)</h3>
+<p>接着我们来看一下代码分割，有时候我们的代码里既包括自己写的业务逻辑，又有引入的第三方包，那在用户加载的时候，如果把两个文件打包在一个文件中，下载的速度会非常的慢，所以就需要把代码分割开来，加载两个较小的文件比加载一个较大的文件速度更快。那如何来实现代码分割呢？
+首先我们先来使用一个外来的库loadsh</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">npm install loadsh -D
+</code></pre></div><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript"><span style="color:#75715e">//index.js
+</span><span style="color:#75715e"></span><span style="color:#66d9ef">import</span> <span style="color:#a6e22e">_</span> <span style="color:#a6e22e">from</span> <span style="color:#e6db74">&#39;loadsh&#39;</span>;
+<span style="color:#a6e22e">console</span>.<span style="color:#a6e22e">log</span>(<span style="color:#a6e22e">_</span>.<span style="color:#a6e22e">join</span>([<span style="color:#e6db74">&#39;a&#39;</span>,<span style="color:#e6db74">&#39;b&#39;</span>],<span style="color:#e6db74">&#39;***&#39;</span>))
+</code></pre></div><p>然后配置common来实现代码分割</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript"><span style="color:#a6e22e">optimization</span><span style="color:#f92672">:</span>{
+		<span style="color:#a6e22e">splitChunks</span><span style="color:#f92672">:</span>{
+			<span style="color:#a6e22e">chunks</span><span style="color:#f92672">:</span><span style="color:#e6db74">&#34;all&#34;</span>
+		}
+	},
+</code></pre></div><p>此时，loadsh和业务代码就分开打包了</p>
+<h3 id="6lazyloading懒加载">6.LazyLoading（懒加载）</h3>
+<p>再来看一下懒加载，通过import异步加载模块，也就是只有需要使用这个模块的时候才来加载，举例说明一下</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript"><span style="color:#66d9ef">function</span> <span style="color:#a6e22e">getComponent</span>(){
+	<span style="color:#66d9ef">return</span> <span style="color:#66d9ef">import</span>(<span style="color:#e6db74">&#39;loadsh&#39;</span>);
+	<span style="color:#66d9ef">var</span> <span style="color:#a6e22e">element</span> <span style="color:#f92672">=</span> document.<span style="color:#a6e22e">createElement</span>(<span style="color:#e6db74">&#39;div&#39;</span>);
+	<span style="color:#a6e22e">element</span>.<span style="color:#a6e22e">innerHTML</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">_</span>.<span style="color:#a6e22e">join</span>([<span style="color:#e6db74">&#39;a&#39;</span>,<span style="color:#e6db74">&#39;b&#39;</span>],<span style="color:#e6db74">&#39;***&#39;</span>);
+	<span style="color:#a6e22e">rerun</span> <span style="color:#a6e22e">element</span>;
+}
+document.<span style="color:#a6e22e">addEventListener</span>(<span style="color:#e6db74">&#39;click&#39;</span>,()=&gt;{
+	<span style="color:#a6e22e">getComponent</span>().<span style="color:#a6e22e">then</span>(<span style="color:#a6e22e">element</span> =&gt; {
+		document.<span style="color:#a6e22e">body</span>.<span style="color:#a6e22e">appendChild</span>(<span style="color:#a6e22e">element</span>)
+	})
+})
+</code></pre></div><h3 id="7prefech预请求">7.PreFech(预请求)</h3>
+<p>再来看一下prefech，异步代码在网络空闲的时候自动下载，举例说明一下</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript"><span style="color:#75715e">//index.js
+</span><span style="color:#75715e"></span>
+document.<span style="color:#a6e22e">addEventListener</span>(<span style="color:#e6db74">&#39;click&#39;</span>,()=&gt;{
+	<span style="color:#66d9ef">import</span>(<span style="color:#75715e">/*webpackPrefetch:true*/</span><span style="color:#e6db74">&#39;/.click.js&#39;</span>).<span style="color:#a6e22e">then</span>(
+	({<span style="color:#66d9ef">default</span><span style="color:#f92672">:</span><span style="color:#a6e22e">func</span>}) =&gt; {
+		<span style="color:#a6e22e">func</span>()
+	})
+})
+</code></pre></div><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript"><span style="color:#75715e">//click.js
+</span><span style="color:#75715e"></span>
+<span style="color:#66d9ef">function</span> <span style="color:#a6e22e">handleClick</span>(){
+	<span style="color:#66d9ef">const</span> <span style="color:#a6e22e">ele</span> <span style="color:#f92672">=</span> document.<span style="color:#a6e22e">createElement</span>(<span style="color:#e6db74">&#39;div&#39;</span>)
+	<span style="color:#a6e22e">ele</span>.<span style="color:#a6e22e">innerHTML</span> <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;hello&#34;</span>;
+	document.<span style="color:#a6e22e">body</span>.<span style="color:#a6e22e">append</span>(<span style="color:#a6e22e">ele</span>)
+}
+
+<span style="color:#66d9ef">export</span> <span style="color:#66d9ef">default</span> <span style="color:#a6e22e">handleClick</span>;
+</code></pre></div><h3 id="8caching缓存">8.caching(缓存)</h3>
+<p>caching，在进行打包的时候，如果有的包内容没有发生改变，那么前后两次打包的名称就相同，这使得浏览器在请求的时候，如果看到相同的文件就不会去重新发请求，所以可以用contenthash来时的每次修改生成一个新的文件名来避免。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript"><span style="color:#a6e22e">output</span><span style="color:#f92672">:</span>{
+	<span style="color:#a6e22e">filename</span><span style="color:#f92672">:</span><span style="color:#e6db74">&#39;[name].[contenthash].js&#39;</span>
+}
+</code></pre></div><h3 id="9shimming垫片">9.shimming(垫片)</h3>
+<p>6.shimming：垫片，一种兼容方案，有很多的行为都叫垫片，它主要是弥补一些不足，例如将变量全局化</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript"><span style="color:#66d9ef">const</span> <span style="color:#a6e22e">webpack</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">require</span>(<span style="color:#e6db74">&#39;webpack&#39;</span>);
+
+<span style="color:#a6e22e">plugins</span><span style="color:#f92672">:</span>[
+	<span style="color:#66d9ef">new</span> <span style="color:#a6e22e">webpack</span>.<span style="color:#a6e22e">ProvidePlugin</span>({
+			<span style="color:#a6e22e">$</span><span style="color:#f92672">:</span><span style="color:#e6db74">&#39;jquery&#39;</span>
+		})
+]
+</code></pre></div><p>全局变量</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript"><span style="color:#a6e22e">module</span>.<span style="color:#a6e22e">exports</span> <span style="color:#f92672">=</span> (<span style="color:#a6e22e">env</span>) =&gt; {
+	<span style="color:#66d9ef">if</span>(<span style="color:#a6e22e">env</span> <span style="color:#f92672">&amp;&amp;</span> <span style="color:#a6e22e">env</span>.<span style="color:#a6e22e">production</span>){
+		<span style="color:#66d9ef">return</span> <span style="color:#a6e22e">merge</span>(<span style="color:#a6e22e">commonConfig</span>,<span style="color:#a6e22e">prodConfig</span>);
+	}<span style="color:#66d9ef">else</span>{
+		<span style="color:#66d9ef">return</span> <span style="color:#a6e22e">merge</span>(<span style="color:#a6e22e">commonConfig</span>,<span style="color:#a6e22e">devConfig</span>);
+	}
+}
+</code></pre></div><h3 id="10dllplugins">10.DllPlugins</h3>
+<p>在打包的时候，我们难免会引入第三方的包，重复的打包时这些没有改变的模块也会重新进行打包，为了加快打包的时间，我们可以在第一次打包的时候就把它保存下来，在以后打包的时候直接调用就行了，这个要借助Dllplugin来实现。
+首先我们先来引入一些内容来看一下</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript"><span style="color:#66d9ef">import</span> <span style="color:#a6e22e">React</span>, { <span style="color:#a6e22e">Component</span> } <span style="color:#a6e22e">from</span> <span style="color:#e6db74">&#39;react&#39;</span>;
+<span style="color:#66d9ef">import</span> <span style="color:#a6e22e">ReactDom</span> <span style="color:#a6e22e">from</span> <span style="color:#e6db74">&#39;react-dom&#39;</span>;
+
+<span style="color:#66d9ef">class</span> <span style="color:#a6e22e">App</span> <span style="color:#66d9ef">extends</span> <span style="color:#a6e22e">Component</span>{
+	<span style="color:#a6e22e">render</span>() {
+		<span style="color:#66d9ef">return</span> <span style="color:#f92672">&lt;</span><span style="color:#a6e22e">div</span><span style="color:#f92672">&gt;</span><span style="color:#a6e22e">hello</span> <span style="color:#a6e22e">world</span><span style="color:#f92672">&lt;</span><span style="color:#960050;background-color:#1e0010">/div&gt;</span>
+	}
+}
+
+<span style="color:#a6e22e">ReactDom</span>.<span style="color:#a6e22e">render</span>(<span style="color:#f92672">&lt;</span><span style="color:#a6e22e">App</span> <span style="color:#f92672">/&gt;</span>,document.<span style="color:#a6e22e">getElementById</span>(<span style="color:#e6db74">&#39;demo&#39;</span>));
+</code></pre></div><p>然后新建一个webpack.dll.js</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript"><span style="color:#66d9ef">const</span> <span style="color:#a6e22e">path</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">require</span>(<span style="color:#e6db74">&#39;path&#39;</span>);
+<span style="color:#66d9ef">const</span> <span style="color:#a6e22e">webpack</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">require</span>(<span style="color:#e6db74">&#39;webpack&#39;</span>);
+
+
+
+<span style="color:#a6e22e">module</span>.<span style="color:#a6e22e">exports</span> <span style="color:#f92672">=</span> {
+	<span style="color:#a6e22e">mode</span><span style="color:#f92672">:</span><span style="color:#e6db74">&#39;development&#39;</span>,
+	<span style="color:#a6e22e">entry</span><span style="color:#f92672">:</span>{
+		<span style="color:#a6e22e">vendors</span><span style="color:#f92672">:</span>[<span style="color:#e6db74">&#39;react&#39;</span>,<span style="color:#e6db74">&#39;react-dom&#39;</span>]
+	},
+	<span style="color:#a6e22e">output</span><span style="color:#f92672">:</span>{
+		<span style="color:#a6e22e">filename</span><span style="color:#f92672">:</span><span style="color:#e6db74">&#39;[name].dll.js&#39;</span>,
+		<span style="color:#a6e22e">path</span><span style="color:#f92672">:</span><span style="color:#a6e22e">path</span>.<span style="color:#a6e22e">resolve</span>(<span style="color:#a6e22e">__dirname</span>,<span style="color:#e6db74">&#39;../dll&#39;</span>),
+		<span style="color:#a6e22e">library</span><span style="color:#f92672">:</span><span style="color:#e6db74">&#39;[name]&#39;</span>
+
+	},
+	<span style="color:#a6e22e">plugins</span><span style="color:#f92672">:</span>[
+		<span style="color:#66d9ef">new</span> <span style="color:#a6e22e">webpack</span>.<span style="color:#a6e22e">DllPlugin</span>({
+			<span style="color:#a6e22e">name</span><span style="color:#f92672">:</span><span style="color:#e6db74">&#39;[name]&#39;</span>,
+			<span style="color:#a6e22e">path</span><span style="color:#f92672">:</span><span style="color:#a6e22e">path</span>.<span style="color:#a6e22e">resolve</span>(<span style="color:#a6e22e">__dirname</span>,<span style="color:#e6db74">&#39;../dll/[name].manifest.json&#39;</span>),
+
+		})
+	]
+
+}
+</code></pre></div><p>先来打包一次，生成模块对应的打包文件和json对应文件</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript">{
+	<span style="color:#e6db74">&#34;scripts&#34;</span><span style="color:#f92672">:</span>{
+		<span style="color:#e6db74">&#34;build:dll&#34;</span><span style="color:#f92672">:</span> <span style="color:#e6db74">&#34;webpack --config ./build/webpack.dll.js&#34;</span>
+	}
+}
+</code></pre></div><p>接下来我们需要在index.html中引入这个文件，</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript"><span style="color:#75715e">//common.js
+</span><span style="color:#75715e"></span><span style="color:#66d9ef">const</span> <span style="color:#a6e22e">AddAssetHtmlWebpackPlugin</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">require</span>(<span style="color:#e6db74">&#39;add-asset-html-webpack-plugin&#39;</span>);
+<span style="color:#a6e22e">plugins</span><span style="color:#f92672">:</span>[
+	<span style="color:#66d9ef">new</span> <span style="color:#a6e22e">AddAssetHtmlWebpackPlugin</span>({
+			<span style="color:#a6e22e">filepath</span><span style="color:#f92672">:</span><span style="color:#a6e22e">path</span>.<span style="color:#a6e22e">resolve</span>(<span style="color:#a6e22e">__dirname</span>,<span style="color:#e6db74">&#39;../dll/vendors.dll.js&#39;</span>)
+		})
+]
+
+</code></pre></div><p>引入成功后，当打包时在commonjs中来检查是不是有vendors.manifest.json中已经打包的内容。如果有就直接在全局变量中使用，没有就去node_modules寻找后再打包，</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript"><span style="color:#75715e">//common.js
+</span><span style="color:#75715e"></span><span style="color:#a6e22e">plugins</span><span style="color:#f92672">:</span>[
+	<span style="color:#66d9ef">new</span> <span style="color:#a6e22e">webpack</span>.<span style="color:#a6e22e">DllReferencePlugin</span>({
+			<span style="color:#a6e22e">manifest</span><span style="color:#f92672">:</span><span style="color:#a6e22e">path</span>.<span style="color:#a6e22e">resolve</span>(<span style="color:#a6e22e">__dirname</span>,<span style="color:#e6db74">&#39;../dll/vendors.manifest.json&#39;</span>)
+		})
+]
+</code></pre></div><p>就会发现打包的速度确实加快了，若果在大型项目里，我们需要引入多个模块，需要重复的配太麻烦，所以坐下自动插入</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript"><span style="color:#75715e">//common
+</span><span style="color:#75715e"></span>
+<span style="color:#66d9ef">const</span> <span style="color:#a6e22e">path</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">require</span>(<span style="color:#e6db74">&#39;path&#39;</span>);
+<span style="color:#66d9ef">const</span> <span style="color:#a6e22e">HtmlWebpackPlugin</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">require</span>(<span style="color:#e6db74">&#39;html-webpack-plugin&#39;</span>);
+<span style="color:#66d9ef">const</span> <span style="color:#a6e22e">CleanWebpackPlugin</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">require</span>(<span style="color:#e6db74">&#39;clean-webpack-plugin&#39;</span>);
+<span style="color:#66d9ef">const</span> <span style="color:#a6e22e">webpack</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">require</span>(<span style="color:#e6db74">&#39;webpack&#39;</span>);
+<span style="color:#66d9ef">const</span> <span style="color:#a6e22e">devConfig</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">require</span>(<span style="color:#e6db74">&#39;./webpack.dev.js&#39;</span>);
+<span style="color:#66d9ef">const</span> <span style="color:#a6e22e">prodConfig</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">require</span>(<span style="color:#e6db74">&#39;./webpack.prod.js&#39;</span>);
+<span style="color:#66d9ef">const</span> <span style="color:#a6e22e">merge</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">require</span>(<span style="color:#e6db74">&#39;webpack-merge&#39;</span>);
+<span style="color:#66d9ef">const</span> <span style="color:#a6e22e">AddAssetHtmlWebpackPlugin</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">require</span>(<span style="color:#e6db74">&#39;add-asset-html-webpack-plugin&#39;</span>);
+<span style="color:#66d9ef">const</span> <span style="color:#a6e22e">fs</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">require</span>(<span style="color:#e6db74">&#39;fs&#39;</span>);
+
+
+
+<span style="color:#66d9ef">const</span> <span style="color:#a6e22e">plugins</span> <span style="color:#f92672">=</span> [
+	<span style="color:#66d9ef">new</span> <span style="color:#a6e22e">HtmlWebpackPlugin</span>({
+			<span style="color:#a6e22e">template</span><span style="color:#f92672">:</span><span style="color:#e6db74">&#34;./src/index.html&#34;</span>
+		}),
+	<span style="color:#66d9ef">new</span> <span style="color:#a6e22e">CleanWebpackPlugin</span>({
+			<span style="color:#a6e22e">root</span><span style="color:#f92672">:</span><span style="color:#a6e22e">path</span>.<span style="color:#a6e22e">resolve</span>(<span style="color:#a6e22e">__dirname</span>,<span style="color:#e6db74">&#39;../dist&#39;</span>)
+		}),
+	<span style="color:#66d9ef">new</span> <span style="color:#a6e22e">webpack</span>.<span style="color:#a6e22e">ProvidePlugin</span>({
+			<span style="color:#a6e22e">$</span><span style="color:#f92672">:</span><span style="color:#e6db74">&#39;jquery&#39;</span>
+		})
+]
+
+<span style="color:#66d9ef">const</span> <span style="color:#a6e22e">files</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">fs</span>.<span style="color:#a6e22e">readdirSync</span>(<span style="color:#a6e22e">path</span>.<span style="color:#a6e22e">resolve</span>(<span style="color:#a6e22e">__dirname</span>,<span style="color:#e6db74">&#39;../dll&#39;</span>));
+<span style="color:#a6e22e">files</span>.<span style="color:#a6e22e">forEach</span>(<span style="color:#a6e22e">file</span> =&gt; {
+	<span style="color:#66d9ef">if</span>(<span style="color:#e6db74">/.*\.dll.js/</span>.<span style="color:#a6e22e">test</span>(<span style="color:#a6e22e">file</span>)){
+		<span style="color:#a6e22e">plugins</span>.<span style="color:#a6e22e">push</span>(<span style="color:#66d9ef">new</span> <span style="color:#a6e22e">AddAssetHtmlWebpackPlugin</span>({
+			<span style="color:#a6e22e">filepath</span><span style="color:#f92672">:</span><span style="color:#a6e22e">path</span>.<span style="color:#a6e22e">resolve</span>(<span style="color:#a6e22e">__dirname</span>,<span style="color:#e6db74">&#39;../dll&#39;</span>,<span style="color:#a6e22e">file</span>)
+		}))
+	}
+
+	<span style="color:#66d9ef">if</span>(<span style="color:#e6db74">/.*\.manifest.json/</span>.<span style="color:#a6e22e">test</span>(<span style="color:#a6e22e">file</span>)){
+		<span style="color:#a6e22e">plugins</span>.<span style="color:#a6e22e">push</span>(<span style="color:#66d9ef">new</span> <span style="color:#a6e22e">webpack</span>.<span style="color:#a6e22e">DllReferencePlugin</span>({
+			<span style="color:#a6e22e">manifest</span><span style="color:#f92672">:</span><span style="color:#a6e22e">path</span>.<span style="color:#a6e22e">resolve</span>(<span style="color:#a6e22e">__dirname</span>,<span style="color:#e6db74">&#39;../dll&#39;</span>,<span style="color:#a6e22e">file</span>)
+		}))
+	}
+})
+
+
+
+<span style="color:#75715e">// module.exports = {
+</span><span style="color:#75715e"></span><span style="color:#66d9ef">const</span> <span style="color:#a6e22e">commonConfig</span> <span style="color:#f92672">=</span> {
+	<span style="color:#a6e22e">entry</span><span style="color:#f92672">:</span>{
+		<span style="color:#e6db74">&#34;main&#34;</span><span style="color:#f92672">:</span><span style="color:#e6db74">&#34;./src/index.js&#34;</span>
+	},
+	<span style="color:#a6e22e">module</span><span style="color:#f92672">:</span>{
+		<span style="color:#a6e22e">rules</span><span style="color:#f92672">:</span>[
+			{
+				<span style="color:#a6e22e">test</span><span style="color:#f92672">:</span><span style="color:#e6db74">/\.js$/</span>,
+				<span style="color:#a6e22e">exclude</span><span style="color:#f92672">:</span> <span style="color:#e6db74">/node_modules/</span>,
+				<span style="color:#a6e22e">use</span><span style="color:#f92672">:</span>[
+					<span style="color:#e6db74">&#34;babel-loader&#34;</span>,
+					<span style="color:#75715e">// &#34;eslint-loader&#34;,
+</span><span style="color:#75715e"></span>					<span style="color:#75715e">// {
+</span><span style="color:#75715e"></span>					<span style="color:#75715e">// 	loader:&#34;imports-loader?this=&gt;window&#34;
+</span><span style="color:#75715e"></span>					<span style="color:#75715e">// }
+</span><span style="color:#75715e"></span>				]
+			},
+			{
+				<span style="color:#a6e22e">test</span><span style="color:#f92672">:</span><span style="color:#e6db74">/\.(png|jpg|gif)$/</span>,
+				<span style="color:#a6e22e">use</span><span style="color:#f92672">:</span>{
+					<span style="color:#a6e22e">loader</span><span style="color:#f92672">:</span><span style="color:#e6db74">&#34;url-loader&#34;</span>
+				}
+			},
+
+			{
+				<span style="color:#a6e22e">test</span><span style="color:#f92672">:</span><span style="color:#e6db74">/\.(ttf|eot|svg)$/</span>,
+				<span style="color:#a6e22e">use</span><span style="color:#f92672">:</span>{
+					<span style="color:#a6e22e">loader</span><span style="color:#f92672">:</span><span style="color:#e6db74">&#34;file-loader&#34;</span>
+				}
+			}
+		]
+	},
+	<span style="color:#a6e22e">plugins</span>,
+
+	<span style="color:#a6e22e">optimization</span><span style="color:#f92672">:</span>{
+		<span style="color:#a6e22e">usedExports</span><span style="color:#f92672">:</span><span style="color:#66d9ef">true</span>,
+		<span style="color:#a6e22e">splitChunks</span><span style="color:#f92672">:</span><span style="color:#66d9ef">false</span>
+	},
+
+	<span style="color:#a6e22e">output</span><span style="color:#f92672">:</span>{
+		<span style="color:#a6e22e">path</span><span style="color:#f92672">:</span><span style="color:#a6e22e">path</span>.<span style="color:#a6e22e">resolve</span>(<span style="color:#a6e22e">__dirname</span>,<span style="color:#e6db74">&#39;../dist&#39;</span>)
+	}
+
+}
+
+<span style="color:#a6e22e">module</span>.<span style="color:#a6e22e">exports</span> <span style="color:#f92672">=</span> (<span style="color:#a6e22e">env</span>) =&gt; {
+	<span style="color:#66d9ef">if</span>(<span style="color:#a6e22e">env</span> <span style="color:#f92672">&amp;&amp;</span> <span style="color:#a6e22e">env</span>.<span style="color:#a6e22e">production</span>){
+		<span style="color:#66d9ef">return</span> <span style="color:#a6e22e">merge</span>(<span style="color:#a6e22e">commonConfig</span>,<span style="color:#a6e22e">prodConfig</span>);
+	}<span style="color:#66d9ef">else</span>{
+		<span style="color:#66d9ef">return</span> <span style="color:#a6e22e">merge</span>(<span style="color:#a6e22e">commonConfig</span>,<span style="color:#a6e22e">devConfig</span>);
+	}
+}
+
+</code></pre></div><p>1.采用最新版本的node
+2.loader和plugin作用在有需求的模块上，像第三方模块上尽量就不检查了
+3.resolve</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript"><span style="color:#a6e22e">resolve</span><span style="color:#f92672">:</span>{
+	<span style="color:#66d9ef">extends</span><span style="color:#f92672">:</span>[<span style="color:#e6db74">&#39;js&#39;</span>,<span style="color:#e6db74">&#39;jsx&#39;</span>],
+	<span style="color:#a6e22e">alias</span><span style="color:#f92672">:</span>{
+		<span style="color:#a6e22e">child</span><span style="color:#f92672">:</span><span style="color:#a6e22e">path</span>.<span style="color:#a6e22e">resolve</span>(<span style="color:#a6e22e">__diename</span>,<span style="color:#e6db74">&#39;/&#39;</span>)
+	}
+}
+</code></pre></div><p>4.DllPlugins
+5.控制包的大小
+6.合理使用sourcemap
+7.结合stats.json进行分析
+8.开发环境内存编译
+9.开发环境剔除不用的插件</p>
+<p>总结一下提升性能：
+1.treeshaking:摇掉引入模块中未使用的内容</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript"><span style="color:#75715e">//dev
+</span><span style="color:#75715e"></span><span style="color:#a6e22e">optimization</span><span style="color:#f92672">:</span>{
+	<span style="color:#a6e22e">usedExports</span><span style="color:#f92672">:</span><span style="color:#66d9ef">true</span>
+}
+</code></pre></div><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript"><span style="color:#75715e">//package
+</span><span style="color:#75715e"></span>{
+	<span style="color:#e6db74">&#34;sideEffects&#34;</span><span style="color:#f92672">:</span><span style="color:#66d9ef">false</span>
+}
+</code></pre></div><p>2.codesplitting:分块打包代码</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript"><span style="color:#a6e22e">optimization</span><span style="color:#f92672">:</span>{
+		<span style="color:#a6e22e">splitChunks</span><span style="color:#f92672">:</span>{
+			<span style="color:#a6e22e">chunks</span><span style="color:#f92672">:</span><span style="color:#e6db74">&#34;all&#34;</span>,
+			<span style="color:#a6e22e">minSize</span><span style="color:#f92672">:</span><span style="color:#ae81ff">30000</span>,
+			<span style="color:#a6e22e">minChunks</span><span style="color:#f92672">:</span><span style="color:#ae81ff">1</span>,
+			<span style="color:#a6e22e">name</span><span style="color:#f92672">:</span><span style="color:#66d9ef">true</span>,
+			<span style="color:#a6e22e">cacheGroup</span><span style="color:#f92672">:</span>{
+				<span style="color:#a6e22e">vendors</span><span style="color:#f92672">:</span>{
+					<span style="color:#a6e22e">vendors</span><span style="color:#f92672">:</span>{
+						<span style="color:#a6e22e">test</span><span style="color:#f92672">:</span><span style="color:#e6db74">/[\\/]node_modules[\\/]/</span>,
+						<span style="color:#a6e22e">priority</span><span style="color:#f92672">:-</span><span style="color:#ae81ff">10</span>,
+						<span style="color:#a6e22e">filename</span><span style="color:#f92672">:</span><span style="color:#e6db74">&#39;vendors.js&#39;</span>
+					}
+				},
+				<span style="color:#66d9ef">default</span><span style="color:#f92672">:</span>{
+					<span style="color:#a6e22e">priority</span><span style="color:#f92672">:-</span><span style="color:#ae81ff">20</span>,
+					<span style="color:#a6e22e">reuseExistingChunk</span><span style="color:#f92672">:</span><span style="color:#66d9ef">true</span>
+					<span style="color:#a6e22e">filename</span><span style="color:#f92672">:</span><span style="color:#e6db74">&#34;common.js&#34;</span>
+				}
+			}
+		}
+	},
+</code></pre></div><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">npm install mini-css-extract-plugin -D//拆分
+npm install optimize-css-assets-webpack-plugin -D//压缩
+</code></pre></div><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript"><span style="color:#75715e">//prod
+</span><span style="color:#75715e"></span><span style="color:#66d9ef">const</span> <span style="color:#a6e22e">MiniCssExtractPlugin</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">require</span>(<span style="color:#e6db74">&#39;mini-css-extract-plugin&#39;</span>);
+
+<span style="color:#a6e22e">module</span><span style="color:#f92672">:</span>{
+		<span style="color:#a6e22e">rules</span><span style="color:#f92672">:</span>[
+			{
+				<span style="color:#a6e22e">test</span><span style="color:#f92672">:</span><span style="color:#e6db74">/\.css$/</span>,
+				<span style="color:#a6e22e">use</span><span style="color:#f92672">:</span>[
+					<span style="color:#a6e22e">MiniCssExtractPlugin</span>.<span style="color:#a6e22e">loader</span>,
+					<span style="color:#e6db74">&#34;css-loader&#34;</span>,
+					<span style="color:#e6db74">&#34;postcss-loader&#34;</span>
+					]
+			},
+
+			{
+				<span style="color:#a6e22e">test</span><span style="color:#f92672">:</span><span style="color:#e6db74">/\.scss$/</span>,
+				<span style="color:#a6e22e">use</span><span style="color:#f92672">:</span>[
+					<span style="color:#a6e22e">MiniCssExtractPlugin</span>.<span style="color:#a6e22e">loader</span>,
+				    <span style="color:#e6db74">&#34;css-loader&#34;</span>,
+				    <span style="color:#e6db74">&#34;sass-loader&#34;</span>
+				   	]
+			}
+
+		]
+	},
+	<span style="color:#a6e22e">optimization</span><span style="color:#f92672">:</span>{
+		<span style="color:#a6e22e">minimizer</span><span style="color:#f92672">:</span>[<span style="color:#66d9ef">new</span> <span style="color:#a6e22e">OptimizeCssAssetsWebpackPlugin</span>({})]
+	},
+	<span style="color:#a6e22e">plugins</span><span style="color:#f92672">:</span>[
+		<span style="color:#66d9ef">new</span> <span style="color:#a6e22e">MiniCssExtractPlugin</span>({
+			<span style="color:#a6e22e">filename</span><span style="color:#f92672">:</span><span style="color:#e6db74">&#39;[name].css&#39;</span>,
+			<span style="color:#a6e22e">chunkFilename</span><span style="color:#f92672">:</span><span style="color:#e6db74">&#39;[name].chunk.css&#39;</span>
+		})
+	]
+<span style="color:#75715e">//注意避免和optimization冲突，并且把common中的css处理摘出来后把prod中也配上
+</span></code></pre></div><p>3.lazy-loading:懒加载，只有在调用的时候才去加载模块</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript"><span style="color:#66d9ef">function</span> <span style="color:#a6e22e">getComponent</span>(){
+	<span style="color:#66d9ef">return</span> <span style="color:#66d9ef">import</span>(<span style="color:#e6db74">&#39;loadsh&#39;</span>);
+	<span style="color:#66d9ef">var</span> <span style="color:#a6e22e">element</span> <span style="color:#f92672">=</span> document.<span style="color:#a6e22e">createElement</span>(<span style="color:#e6db74">&#39;div&#39;</span>);
+	<span style="color:#a6e22e">element</span>.<span style="color:#a6e22e">innerHTML</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">_</span>.<span style="color:#a6e22e">join</span>([<span style="color:#e6db74">&#39;a&#39;</span>,<span style="color:#e6db74">&#39;b&#39;</span>],<span style="color:#e6db74">&#39;***&#39;</span>);
+	<span style="color:#a6e22e">rerun</span> <span style="color:#a6e22e">element</span>;
+}
+document.<span style="color:#a6e22e">addEventListener</span>(<span style="color:#e6db74">&#39;click&#39;</span>,()=&gt;{
+	<span style="color:#a6e22e">getComponent</span>().<span style="color:#a6e22e">then</span>(<span style="color:#a6e22e">element</span> =&gt; {
+		document.<span style="color:#a6e22e">body</span>.<span style="color:#a6e22e">appendChild</span>(<span style="color:#a6e22e">element</span>)
+	})
+})
+</code></pre></div><p>4.preFech:异步代码在网络空闲的时候自动下载</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript">document.<span style="color:#a6e22e">addEventListener</span>(<span style="color:#e6db74">&#39;click&#39;</span>,()=&gt;{
+	<span style="color:#66d9ef">import</span>(<span style="color:#75715e">/*webpackPrefetch:true*/</span><span style="color:#e6db74">&#39;/.click.js&#39;</span>).<span style="color:#a6e22e">then</span>(
+	({<span style="color:#66d9ef">default</span><span style="color:#f92672">:</span><span style="color:#a6e22e">func</span>}) =&gt; {
+		<span style="color:#a6e22e">func</span>()
+	})
+})
+</code></pre></div><p>5.caching：huancun</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript"><span style="color:#a6e22e">output</span><span style="color:#f92672">:</span>{
+	<span style="color:#a6e22e">filename</span><span style="color:#f92672">:</span><span style="color:#e6db74">&#39;[name].[contenthash].js&#39;</span>
+}
+</code></pre></div><p>6.shimming：垫片，一种兼容方案，将变量全局化</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript"><span style="color:#66d9ef">const</span> <span style="color:#a6e22e">webpack</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">require</span>(<span style="color:#e6db74">&#39;webpack&#39;</span>);
+
+<span style="color:#a6e22e">plugins</span><span style="color:#f92672">:</span>[
+	<span style="color:#66d9ef">new</span> <span style="color:#a6e22e">webpack</span>.<span style="color:#a6e22e">ProvidePlugin</span>({
+			<span style="color:#a6e22e">$</span><span style="color:#f92672">:</span><span style="color:#e6db74">&#39;jquery&#39;</span>
+		})
+]
+</code></pre></div><p>全局变量</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript"><span style="color:#a6e22e">module</span>.<span style="color:#a6e22e">exports</span> <span style="color:#f92672">=</span> (<span style="color:#a6e22e">env</span>) =&gt; {
+	<span style="color:#66d9ef">if</span>(<span style="color:#a6e22e">env</span> <span style="color:#f92672">&amp;&amp;</span> <span style="color:#a6e22e">env</span>.<span style="color:#a6e22e">production</span>){
+		<span style="color:#66d9ef">return</span> <span style="color:#a6e22e">merge</span>(<span style="color:#a6e22e">commonConfig</span>,<span style="color:#a6e22e">prodConfig</span>);
+	}<span style="color:#66d9ef">else</span>{
+		<span style="color:#66d9ef">return</span> <span style="color:#a6e22e">merge</span>(<span style="color:#a6e22e">commonConfig</span>,<span style="color:#a6e22e">devConfig</span>);
+	}
+}
+</code></pre></div><h2 id="五webpack底层探索">（五）webpack底层探索</h2>
+<p>###1.自己实现loader
+loader是用来处理各种资源的，它本质上是一个函数，我们来写一下，</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript"><span style="color:#75715e">//webpack.config.js
+</span><span style="color:#75715e"></span><span style="color:#66d9ef">const</span> <span style="color:#a6e22e">path</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">require</span>(<span style="color:#e6db74">&#39;path&#39;</span>);
+
+<span style="color:#a6e22e">module</span>.<span style="color:#a6e22e">exports</span> <span style="color:#f92672">=</span> {
+	<span style="color:#a6e22e">mode</span><span style="color:#f92672">:</span><span style="color:#e6db74">&#39;development&#39;</span>,
+	<span style="color:#a6e22e">entry</span><span style="color:#f92672">:</span>{
+		<span style="color:#a6e22e">main</span><span style="color:#f92672">:</span><span style="color:#e6db74">&#34;./src/index.js&#34;</span>
+	},
+	<span style="color:#a6e22e">resolveLoader</span><span style="color:#f92672">:</span>{
+		<span style="color:#a6e22e">modules</span><span style="color:#f92672">:</span>[<span style="color:#e6db74">&#39;node_modules&#39;</span>,<span style="color:#e6db74">&#39;./loaders&#39;</span>]
+	},
+	<span style="color:#a6e22e">module</span><span style="color:#f92672">:</span>{
+		<span style="color:#a6e22e">rules</span><span style="color:#f92672">:</span>[
+			{
+			<span style="color:#a6e22e">test</span><span style="color:#f92672">:</span><span style="color:#e6db74">/\.js$/</span>,
+			<span style="color:#a6e22e">use</span><span style="color:#f92672">:</span>{
+				<span style="color:#a6e22e">loader</span><span style="color:#f92672">:</span><span style="color:#e6db74">&#39;my-loader.js&#39;</span>,
+				<span style="color:#a6e22e">options</span><span style="color:#f92672">:</span>{
+					<span style="color:#a6e22e">name</span><span style="color:#f92672">:</span><span style="color:#e6db74">&#39;kk&#39;</span>
+				}
+			}
+
+		}
+
+		]
+	},
+	<span style="color:#a6e22e">output</span><span style="color:#f92672">:</span>{
+		<span style="color:#a6e22e">filename</span><span style="color:#f92672">:</span><span style="color:#e6db74">&#39;[name].js&#39;</span>,
+		<span style="color:#a6e22e">path</span><span style="color:#f92672">:</span><span style="color:#a6e22e">path</span>.<span style="color:#a6e22e">resolve</span>(<span style="color:#a6e22e">__dirname</span>,<span style="color:#e6db74">&#39;dist&#39;</span>)
+
+	}
+
+}
+</code></pre></div><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript"><span style="color:#75715e">//index.js
+</span><span style="color:#75715e"></span><span style="color:#a6e22e">console</span>.<span style="color:#a6e22e">log</span>(<span style="color:#e6db74">&#39;hello world&#39;</span>);
+
+</code></pre></div><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript"><span style="color:#75715e">//my-loader.js
+</span><span style="color:#75715e">//npm install loader-utils -D
+</span><span style="color:#75715e"></span>
+<span style="color:#66d9ef">const</span> <span style="color:#a6e22e">loaderUtils</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">require</span>(<span style="color:#e6db74">&#39;loader-utils&#39;</span>);
+
+<span style="color:#a6e22e">module</span>.<span style="color:#a6e22e">exports</span> <span style="color:#f92672">=</span> <span style="color:#66d9ef">function</span>(<span style="color:#a6e22e">source</span>){
+	<span style="color:#75715e">//1.直接处理参数
+</span><span style="color:#75715e"></span>	<span style="color:#66d9ef">const</span> <span style="color:#a6e22e">options</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">loaderUtils</span>.<span style="color:#a6e22e">getOptions</span>(<span style="color:#66d9ef">this</span>);
+	<span style="color:#75715e">// return source.replace(&#39;lee&#39;,options.name);
+</span><span style="color:#75715e"></span>
+	<span style="color:#75715e">//2.callback处理参数
+</span><span style="color:#75715e"></span>	<span style="color:#75715e">// const result = source.replace(&#39;lee&#39;,options.name);
+</span><span style="color:#75715e"></span>	<span style="color:#75715e">// this.callback(null,result);
+</span><span style="color:#75715e"></span>
+	<span style="color:#75715e">//3.写异步代码
+</span><span style="color:#75715e"></span>	<span style="color:#66d9ef">const</span> <span style="color:#a6e22e">callback</span> <span style="color:#f92672">=</span> <span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">async</span>();
+	<span style="color:#a6e22e">setTimeout</span>(()=&gt;{
+		<span style="color:#66d9ef">const</span> <span style="color:#a6e22e">result</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">source</span>.<span style="color:#a6e22e">replace</span>(<span style="color:#e6db74">&#39;dell&#39;</span>,<span style="color:#a6e22e">options</span>.<span style="color:#a6e22e">name</span>);
+		<span style="color:#a6e22e">callback</span>(<span style="color:#66d9ef">null</span>,<span style="color:#a6e22e">result</span>)
+	},<span style="color:#ae81ff">1000</span>)
+
+}
+
+</code></pre></div><h3 id="2自己实现plugin">2.自己实现plugin</h3>
+<p>plugin是用来帮助我们简化一些操作流程，它实质上是一个类，我们来写一下</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript"><span style="color:#75715e">//webpack.config.js
+</span><span style="color:#75715e"></span><span style="color:#66d9ef">const</span> <span style="color:#a6e22e">path</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">require</span>(<span style="color:#e6db74">&#39;path&#39;</span>);
+<span style="color:#66d9ef">const</span> <span style="color:#a6e22e">CopyrightWebpackPlugin</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">require</span>(<span style="color:#e6db74">&#39;./plugins/copyright-webpack-plugin.js&#39;</span>);
+
+
+
+
+<span style="color:#a6e22e">module</span>.<span style="color:#a6e22e">exports</span> <span style="color:#f92672">=</span> {
+	<span style="color:#a6e22e">mode</span><span style="color:#f92672">:</span><span style="color:#e6db74">&#39;development&#39;</span>,
+	<span style="color:#a6e22e">entry</span><span style="color:#f92672">:</span>{
+		<span style="color:#a6e22e">main</span><span style="color:#f92672">:</span><span style="color:#e6db74">&#34;./src/index.js&#34;</span>
+	},
+	<span style="color:#a6e22e">resolveLoader</span><span style="color:#f92672">:</span>{
+		<span style="color:#a6e22e">modules</span><span style="color:#f92672">:</span>[<span style="color:#e6db74">&#39;node_modules&#39;</span>,<span style="color:#e6db74">&#39;./loaders&#39;</span>]
+	},
+	<span style="color:#a6e22e">plugins</span><span style="color:#f92672">:</span>[
+		<span style="color:#66d9ef">new</span> <span style="color:#a6e22e">CopyrightWebpackPlugin</span>({
+			<span style="color:#a6e22e">name</span><span style="color:#f92672">:</span><span style="color:#e6db74">&#39;dell&#39;</span>
+		})
+	],
+	<span style="color:#a6e22e">output</span><span style="color:#f92672">:</span>{
+		<span style="color:#a6e22e">filename</span><span style="color:#f92672">:</span><span style="color:#e6db74">&#39;[name].js&#39;</span>,
+		<span style="color:#a6e22e">path</span><span style="color:#f92672">:</span><span style="color:#a6e22e">path</span>.<span style="color:#a6e22e">resolve</span>(<span style="color:#a6e22e">__dirname</span>,<span style="color:#e6db74">&#39;dist&#39;</span>)
+
+	}
+}
+
+</code></pre></div><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript"><span style="color:#75715e">//plugins/copyright-webpack-plugin.js
+</span><span style="color:#75715e"></span>
+
+
+<span style="color:#66d9ef">class</span> <span style="color:#a6e22e">CopyrightWebpackPlugin</span>{
+	<span style="color:#a6e22e">constructor</span>(<span style="color:#a6e22e">options</span>){
+		<span style="color:#a6e22e">cosnole</span>.<span style="color:#a6e22e">log</span>(<span style="color:#a6e22e">options</span>)
+	}
+	<span style="color:#a6e22e">apply</span>(<span style="color:#a6e22e">compiler</span>){
+		<span style="color:#a6e22e">compiler</span>.<span style="color:#a6e22e">hooks</span>.<span style="color:#a6e22e">emit</span>.<span style="color:#a6e22e">tapAsync</span>(<span style="color:#e6db74">&#39;CopyrightWebpackPlugin&#39;</span>,(<span style="color:#a6e22e">compiltion</span>,<span style="color:#a6e22e">cb</span>)=&gt;{
+			<span style="color:#a6e22e">compiltions</span>.<span style="color:#a6e22e">assets</span>[<span style="color:#e6db74">&#39;kk.txt&#39;</span>] <span style="color:#f92672">=</span> {
+				<span style="color:#a6e22e">source</span><span style="color:#f92672">:</span><span style="color:#66d9ef">function</span>(){
+					<span style="color:#66d9ef">return</span> <span style="color:#e6db74">&#39;kk&#39;</span>
+				},
+				<span style="color:#a6e22e">size</span><span style="color:#f92672">:</span><span style="color:#66d9ef">function</span>(){
+					<span style="color:#66d9ef">return</span> <span style="color:#ae81ff">2</span>;
+				}
+				
+				};
+				<span style="color:#a6e22e">cb</span>();
+		})
+	}
+	
+
+}
+<span style="color:#a6e22e">module</span>.<span style="color:#a6e22e">exports</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">CopyrightWebpackPlugin</span>;
+</code></pre></div><h3 id="3自己实现bundller">3.自己实现bundller</h3>
+<p>bundller实质上是要寻找层层引用，然后转化代码使之执行，我们来写一下</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript">
+
+<span style="color:#66d9ef">const</span> <span style="color:#a6e22e">fs</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">require</span>(<span style="color:#e6db74">&#39;fs&#39;</span>);
+<span style="color:#66d9ef">const</span> <span style="color:#a6e22e">path</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">require</span>(<span style="color:#e6db74">&#39;path&#39;</span>);
+<span style="color:#66d9ef">const</span> <span style="color:#a6e22e">parser</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">require</span>(<span style="color:#e6db74">&#39;@babel/parser&#39;</span>);
+<span style="color:#66d9ef">const</span> <span style="color:#a6e22e">traverse</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">require</span>(<span style="color:#e6db74">&#39;@babel/traverse&#39;</span>).<span style="color:#66d9ef">default</span>;
+<span style="color:#66d9ef">const</span> <span style="color:#a6e22e">babel</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">require</span>(<span style="color:#e6db74">&#39;@babel/core&#39;</span>);
+
+
+
+<span style="color:#75715e">//分析一个模块
+</span><span style="color:#75715e"></span><span style="color:#66d9ef">const</span> <span style="color:#a6e22e">moduleAnalyser</span> <span style="color:#f92672">=</span> (<span style="color:#a6e22e">filename</span>) =&gt; {
+	<span style="color:#75715e">//1.读取文件
+</span><span style="color:#75715e"></span>	<span style="color:#66d9ef">const</span> <span style="color:#a6e22e">content</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">fs</span>.<span style="color:#a6e22e">readFileSync</span>(<span style="color:#a6e22e">filename</span>,<span style="color:#e6db74">&#39;utf-8&#39;</span>); 
+	<span style="color:#75715e">//2.获得抽象语法树
+</span><span style="color:#75715e"></span>	<span style="color:#66d9ef">const</span> <span style="color:#a6e22e">ast</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">parser</span>.<span style="color:#a6e22e">parse</span>(<span style="color:#a6e22e">content</span>,{
+		<span style="color:#a6e22e">sourceType</span><span style="color:#f92672">:</span><span style="color:#e6db74">&#39;module&#39;</span>
+	});
+	<span style="color:#75715e">//3.找出第一个模块中引入模块的相对/绝对地址，转化后的代码
+</span><span style="color:#75715e"></span>	<span style="color:#66d9ef">const</span> <span style="color:#a6e22e">dependencies</span> <span style="color:#f92672">=</span> {};
+	<span style="color:#a6e22e">traverse</span>(<span style="color:#a6e22e">ast</span>,{
+		<span style="color:#a6e22e">ImportDeclaration</span>({ <span style="color:#a6e22e">node</span> }){
+			<span style="color:#66d9ef">const</span> <span style="color:#a6e22e">dirname</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">path</span>.<span style="color:#a6e22e">dirname</span>(<span style="color:#a6e22e">filename</span>);
+			<span style="color:#66d9ef">const</span> <span style="color:#a6e22e">newFile</span> <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;./&#39;</span> <span style="color:#f92672">+</span> <span style="color:#a6e22e">path</span>.<span style="color:#a6e22e">join</span>(<span style="color:#a6e22e">dirname</span>,<span style="color:#a6e22e">node</span>.<span style="color:#a6e22e">source</span>.<span style="color:#a6e22e">value</span>);
+			<span style="color:#a6e22e">dependencies</span>[<span style="color:#a6e22e">node</span>.<span style="color:#a6e22e">source</span>.<span style="color:#a6e22e">value</span>] <span style="color:#f92672">=</span> <span style="color:#a6e22e">newFile</span>;
+		}
+	});
+	<span style="color:#66d9ef">const</span> { <span style="color:#a6e22e">code</span> } <span style="color:#f92672">=</span> <span style="color:#a6e22e">babel</span>.<span style="color:#a6e22e">transformFromAst</span>(<span style="color:#a6e22e">ast</span>,<span style="color:#66d9ef">null</span>,{
+		<span style="color:#a6e22e">presets</span><span style="color:#f92672">:</span>[<span style="color:#e6db74">&#39;@babel/preset-env&#39;</span>]
+	});
+	<span style="color:#66d9ef">return</span> {
+		<span style="color:#a6e22e">filename</span>,
+		<span style="color:#a6e22e">dependencies</span>,
+		<span style="color:#a6e22e">code</span>
+	}
+	
+	
+}
+
+
+<span style="color:#75715e">//4.遍历所有的模块
+</span><span style="color:#75715e"></span><span style="color:#66d9ef">const</span> <span style="color:#a6e22e">makeDenpendencesGraph</span> <span style="color:#f92672">=</span> (<span style="color:#a6e22e">entry</span>) =&gt; {
+	<span style="color:#66d9ef">const</span> <span style="color:#a6e22e">entryModule</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">moduleAnalyser</span>(<span style="color:#a6e22e">entry</span>);
+	<span style="color:#66d9ef">const</span> <span style="color:#a6e22e">graphArray</span> <span style="color:#f92672">=</span> [ <span style="color:#a6e22e">entryModule</span> ];
+	<span style="color:#66d9ef">for</span>(<span style="color:#66d9ef">let</span> <span style="color:#a6e22e">i</span> <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>; <span style="color:#a6e22e">i</span><span style="color:#f92672">&lt;</span><span style="color:#a6e22e">graphArray</span>.<span style="color:#a6e22e">length</span>; <span style="color:#a6e22e">i</span><span style="color:#f92672">++</span>){
+		<span style="color:#66d9ef">const</span> <span style="color:#a6e22e">item</span>  <span style="color:#f92672">=</span> <span style="color:#a6e22e">graphArray</span>[<span style="color:#a6e22e">i</span>];
+		<span style="color:#66d9ef">const</span> { <span style="color:#a6e22e">dependencies</span> } <span style="color:#f92672">=</span> <span style="color:#a6e22e">item</span>;
+		<span style="color:#66d9ef">if</span>(<span style="color:#a6e22e">dependencies</span>){
+			<span style="color:#66d9ef">for</span>(<span style="color:#66d9ef">let</span> <span style="color:#a6e22e">j</span> <span style="color:#66d9ef">in</span> <span style="color:#a6e22e">dependencies</span>){
+				<span style="color:#a6e22e">graphArray</span>.<span style="color:#a6e22e">push</span>(
+					<span style="color:#a6e22e">moduleAnalyser</span>(<span style="color:#a6e22e">dependencies</span>[<span style="color:#a6e22e">j</span>])
+					);
+			}
+		}
+	}
+	<span style="color:#66d9ef">const</span> <span style="color:#a6e22e">graph</span> <span style="color:#f92672">=</span> {};
+	<span style="color:#a6e22e">graphArray</span>.<span style="color:#a6e22e">forEach</span>(<span style="color:#a6e22e">item</span> =&gt; {
+		<span style="color:#a6e22e">graph</span>[<span style="color:#a6e22e">item</span>.<span style="color:#a6e22e">filename</span>] <span style="color:#f92672">=</span> {
+			<span style="color:#a6e22e">dependencies</span><span style="color:#f92672">:</span><span style="color:#a6e22e">item</span>.<span style="color:#a6e22e">dependencies</span>,
+			<span style="color:#a6e22e">code</span><span style="color:#f92672">:</span><span style="color:#a6e22e">item</span>.<span style="color:#a6e22e">code</span>
+		}
+
+	});
+	<span style="color:#66d9ef">return</span> <span style="color:#a6e22e">graph</span>;
+}
+
+
+<span style="color:#75715e">//5.生成打包后的代码
+</span><span style="color:#75715e"></span><span style="color:#66d9ef">const</span> <span style="color:#a6e22e">generateCode</span> <span style="color:#f92672">=</span> (<span style="color:#a6e22e">entry</span>) =&gt; {
+	<span style="color:#66d9ef">const</span> <span style="color:#a6e22e">graph</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">JSON</span>.<span style="color:#a6e22e">stringify</span>(<span style="color:#a6e22e">makeDenpendencesGraph</span>(<span style="color:#a6e22e">entry</span>))
+	<span style="color:#66d9ef">return</span> <span style="color:#e6db74">`
+</span><span style="color:#e6db74">		(function(graph){
+</span><span style="color:#e6db74">			function require(module){
+</span><span style="color:#e6db74">				function localRequire(relativePath){
+</span><span style="color:#e6db74">					return require(graph[module].dependencies[relativePath]);
+</span><span style="color:#e6db74">				}
+</span><span style="color:#e6db74">				var exports = {};
+</span><span style="color:#e6db74">				(function(require,exports,code){
+</span><span style="color:#e6db74">					eval(code);
+</span><span style="color:#e6db74">				})(localRequire,exports,graph[module].code)	
+</span><span style="color:#e6db74">				return exports;
+</span><span style="color:#e6db74">			};
+</span><span style="color:#e6db74">
+</span><span style="color:#e6db74">			require(&#39;</span><span style="color:#e6db74">${</span><span style="color:#a6e22e">entry</span><span style="color:#e6db74">}</span><span style="color:#e6db74">&#39;)
+</span><span style="color:#e6db74">
+</span><span style="color:#e6db74">		})(&#39;</span><span style="color:#e6db74">${</span><span style="color:#a6e22e">graph</span><span style="color:#e6db74">}</span><span style="color:#e6db74">&#39;)
+</span><span style="color:#e6db74">	`</span>;
+}
+<span style="color:#66d9ef">const</span> <span style="color:#a6e22e">code</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">generateCode</span>(<span style="color:#e6db74">&#39;./src/index.js&#39;</span>);
+
+<span style="color:#a6e22e">console</span>.<span style="color:#a6e22e">log</span>(<span style="color:#a6e22e">code</span>)
+</code></pre></div><p><code>终于写完了，参考教程放在下面：</code>
+<a href="https://coding.imooc.com/class/316.html">https://coding.imooc.com/class/316.html</a></p>
+
+    </div>
+    <video id="my_video" style="height: 300px;width:100%" controls="controls"></video>
+
+</article>
+<div class="pagination">
+    
+    <div class="prev"> <a href="https://Apollo2light.github.io/Apollo2light/frontend/8.ts%E5%9F%BA%E7%A1%80/">Previous Post</a> </div>
+    
+    
+    <div class="next"> <a href="https://Apollo2light.github.io/Apollo2light/frontend/10.nodejs%E5%9F%BA%E7%A1%80/">Next Post</a> </div>
+    
+</div>
+
+
+<script>
+    try{
+        
+        let src = document.getElementsByTagName('code')[0].innerText;
+        
+        if(src.indexOf("mp4")!=-1){
+            document.getElementById('my_video').setAttribute("src",src)
+        }else{
+            
+            let video = document.getElementById('my_video');
+            if (video != null){
+                video.parentNode.removeChild(video);
+            }
+        }
+    }catch(e){
+        
+        let video = document.getElementById('my_video');
+        if (video != null){
+            video.parentNode.removeChild(video);
+        }
+    }
+</script>
+
+        </main><footer class="site-footer">
+	<span class="right">
+		<em>Apollo&#39;s blog</em>
+	</span>
+</footer>
+</body>
+    <script>
+        
+    </script>
+</html>

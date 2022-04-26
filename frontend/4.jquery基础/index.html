@@ -1,0 +1,696 @@
+<!DOCTYPE html>
+<html lang=en-us><head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title> 4.jquery基础 - Apollo&#39;s blog</title>
+    <meta name="description" content="1.匿名函数自执行 jquery2.0.3中，源码首先是一个自执行的匿名函数, 匿名函数就是没有函数名的函数，目的是为了保护变量不被污染,如下：
+(function(window,undefined){ //具体源码  })(window); 要理解它需要先来了解js的函数命名：
+js函数有2种命名方式：声明式和函数表达式
+ 声明式：function demo(){ //会被解释器优先编译 } 函数表达式： let demo = function(){ //解释器逐行解释 }  声明式：不论在哪里调用demo都能正常输出a，因为在开始执行前声明的函数都被提升了
+demo(); function demo(){ console.log(&#39;a&#39;) } 函数表达式：必须要在表达式后才能调用demo，因为解释器是逐行执行
+demo(); let demo = function(){ console.log(&#39;a&#39;) } 比对一下就可知：
+(function(){ }) () | | demo () 那为什么不写成：function(){ }()呢？答案是语法里并不支持这么做，最简的方式就是加小括号
+(function(){ })() 2.封装好的功能暴露到全局 采用匿名函数自执行可以很好的保护变量不受污染，但也需要把写好的功能暴露出去提供使用,我们平常使用时：
+$()或者jQuery() 在jquery2.0.3中，它是将其挂载到了window全局对象来实现的
+(function(window,undefined){ if ( typeof window === &#34;object&#34; &amp;&amp; typeof window.document === &#34;object&#34; ) { window.jQuery = window.$ = jQuery; } })(window); 3.">
+    <link rel="canonical" href="https://Apollo2light.github.io/Apollo2light/frontend/4.jquery%E5%9F%BA%E7%A1%80/">
+    <meta property="og:title" content="4.jquery基础">
+    <meta property="og:type" content="article">
+    <meta property="og:url" content="https://Apollo2light.github.io/Apollo2light/frontend/4.jquery%E5%9F%BA%E7%A1%80/">
+    <meta property="og:description" content="1.匿名函数自执行 jquery2.0.3中，源码首先是一个自执行的匿名函数, 匿名函数就是没有函数名的函数，目的是为了保护变量不被污染,如下：
+(function(window,undefined){ //具体源码  })(window); 要理解它需要先来了解js的函数命名：
+js函数有2种命名方式：声明式和函数表达式
+ 声明式：function demo(){ //会被解释器优先编译 } 函数表达式： let demo = function(){ //解释器逐行解释 }  声明式：不论在哪里调用demo都能正常输出a，因为在开始执行前声明的函数都被提升了
+demo(); function demo(){ console.log(&#39;a&#39;) } 函数表达式：必须要在表达式后才能调用demo，因为解释器是逐行执行
+demo(); let demo = function(){ console.log(&#39;a&#39;) } 比对一下就可知：
+(function(){ }) () | | demo () 那为什么不写成：function(){ }()呢？答案是语法里并不支持这么做，最简的方式就是加小括号
+(function(){ })() 2.封装好的功能暴露到全局 采用匿名函数自执行可以很好的保护变量不受污染，但也需要把写好的功能暴露出去提供使用,我们平常使用时：
+$()或者jQuery() 在jquery2.0.3中，它是将其挂载到了window全局对象来实现的
+(function(window,undefined){ if ( typeof window === &#34;object&#34; &amp;&amp; typeof window.document === &#34;object&#34; ) { window.jQuery = window.$ = jQuery; } })(window); 3.">
+    <meta property="og:site_name" content="Apollo&#39;s blog">
+    <link rel="stylesheet" href="https://Apollo2light.github.io/Apollo2light/css/main.min.7fdf1d02dafd1a6eb5cfd0d707e17e33515b866f5d305a0ab01a4095577484fe.css" integrity="sha256-f98dAtr9Gm61z9DXB&#43;F&#43;M1Fbhm9dMFoKsBpAlVd0hP4=">
+    <meta name="generator" content="Hugo 0.73.0" />
+    <script type="module" src="https://unpkg.com/ionicons@5.1.2/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule="" src="https://unpkg.com/ionicons@5.1.2/dist/ionicons/ionicons.js"></script>
+    
+</head>
+<body><header class="site-header">
+    <nav class="site-nav" role="navigation" aria-label="breadcrumb">
+    <ol itemscope itemtype="https://schema.org/BreadcrumbList" class="breadcrumb"><li class="breadcrumb-item  " 
+  itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+  <a itemtype="https://schema.org/Thing" itemprop="item" href="https://Apollo2light.github.io/Apollo2light/">
+    <span itemprop="name">Apollo&#39;s blog</span>
+  </a>
+  <meta itemprop="position" content="0" />
+</li>/<li class="breadcrumb-item  " 
+  itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+  <a itemtype="https://schema.org/Thing" itemprop="item" href="https://Apollo2light.github.io/Apollo2light/frontend/">
+    <span itemprop="name">frontend</span>
+  </a>
+  <meta itemprop="position" content="0" />
+</li>/<li class="breadcrumb-item active hidden" aria-current="page"
+  itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+  <a itemtype="https://schema.org/Thing" itemprop="item" href="https://Apollo2light.github.io/Apollo2light/frontend/4.jquery%E5%9F%BA%E7%A1%80/">
+    <span itemprop="name">4.jquery%E5%9F%BA%E7%A1%80</span>
+  </a>
+  <meta itemprop="position" content="1" />
+</li></ol>
+    </nav>
+    <h1 class="site-title hidden">
+		<a href="https://Apollo2light.github.io/Apollo2light/">Apollo&#39;s blog</a>
+    </h1>
+</header><main id="content">
+<article role="article" class="content post h-entry" itemscope="" itemtype="http://schema.org/BlogPosting">
+    <header class="post-header">        
+        <h2 class="post-title" itemprop="name headline">4.jquery基础</h2>
+        <span class="post-meta">
+            <time class="date-published" datetime="2022-04-26T22:58:40&#43;07:00" itemprop="datePublished">
+                Tue, 26 Apr 2022
+            </time>
+            
+        </span>
+    </header>
+    <div class="post-content" itemprop="articleBody">
+        <h2 id="1匿名函数自执行">1.匿名函数自执行</h2>
+<p><code>jquery2.0.3中，源码首先是一个自执行的匿名函数, 匿名函数就是没有函数名的函数，目的是为了保护变量不被污染,如下：</code></p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript">(<span style="color:#66d9ef">function</span>(window,<span style="color:#66d9ef">undefined</span>){
+	<span style="color:#75715e">//具体源码
+</span><span style="color:#75715e"></span>
+})(window);
+</code></pre></div><p><code>要理解它需要先来了解js的函数命名：</code></p>
+<p><code>js函数有2种命名方式：声明式和函数表达式</code></p>
+<ul>
+<li>声明式：function demo(){  //会被解释器优先编译 }</li>
+<li>函数表达式： let demo = function(){  //解释器逐行解释 }</li>
+</ul>
+<p><code>声明式：不论在哪里调用demo都能正常输出a，因为在开始执行前声明的函数都被提升了</code></p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript"><span style="color:#a6e22e">demo</span>();
+
+<span style="color:#66d9ef">function</span> <span style="color:#a6e22e">demo</span>(){
+	<span style="color:#a6e22e">console</span>.<span style="color:#a6e22e">log</span>(<span style="color:#e6db74">&#39;a&#39;</span>)
+}
+
+</code></pre></div><p><code>函数表达式：必须要在表达式后才能调用demo，因为解释器是逐行执行</code></p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript"><span style="color:#a6e22e">demo</span>();
+
+<span style="color:#66d9ef">let</span> <span style="color:#a6e22e">demo</span> <span style="color:#f92672">=</span> <span style="color:#66d9ef">function</span>(){
+	<span style="color:#a6e22e">console</span>.<span style="color:#a6e22e">log</span>(<span style="color:#e6db74">&#39;a&#39;</span>)
+}
+</code></pre></div><p><code>比对一下就可知：</code></p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript">(<span style="color:#66d9ef">function</span>(){ })       ()
+      <span style="color:#f92672">|</span>               <span style="color:#f92672">|</span>
+     <span style="color:#a6e22e">demo</span>             ()
+</code></pre></div><p><code>那为什么不写成：function(){ }()呢？答案是语法里并不支持这么做，最简的方式就是加小括号</code></p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript">(<span style="color:#66d9ef">function</span>(){ })()
+</code></pre></div><h2 id="2封装好的功能暴露到全局">2.封装好的功能暴露到全局</h2>
+<p><code>采用匿名函数自执行可以很好的保护变量不受污染，但也需要把写好的功能暴露出去提供使用,我们平常使用时：</code></p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript"><span style="color:#a6e22e">$</span>()<span style="color:#a6e22e">或者jQuery</span>()
+</code></pre></div><p><code>在jquery2.0.3中，它是将其挂载到了window全局对象来实现的</code></p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript">(<span style="color:#66d9ef">function</span>(window,<span style="color:#66d9ef">undefined</span>){
+	<span style="color:#66d9ef">if</span> ( <span style="color:#66d9ef">typeof</span> window <span style="color:#f92672">===</span> <span style="color:#e6db74">&#34;object&#34;</span> <span style="color:#f92672">&amp;&amp;</span> <span style="color:#66d9ef">typeof</span> window.document <span style="color:#f92672">===</span> <span style="color:#e6db74">&#34;object&#34;</span> ) {
+		window.<span style="color:#a6e22e">jQuery</span> <span style="color:#f92672">=</span> window.<span style="color:#a6e22e">$</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">jQuery</span>;
+	}
+})(window);
+</code></pre></div><h2 id="3原型添加封装好的功能">3.原型添加封装好的功能</h2>
+<p><code>在保证变量不受污染且封装好的功能可以被外部使用的情况下，我们就可以来封装所需要的功能了</code></p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript">(<span style="color:#66d9ef">function</span>(window,<span style="color:#66d9ef">undefined</span>){
+	
+	<span style="color:#66d9ef">var</span> <span style="color:#a6e22e">jQuery</span> <span style="color:#f92672">=</span> <span style="color:#66d9ef">function</span>( <span style="color:#a6e22e">selector</span>, <span style="color:#a6e22e">context</span> ) {
+		<span style="color:#66d9ef">return</span> <span style="color:#66d9ef">new</span> <span style="color:#a6e22e">jQuery</span>.<span style="color:#a6e22e">fn</span>.<span style="color:#a6e22e">init</span>( <span style="color:#a6e22e">selector</span>, <span style="color:#a6e22e">context</span>, <span style="color:#a6e22e">rootjQuery</span> );
+	}
+
+
+	<span style="color:#a6e22e">jQuery</span>.<span style="color:#a6e22e">fn</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">jQuery</span>.<span style="color:#a6e22e">prototype</span> <span style="color:#f92672">=</span> { }
+
+	<span style="color:#a6e22e">jQuery</span>.<span style="color:#a6e22e">fn</span>.<span style="color:#a6e22e">init</span>.<span style="color:#a6e22e">prototype</span><span style="color:#f92672">=</span> <span style="color:#a6e22e">jQuery</span>.<span style="color:#a6e22e">fn</span>
+
+	<span style="color:#66d9ef">if</span> ( <span style="color:#66d9ef">typeof</span> window <span style="color:#f92672">===</span> <span style="color:#e6db74">&#34;object&#34;</span> <span style="color:#f92672">&amp;&amp;</span> <span style="color:#66d9ef">typeof</span> window.document <span style="color:#f92672">===</span> <span style="color:#e6db74">&#34;object&#34;</span> ) {
+		window.<span style="color:#a6e22e">jQuery</span> <span style="color:#f92672">=</span> window.<span style="color:#a6e22e">$</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">jQuery</span>;
+	}
+})(window);
+
+</code></pre></div><p><code>这里出现的prototype是js的原型概念，所以需要先来了解一下js的面向对象：</code></p>
+<p><code>js创建类与实例时，采用的是构造函数+原型对象的方式，属性写在构造函数中，方法写在原型对象上，需要提前知晓的是：</code></p>
+<ul>
+<li>每个对象都有隐藏属性__proto__(隐式原型)，该属性指向创建当前对象的函数的prototype，即：fn.__proto__ === Fn.prototype</li>
+<li>每个函数都有自带属性prototype(显式原型)，它的取值是个对象，该对象默认只有一个叫做constructor的属性，指向这个函数本身</li>
+</ul>
+<p><code>以下方代码为例：</code></p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript"><span style="color:#66d9ef">let</span> <span style="color:#a6e22e">Func</span><span style="color:#f92672">=</span><span style="color:#66d9ef">function</span>(){ }
+<span style="color:#66d9ef">let</span> <span style="color:#a6e22e">obj</span> <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> <span style="color:#a6e22e">Func</span>()
+</code></pre></div><p><code>在使用new时进行了以下三步：</code></p>
+<p><code>1. new先新建了个空对象</code></p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript"><span style="color:#66d9ef">var</span> <span style="color:#a6e22e">obj</span> <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> Object();
+</code></pre></div><p><code>此时：</code></p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript"><span style="color:#a6e22e">obj</span>.<span style="color:#a6e22e">__proto__</span><span style="color:#f92672">===</span> Object.<span style="color:#a6e22e">prototype</span> <span style="color:#f92672">===</span> <span style="color:#66d9ef">null</span>
+</code></pre></div><p><code>2. 将实例的原型对象指向构造函数的原型对象</code></p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript"><span style="color:#a6e22e">obj</span>.<span style="color:#a6e22e">__proto__</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">Foo</span>.<span style="color:#a6e22e">prototype</span>;
+</code></pre></div><p><code>此时：</code></p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript"><span style="color:#a6e22e">Foo</span>.<span style="color:#a6e22e">prototype</span>.<span style="color:#a6e22e">_prototype_</span> <span style="color:#f92672">===</span> Object.<span style="color:#a6e22e">prototype</span> <span style="color:#f92672">===</span> <span style="color:#66d9ef">null</span>
+<span style="color:#a6e22e">Foo</span>.<span style="color:#a6e22e">prototype</span>.<span style="color:#a6e22e">constructor</span><span style="color:#f92672">===</span> <span style="color:#66d9ef">undefined</span>
+</code></pre></div><p><code>3.改变this指向</code></p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript"><span style="color:#66d9ef">let</span> <span style="color:#a6e22e">result</span> <span style="color:#f92672">=</span><span style="color:#a6e22e">Func</span>.<span style="color:#a6e22e">call</span>(<span style="color:#a6e22e">obj</span>);
+</code></pre></div><p><code>原本Foo.prototype.constructor指向Foo，但第二步中导致Foo.prototype.constructor指向null，所以需要修改this指向</code></p>
+<p><code>所以我们可以得出，在js中，obj = new Object.prototype，obj本质上是被Object函数创建的，在jQuery中我们期待的使用方法是类似jQuery().css()的形式，为了实现这种简化，只需要将jQuery.prototype指向jQuery.fn.init.prototype，即jQuery原型对象上的init方法的原型对象，这样在init方法里将对象返回即可，init函数才是真正的构造函数</code></p>
+<h2 id="4选择器分类">4.选择器分类</h2>
+<p><code>在使用jquery时，我们采用的是链式调用，这是因为在每个选择器分类的后面，都将this对象返回，下面是选择器的具体分类：</code></p>
+<ul>
+<li>1.不合法选择器直接返回this</li>
+<li>2.选择器是字符串
+<ul>
+<li>2.1 标签类型的字符串，比如$(<code>&quot;&lt;div&gt;&quot;</code>) $(<code>&quot;&lt;div&gt;1 &lt;/div&gt;&lt;div&gt;2 &lt;/div&gt;&quot;</code>)</li>
+<li>2.2 id，class或者特殊的标签类型字符串</li>
+</ul>
+</li>
+<li>3.选择器是dom元素,比如$(this),$(document)</li>
+<li>4.选择器是函数元素, 比如$(function(){ })</li>
+<li>5.选择器是其他元素，比如$([]),$({ })</li>
+</ul>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript">
+<span style="color:#a6e22e">jQuery</span>.<span style="color:#a6e22e">fn</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">jQuery</span>.<span style="color:#a6e22e">prototype</span> <span style="color:#f92672">=</span>{ 
+    <span style="color:#75715e">//jquery的版本号 
+</span><span style="color:#75715e"></span>    <span style="color:#a6e22e">jquery</span><span style="color:#f92672">:</span> <span style="color:#a6e22e">core_version</span>,
+    
+    <span style="color:#75715e">//将this引用改回到jquery
+</span><span style="color:#75715e"></span>    <span style="color:#a6e22e">constructor</span><span style="color:#f92672">:</span><span style="color:#a6e22e">jQuery</span>,
+    
+    <span style="color:#75715e">//初始化构造函数
+</span><span style="color:#75715e"></span>    <span style="color:#75715e">//selector：选择器
+</span><span style="color:#75715e"></span>    <span style="color:#75715e">//context：上下文环境
+</span><span style="color:#75715e"></span>    <span style="color:#75715e">//rootQuery：？？？？？？？
+</span><span style="color:#75715e"></span>    <span style="color:#a6e22e">init</span><span style="color:#f92672">:</span><span style="color:#66d9ef">function</span>(<span style="color:#a6e22e">selector</span>,<span style="color:#a6e22e">context</span>,<span style="color:#a6e22e">rootQuery</span>){ 
+       <span style="color:#66d9ef">var</span> <span style="color:#a6e22e">match</span>;
+       <span style="color:#75715e">//1.不合法选择器直接返回this,比如$(&#34;&#34;), $(null), $(undefined), $(false)
+</span><span style="color:#75715e"></span>       <span style="color:#66d9ef">if</span> ( <span style="color:#f92672">!</span><span style="color:#a6e22e">selector</span> ) { <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">this</span>; }
+        
+       <span style="color:#75715e">//2.选择器是字符串
+</span><span style="color:#75715e"></span>       <span style="color:#66d9ef">if</span> ( <span style="color:#66d9ef">typeof</span> <span style="color:#a6e22e">selector</span> <span style="color:#f92672">===</span> <span style="color:#e6db74">&#34;string&#34;</span> ) {
+
+       	<span style="color:#75715e">//2.1 标签类型的字符串，比如(“&lt;div&gt;”) (“&lt;div&gt; &lt;/div&gt;”)
+</span><span style="color:#75715e"></span>       	<span style="color:#66d9ef">if</span> ( <span style="color:#a6e22e">selector</span>.<span style="color:#a6e22e">charAt</span>(<span style="color:#ae81ff">0</span>) <span style="color:#f92672">===</span> <span style="color:#e6db74">&#34;&lt;&#34;</span> <span style="color:#f92672">&amp;&amp;</span> <span style="color:#a6e22e">selector</span>.<span style="color:#a6e22e">charAt</span>( <span style="color:#a6e22e">selector</span>.<span style="color:#a6e22e">length</span> <span style="color:#f92672">-</span> <span style="color:#ae81ff">1</span> ) <span style="color:#f92672">===</span> <span style="color:#e6db74">&#34;&gt;&#34;</span> <span style="color:#f92672">&amp;&amp;</span> <span style="color:#a6e22e">selector</span>.<span style="color:#a6e22e">length</span> <span style="color:#f92672">&gt;=</span> <span style="color:#ae81ff">3</span> ) {
+     		<span style="color:#75715e">//match=[null,&#39;&lt;div&gt;&#39;,null]
+</span><span style="color:#75715e"></span>     		<span style="color:#a6e22e">match</span><span style="color:#f92672">=</span>[<span style="color:#66d9ef">null</span>,<span style="color:#a6e22e">selector</span>,<span style="color:#66d9ef">null</span>]
+   		}<span style="color:#66d9ef">else</span>{
+   		<span style="color:#75715e">//2.2 id，class或者特殊的标签类型字符串
+</span><span style="color:#75715e"></span>   		<span style="color:#75715e">//match = null; (“.class”) (“div”) (“#id div.class”)
+</span><span style="color:#75715e"></span>   		<span style="color:#75715e">//match = [&#34;#id&#34;,null,&#34;#id&#34;];(“#id”)
+</span><span style="color:#75715e"></span>   		<span style="color:#75715e">//match = [&#34;&lt;div&gt;hello&#34;,&#34;&lt;div&gt;&#34;,null];(“&lt;div&gt;hello”)
+</span><span style="color:#75715e"></span>   		<span style="color:#a6e22e">match</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">rquickExpr</span>.<span style="color:#a6e22e">exec</span>( <span style="color:#a6e22e">selector</span> );
+   		}
+
+   		<span style="color:#75715e">//$(`&#34;&lt;div&gt;&#34;`),$(“#id”)
+</span><span style="color:#75715e"></span>   		<span style="color:#66d9ef">if</span> ( <span style="color:#a6e22e">match</span> <span style="color:#f92672">&amp;&amp;</span> (<span style="color:#a6e22e">match</span>[<span style="color:#ae81ff">1</span>] <span style="color:#f92672">||</span> <span style="color:#f92672">!</span><span style="color:#a6e22e">context</span>) ) {
+	<span style="color:#75715e">//$(`&#34;&lt;div&gt;&#34;`)
+</span><span style="color:#75715e"></span>	<span style="color:#66d9ef">if</span> ( <span style="color:#a6e22e">match</span>[<span style="color:#ae81ff">1</span>] ){
+		<span style="color:#75715e">//$(`&#34;&lt;div&gt;&#34;`,$(document))
+</span><span style="color:#75715e"></span>		<span style="color:#a6e22e">context</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">context</span> <span style="color:#66d9ef">instanceof</span> <span style="color:#a6e22e">jQuery</span> <span style="color:#f92672">?</span> <span style="color:#a6e22e">context</span>[<span style="color:#ae81ff">0</span>] <span style="color:#f92672">:</span> <span style="color:#a6e22e">context</span>;
+
+		<span style="color:#75715e">//jQuery.parseHTML:将字符串转为[&#39;div&#39;,&#39;div&#39;]的格式
+</span><span style="color:#75715e"></span>		<span style="color:#75715e">//jQuery.merge
+</span><span style="color:#75715e"></span>		<span style="color:#a6e22e">jQuery</span>.<span style="color:#a6e22e">merge</span>( <span style="color:#66d9ef">this</span>, <span style="color:#a6e22e">jQuery</span>.<span style="color:#a6e22e">parseHTML</span>(
+		<span style="color:#a6e22e">match</span>[<span style="color:#ae81ff">1</span>],
+		<span style="color:#a6e22e">context</span> <span style="color:#f92672">&amp;&amp;</span> <span style="color:#a6e22e">context</span>.<span style="color:#a6e22e">nodeType</span> <span style="color:#f92672">?</span> <span style="color:#a6e22e">context</span>.<span style="color:#a6e22e">ownerDocument</span> <span style="color:#f92672">||</span> <span style="color:#a6e22e">context</span> <span style="color:#f92672">:</span> document,
+		<span style="color:#66d9ef">true</span>
+	) );
+	
+	<span style="color:#75715e">//处理带属性的单标签$(&#39;&lt;li&gt;&#39;,{title:&#39;hello&#39;})
+</span><span style="color:#75715e"></span>	<span style="color:#66d9ef">if</span> ( <span style="color:#a6e22e">rsingleTag</span>.<span style="color:#a6e22e">test</span>( <span style="color:#a6e22e">match</span>[<span style="color:#ae81ff">1</span>] ) <span style="color:#f92672">&amp;&amp;</span> <span style="color:#a6e22e">jQuery</span>.<span style="color:#a6e22e">isPlainObject</span>( <span style="color:#a6e22e">context</span> ) ) {
+		<span style="color:#66d9ef">for</span> ( <span style="color:#a6e22e">match</span> <span style="color:#66d9ef">in</span> <span style="color:#a6e22e">context</span> ) {
+			<span style="color:#75715e">// Properties of context are called as methods if possible
+</span><span style="color:#75715e"></span>			<span style="color:#66d9ef">if</span> ( <span style="color:#a6e22e">jQuery</span>.<span style="color:#a6e22e">isFunction</span>( <span style="color:#66d9ef">this</span>[ <span style="color:#a6e22e">match</span> ] ) ) {
+				<span style="color:#66d9ef">this</span>[ <span style="color:#a6e22e">match</span> ]( <span style="color:#a6e22e">context</span>[ <span style="color:#a6e22e">match</span> ] );
+
+			<span style="color:#75715e">// ...and otherwise set as attributes
+</span><span style="color:#75715e"></span>			} <span style="color:#66d9ef">else</span> {
+				<span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">attr</span>( <span style="color:#a6e22e">match</span>, <span style="color:#a6e22e">context</span>[ <span style="color:#a6e22e">match</span> ] );
+			}
+		}
+	}
+	<span style="color:#75715e">//处理好的结果返回
+</span><span style="color:#75715e"></span>	<span style="color:#66d9ef">return</span> <span style="color:#66d9ef">this</span>;
+	}<span style="color:#66d9ef">else</span>{
+		<span style="color:#75715e">//选择器是id类型 ，比如 $(“#id”)
+</span><span style="color:#75715e"></span>		<span style="color:#66d9ef">if</span> ( <span style="color:#a6e22e">elem</span> <span style="color:#f92672">&amp;&amp;</span> <span style="color:#a6e22e">elem</span>.<span style="color:#a6e22e">parentNode</span> ) { 
+			<span style="color:#75715e">//黑莓4.6的bug 
+</span><span style="color:#75715e"></span>			<span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">length</span> <span style="color:#f92672">=</span> <span style="color:#ae81ff">1</span>;
+			<span style="color:#66d9ef">this</span>[<span style="color:#ae81ff">0</span>] <span style="color:#f92672">=</span> <span style="color:#a6e22e">elem</span>;
+		}
+		<span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">context</span> <span style="color:#f92672">=</span> document;
+		<span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">selector</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">selector</span>;
+		<span style="color:#75715e">//返回结果
+</span><span style="color:#75715e"></span>		<span style="color:#66d9ef">return</span> <span style="color:#66d9ef">this</span>;
+		}
+	<span style="color:#75715e">//多层级查找调用find去sizzle拆分
+</span><span style="color:#75715e"></span>	}<span style="color:#66d9ef">else</span> <span style="color:#66d9ef">if</span> ( <span style="color:#f92672">!</span><span style="color:#a6e22e">context</span> <span style="color:#f92672">||</span> <span style="color:#a6e22e">context</span>.<span style="color:#a6e22e">jquery</span> ) {
+		<span style="color:#75715e">//处理$(&#39;ul&#39;,document)情况
+</span><span style="color:#75715e"></span>	}<span style="color:#66d9ef">else</span> {
+		<span style="color:#75715e">//处理$(&#39;ul&#39;,$(document))情况
+</span><span style="color:#75715e"></span>	}
+
+	<span style="color:#75715e">// 选择器是dom节点，比如$(this),$(document)
+</span><span style="color:#75715e"></span>   	}<span style="color:#66d9ef">else</span> <span style="color:#66d9ef">if</span>(<span style="color:#a6e22e">selector</span>.<span style="color:#a6e22e">nodeType</span>){
+	
+	<span style="color:#75715e">// 选择器是函数，比如$(function(){ })
+</span><span style="color:#75715e"></span>	<span style="color:#75715e">//$(function(){ }) 等同于 $(document).ready(function(){ })
+</span><span style="color:#75715e"></span>   	}<span style="color:#66d9ef">else</span> <span style="color:#66d9ef">if</span> ( <span style="color:#a6e22e">jQuery</span>.<span style="color:#a6e22e">isFunction</span>( <span style="color:#a6e22e">selector</span> ) ) {
+
+   	}
+
+   	<span style="color:#75715e">//处理$($(&#39;#div&#39;))的情况
+</span><span style="color:#75715e"></span>   	<span style="color:#66d9ef">if</span> ( <span style="color:#a6e22e">selector</span>.<span style="color:#a6e22e">selector</span> <span style="color:#f92672">!==</span> <span style="color:#66d9ef">undefined</span> ) {
+		<span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">selector</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">selector</span>.<span style="color:#a6e22e">selector</span>;
+		<span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">context</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">selector</span>.<span style="color:#a6e22e">context</span>;
+	}
+
+   	<span style="color:#75715e">// 选择器是其他元素，比如$([]),$({ })
+</span><span style="color:#75715e"></span>   	<span style="color:#75715e">//将元素集合转为this = {0:&#34;xx&#34;,1:&#39;sss&#39;,length:2}格式
+</span><span style="color:#75715e"></span>	<span style="color:#a6e22e">retur</span>
+  }
+}
+</code></pre></div><h2 id="5jquery静态方法">5.jQuery静态方法</h2>
+<p><code>jquery内部操作时需要用到一些方法，全部挂在jQuery原型上</code></p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript"><span style="color:#a6e22e">core_deletedIds</span> <span style="color:#f92672">=</span> [],
+<span style="color:#a6e22e">core_slice</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">core_deletedIds</span>.<span style="color:#a6e22e">slice</span>
+
+<span style="color:#a6e22e">jQuery</span>.<span style="color:#a6e22e">fn</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">jQuery</span>.<span style="color:#a6e22e">prototype</span> <span style="color:#f92672">=</span> {
+
+	<span style="color:#a6e22e">toArray</span><span style="color:#f92672">:</span> <span style="color:#66d9ef">function</span>(){ <span style="color:#75715e">//集合对象转原生数组 },
+</span><span style="color:#75715e"></span>	<span style="color:#a6e22e">get</span><span style="color:#f92672">:</span> <span style="color:#66d9ef">function</span>( <span style="color:#a6e22e">num</span> ) { <span style="color:#75715e">//获取原生集合或者集合中的某一项 },
+</span><span style="color:#75715e"></span>	
+	<span style="color:#a6e22e">pushStack</span><span style="color:#f92672">:</span> <span style="color:#66d9ef">function</span>( <span style="color:#a6e22e">elems</span> ) { 
+		<span style="color:#75715e">//生成栈
+</span><span style="color:#75715e"></span>		<span style="color:#75715e">//将elems和jquery对象合并
+</span><span style="color:#75715e"></span>		<span style="color:#66d9ef">var</span> <span style="color:#a6e22e">ret</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">jQuery</span>.<span style="color:#a6e22e">merge</span>( <span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">constructor</span>(), <span style="color:#a6e22e">elems</span> );
+		<span style="color:#75715e">//保存当前jquery对象到prevobject
+</span><span style="color:#75715e"></span>		<span style="color:#a6e22e">ret</span>.<span style="color:#a6e22e">prevObject</span> <span style="color:#f92672">=</span> <span style="color:#66d9ef">this</span>;
+		<span style="color:#75715e">//设置上下文环境
+</span><span style="color:#75715e"></span>		<span style="color:#a6e22e">ret</span>.<span style="color:#a6e22e">context</span> <span style="color:#f92672">=</span> <span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">context</span>;
+		<span style="color:#75715e">//返回栈
+</span><span style="color:#75715e"></span>		<span style="color:#66d9ef">return</span> <span style="color:#a6e22e">ret</span>;
+	},
+	
+	<span style="color:#a6e22e">end</span><span style="color:#f92672">:</span> <span style="color:#66d9ef">function</span>() {
+		<span style="color:#75715e">//结束当前帧栈
+</span><span style="color:#75715e"></span>		<span style="color:#66d9ef">return</span> <span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">prevObject</span> <span style="color:#f92672">||</span> <span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">constructor</span>(<span style="color:#66d9ef">null</span>);
+	},
+
+	<span style="color:#a6e22e">slice</span><span style="color:#f92672">:</span> <span style="color:#66d9ef">function</span>() { 
+		<span style="color:#75715e">//截取某范围的栈片段，底层用的是原生数组的slice方法
+</span><span style="color:#75715e"></span>		<span style="color:#66d9ef">return</span> <span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">pushStack</span>( <span style="color:#a6e22e">core_slice</span>.<span style="color:#a6e22e">apply</span>( <span style="color:#66d9ef">this</span>, <span style="color:#a6e22e">arguments</span> ) );
+	},
+
+	<span style="color:#a6e22e">eq</span><span style="color:#f92672">:</span> <span style="color:#66d9ef">function</span>( <span style="color:#a6e22e">i</span> ) { 
+		<span style="color:#75715e">//找到集合的某一项
+</span><span style="color:#75715e"></span>		<span style="color:#66d9ef">var</span> <span style="color:#a6e22e">len</span> <span style="color:#f92672">=</span> <span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">length</span>,
+		<span style="color:#a6e22e">j</span> <span style="color:#f92672">=</span> <span style="color:#f92672">+</span><span style="color:#a6e22e">i</span> <span style="color:#f92672">+</span> ( <span style="color:#a6e22e">i</span> <span style="color:#f92672">&lt;</span> <span style="color:#ae81ff">0</span> <span style="color:#f92672">?</span> <span style="color:#a6e22e">len</span> <span style="color:#f92672">:</span> <span style="color:#ae81ff">0</span> );<span style="color:#75715e">//判断正负
+</span><span style="color:#75715e"></span>		<span style="color:#75715e">//[ this[j] ]就是用户所选的元素
+</span><span style="color:#75715e"></span>		<span style="color:#66d9ef">return</span> <span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">pushStack</span>( <span style="color:#a6e22e">j</span> <span style="color:#f92672">&gt;=</span> <span style="color:#ae81ff">0</span> <span style="color:#f92672">&amp;&amp;</span> <span style="color:#a6e22e">j</span> <span style="color:#f92672">&lt;</span> <span style="color:#a6e22e">len</span> <span style="color:#f92672">?</span> [ <span style="color:#66d9ef">this</span>[<span style="color:#a6e22e">j</span>] ] <span style="color:#f92672">:</span> [] );
+	},
+	
+	<span style="color:#a6e22e">first</span><span style="color:#f92672">:</span> <span style="color:#66d9ef">function</span>() {
+		<span style="color:#75715e">//找到集合的第一项
+</span><span style="color:#75715e"></span>		<span style="color:#66d9ef">return</span> <span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">eq</span>( <span style="color:#ae81ff">0</span> );
+	},
+	
+	<span style="color:#a6e22e">last</span><span style="color:#f92672">:</span> <span style="color:#66d9ef">function</span>() { 
+		<span style="color:#75715e">//找到集合的最后一项
+</span><span style="color:#75715e"></span>		<span style="color:#66d9ef">return</span> <span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">eq</span>( <span style="color:#f92672">-</span><span style="color:#ae81ff">1</span> );
+	},
+	
+	<span style="color:#a6e22e">each</span><span style="color:#f92672">:</span> <span style="color:#66d9ef">function</span>( <span style="color:#a6e22e">callback</span>, <span style="color:#a6e22e">args</span> ) { <span style="color:#75715e">//遍历集合 },
+</span><span style="color:#75715e"></span>
+	<span style="color:#a6e22e">map</span><span style="color:#f92672">:</span> <span style="color:#66d9ef">function</span>( <span style="color:#a6e22e">callback</span> ) { <span style="color:#75715e">//遍历集合},
+</span><span style="color:#75715e"></span>
+	<span style="color:#a6e22e">ready</span><span style="color:#f92672">:</span> <span style="color:#66d9ef">function</span>( <span style="color:#a6e22e">fn</span> ) { <span style="color:#75715e">//dom加载 },
+</span><span style="color:#75715e"></span>	
+}
+</code></pre></div><h2 id="6extend原理">6.extend原理</h2>
+<p><code>jquery是可被扩展的，可以使用extend来扩展，除了用于扩展插件，extend还有很多用法</code></p>
+<ul>
+<li>单个对象字面量,用于扩展插件</li>
+<li>多个对象字面量，前面对象继承后面对象</li>
+<li>深/浅拷贝</li>
+<li>扩展工具方法</li>
+</ul>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript"><span style="color:#a6e22e">jQuery</span>.<span style="color:#a6e22e">extend</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">jQuery</span>.<span style="color:#a6e22e">fn</span>.<span style="color:#a6e22e">extend</span> <span style="color:#f92672">=</span> <span style="color:#66d9ef">function</span>(){
+	<span style="color:#75715e">//target: 需要继承的对象,默认为arguments[0] || {}
+</span><span style="color:#75715e"></span>	<span style="color:#75715e">//deep：是否为深拷贝，默认是false
+</span><span style="color:#75715e"></span>	<span style="color:#75715e">//length: 传入的参数个数
+</span><span style="color:#75715e"></span>	<span style="color:#75715e">//options：存放多个字面量的临时空间
+</span><span style="color:#75715e"></span>	<span style="color:#75715e">//copy:需要被继承的对象
+</span><span style="color:#75715e"></span>
+	<span style="color:#66d9ef">var</span> <span style="color:#a6e22e">options</span>, <span style="color:#a6e22e">name</span>, <span style="color:#a6e22e">src</span>, <span style="color:#a6e22e">copy</span>, <span style="color:#a6e22e">copyIsArray</span>, <span style="color:#a6e22e">clone</span>,
+		<span style="color:#a6e22e">target</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">arguments</span>[<span style="color:#ae81ff">0</span>] <span style="color:#f92672">||</span> {},
+		<span style="color:#a6e22e">i</span> <span style="color:#f92672">=</span> <span style="color:#ae81ff">1</span>,
+		<span style="color:#a6e22e">length</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">arguments</span>.<span style="color:#a6e22e">length</span>,
+		<span style="color:#a6e22e">deep</span> <span style="color:#f92672">=</span> <span style="color:#66d9ef">false</span>;
+
+
+    <span style="color:#75715e">// 针对 $.extend(true,{},{})情况
+</span><span style="color:#75715e"></span>	<span style="color:#66d9ef">if</span> ( <span style="color:#66d9ef">typeof</span> <span style="color:#a6e22e">target</span> <span style="color:#f92672">===</span> <span style="color:#e6db74">&#34;boolean&#34;</span> ) {
+		<span style="color:#a6e22e">deep</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">target</span>;
+		<span style="color:#a6e22e">target</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">arguments</span>[<span style="color:#ae81ff">1</span>] <span style="color:#f92672">||</span> {};
+		<span style="color:#a6e22e">i</span> <span style="color:#f92672">=</span> <span style="color:#ae81ff">2</span>;
+	}
+
+	<span style="color:#75715e">//避免第一项既不是布尔值也不是对象
+</span><span style="color:#75715e"></span>	<span style="color:#66d9ef">if</span> ( <span style="color:#66d9ef">typeof</span> <span style="color:#a6e22e">target</span> <span style="color:#f92672">!==</span> <span style="color:#e6db74">&#34;object&#34;</span> <span style="color:#f92672">&amp;&amp;</span> <span style="color:#f92672">!</span><span style="color:#a6e22e">jQuery</span>.<span style="color:#a6e22e">isFunction</span>(<span style="color:#a6e22e">target</span>) ) {
+		<span style="color:#a6e22e">target</span> <span style="color:#f92672">=</span> {};
+	}
+
+	<span style="color:#75715e">// 扩展插件，target就是jquery实例
+</span><span style="color:#75715e"></span>	<span style="color:#75715e">// length === i代表 传入的参数个数等于1且不是布尔值和非对象值
+</span><span style="color:#75715e"></span>	<span style="color:#66d9ef">if</span> ( <span style="color:#a6e22e">length</span> <span style="color:#f92672">===</span> <span style="color:#a6e22e">i</span> ) {
+		<span style="color:#a6e22e">target</span> <span style="color:#f92672">=</span> <span style="color:#66d9ef">this</span>;
+		<span style="color:#f92672">--</span><span style="color:#a6e22e">i</span>;
+	}
+
+	<span style="color:#75715e">//多个字面量传入时遍历进行拷贝
+</span><span style="color:#75715e"></span>	<span style="color:#66d9ef">for</span> ( ; <span style="color:#a6e22e">i</span> <span style="color:#f92672">&lt;</span> <span style="color:#a6e22e">length</span>; <span style="color:#a6e22e">i</span><span style="color:#f92672">++</span> ) {
+		<span style="color:#75715e">// 避免传入的是空，如果是空没有扩展必要
+</span><span style="color:#75715e"></span>		<span style="color:#66d9ef">if</span> ( (<span style="color:#a6e22e">options</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">arguments</span>[ <span style="color:#a6e22e">i</span> ]) <span style="color:#f92672">!=</span> <span style="color:#66d9ef">null</span> ) {
+			<span style="color:#75715e">// Extend the base object
+</span><span style="color:#75715e"></span>			<span style="color:#66d9ef">for</span> ( <span style="color:#a6e22e">name</span> <span style="color:#66d9ef">in</span> <span style="color:#a6e22e">options</span> ) {
+				<span style="color:#a6e22e">src</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">target</span>[ <span style="color:#a6e22e">name</span> ];
+				<span style="color:#a6e22e">copy</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">options</span>[ <span style="color:#a6e22e">name</span> ];
+
+				<span style="color:#75715e">// 避免循环引用，比如let a={} $.extend(a,{name:a})
+</span><span style="color:#75715e"></span>				<span style="color:#66d9ef">if</span> ( <span style="color:#a6e22e">target</span> <span style="color:#f92672">===</span> <span style="color:#a6e22e">copy</span> ) {
+					<span style="color:#66d9ef">continue</span>;
+				}
+
+				<span style="color:#75715e">// 深拷贝
+</span><span style="color:#75715e"></span>				<span style="color:#66d9ef">if</span> ( <span style="color:#a6e22e">deep</span> <span style="color:#f92672">&amp;&amp;</span> <span style="color:#a6e22e">copy</span> <span style="color:#f92672">&amp;&amp;</span> ( <span style="color:#a6e22e">jQuery</span>.<span style="color:#a6e22e">isPlainObject</span>(<span style="color:#a6e22e">copy</span>) <span style="color:#f92672">||</span> (<span style="color:#a6e22e">copyIsArray</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">jQuery</span>.<span style="color:#a6e22e">isArray</span>(<span style="color:#a6e22e">copy</span>)) ) ) {
+					<span style="color:#75715e">// 针对以下情况：
+</span><span style="color:#75715e"></span>					<span style="color:#75715e">// let a = { name: { job: &#39;it&#39; } }
+</span><span style="color:#75715e"></span>					<span style="color:#75715e">// let b = { name: { age: 30 } }
+</span><span style="color:#75715e"></span>					<span style="color:#75715e">// $.extend( true, a, b)
+</span><span style="color:#75715e"></span>
+					<span style="color:#66d9ef">if</span> ( <span style="color:#a6e22e">copyIsArray</span> ) {
+						<span style="color:#a6e22e">copyIsArray</span> <span style="color:#f92672">=</span> <span style="color:#66d9ef">false</span>;
+						<span style="color:#a6e22e">clone</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">src</span> <span style="color:#f92672">&amp;&amp;</span> <span style="color:#a6e22e">jQuery</span>.<span style="color:#a6e22e">isArray</span>(<span style="color:#a6e22e">src</span>) <span style="color:#f92672">?</span> <span style="color:#a6e22e">src</span> <span style="color:#f92672">:</span> [];
+
+					} <span style="color:#66d9ef">else</span> {
+						<span style="color:#a6e22e">clone</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">src</span> <span style="color:#f92672">&amp;&amp;</span> <span style="color:#a6e22e">jQuery</span>.<span style="color:#a6e22e">isPlainObject</span>(<span style="color:#a6e22e">src</span>) <span style="color:#f92672">?</span> <span style="color:#a6e22e">src</span> <span style="color:#f92672">:</span> {};
+					}
+
+					<span style="color:#a6e22e">target</span>[ <span style="color:#a6e22e">name</span> ] <span style="color:#f92672">=</span> <span style="color:#a6e22e">jQuery</span>.<span style="color:#a6e22e">extend</span>( <span style="color:#a6e22e">deep</span>, <span style="color:#a6e22e">clone</span>, <span style="color:#a6e22e">copy</span> );
+
+				<span style="color:#75715e">// 浅拷贝
+</span><span style="color:#75715e"></span>				<span style="color:#75715e">// 直接将后面对象的地址赋值给target对应的name上
+</span><span style="color:#75715e"></span>				} <span style="color:#66d9ef">else</span> <span style="color:#66d9ef">if</span> ( <span style="color:#a6e22e">copy</span> <span style="color:#f92672">!==</span> <span style="color:#66d9ef">undefined</span> ) {
+					<span style="color:#a6e22e">target</span>[ <span style="color:#a6e22e">name</span> ] <span style="color:#f92672">=</span> <span style="color:#a6e22e">copy</span>;
+				}
+			}
+		}
+	}
+
+	<span style="color:#75715e">// 返回扩展好的对象
+</span><span style="color:#75715e"></span>	<span style="color:#66d9ef">return</span> <span style="color:#a6e22e">target</span>;
+}
+</code></pre></div><p><code>扩展工具方法</code></p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript"><span style="color:#a6e22e">jQuery</span>.<span style="color:#a6e22e">extend</span>({
+	<span style="color:#a6e22e">expando</span><span style="color:#f92672">:</span> <span style="color:#a6e22e">生成唯一的jq字符串</span>
+	<span style="color:#a6e22e">noConflict</span>()<span style="color:#960050;background-color:#1e0010">：</span><span style="color:#a6e22e">防止与其他类库冲突</span>
+	<span style="color:#a6e22e">isReady</span><span style="color:#f92672">:</span> <span style="color:#a6e22e">dom是否加载完</span>
+	<span style="color:#a6e22e">readywait</span><span style="color:#960050;background-color:#1e0010">：</span><span style="color:#a6e22e">等待多少文件的计数器</span>
+	<span style="color:#a6e22e">holdReady</span>()<span style="color:#f92672">:</span> <span style="color:#a6e22e">推迟dom触发</span> 
+	<span style="color:#a6e22e">ready</span>()<span style="color:#f92672">:</span> <span style="color:#a6e22e">准备dom的处罚</span>
+	<span style="color:#a6e22e">isFunction</span><span style="color:#f92672">:</span> <span style="color:#a6e22e">是否为函数</span>
+	<span style="color:#a6e22e">isArray</span><span style="color:#960050;background-color:#1e0010">：</span><span style="color:#a6e22e">是否为数组</span>
+	<span style="color:#a6e22e">isWindow</span><span style="color:#960050;background-color:#1e0010">：</span><span style="color:#a6e22e">是否为window</span>
+	<span style="color:#a6e22e">type</span>()<span style="color:#f92672">:</span><span style="color:#a6e22e">判断数据类型</span>
+	<span style="color:#a6e22e">isPlainObject</span>()<span style="color:#f92672">:</span><span style="color:#a6e22e">是否为对象自变量</span>
+	<span style="color:#a6e22e">isEmptyObject</span>()<span style="color:#f92672">:</span><span style="color:#a6e22e">是否为空对象</span>
+	<span style="color:#a6e22e">error</span>()<span style="color:#f92672">:</span> <span style="color:#a6e22e">抛出异常</span>
+	<span style="color:#a6e22e">parseHTML</span>()<span style="color:#f92672">:</span> <span style="color:#a6e22e">解析节点</span>
+	<span style="color:#a6e22e">parseJSON</span>()<span style="color:#f92672">:</span> <span style="color:#a6e22e">解析json</span>
+	<span style="color:#a6e22e">parseXML</span>()<span style="color:#f92672">:</span> <span style="color:#a6e22e">解析xml</span>
+	<span style="color:#a6e22e">noop</span><span style="color:#960050;background-color:#1e0010">：</span><span style="color:#a6e22e">空函数</span>
+	<span style="color:#a6e22e">globalEval</span><span style="color:#960050;background-color:#1e0010">：</span><span style="color:#a6e22e">全局解析js</span>
+	<span style="color:#a6e22e">camelCase</span><span style="color:#960050;background-color:#1e0010">：</span><span style="color:#a6e22e">转驼峰</span>
+	<span style="color:#a6e22e">nodeName</span><span style="color:#960050;background-color:#1e0010">：</span><span style="color:#a6e22e">是否为指定节点名</span>
+	<span style="color:#a6e22e">each</span><span style="color:#960050;background-color:#1e0010">：</span><span style="color:#a6e22e">遍历集合</span>
+	<span style="color:#a6e22e">trim</span><span style="color:#960050;background-color:#1e0010">：</span><span style="color:#a6e22e">去前后空格</span>
+	<span style="color:#a6e22e">makeArray</span><span style="color:#960050;background-color:#1e0010">：</span><span style="color:#a6e22e">类数组转真数组</span>
+	<span style="color:#a6e22e">inArray</span><span style="color:#960050;background-color:#1e0010">：</span><span style="color:#a6e22e">数组版本的indexof</span>
+	<span style="color:#a6e22e">merge</span><span style="color:#960050;background-color:#1e0010">：</span><span style="color:#a6e22e">合并数组</span>
+	<span style="color:#a6e22e">grep</span><span style="color:#960050;background-color:#1e0010">：</span> <span style="color:#a6e22e">过滤数组</span>
+	<span style="color:#a6e22e">map</span><span style="color:#960050;background-color:#1e0010">：</span><span style="color:#a6e22e">映射新数组</span>
+	<span style="color:#a6e22e">proxy</span><span style="color:#960050;background-color:#1e0010">：</span> <span style="color:#a6e22e">代理</span>
+	<span style="color:#a6e22e">access</span><span style="color:#960050;background-color:#1e0010">：</span><span style="color:#a6e22e">多功能值操作</span>
+	<span style="color:#a6e22e">now</span><span style="color:#960050;background-color:#1e0010">：</span><span style="color:#a6e22e">当前时间</span>
+	<span style="color:#a6e22e">swap</span><span style="color:#960050;background-color:#1e0010">：</span><span style="color:#a6e22e">css交换</span>
+})
+
+</code></pre></div><h2 id="7回调对象callbacks">7.回调对象callbacks</h2>
+<p><code>控制函数触发顺序，本质是遍历注册的函数后进行触发</code></p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript"><span style="color:#66d9ef">let</span> <span style="color:#a6e22e">cb</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">$</span>.<span style="color:#a6e22e">Callbacks</span>();
+
+<span style="color:#a6e22e">cb</span>.<span style="color:#a6e22e">add</span>(<span style="color:#a6e22e">aaa</span>)
+<span style="color:#a6e22e">cb</span>.<span style="color:#a6e22e">add</span>(<span style="color:#a6e22e">bbb</span>)
+<span style="color:#a6e22e">cb</span>.<span style="color:#a6e22e">fire</span>()
+
+</code></pre></div><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript"><span style="color:#a6e22e">jQuery</span>.<span style="color:#a6e22e">Callbacks</span> <span style="color:#f92672">=</span> <span style="color:#66d9ef">function</span>( <span style="color:#a6e22e">options</span> ) {
+	<span style="color:#a6e22e">fire</span>(){
+
+	};
+	<span style="color:#a6e22e">self</span><span style="color:#f92672">:</span> {
+		<span style="color:#a6e22e">add</span>(),
+		<span style="color:#a6e22e">remove</span>(),
+		<span style="color:#a6e22e">has</span>(),
+		<span style="color:#a6e22e">empty</span>,
+		<span style="color:#a6e22e">disable</span>(),
+		<span style="color:#a6e22e">disabled</span>(),
+		<span style="color:#a6e22e">lock</span>(),
+		<span style="color:#a6e22e">lockd</span>(),
+		<span style="color:#a6e22e">fireWith</span>(),
+		<span style="color:#a6e22e">fire</span>(),
+		<span style="color:#a6e22e">fired</span>()
+	};
+	<span style="color:#66d9ef">return</span> <span style="color:#a6e22e">self</span>;
+}
+</code></pre></div><p><img src="https://s3.bmp.ovh/imgs/2021/12/cf883b8f4aac4b79.png" alt="dianlu"></p>
+<h2 id="8延迟对象deferred">8.延迟对象Deferred</h2>
+<p><code>异步操作，本质是对callbacks对象的进一步封装</code></p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript"><span style="color:#66d9ef">let</span> <span style="color:#a6e22e">dtd</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">$</span>.<span style="color:#a6e22e">Deferred</span>();
+
+<span style="color:#a6e22e">setTimeout</span>(<span style="color:#66d9ef">function</span>(){
+	<span style="color:#a6e22e">alert</span>(<span style="color:#ae81ff">111</span>)
+	<span style="color:#a6e22e">dtd</span>.<span style="color:#a6e22e">resolve</span>()
+})
+
+<span style="color:#a6e22e">dtd</span>.<span style="color:#a6e22e">done</span>(<span style="color:#66d9ef">function</span>(){
+    <span style="color:#a6e22e">alert</span>(<span style="color:#ae81ff">222</span>)
+})
+</code></pre></div><p><code>源码如下：</code></p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript"><span style="color:#a6e22e">jQuery</span>.<span style="color:#a6e22e">extend</span>({
+	<span style="color:#a6e22e">Deferred</span><span style="color:#f92672">:</span> <span style="color:#66d9ef">function</span>( <span style="color:#a6e22e">func</span> ) {
+		<span style="color:#75715e">//定义了一些变量
+</span><span style="color:#75715e"></span>		<span style="color:#75715e">//tuples存储了 状态，回调函数，回调对象
+</span><span style="color:#75715e"></span>		<span style="color:#66d9ef">var</span> <span style="color:#a6e22e">tuples</span> <span style="color:#f92672">=</span> [
+			[ <span style="color:#e6db74">&#34;resolve&#34;</span>, <span style="color:#e6db74">&#34;done&#34;</span>, <span style="color:#a6e22e">jQuery</span>.<span style="color:#a6e22e">Callbacks</span>(<span style="color:#e6db74">&#34;once memory&#34;</span>), <span style="color:#e6db74">&#34;resolved&#34;</span> ],
+			[ <span style="color:#e6db74">&#34;reject&#34;</span>, <span style="color:#e6db74">&#34;fail&#34;</span>, <span style="color:#a6e22e">jQuery</span>.<span style="color:#a6e22e">Callbacks</span>(<span style="color:#e6db74">&#34;once memory&#34;</span>), <span style="color:#e6db74">&#34;rejected&#34;</span> ],
+			[ <span style="color:#e6db74">&#34;notify&#34;</span>, <span style="color:#e6db74">&#34;progress&#34;</span>, <span style="color:#a6e22e">jQuery</span>.<span style="color:#a6e22e">Callbacks</span>(<span style="color:#e6db74">&#34;memory&#34;</span>) ]
+		],
+
+		<span style="color:#75715e">//默认状态
+</span><span style="color:#75715e"></span>		<span style="color:#a6e22e">state</span> <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;pending&#34;</span>,
+
+		<span style="color:#75715e">//定义了promise对象
+</span><span style="color:#75715e"></span>		<span style="color:#a6e22e">promise</span> <span style="color:#f92672">=</span> {
+			<span style="color:#a6e22e">state</span><span style="color:#f92672">:</span> <span style="color:#66d9ef">function</span>() { },
+			<span style="color:#a6e22e">always</span><span style="color:#f92672">:</span> <span style="color:#66d9ef">function</span>() { },
+			<span style="color:#a6e22e">then</span><span style="color:#f92672">:</span> <span style="color:#66d9ef">function</span>() { },
+			<span style="color:#a6e22e">promise</span><span style="color:#f92672">:</span> <span style="color:#66d9ef">function</span>(<span style="color:#a6e22e">obj</span>) { 
+				<span style="color:#66d9ef">return</span> <span style="color:#a6e22e">obj</span> <span style="color:#f92672">!=</span> <span style="color:#66d9ef">null</span> <span style="color:#f92672">?</span> <span style="color:#a6e22e">jQuery</span>.<span style="color:#a6e22e">extend</span>( <span style="color:#a6e22e">obj</span>, <span style="color:#a6e22e">promise</span> ) <span style="color:#f92672">:</span> <span style="color:#a6e22e">promise</span>;
+			},
+		},
+
+		<span style="color:#75715e">//定义了deferred对象
+</span><span style="color:#75715e"></span>		<span style="color:#a6e22e">deferred</span> <span style="color:#f92672">=</span> {};
+
+		<span style="color:#75715e">//兼容老版本的写法
+</span><span style="color:#75715e"></span>		<span style="color:#a6e22e">promise</span>.<span style="color:#a6e22e">pipe</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">promise</span>.<span style="color:#a6e22e">then</span>;
+
+
+		<span style="color:#75715e">//将状态与相关的回调函数一一对应
+</span><span style="color:#75715e"></span>		<span style="color:#a6e22e">jQuery</span>.<span style="color:#a6e22e">each</span>( <span style="color:#a6e22e">tuples</span>, <span style="color:#66d9ef">function</span>( <span style="color:#a6e22e">i</span>, <span style="color:#a6e22e">tuple</span> ) {
+
+	    	<span style="color:#75715e">//list: 回调对象
+</span><span style="color:#75715e"></span>		<span style="color:#75715e">//stateString: 状态字符串
+</span><span style="color:#75715e"></span>		<span style="color:#66d9ef">var</span> <span style="color:#a6e22e">list</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">tuple</span>[ <span style="color:#ae81ff">2</span> ], <span style="color:#a6e22e">stateString</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">tuple</span>[ <span style="color:#ae81ff">3</span> ];
+
+		<span style="color:#75715e">//回调函数done，fail，progress都对应的是callbacks的add函数
+</span><span style="color:#75715e"></span>		<span style="color:#75715e">//最后的形式是：
+</span><span style="color:#75715e"></span>		<span style="color:#75715e">//promise.done = $.Callbacks.add
+</span><span style="color:#75715e"></span>		<span style="color:#75715e">//promise.fail = $.Callbacks.add
+</span><span style="color:#75715e"></span>		<span style="color:#75715e">//promise.progress = $.Callbacks.add
+</span><span style="color:#75715e"></span>
+		<span style="color:#a6e22e">promise</span>[ <span style="color:#a6e22e">tuple</span>[<span style="color:#ae81ff">1</span>] ] <span style="color:#f92672">=</span> <span style="color:#a6e22e">list</span>.<span style="color:#a6e22e">add</span>;
+
+		<span style="color:#75715e">// 锁死状态
+</span><span style="color:#75715e"></span>		<span style="color:#66d9ef">if</span> ( <span style="color:#a6e22e">stateString</span> ) {
+			<span style="color:#a6e22e">list</span>.<span style="color:#a6e22e">add</span>(<span style="color:#66d9ef">function</span>() {
+				<span style="color:#a6e22e">state</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">stateString</span>;
+				<span style="color:#75715e">//当状态确定后就不能更改，底层调用的是callbacks的disable，lock
+</span><span style="color:#75715e"></span>			}, <span style="color:#a6e22e">tuples</span>[ <span style="color:#a6e22e">i</span> <span style="color:#f92672">^</span> <span style="color:#ae81ff">1</span> ][ <span style="color:#ae81ff">2</span> ].<span style="color:#a6e22e">disable</span>, <span style="color:#a6e22e">tuples</span>[ <span style="color:#ae81ff">2</span> ][ <span style="color:#ae81ff">2</span> ].<span style="color:#a6e22e">lock</span> );
+		}
+
+		<span style="color:#75715e">//不同状态下调用不同回调函数
+</span><span style="color:#75715e"></span>		<span style="color:#a6e22e">deferred</span>[ <span style="color:#a6e22e">tuple</span>[<span style="color:#ae81ff">0</span>] ] <span style="color:#f92672">=</span> <span style="color:#66d9ef">function</span>() {
+			<span style="color:#a6e22e">deferred</span>[ <span style="color:#a6e22e">tuple</span>[<span style="color:#ae81ff">0</span>] <span style="color:#f92672">+</span> <span style="color:#e6db74">&#34;With&#34;</span> ]( <span style="color:#66d9ef">this</span> <span style="color:#f92672">===</span> <span style="color:#a6e22e">deferred</span> <span style="color:#f92672">?</span> <span style="color:#a6e22e">promise</span> <span style="color:#f92672">:</span> <span style="color:#66d9ef">this</span>, <span style="color:#a6e22e">arguments</span> );
+		}
+	} )
+
+	<span style="color:#75715e">//将promise对象下的方法继承给deferred对象
+</span><span style="color:#75715e"></span>	<span style="color:#75715e">//避免外部修改延迟对象的状态
+</span><span style="color:#75715e"></span>	<span style="color:#a6e22e">promise</span>.<span style="color:#a6e22e">promise</span>( <span style="color:#a6e22e">deferred</span> );
+	
+	<span style="color:#66d9ef">return</span> <span style="color:#a6e22e">deferred</span>;
+},
+	<span style="color:#a6e22e">when</span><span style="color:#f92672">:</span> <span style="color:#66d9ef">function</span>( <span style="color:#a6e22e">subordinate</span>) { }
+})
+
+</code></pre></div><p><code>js异步的背景知识：</code></p>
+<pre><code>js被设计用来操作dom的用途决定了它只能是单线程，在此线程中所有任务依次进行，即同步执行，但在实际应用中有
+很多耗时的操作，比如网络请求，读取大容量文件，设置定时器等，它们的共同特点是在执行后的未来某个时刻才会产
+生结果，如果让这类任务依次执行，会降低程序执行效率，严重时造成线程假死或者崩溃，为了避免耗时的任务阻塞进
+程，可以让它们不依次执行，当遇到这种任务时由浏览器为它们开辟新线程挂起执行，即异步执行，等到省时的同步任
+务结束后按照异步任务挂起顺序依次查看挂起线程的执行结果，同步和异步都只不过是程序执行的一种方式，实现异步的方法有
+很多种：回调函数，事件监听，promise，async等
+</code></pre><p>1️⃣回调函数</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript"><span style="color:#a6e22e">console</span>.<span style="color:#a6e22e">log</span>(<span style="color:#960050;background-color:#1e0010">“</span><span style="color:#ae81ff">111</span><span style="color:#960050;background-color:#1e0010">”</span>)
+
+<span style="color:#a6e22e">setTimeout</span>(<span style="color:#66d9ef">function</span>(){
+      <span style="color:#a6e22e">console</span>.<span style="color:#a6e22e">log</span>(<span style="color:#960050;background-color:#1e0010">“</span><span style="color:#ae81ff">222</span><span style="color:#960050;background-color:#1e0010">”</span>)
+},<span style="color:#ae81ff">1000</span>)
+
+<span style="color:#a6e22e">console</span>.<span style="color:#a6e22e">log</span>(<span style="color:#960050;background-color:#1e0010">“</span><span style="color:#ae81ff">333</span><span style="color:#960050;background-color:#1e0010">”</span>)
+
+<span style="color:#a6e22e">此时执行顺序是1</span><span style="color:#960050;background-color:#1e0010">，</span><span style="color:#ae81ff">3</span><span style="color:#960050;background-color:#1e0010">，</span><span style="color:#ae81ff">2</span><span style="color:#960050;background-color:#1e0010">，</span><span style="color:#a6e22e">但需要的执行顺序是1</span><span style="color:#960050;background-color:#1e0010">，</span><span style="color:#ae81ff">2</span><span style="color:#960050;background-color:#1e0010">，</span><span style="color:#ae81ff">3</span><span style="color:#960050;background-color:#1e0010">，</span><span style="color:#a6e22e">所以可以采取如下方式</span><span style="color:#960050;background-color:#1e0010">：</span>
+
+<span style="color:#a6e22e">console</span>.<span style="color:#a6e22e">log</span>(<span style="color:#960050;background-color:#1e0010">“</span><span style="color:#ae81ff">111</span><span style="color:#960050;background-color:#1e0010">”</span>)
+
+<span style="color:#a6e22e">setTimeout</span>(<span style="color:#66d9ef">function</span>(){
+      <span style="color:#a6e22e">console</span>.<span style="color:#a6e22e">log</span>(<span style="color:#960050;background-color:#1e0010">“</span><span style="color:#ae81ff">222</span><span style="color:#960050;background-color:#1e0010">”</span>)
+      <span style="color:#a6e22e">callback</span>()
+},<span style="color:#ae81ff">1000</span>)
+
+<span style="color:#66d9ef">function</span> <span style="color:#a6e22e">callback</span>(){
+      <span style="color:#a6e22e">console</span>.<span style="color:#a6e22e">log</span>(<span style="color:#960050;background-color:#1e0010">“</span><span style="color:#ae81ff">333</span><span style="color:#960050;background-color:#1e0010">”</span>)
+}
+
+<span style="color:#a6e22e">此时执行顺序是1</span><span style="color:#960050;background-color:#1e0010">，</span><span style="color:#ae81ff">2</span><span style="color:#960050;background-color:#1e0010">，</span><span style="color:#ae81ff">3</span><span style="color:#960050;background-color:#1e0010">，</span><span style="color:#a6e22e">如果此时需要顺序打印4</span><span style="color:#960050;background-color:#1e0010">，</span><span style="color:#a6e22e">就需要再加一层回调</span><span style="color:#960050;background-color:#1e0010">，</span><span style="color:#a6e22e">代码如下</span><span style="color:#960050;background-color:#1e0010">：</span>
+
+<span style="color:#a6e22e">console</span>.<span style="color:#a6e22e">log</span>(<span style="color:#960050;background-color:#1e0010">“</span><span style="color:#ae81ff">111</span><span style="color:#960050;background-color:#1e0010">”</span>)
+
+<span style="color:#a6e22e">setTimeout</span>(<span style="color:#66d9ef">function</span>(){
+      <span style="color:#a6e22e">console</span>.<span style="color:#a6e22e">log</span>(<span style="color:#960050;background-color:#1e0010">“</span><span style="color:#ae81ff">222</span><span style="color:#960050;background-color:#1e0010">”</span>)
+      <span style="color:#a6e22e">callback</span>()
+},<span style="color:#ae81ff">1000</span>)
+
+<span style="color:#66d9ef">function</span> <span style="color:#a6e22e">callback</span>(){
+      <span style="color:#a6e22e">console</span>.<span style="color:#a6e22e">log</span>(<span style="color:#960050;background-color:#1e0010">“</span><span style="color:#ae81ff">333</span><span style="color:#960050;background-color:#1e0010">”</span>)
+      <span style="color:#a6e22e">setTimeout</span>(<span style="color:#66d9ef">function</span>(){
+          <span style="color:#a6e22e">callback2</span>()
+      },<span style="color:#ae81ff">1000</span>)
+}
+
+<span style="color:#66d9ef">function</span> <span style="color:#a6e22e">callback2</span>(){
+      <span style="color:#a6e22e">console</span>.<span style="color:#a6e22e">log</span>(<span style="color:#960050;background-color:#1e0010">“</span><span style="color:#ae81ff">444</span><span style="color:#960050;background-color:#1e0010">”</span>)
+}
+</code></pre></div><p><code>嵌套多层回调函数会导致出bug时不好排查，所以es6规范中给出了新规范promise用于处理异步</code></p>
+<p>2️⃣promise</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript"><span style="color:#66d9ef">let</span> <span style="color:#a6e22e">p</span> <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> Promise(<span style="color:#66d9ef">function</span>(<span style="color:#a6e22e">resolve</span>,<span style="color:#a6e22e">reject</span>){
+    <span style="color:#a6e22e">console</span>.<span style="color:#a6e22e">log</span>(<span style="color:#960050;background-color:#1e0010">“</span><span style="color:#ae81ff">111</span><span style="color:#960050;background-color:#1e0010">”</span>)
+    <span style="color:#a6e22e">resolve</span>()
+})
+<span style="color:#a6e22e">p</span>.<span style="color:#a6e22e">then</span>(<span style="color:#66d9ef">function</span>(){
+   <span style="color:#a6e22e">console</span>.<span style="color:#a6e22e">log</span>(<span style="color:#960050;background-color:#1e0010">“</span><span style="color:#ae81ff">222</span><span style="color:#960050;background-color:#1e0010">”</span>)
+})
+.<span style="color:#a6e22e">then</span>(<span style="color:#66d9ef">function</span>(){
+   <span style="color:#a6e22e">console</span>.<span style="color:#a6e22e">log</span>(<span style="color:#960050;background-color:#1e0010">“</span><span style="color:#ae81ff">333</span><span style="color:#960050;background-color:#1e0010">”</span>)
+})
+.<span style="color:#a6e22e">then</span>(<span style="color:#66d9ef">function</span>(){
+   <span style="color:#a6e22e">console</span>.<span style="color:#a6e22e">log</span>(<span style="color:#960050;background-color:#1e0010">“</span><span style="color:#ae81ff">444</span><span style="color:#960050;background-color:#1e0010">”</span>)
+})
+</code></pre></div><p>使用promise后将原本嵌套的回调函数变成了then的链式调用，但该异步任务的语义就不太明显，需要去阅读then中的代码才能理解，为了实现完美的异步编程，es7提出了async/await</p>
+<p>3️⃣async/await</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript"><span style="color:#66d9ef">var</span> <span style="color:#a6e22e">readFile</span> <span style="color:#f92672">=</span> <span style="color:#66d9ef">function</span> (<span style="color:#a6e22e">fileName</span>){
+  <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">new</span> Promise(<span style="color:#66d9ef">function</span> (<span style="color:#a6e22e">resolve</span>, <span style="color:#a6e22e">reject</span>){
+    <span style="color:#a6e22e">fs</span>.<span style="color:#a6e22e">readFile</span>(<span style="color:#a6e22e">fileName</span>, <span style="color:#66d9ef">function</span>(<span style="color:#a6e22e">error</span>, <span style="color:#a6e22e">data</span>){
+      <span style="color:#66d9ef">if</span> (<span style="color:#a6e22e">error</span>) <span style="color:#a6e22e">reject</span>(<span style="color:#a6e22e">error</span>);
+      <span style="color:#a6e22e">resolve</span>(<span style="color:#a6e22e">data</span>);
+    });
+  });
+};
+
+<span style="color:#66d9ef">var</span> <span style="color:#a6e22e">gen</span> <span style="color:#f92672">=</span> <span style="color:#66d9ef">function</span><span style="color:#f92672">*</span> (){
+  <span style="color:#66d9ef">var</span> <span style="color:#a6e22e">f1</span> <span style="color:#f92672">=</span> <span style="color:#66d9ef">yield</span> <span style="color:#a6e22e">readFile</span>(<span style="color:#e6db74">&#39;/etc/fstab&#39;</span>);
+  <span style="color:#66d9ef">var</span> <span style="color:#a6e22e">f2</span> <span style="color:#f92672">=</span> <span style="color:#66d9ef">yield</span> <span style="color:#a6e22e">readFile</span>(<span style="color:#e6db74">&#39;/etc/shells&#39;</span>);
+  <span style="color:#a6e22e">console</span>.<span style="color:#a6e22e">log</span>(<span style="color:#a6e22e">f1</span>.<span style="color:#a6e22e">toString</span>());
+  <span style="color:#a6e22e">console</span>.<span style="color:#a6e22e">log</span>(<span style="color:#a6e22e">f2</span>.<span style="color:#a6e22e">toString</span>());
+};
+
+<span style="color:#66d9ef">var</span> <span style="color:#a6e22e">asyncReadFile</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">async</span> <span style="color:#66d9ef">function</span> (){
+  <span style="color:#66d9ef">var</span> <span style="color:#a6e22e">f1</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">await</span> <span style="color:#a6e22e">readFile</span>(<span style="color:#e6db74">&#39;/etc/fstab&#39;</span>);
+  <span style="color:#66d9ef">var</span> <span style="color:#a6e22e">f2</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">await</span> <span style="color:#a6e22e">readFile</span>(<span style="color:#e6db74">&#39;/etc/shells&#39;</span>);
+  <span style="color:#a6e22e">console</span>.<span style="color:#a6e22e">log</span>(<span style="color:#a6e22e">f1</span>.<span style="color:#a6e22e">toString</span>());
+  <span style="color:#a6e22e">console</span>.<span style="color:#a6e22e">log</span>(<span style="color:#a6e22e">f2</span>.<span style="color:#a6e22e">toString</span>());
+};
+
+<span style="color:#a6e22e">async</span> <span style="color:#a6e22e">函数的实现</span><span style="color:#960050;background-color:#1e0010">，</span><span style="color:#a6e22e">就是将</span> <span style="color:#a6e22e">Generator</span> <span style="color:#a6e22e">函数和自动执行器</span><span style="color:#960050;background-color:#1e0010">，</span><span style="color:#a6e22e">包装在一个函数里</span>
+
+<span style="color:#a6e22e">Generator函数</span><span style="color:#960050;background-color:#1e0010">：</span><span style="color:#66d9ef">function</span><span style="color:#f92672">*</span> <span style="color:#a6e22e">g</span>(){ <span style="color:#66d9ef">yield</span> <span style="color:#a6e22e">xxx</span> <span style="color:#960050;background-color:#1e0010">｝</span>
+<span style="color:#a6e22e">自动执行器</span><span style="color:#960050;background-color:#1e0010">：</span><span style="color:#a6e22e">g</span>.<span style="color:#a6e22e">next</span>()
+</code></pre></div><h2 id="9support检测差异">9.support检测差异</h2>
+
+    </div>
+    <video id="my_video" style="height: 300px;width:100%" controls="controls"></video>
+
+</article>
+<div class="pagination">
+    
+    <div class="prev"> <a href="https://Apollo2light.github.io/Apollo2light/frontend/6.react%E5%9F%BA%E7%A1%80/">Previous Post</a> </div>
+    
+    
+    <div class="next"> <a href="https://Apollo2light.github.io/Apollo2light/frontend/7.%E5%B0%8F%E7%A8%8B%E5%BA%8F%E5%9F%BA%E7%A1%80/">Next Post</a> </div>
+    
+</div>
+
+
+<script>
+    try{
+        
+        let src = document.getElementsByTagName('code')[0].innerText;
+        
+        if(src.indexOf("mp4")!=-1){
+            document.getElementById('my_video').setAttribute("src",src)
+        }else{
+            
+            let video = document.getElementById('my_video');
+            if (video != null){
+                video.parentNode.removeChild(video);
+            }
+        }
+    }catch(e){
+        
+        let video = document.getElementById('my_video');
+        if (video != null){
+            video.parentNode.removeChild(video);
+        }
+    }
+</script>
+
+        </main><footer class="site-footer">
+	<span class="right">
+		<em>Apollo&#39;s blog</em>
+	</span>
+</footer>
+</body>
+    <script>
+        
+    </script>
+</html>

@@ -1,0 +1,365 @@
+<!DOCTYPE html>
+<html lang=en-us><head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title> 3.js基础 - Apollo&#39;s blog</title>
+    <meta name="description" content="0.前提 javascript包括三部分：
+ 1.ECMA：基础语法 2.DOM: 操作文档节点 3.BOM：操作浏览器节点  1.变量  值：复制新内存 引用：指向同一块内存的地址  let obj0 = { name:&#34;deepcopy&#34;, description:&#34;copy all args from object except its own prop&#34;, arr:[&#34;refrence&#34;,&#34;data&#34;] } let obj1 = { name:&#34;deepcopy&#34;, description:&#34;copy all args from object except its own prop&#34;, arr:[&#34;refrence&#34;,&#34;data&#34;], obje: obj0 } /** * 深拷贝 */ function deepCopy(obj){ //边界判断  if(typeof obj !=&#34;object&#34; || obj == null){ return obj; } //定义返回结果  let result; if(obj instanceof Array){ //待拷贝的对象是数组类型  result = [] }else{ //待拷贝的对象是object类型  result = {} } //开始拷贝  for (const key in obj) { //只拷贝obj自身的属性  if (obj.">
+    <link rel="canonical" href="https://Apollo2light.github.io/Apollo2light/frontend/3.js%E5%9F%BA%E7%A1%80/">
+    <meta property="og:title" content="3.js基础">
+    <meta property="og:type" content="article">
+    <meta property="og:url" content="https://Apollo2light.github.io/Apollo2light/frontend/3.js%E5%9F%BA%E7%A1%80/">
+    <meta property="og:description" content="0.前提 javascript包括三部分：
+ 1.ECMA：基础语法 2.DOM: 操作文档节点 3.BOM：操作浏览器节点  1.变量  值：复制新内存 引用：指向同一块内存的地址  let obj0 = { name:&#34;deepcopy&#34;, description:&#34;copy all args from object except its own prop&#34;, arr:[&#34;refrence&#34;,&#34;data&#34;] } let obj1 = { name:&#34;deepcopy&#34;, description:&#34;copy all args from object except its own prop&#34;, arr:[&#34;refrence&#34;,&#34;data&#34;], obje: obj0 } /** * 深拷贝 */ function deepCopy(obj){ //边界判断  if(typeof obj !=&#34;object&#34; || obj == null){ return obj; } //定义返回结果  let result; if(obj instanceof Array){ //待拷贝的对象是数组类型  result = [] }else{ //待拷贝的对象是object类型  result = {} } //开始拷贝  for (const key in obj) { //只拷贝obj自身的属性  if (obj.">
+    <meta property="og:site_name" content="Apollo&#39;s blog">
+    <link rel="stylesheet" href="https://Apollo2light.github.io/Apollo2light/css/main.min.7fdf1d02dafd1a6eb5cfd0d707e17e33515b866f5d305a0ab01a4095577484fe.css" integrity="sha256-f98dAtr9Gm61z9DXB&#43;F&#43;M1Fbhm9dMFoKsBpAlVd0hP4=">
+    <meta name="generator" content="Hugo 0.73.0" />
+    <script type="module" src="https://unpkg.com/ionicons@5.1.2/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule="" src="https://unpkg.com/ionicons@5.1.2/dist/ionicons/ionicons.js"></script>
+    
+</head>
+<body><header class="site-header">
+    <nav class="site-nav" role="navigation" aria-label="breadcrumb">
+    <ol itemscope itemtype="https://schema.org/BreadcrumbList" class="breadcrumb"><li class="breadcrumb-item  " 
+  itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+  <a itemtype="https://schema.org/Thing" itemprop="item" href="https://Apollo2light.github.io/Apollo2light/">
+    <span itemprop="name">Apollo&#39;s blog</span>
+  </a>
+  <meta itemprop="position" content="0" />
+</li>/<li class="breadcrumb-item  " 
+  itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+  <a itemtype="https://schema.org/Thing" itemprop="item" href="https://Apollo2light.github.io/Apollo2light/frontend/">
+    <span itemprop="name">frontend</span>
+  </a>
+  <meta itemprop="position" content="0" />
+</li>/<li class="breadcrumb-item active hidden" aria-current="page"
+  itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+  <a itemtype="https://schema.org/Thing" itemprop="item" href="https://Apollo2light.github.io/Apollo2light/frontend/3.js%E5%9F%BA%E7%A1%80/">
+    <span itemprop="name">3.js%E5%9F%BA%E7%A1%80</span>
+  </a>
+  <meta itemprop="position" content="1" />
+</li></ol>
+    </nav>
+    <h1 class="site-title hidden">
+		<a href="https://Apollo2light.github.io/Apollo2light/">Apollo&#39;s blog</a>
+    </h1>
+</header><main id="content">
+<article role="article" class="content post h-entry" itemscope="" itemtype="http://schema.org/BlogPosting">
+    <header class="post-header">        
+        <h2 class="post-title" itemprop="name headline">3.js基础</h2>
+        <span class="post-meta">
+            <time class="date-published" datetime="2022-04-26T22:48:33&#43;07:00" itemprop="datePublished">
+                Tue, 26 Apr 2022
+            </time>
+            
+        </span>
+    </header>
+    <div class="post-content" itemprop="articleBody">
+        <h2 id="0前提">0.前提</h2>
+<p>javascript包括三部分：</p>
+<ul>
+<li>1.ECMA：基础语法</li>
+<li>2.DOM: 操作文档节点</li>
+<li>3.BOM：操作浏览器节点</li>
+</ul>
+<h2 id="1变量">1.变量</h2>
+<ul>
+<li>值：复制新内存</li>
+<li>引用：指向同一块内存的地址</li>
+</ul>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript"><span style="color:#66d9ef">let</span> <span style="color:#a6e22e">obj0</span> <span style="color:#f92672">=</span> {
+    <span style="color:#a6e22e">name</span><span style="color:#f92672">:</span><span style="color:#e6db74">&#34;deepcopy&#34;</span>,
+    <span style="color:#a6e22e">description</span><span style="color:#f92672">:</span><span style="color:#e6db74">&#34;copy all args from object except its own prop&#34;</span>,
+    <span style="color:#a6e22e">arr</span><span style="color:#f92672">:</span>[<span style="color:#e6db74">&#34;refrence&#34;</span>,<span style="color:#e6db74">&#34;data&#34;</span>]
+}
+<span style="color:#66d9ef">let</span> <span style="color:#a6e22e">obj1</span> <span style="color:#f92672">=</span> {
+    <span style="color:#a6e22e">name</span><span style="color:#f92672">:</span><span style="color:#e6db74">&#34;deepcopy&#34;</span>,
+    <span style="color:#a6e22e">description</span><span style="color:#f92672">:</span><span style="color:#e6db74">&#34;copy all args from object except its own prop&#34;</span>,
+    <span style="color:#a6e22e">arr</span><span style="color:#f92672">:</span>[<span style="color:#e6db74">&#34;refrence&#34;</span>,<span style="color:#e6db74">&#34;data&#34;</span>],
+    <span style="color:#a6e22e">obje</span><span style="color:#f92672">:</span> <span style="color:#a6e22e">obj0</span>
+}
+
+
+<span style="color:#75715e">/**
+</span><span style="color:#75715e"> * 深拷贝
+</span><span style="color:#75715e"> */</span>
+<span style="color:#66d9ef">function</span> <span style="color:#a6e22e">deepCopy</span>(<span style="color:#a6e22e">obj</span>){
+    <span style="color:#75715e">//边界判断
+</span><span style="color:#75715e"></span>    <span style="color:#66d9ef">if</span>(<span style="color:#66d9ef">typeof</span> <span style="color:#a6e22e">obj</span> <span style="color:#f92672">!=</span><span style="color:#e6db74">&#34;object&#34;</span> <span style="color:#f92672">||</span> <span style="color:#a6e22e">obj</span> <span style="color:#f92672">==</span> <span style="color:#66d9ef">null</span>){
+        <span style="color:#66d9ef">return</span> <span style="color:#a6e22e">obj</span>;
+    }
+    <span style="color:#75715e">//定义返回结果
+</span><span style="color:#75715e"></span>    <span style="color:#66d9ef">let</span> <span style="color:#a6e22e">result</span>;
+    <span style="color:#66d9ef">if</span>(<span style="color:#a6e22e">obj</span> <span style="color:#66d9ef">instanceof</span> Array){
+        <span style="color:#75715e">//待拷贝的对象是数组类型
+</span><span style="color:#75715e"></span>        <span style="color:#a6e22e">result</span> <span style="color:#f92672">=</span> []
+    }<span style="color:#66d9ef">else</span>{
+        <span style="color:#75715e">//待拷贝的对象是object类型
+</span><span style="color:#75715e"></span>        <span style="color:#a6e22e">result</span> <span style="color:#f92672">=</span> {}
+    }
+    <span style="color:#75715e">//开始拷贝
+</span><span style="color:#75715e"></span>    <span style="color:#66d9ef">for</span> (<span style="color:#66d9ef">const</span> <span style="color:#a6e22e">key</span> <span style="color:#66d9ef">in</span> <span style="color:#a6e22e">obj</span>) {
+        <span style="color:#75715e">//只拷贝obj自身的属性
+</span><span style="color:#75715e"></span>        <span style="color:#66d9ef">if</span> (<span style="color:#a6e22e">obj</span>.<span style="color:#a6e22e">hasOwnProperty</span>(<span style="color:#a6e22e">key</span>)) {
+            <span style="color:#a6e22e">result</span>[<span style="color:#a6e22e">key</span>] <span style="color:#f92672">=</span> <span style="color:#a6e22e">deepCopy</span>(<span style="color:#a6e22e">obj</span>[<span style="color:#a6e22e">key</span>]);
+        }
+    }
+    <span style="color:#66d9ef">return</span> <span style="color:#a6e22e">result</span>;
+}
+
+<span style="color:#a6e22e">console</span>.<span style="color:#a6e22e">log</span>(<span style="color:#a6e22e">deepCopy</span>(<span style="color:#a6e22e">obj1</span>));
+
+</code></pre></div><h2 id="2原型链">2.原型链</h2>
+<ul>
+<li>1.类有显/隐式原型，通过prototype显式原型&mdash;&mdash;&mdash;&raquo;&gt;原型对象</li>
+<li>2.对象有隐式原型，通过__prototype__隐式原型&mdash;&mdash;&raquo;&gt;原型对象</li>
+<li>3.类的隐式原型指向类自身</li>
+</ul>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript"><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Person</span>{
+    <span style="color:#a6e22e">constructor</span>(<span style="color:#a6e22e">name</span>){
+        <span style="color:#75715e">//this是指创建时的那个实例对象
+</span><span style="color:#75715e"></span>        <span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">name</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">name</span>;
+    };
+
+    <span style="color:#a6e22e">eat</span>(){
+        <span style="color:#a6e22e">console</span>.<span style="color:#a6e22e">log</span>(<span style="color:#e6db74">`</span><span style="color:#e6db74">${</span><span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">name</span><span style="color:#e6db74">}</span><span style="color:#e6db74"> eat food!`</span>);
+    };
+}
+
+<span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Student</span> <span style="color:#66d9ef">extends</span> <span style="color:#a6e22e">Person</span>{
+    <span style="color:#a6e22e">constructor</span>(<span style="color:#a6e22e">name</span>,<span style="color:#a6e22e">number</span>){
+        <span style="color:#75715e">//super是用来调用父类的构造函数
+</span><span style="color:#75715e"></span>        <span style="color:#66d9ef">super</span>(<span style="color:#a6e22e">name</span>);
+        <span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">number</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">number</span>;
+    };
+
+    <span style="color:#a6e22e">showInfo</span>(){
+        <span style="color:#a6e22e">console</span>.<span style="color:#a6e22e">log</span>(<span style="color:#e6db74">`</span><span style="color:#e6db74">${</span><span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">name</span><span style="color:#e6db74">}</span><span style="color:#e6db74"> 的学号是 </span><span style="color:#e6db74">${</span><span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">number</span><span style="color:#e6db74">}</span><span style="color:#e6db74">`</span>);
+    };
+}
+
+<span style="color:#66d9ef">const</span> <span style="color:#a6e22e">alex</span> <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> <span style="color:#a6e22e">Student</span>(<span style="color:#e6db74">&#34;alex&#34;</span>,<span style="color:#ae81ff">20140560</span>);
+<span style="color:#a6e22e">console</span>.<span style="color:#a6e22e">log</span>(<span style="color:#e6db74">`
+</span><span style="color:#e6db74">    1.类有显/隐式原型，通过prototype显式原型---------&gt;&gt;&gt;原型对象
+</span><span style="color:#e6db74">    2.对象有隐式原型，通过__prototype__隐式原型------&gt;&gt;&gt;原型对象
+</span><span style="color:#e6db74">    3.类的隐式原型指向类自身
+</span><span style="color:#e6db74">`</span>)
+<span style="color:#a6e22e">console</span>.<span style="color:#a6e22e">log</span>(<span style="color:#e6db74">&#34;==================================&#34;</span>)
+
+<span style="color:#a6e22e">console</span>.<span style="color:#a6e22e">log</span>(<span style="color:#e6db74">&#34;实例的显式原型：&#34;</span><span style="color:#f92672">+</span><span style="color:#a6e22e">alex</span>.<span style="color:#a6e22e">prototype</span>);
+<span style="color:#a6e22e">console</span>.<span style="color:#a6e22e">log</span>(<span style="color:#e6db74">&#34;实例的隐式原型：&#34;</span><span style="color:#f92672">+</span><span style="color:#a6e22e">alex</span>.<span style="color:#a6e22e">__proto__</span>);
+
+<span style="color:#a6e22e">console</span>.<span style="color:#a6e22e">log</span>(<span style="color:#e6db74">&#34;==================================&#34;</span>)
+
+<span style="color:#a6e22e">console</span>.<span style="color:#a6e22e">log</span>(<span style="color:#e6db74">&#34;子类的显式原型：&#34;</span><span style="color:#f92672">+</span><span style="color:#a6e22e">Student</span>.<span style="color:#a6e22e">prototype</span>);
+<span style="color:#a6e22e">console</span>.<span style="color:#a6e22e">log</span>(<span style="color:#e6db74">&#34;子类的隐式原型：&#34;</span><span style="color:#f92672">+</span><span style="color:#a6e22e">Student</span>.<span style="color:#a6e22e">__proto__</span>);
+
+<span style="color:#a6e22e">console</span>.<span style="color:#a6e22e">log</span>(<span style="color:#e6db74">&#34;==================================&#34;</span>)
+
+<span style="color:#a6e22e">console</span>.<span style="color:#a6e22e">log</span>(<span style="color:#e6db74">&#34;父类的显式原型：&#34;</span><span style="color:#f92672">+</span><span style="color:#a6e22e">Person</span>.<span style="color:#a6e22e">prototype</span>);
+<span style="color:#a6e22e">console</span>.<span style="color:#a6e22e">log</span>(<span style="color:#e6db74">&#34;父类的隐式原型：&#34;</span><span style="color:#f92672">+</span><span style="color:#a6e22e">Person</span>.<span style="color:#a6e22e">__proto__</span>);
+
+<span style="color:#a6e22e">console</span>.<span style="color:#a6e22e">log</span>(<span style="color:#e6db74">&#34;==================================&#34;</span>)
+
+<span style="color:#a6e22e">console</span>.<span style="color:#a6e22e">log</span>(<span style="color:#e6db74">&#34;{}的显式原型：&#34;</span><span style="color:#f92672">+</span><span style="color:#a6e22e">Person</span>.<span style="color:#a6e22e">prototype</span>.<span style="color:#a6e22e">prototype</span>);
+<span style="color:#a6e22e">console</span>.<span style="color:#a6e22e">log</span>(<span style="color:#e6db74">&#34;{}的隐式原型：&#34;</span><span style="color:#f92672">+</span><span style="color:#a6e22e">Person</span>.<span style="color:#a6e22e">prototype</span>.<span style="color:#a6e22e">__proto__</span>)
+</code></pre></div><h2 id="3闭包">3.闭包</h2>
+<ul>
+<li>特殊作用域，自由变量向定义时的作用域查找而非向执行时的作用域查找</li>
+<li>函数做参数或者返回值</li>
+</ul>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript">
+
+<span style="color:#66d9ef">function</span> <span style="color:#a6e22e">create</span>(){
+    <span style="color:#66d9ef">let</span> <span style="color:#a6e22e">a</span> <span style="color:#f92672">=</span> <span style="color:#ae81ff">100</span>;
+    <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">function</span>(){
+        <span style="color:#a6e22e">console</span>.<span style="color:#a6e22e">log</span>(<span style="color:#a6e22e">a</span>);
+    }
+};
+<span style="color:#66d9ef">let</span> <span style="color:#a6e22e">fn</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">create</span>();
+<span style="color:#66d9ef">let</span> <span style="color:#a6e22e">a</span> <span style="color:#f92672">=</span> <span style="color:#ae81ff">200</span>;
+<span style="color:#a6e22e">fn</span>()<span style="color:#75715e">//100
+</span><span style="color:#75715e"></span>
+
+
+<span style="color:#66d9ef">function</span> <span style="color:#a6e22e">print</span>(<span style="color:#a6e22e">fn</span>){
+    <span style="color:#66d9ef">let</span> <span style="color:#a6e22e">m</span> <span style="color:#f92672">=</span> <span style="color:#ae81ff">200</span>;
+    <span style="color:#a6e22e">fn</span>();
+}
+
+<span style="color:#66d9ef">let</span> <span style="color:#a6e22e">m</span> <span style="color:#f92672">=</span> <span style="color:#ae81ff">100</span>;
+<span style="color:#66d9ef">function</span> <span style="color:#a6e22e">fun</span>(){
+    <span style="color:#a6e22e">console</span>.<span style="color:#a6e22e">log</span>(<span style="color:#a6e22e">m</span>);
+}
+<span style="color:#a6e22e">print</span>(<span style="color:#a6e22e">fun</span>)<span style="color:#75715e">//100
+</span></code></pre></div><h2 id="4this指向">4.this指向</h2>
+<ul>
+<li>执行时确定</li>
+</ul>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript"><span style="color:#66d9ef">const</span> <span style="color:#a6e22e">obj</span> <span style="color:#f92672">=</span> {
+    <span style="color:#a6e22e">show</span>(){
+        <span style="color:#a6e22e">console</span>.<span style="color:#a6e22e">log</span>(<span style="color:#66d9ef">this</span>)<span style="color:#75715e">//obj
+</span><span style="color:#75715e"></span>    },
+    <span style="color:#a6e22e">wait</span>(){
+        <span style="color:#a6e22e">setTimeout</span>(<span style="color:#66d9ef">function</span>(){
+            <span style="color:#a6e22e">console</span>.<span style="color:#a6e22e">log</span>(<span style="color:#66d9ef">this</span>)<span style="color:#75715e">//环境变量
+</span><span style="color:#75715e"></span>        })
+    },
+    <span style="color:#a6e22e">wait_arr_func</span>(){
+        <span style="color:#a6e22e">setTimeout</span>(() =&gt; {
+            <span style="color:#a6e22e">console</span>.<span style="color:#a6e22e">log</span>(<span style="color:#66d9ef">this</span>)<span style="color:#75715e">//obj
+</span><span style="color:#75715e"></span>        })
+    }
+}
+<span style="color:#a6e22e">obj</span>.<span style="color:#a6e22e">show</span>();
+<span style="color:#a6e22e">obj</span>.<span style="color:#a6e22e">wait</span>();
+<span style="color:#a6e22e">obj</span>.<span style="color:#a6e22e">wait_arr_func</span>();
+
+</code></pre></div><h2 id="5异步">5.异步</h2>
+<p>1.异步代码</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript"><span style="color:#75715e">//13542
+</span><span style="color:#75715e"></span><span style="color:#a6e22e">console</span>.<span style="color:#a6e22e">log</span>(<span style="color:#ae81ff">1</span>);
+
+<span style="color:#a6e22e">setTimeout</span>(<span style="color:#66d9ef">function</span>(){
+    <span style="color:#a6e22e">console</span>.<span style="color:#a6e22e">log</span>(<span style="color:#ae81ff">2</span>)
+},<span style="color:#ae81ff">1000</span>);
+
+<span style="color:#a6e22e">console</span>.<span style="color:#a6e22e">log</span>(<span style="color:#ae81ff">3</span>);
+
+<span style="color:#a6e22e">setTimeout</span>(<span style="color:#66d9ef">function</span>(){
+    <span style="color:#a6e22e">console</span>.<span style="color:#a6e22e">log</span>(<span style="color:#ae81ff">4</span>)
+},<span style="color:#ae81ff">0</span>);
+
+<span style="color:#a6e22e">console</span>.<span style="color:#a6e22e">log</span>(<span style="color:#ae81ff">5</span>)
+</code></pre></div><p>2.callback写法</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript"><span style="color:#75715e">//12345
+</span><span style="color:#75715e"></span><span style="color:#a6e22e">console</span>.<span style="color:#a6e22e">log</span>(<span style="color:#ae81ff">1</span>);
+
+<span style="color:#a6e22e">setTimeout</span>(<span style="color:#66d9ef">function</span>(){
+    <span style="color:#a6e22e">console</span>.<span style="color:#a6e22e">log</span>(<span style="color:#ae81ff">2</span>)
+    <span style="color:#a6e22e">f1</span>();
+    <span style="color:#a6e22e">f2</span>();
+},<span style="color:#ae81ff">1000</span>);
+
+<span style="color:#66d9ef">function</span> <span style="color:#a6e22e">f1</span>(){
+    <span style="color:#a6e22e">console</span>.<span style="color:#a6e22e">log</span>(<span style="color:#ae81ff">3</span>);
+}
+
+
+<span style="color:#66d9ef">function</span> <span style="color:#a6e22e">f2</span>(){
+    <span style="color:#a6e22e">setTimeout</span>(<span style="color:#66d9ef">function</span>(){
+        <span style="color:#a6e22e">console</span>.<span style="color:#a6e22e">log</span>(<span style="color:#ae81ff">4</span>);
+        <span style="color:#a6e22e">f3</span>();
+    },<span style="color:#ae81ff">0</span>);
+    
+    <span style="color:#66d9ef">function</span> <span style="color:#a6e22e">f3</span>(){
+        <span style="color:#a6e22e">console</span>.<span style="color:#a6e22e">log</span>(<span style="color:#ae81ff">5</span>)
+    }
+}
+
+</code></pre></div><p>3.promise写法</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript"><span style="color:#a6e22e">console</span>.<span style="color:#a6e22e">log</span>(<span style="color:#ae81ff">1</span>);
+
+<span style="color:#66d9ef">function</span> <span style="color:#a6e22e">f1</span>(){
+    <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">new</span> Promise((<span style="color:#a6e22e">resolve</span>,<span style="color:#a6e22e">reject</span>) =&gt; {
+        <span style="color:#a6e22e">setTimeout</span>(<span style="color:#66d9ef">function</span>(){
+            <span style="color:#a6e22e">console</span>.<span style="color:#a6e22e">log</span>(<span style="color:#ae81ff">2</span>)
+            <span style="color:#a6e22e">resolve</span>()
+        },<span style="color:#ae81ff">1000</span>);
+    })
+}
+
+<span style="color:#a6e22e">f1</span>().<span style="color:#a6e22e">then</span>(() =&gt; {
+    <span style="color:#a6e22e">console</span>.<span style="color:#a6e22e">log</span>(<span style="color:#ae81ff">3</span>);
+}).<span style="color:#a6e22e">then</span>(() =&gt; {
+    <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">new</span> Promise((<span style="color:#a6e22e">resolve</span>,<span style="color:#a6e22e">reject</span>)=&gt;{
+        <span style="color:#a6e22e">setTimeout</span>(<span style="color:#66d9ef">function</span>(){
+            <span style="color:#a6e22e">console</span>.<span style="color:#a6e22e">log</span>(<span style="color:#ae81ff">4</span>);
+            <span style="color:#a6e22e">resolve</span>();
+        },<span style="color:#ae81ff">0</span>);
+    })
+}).<span style="color:#a6e22e">then</span>(() =&gt; {
+    <span style="color:#a6e22e">console</span>.<span style="color:#a6e22e">log</span>(<span style="color:#ae81ff">5</span>);
+})
+
+</code></pre></div><p>4.async/await写法</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript"><span style="color:#a6e22e">console</span>.<span style="color:#a6e22e">log</span>(<span style="color:#ae81ff">1</span>);
+
+<span style="color:#a6e22e">async</span> <span style="color:#66d9ef">function</span> <span style="color:#a6e22e">f</span>(){
+    <span style="color:#66d9ef">let</span> <span style="color:#a6e22e">result1</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">await</span> <span style="color:#a6e22e">f1</span>();
+    <span style="color:#a6e22e">console</span>.<span style="color:#a6e22e">log</span>(<span style="color:#a6e22e">result1</span>);
+    <span style="color:#a6e22e">console</span>.<span style="color:#a6e22e">log</span>(<span style="color:#ae81ff">3</span>);
+    <span style="color:#66d9ef">let</span> <span style="color:#a6e22e">result2</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">await</span> <span style="color:#a6e22e">f2</span>();
+    <span style="color:#a6e22e">console</span>.<span style="color:#a6e22e">log</span>(<span style="color:#a6e22e">result2</span>);
+    <span style="color:#a6e22e">console</span>.<span style="color:#a6e22e">log</span>(<span style="color:#ae81ff">5</span>);
+}
+
+
+
+<span style="color:#a6e22e">async</span> <span style="color:#66d9ef">function</span> <span style="color:#a6e22e">f1</span>(){
+    <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">new</span> Promise((<span style="color:#a6e22e">resolve</span>,<span style="color:#a6e22e">reject</span>)=&gt;{
+        <span style="color:#a6e22e">setTimeout</span>(<span style="color:#66d9ef">function</span>(){
+            <span style="color:#a6e22e">resolve</span>(<span style="color:#ae81ff">2</span>)
+        },<span style="color:#ae81ff">1000</span>);
+    })
+}
+
+<span style="color:#a6e22e">async</span> <span style="color:#66d9ef">function</span> <span style="color:#a6e22e">f2</span>(){
+    <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">new</span> Promise((<span style="color:#a6e22e">resolve</span>,<span style="color:#a6e22e">reject</span>)=&gt;{
+        <span style="color:#a6e22e">setTimeout</span>(<span style="color:#66d9ef">function</span>(){
+            <span style="color:#a6e22e">resolve</span>(<span style="color:#ae81ff">4</span>)
+        },<span style="color:#ae81ff">0</span>);
+    })
+}
+
+<span style="color:#a6e22e">f</span>()
+
+</code></pre></div>
+    </div>
+    <video id="my_video" style="height: 300px;width:100%" controls="controls"></video>
+
+</article>
+<div class="pagination">
+    
+    <div class="prev"> <a href="https://Apollo2light.github.io/Apollo2light/frontend/2.css%E5%9F%BA%E7%A1%80/">Previous Post</a> </div>
+    
+    
+    <div class="next"> <a href="https://Apollo2light.github.io/Apollo2light/frontend/5.vue%E5%9F%BA%E7%A1%80/">Next Post</a> </div>
+    
+</div>
+
+
+<script>
+    try{
+        
+        let src = document.getElementsByTagName('code')[0].innerText;
+        
+        if(src.indexOf("mp4")!=-1){
+            document.getElementById('my_video').setAttribute("src",src)
+        }else{
+            
+            let video = document.getElementById('my_video');
+            if (video != null){
+                video.parentNode.removeChild(video);
+            }
+        }
+    }catch(e){
+        
+        let video = document.getElementById('my_video');
+        if (video != null){
+            video.parentNode.removeChild(video);
+        }
+    }
+</script>
+
+        </main><footer class="site-footer">
+	<span class="right">
+		<em>Apollo&#39;s blog</em>
+	</span>
+</footer>
+</body>
+    <script>
+        
+    </script>
+</html>

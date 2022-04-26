@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang=en-us><head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title> 6.react基础 - Apollo&#39;s blog</title>
+    <meta name="description" content="1.概念  单页面应用：加载单个HTML页面和所需资源，与页面的任何交互，页面都不会重新加载 jsx：js的扩展集，每个 JSX 元素只是调用 React.createElement的语法糖 组件：分为函数组件和类组件，区别是类组件上添加了许多别的特性 钩子函数：生命周期函数，在特定时间自动触发的函数 Props：jsx传值与子组件的节点组成的对象，props 是只读的 State：组件内部的数据，只能通过setState({ })更改 react非受控组件：用非react处理数据方式处理的组件 状态提升：不同层级子组件传值 组合继承：组件通过组合堆砌而不是继承实现,实质相当于槽的概念 context：复杂组件传值 错误边界：避免出错导致应用崩溃 Ref转发：组件外选中特定的dom refdom：组件内选中特定的dom 高阶组件：传入组件输出组件，实现对组件的加强，比如redux的connect Portals：组件可以脱离父组件层级挂载在DOM树的任何位置 Profiler：任意位置的性能测试 协调： diff算法 webcomponent：w3c支持的组件化标准  2.react细节 1.组件 // 1.获取容器 const domContainer = document.getElementById(&#39;root&#39;); // 2.创建虚拟dom //类组件 class Hello extends React.Component { constructor(props){ super(props); this.state = {name: &#39;hello,world!&#39;}; } componentWillMount(){ // 不能直接修改state  // this.state = { name:&#39;hello&#39;};  // this.setState({ name:&#39;你好&#39;})  } render() { return (&lt;div&gt;{this.state.name}&lt;/div&gt;) } }; //函数组件 function World(props){ console.">
+    <link rel="canonical" href="https://Apollo2light.github.io/Apollo2light/frontend/6.react%E5%9F%BA%E7%A1%80/">
+    <meta property="og:title" content="6.react基础">
+    <meta property="og:type" content="article">
+    <meta property="og:url" content="https://Apollo2light.github.io/Apollo2light/frontend/6.react%E5%9F%BA%E7%A1%80/">
+    <meta property="og:description" content="1.概念  单页面应用：加载单个HTML页面和所需资源，与页面的任何交互，页面都不会重新加载 jsx：js的扩展集，每个 JSX 元素只是调用 React.createElement的语法糖 组件：分为函数组件和类组件，区别是类组件上添加了许多别的特性 钩子函数：生命周期函数，在特定时间自动触发的函数 Props：jsx传值与子组件的节点组成的对象，props 是只读的 State：组件内部的数据，只能通过setState({ })更改 react非受控组件：用非react处理数据方式处理的组件 状态提升：不同层级子组件传值 组合继承：组件通过组合堆砌而不是继承实现,实质相当于槽的概念 context：复杂组件传值 错误边界：避免出错导致应用崩溃 Ref转发：组件外选中特定的dom refdom：组件内选中特定的dom 高阶组件：传入组件输出组件，实现对组件的加强，比如redux的connect Portals：组件可以脱离父组件层级挂载在DOM树的任何位置 Profiler：任意位置的性能测试 协调： diff算法 webcomponent：w3c支持的组件化标准  2.react细节 1.组件 // 1.获取容器 const domContainer = document.getElementById(&#39;root&#39;); // 2.创建虚拟dom //类组件 class Hello extends React.Component { constructor(props){ super(props); this.state = {name: &#39;hello,world!&#39;}; } componentWillMount(){ // 不能直接修改state  // this.state = { name:&#39;hello&#39;};  // this.setState({ name:&#39;你好&#39;})  } render() { return (&lt;div&gt;{this.state.name}&lt;/div&gt;) } }; //函数组件 function World(props){ console.">
+    <meta property="og:site_name" content="Apollo&#39;s blog">
+    <link rel="stylesheet" href="https://Apollo2light.github.io/Apollo2light/css/main.min.7fdf1d02dafd1a6eb5cfd0d707e17e33515b866f5d305a0ab01a4095577484fe.css" integrity="sha256-f98dAtr9Gm61z9DXB&#43;F&#43;M1Fbhm9dMFoKsBpAlVd0hP4=">
+    <meta name="generator" content="Hugo 0.73.0" />
+    <script type="module" src="https://unpkg.com/ionicons@5.1.2/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule="" src="https://unpkg.com/ionicons@5.1.2/dist/ionicons/ionicons.js"></script>
+    
+</head>
+<body><header class="site-header">
+    <nav class="site-nav" role="navigation" aria-label="breadcrumb">
+    <ol itemscope itemtype="https://schema.org/BreadcrumbList" class="breadcrumb"><li class="breadcrumb-item  " 
+  itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+  <a itemtype="https://schema.org/Thing" itemprop="item" href="https://Apollo2light.github.io/Apollo2light/">
+    <span itemprop="name">Apollo&#39;s blog</span>
+  </a>
+  <meta itemprop="position" content="0" />
+</li>/<li class="breadcrumb-item  " 
+  itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+  <a itemtype="https://schema.org/Thing" itemprop="item" href="https://Apollo2light.github.io/Apollo2light/frontend/">
+    <span itemprop="name">frontend</span>
+  </a>
+  <meta itemprop="position" content="0" />
+</li>/<li class="breadcrumb-item active hidden" aria-current="page"
+  itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+  <a itemtype="https://schema.org/Thing" itemprop="item" href="https://Apollo2light.github.io/Apollo2light/frontend/6.react%E5%9F%BA%E7%A1%80/">
+    <span itemprop="name">6.react%E5%9F%BA%E7%A1%80</span>
+  </a>
+  <meta itemprop="position" content="1" />
+</li></ol>
+    </nav>
+    <h1 class="site-title hidden">
+		<a href="https://Apollo2light.github.io/Apollo2light/">Apollo&#39;s blog</a>
+    </h1>
+</header><main id="content">
+<article role="article" class="content post h-entry" itemscope="" itemtype="http://schema.org/BlogPosting">
+    <header class="post-header">        
+        <h2 class="post-title" itemprop="name headline">6.react基础</h2>
+        <span class="post-meta">
+            <time class="date-published" datetime="2022-04-26T22:58:13&#43;07:00" itemprop="datePublished">
+                Tue, 26 Apr 2022
+            </time>
+            
+        </span>
+    </header>
+    <div class="post-content" itemprop="articleBody">
+        <h2 id="1概念">1.概念</h2>
+<ul>
+<li>单页面应用：加载单个HTML页面和所需资源，与页面的任何交互，页面都不会重新加载</li>
+<li>jsx：js的扩展集，每个 JSX 元素只是调用 React.createElement的语法糖</li>
+<li>组件：分为函数组件和类组件，区别是类组件上添加了许多别的特性</li>
+<li>钩子函数：生命周期函数，在特定时间自动触发的函数</li>
+<li>Props：jsx传值与子组件的节点组成的对象，props 是只读的</li>
+<li>State：组件内部的数据，只能通过setState({ })更改</li>
+<li>react非受控组件：用非react处理数据方式处理的组件</li>
+<li>状态提升：不同层级子组件传值</li>
+<li>组合继承：组件通过组合堆砌而不是继承实现,实质相当于槽的概念</li>
+<li>context：复杂组件传值</li>
+<li>错误边界：避免出错导致应用崩溃</li>
+<li>Ref转发：组件外选中特定的dom</li>
+<li>refdom：组件内选中特定的dom</li>
+<li>高阶组件：传入组件输出组件，实现对组件的加强，比如redux的connect</li>
+<li>Portals：组件可以脱离父组件层级挂载在DOM树的任何位置</li>
+<li>Profiler：任意位置的性能测试</li>
+<li>协调： diff算法</li>
+<li>webcomponent：w3c支持的组件化标准</li>
+</ul>
+<h2 id="2react细节">2.react细节</h2>
+<h3 id="1组件">1.组件</h3>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript"><span style="color:#75715e">// 1.获取容器
+</span><span style="color:#75715e"></span><span style="color:#66d9ef">const</span> <span style="color:#a6e22e">domContainer</span> <span style="color:#f92672">=</span> document.<span style="color:#a6e22e">getElementById</span>(<span style="color:#e6db74">&#39;root&#39;</span>);
+<span style="color:#75715e">// 2.创建虚拟dom
+</span><span style="color:#75715e">//类组件
+</span><span style="color:#75715e"></span><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Hello</span> <span style="color:#66d9ef">extends</span> <span style="color:#a6e22e">React</span>.<span style="color:#a6e22e">Component</span> {
+  <span style="color:#a6e22e">constructor</span>(<span style="color:#a6e22e">props</span>){
+  	<span style="color:#66d9ef">super</span>(<span style="color:#a6e22e">props</span>);
+  	<span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">state</span> <span style="color:#f92672">=</span> {<span style="color:#a6e22e">name</span><span style="color:#f92672">:</span> <span style="color:#e6db74">&#39;hello,world!&#39;</span>};
+  }
+
+  <span style="color:#a6e22e">componentWillMount</span>(){
+  	<span style="color:#75715e">// 不能直接修改state
+</span><span style="color:#75715e"></span>  	<span style="color:#75715e">// this.state = { name:&#39;hello&#39;};
+</span><span style="color:#75715e"></span>  	<span style="color:#75715e">// this.setState({ name:&#39;你好&#39;})
+</span><span style="color:#75715e"></span>  }
+
+  <span style="color:#a6e22e">render</span>() {
+    <span style="color:#66d9ef">return</span> (<span style="color:#f92672">&lt;</span><span style="color:#a6e22e">div</span><span style="color:#f92672">&gt;</span>{<span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">state</span>.<span style="color:#a6e22e">name</span>}<span style="color:#f92672">&lt;</span><span style="color:#960050;background-color:#1e0010">/div&gt;)</span>
+  }
+};
+<span style="color:#75715e">//函数组件
+</span><span style="color:#75715e"></span><span style="color:#66d9ef">function</span> <span style="color:#a6e22e">World</span>(<span style="color:#a6e22e">props</span>){
+	<span style="color:#a6e22e">console</span>.<span style="color:#a6e22e">log</span>(<span style="color:#a6e22e">props</span>.<span style="color:#a6e22e">name</span>);
+	<span style="color:#75715e">// props.name = props.name + &#39;aa&#39;
+</span><span style="color:#75715e"></span>	<span style="color:#66d9ef">return</span> <span style="color:#f92672">&lt;</span><span style="color:#a6e22e">div</span><span style="color:#f92672">&gt;</span>{<span style="color:#a6e22e">props</span>.<span style="color:#a6e22e">name</span>}<span style="color:#f92672">&lt;</span><span style="color:#960050;background-color:#1e0010">/div&gt;</span>
+}
+<span style="color:#75715e">//3.渲染虚拟dom
+</span><span style="color:#75715e">// ReactDOM.render(element, container[, callback])
+</span><span style="color:#75715e"></span><span style="color:#66d9ef">const</span> <span style="color:#a6e22e">element</span> <span style="color:#f92672">=</span> <span style="color:#f92672">&lt;</span><span style="color:#a6e22e">Hello</span> <span style="color:#f92672">/&gt;</span>
+<span style="color:#75715e">//const element = &lt;World name=&#34;hh&#34; /&gt;
+</span><span style="color:#75715e"></span><span style="color:#a6e22e">ReactDOM</span>.<span style="color:#a6e22e">render</span>(<span style="color:#a6e22e">element</span>, <span style="color:#a6e22e">domContainer</span>,<span style="color:#66d9ef">function</span>(){<span style="color:#a6e22e">console</span>.<span style="color:#a6e22e">log</span>(<span style="color:#e6db74">&#39;已经渲染完了！！！&#39;</span>)});
+</code></pre></div><h3 id="2代码分割">2.代码分割</h3>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript"><span style="color:#75715e">//避免因体积过大而导致加载时间过长
+</span><span style="color:#75715e"></span><span style="color:#66d9ef">import</span>(<span style="color:#e6db74">&#34;./math&#34;</span>).<span style="color:#a6e22e">then</span>(<span style="color:#a6e22e">math</span> =&gt; {
+  <span style="color:#a6e22e">console</span>.<span style="color:#a6e22e">log</span>(<span style="color:#a6e22e">math</span>.<span style="color:#a6e22e">add</span>(<span style="color:#ae81ff">16</span>, <span style="color:#ae81ff">26</span>));
+});
+
+<span style="color:#66d9ef">const</span> <span style="color:#a6e22e">OtherComponent</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">React</span>.<span style="color:#a6e22e">lazy</span>(() =&gt; <span style="color:#66d9ef">import</span>(<span style="color:#e6db74">&#39;./OtherComponent&#39;</span>));
+<span style="color:#f92672">&lt;</span><span style="color:#a6e22e">Router</span><span style="color:#f92672">&gt;</span>
+    <span style="color:#f92672">&lt;</span><span style="color:#a6e22e">Suspense</span> <span style="color:#a6e22e">fallback</span><span style="color:#f92672">=</span>{<span style="color:#f92672">&lt;</span><span style="color:#a6e22e">div</span><span style="color:#f92672">&gt;</span><span style="color:#a6e22e">Loading</span>...<span style="color:#f92672">&lt;</span><span style="color:#960050;background-color:#1e0010">/div&gt;}&gt;</span>
+      <span style="color:#f92672">&lt;</span><span style="color:#a6e22e">Switch</span><span style="color:#f92672">&gt;</span>
+        <span style="color:#f92672">&lt;</span><span style="color:#a6e22e">Route</span> <span style="color:#a6e22e">exact</span> <span style="color:#a6e22e">path</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;/&#34;</span> <span style="color:#a6e22e">component</span><span style="color:#f92672">=</span>{<span style="color:#a6e22e">Home</span>}<span style="color:#f92672">/&gt;</span>
+        <span style="color:#f92672">&lt;</span><span style="color:#a6e22e">Route</span> <span style="color:#a6e22e">path</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;/about&#34;</span> <span style="color:#a6e22e">component</span><span style="color:#f92672">=</span>{<span style="color:#a6e22e">About</span>}<span style="color:#f92672">/&gt;</span>
+      <span style="color:#f92672">&lt;</span><span style="color:#960050;background-color:#1e0010">/Switch&gt;</span>
+    <span style="color:#f92672">&lt;</span><span style="color:#960050;background-color:#1e0010">/Suspense&gt;</span>
+<span style="color:#f92672">&lt;</span><span style="color:#960050;background-color:#1e0010">/Router&gt;</span>
+
+</code></pre></div><h3 id="3ref-dom">3.ref dom</h3>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript"><span style="color:#75715e">//组件内(dom)：
+</span><span style="color:#75715e"></span><span style="color:#a6e22e">构造器中</span><span style="color:#960050;background-color:#1e0010">：</span><span style="color:#66d9ef">const</span> <span style="color:#a6e22e">ref</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">React</span>.<span style="color:#a6e22e">createRef</span>();
+<span style="color:#a6e22e">组件元素</span><span style="color:#960050;background-color:#1e0010">：</span><span style="color:#f92672">&lt;</span><span style="color:#a6e22e">div</span> <span style="color:#a6e22e">ref</span><span style="color:#f92672">=</span>{<span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">ref</span>}<span style="color:#f92672">&gt;&lt;</span><span style="color:#960050;background-color:#1e0010">/div&gt;</span>
+<span style="color:#a6e22e">逻辑处理</span><span style="color:#960050;background-color:#1e0010">：</span><span style="color:#66d9ef">const</span> <span style="color:#a6e22e">node</span> <span style="color:#f92672">=</span> <span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">ref</span>.<span style="color:#a6e22e">current</span>.<span style="color:#a6e22e">xxx</span>
+
+<span style="color:#75715e">//组件外(转发)：
+</span><span style="color:#75715e"></span><span style="color:#a6e22e">内部元素</span><span style="color:#960050;background-color:#1e0010">：</span><span style="color:#66d9ef">const</span> <span style="color:#a6e22e">FancyButton</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">React</span>.<span style="color:#a6e22e">forwardRef</span>((<span style="color:#a6e22e">props</span>, <span style="color:#a6e22e">ref</span>) =&gt; { <span style="color:#f92672">&lt;</span><span style="color:#a6e22e">div</span> <span style="color:#a6e22e">ref</span><span style="color:#f92672">=</span>{<span style="color:#a6e22e">ref</span>}<span style="color:#f92672">&gt;&lt;</span><span style="color:#960050;background-color:#1e0010">/div&gt; })</span>
+<span style="color:#a6e22e">外部逻辑</span><span style="color:#960050;background-color:#1e0010">：</span><span style="color:#66d9ef">const</span> <span style="color:#a6e22e">ref</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">React</span>.<span style="color:#a6e22e">createRef</span>();
+<span style="color:#a6e22e">外部组件</span><span style="color:#960050;background-color:#1e0010">：</span><span style="color:#f92672">&lt;</span><span style="color:#a6e22e">FancyButton</span> <span style="color:#a6e22e">ref</span><span style="color:#f92672">=</span>{<span style="color:#a6e22e">ref</span>}<span style="color:#f92672">&gt;</span><span style="color:#a6e22e">Click</span> <span style="color:#a6e22e">me</span><span style="color:#f92672">!&lt;</span><span style="color:#960050;background-color:#1e0010">/FancyButton&gt;;</span>
+</code></pre></div><h3 id="4高阶组件hoc">4.高阶组件HOC</h3>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript"><span style="color:#75715e">//参数为组件，返回值是新组建的函数，对原有组件的二次封装，比如redux的connect
+</span><span style="color:#75715e"></span>
+</code></pre></div><h3 id="5render-props复用复杂逻辑">5.render props复用复杂逻辑</h3>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript"><span style="color:#75715e">//把特定行为或功能封装成一个组件，提供给其他组件使用让其他组件拥有这样的能力
+</span><span style="color:#75715e"></span>
+</code></pre></div><h3 id="6typescript类型检测">6.typescript类型检测</h3>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript"><span style="color:#a6e22e">npx</span> <span style="color:#a6e22e">create</span><span style="color:#f92672">-</span><span style="color:#a6e22e">react</span><span style="color:#f92672">-</span><span style="color:#a6e22e">app</span> <span style="color:#a6e22e">my</span><span style="color:#f92672">-</span><span style="color:#a6e22e">app</span> <span style="color:#f92672">--</span><span style="color:#a6e22e">template</span> <span style="color:#a6e22e">typescript</span>
+
+</code></pre></div><h3 id="7动画">7.动画</h3>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript"><span style="color:#a6e22e">React</span><span style="color:#f92672">-</span><span style="color:#a6e22e">transition</span><span style="color:#f92672">-</span><span style="color:#a6e22e">group</span>
+<span style="color:#f92672">&lt;</span><span style="color:#a6e22e">CSSTransition</span> 
+<span style="color:#66d9ef">in</span><span style="color:#f92672">=</span>{<span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">state</span>.<span style="color:#a6e22e">show</span>} 
+<span style="color:#a6e22e">timeout</span><span style="color:#f92672">=</span>{<span style="color:#ae81ff">100</span>} 
+<span style="color:#a6e22e">className</span><span style="color:#f92672">=</span><span style="color:#960050;background-color:#1e0010">“</span><span style="color:#a6e22e">fade</span><span style="color:#960050;background-color:#1e0010">”</span> 
+<span style="color:#a6e22e">unmountOnExit</span> <span style="color:#a6e22e">onEntered</span><span style="color:#f92672">=</span>{ (<span style="color:#a6e22e">el</span>) =&gt; {<span style="color:#a6e22e">el</span>.<span style="color:#a6e22e">style</span>.<span style="color:#a6e22e">color</span><span style="color:#f92672">=</span><span style="color:#960050;background-color:#1e0010">“”</span>
+}<span style="color:#f92672">&gt;</span><span style="color:#a6e22e">具体的内容</span><span style="color:#f92672">&lt;</span><span style="color:#960050;background-color:#1e0010">/CSSTransition&gt;</span>
+<span style="color:#a6e22e">根据show的内容在1秒内自动在CSSTransition包裹的dom上添加fade</span><span style="color:#f92672">-</span><span style="color:#a6e22e">enter</span><span style="color:#f92672">/</span><span style="color:#a6e22e">exit</span><span style="color:#960050;background-color:#1e0010">……</span><span style="color:#a6e22e">的样式</span>
+
+<span style="color:#f92672">&lt;</span><span style="color:#a6e22e">TransitionGroup</span><span style="color:#f92672">&gt;</span>
+<span style="color:#f92672">&lt;</span><span style="color:#a6e22e">CSSTransition</span> <span style="color:#f92672">&gt;</span><span style="color:#a6e22e">具体内容</span><span style="color:#f92672">&lt;</span><span style="color:#960050;background-color:#1e0010">/CSSTransition&gt;</span>
+<span style="color:#f92672">&lt;</span><span style="color:#960050;background-color:#1e0010">/TransitionGroup&gt;</span>
+ <span style="color:#a6e22e">多个dom元素都添加动画效果</span>
+</code></pre></div><h2 id="3react-router细节">3.react-router细节</h2>
+<h3 id="31基本路由">3.1基本路由</h3>
+<p><img src="https://i.loli.net/2021/02/28/SFnqAW5ve8DBTHy.jpg" alt="luyou"></p>
+<h3 id="32动态路由">3.2动态路由</h3>
+<p><img src="https://i.loli.net/2021/02/28/QLXjulMade49w1D.jpg" alt="luyou"></p>
+<p><img src="https://i.loli.net/2021/02/28/5QTt1uNhAbkyrMc.jpg" alt="luyou"></p>
+<p><img src="https://i.loli.net/2021/02/28/AWF8TEpQ3UDZaOK.jpg" alt="luyou"></p>
+<p><img src="https://i.loli.net/2021/02/28/SGkJNEKOe5LCqau.jpg" alt="luyou"></p>
+<h2 id="4redux细节">4.redux细节</h2>
+<h3 id="41-工作流">4.1 工作流</h3>
+<p><img src="https://i.loli.net/2021/02/28/zsaL2CKwIHdo6Tj.jpg" alt="luyou"></p>
+<p><code>中间件是对dispatch的升级，redux的中间件指的是action和store的中间</code></p>
+<p><img src="https://i.loli.net/2021/02/28/jaMhA4mFLtSTD65.jpg" alt="luyou"></p>
+<h3 id="42-代码演示">4.2 代码演示</h3>
+<p><code>1.新建store</code></p>
+<p><img src="https://i.loli.net/2021/02/28/BAZDzGbyaxToutJ.jpg" alt="luyou"></p>
+<p><code>2.新建reducer</code>
+<img src="https://i.loli.net/2021/02/28/MI7jCY6ZnOfWGks.jpg" alt="luyou"></p>
+<p><code>3.将store数据引入组件</code>
+<img src="https://i.loli.net/2021/02/28/OvUJfAl9tCbnS2i.jpg" alt="luyou"></p>
+<p><code>4.组件更新数据时新建action</code>
+<img src="https://i.loli.net/2021/02/28/yXnKcCMYHx12S7I.jpg" alt="luyou"></p>
+<p><code>5.建好action后store派发action</code>
+<img src="https://i.loli.net/2021/02/28/2SOcMjQPx7rFzBa.jpg" alt="luyou"></p>
+<p><code>6.派发后store将action传给reducer处理</code>
+<img src="https://i.loli.net/2021/02/28/iEUYC9hJdLbl8rf.jpg" alt="luyou"></p>
+<p><code>7.reducer处理后在组件中订阅store变化</code>
+<img src="https://i.loli.net/2021/02/28/cJyX2GxUT9r35Yg.jpg" alt="luyou"></p>
+<p><code>8.组件中检测到store数据变化时更新数据</code>
+<img src="https://i.loli.net/2021/02/28/36MpvYPx57XOjdz.jpg" alt="luyou"></p>
+<h3 id="43-redux-thunk">4.3 redux-thunk</h3>
+<p><code>1.引入redux-thunk</code></p>
+<p><img src="https://i.loli.net/2021/02/28/GaXcIhvwRJ53jmA.jpg" alt="luyou"></p>
+<p><img src="https://i.loli.net/2021/02/28/2Ni6WEKau7yDdVx.jpg" alt="luyou"></p>
+<p><code>2.在组件生命周期函数派发异步action</code></p>
+<p><img src="https://i.loli.net/2021/02/28/ur5FfCU2ib31Epv.jpg" alt="luyou"></p>
+<p><code>3.在action写异步逻辑</code></p>
+<p><img src="https://i.loli.net/2021/02/28/h2nrodBjD7i1bJT.jpg" alt="luyou"></p>
+<h3 id="44-redux-saga">4.4 redux-saga</h3>
+<p><code>1.引入redux-saga</code>
+<img src="https://i.loli.net/2021/02/28/FWkUZxpTjzRC97N.jpg" alt="luyou"></p>
+<p><code>2.在组件生命周期函数派发异步action</code>
+<img src="https://www.hualigs.cn/image/603a7f975c98f.jpg" alt="luyou"></p>
+<p><code>3.在saga文件中写异步逻辑（因为使用了该中间件所以saga文件也可以捕获store派发的action）</code>
+<img src="https://www.hualigs.cn/image/603a7f975cba3.jpg" alt="luyou"></p>
+<h3 id="45-react-redux">4.5 react-redux</h3>
+<p><code>本质：简化redux使用，直接将store数据映射到组件props</code></p>
+<p><code>1.引入react-redux</code>
+<img src="https://www.hualigs.cn/image/603a7f975bf63.jpg" alt="luyou"></p>
+<p><code>2.建立数据映射</code>
+<img src="https://www.hualigs.cn/image/603a7f975cb5f.jpg" alt="luyou"></p>
+<h2 id="5api">5.api</h2>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript"><span style="color:#a6e22e">React</span>.<span style="color:#a6e22e">PureComponent</span><span style="color:#960050;background-color:#1e0010">：</span><span style="color:#a6e22e">props</span> <span style="color:#a6e22e">和</span> <span style="color:#a6e22e">state</span> <span style="color:#a6e22e">较为简单时使用</span>
+
+<span style="color:#a6e22e">React</span>.<span style="color:#a6e22e">createElement</span>(<span style="color:#a6e22e">type</span>,  [<span style="color:#a6e22e">props</span>],  [...<span style="color:#a6e22e">children</span>]) <span style="color:#a6e22e">创建虚拟dom</span>
+
+<span style="color:#a6e22e">React</span>.<span style="color:#a6e22e">Fragment代替无意义标签</span>
+
+<span style="color:#a6e22e">React</span>.<span style="color:#a6e22e">createRef</span>()<span style="color:#a6e22e">创建获取dom的对象</span>
+
+<span style="color:#a6e22e">React</span>.<span style="color:#a6e22e">lazy</span>()<span style="color:#a6e22e">动态加载组件</span>
+
+<span style="color:#a6e22e">React</span>.<span style="color:#a6e22e">Suspense懒加载组件并可以指定加载指示器</span>
+
+<span style="color:#a6e22e">ReactDOM</span>.<span style="color:#a6e22e">render</span>(<span style="color:#a6e22e">element</span>, <span style="color:#a6e22e">container</span>[, <span style="color:#a6e22e">callback</span>])<span style="color:#a6e22e">渲染虚拟dom</span>
+
+</code></pre></div>
+    </div>
+    <video id="my_video" style="height: 300px;width:100%" controls="controls"></video>
+
+</article>
+<div class="pagination">
+    
+    <div class="prev"> <a href="https://Apollo2light.github.io/Apollo2light/frontend/5.vue%E5%9F%BA%E7%A1%80/">Previous Post</a> </div>
+    
+    
+    <div class="next"> <a href="https://Apollo2light.github.io/Apollo2light/frontend/4.jquery%E5%9F%BA%E7%A1%80/">Next Post</a> </div>
+    
+</div>
+
+
+<script>
+    try{
+        
+        let src = document.getElementsByTagName('code')[0].innerText;
+        
+        if(src.indexOf("mp4")!=-1){
+            document.getElementById('my_video').setAttribute("src",src)
+        }else{
+            
+            let video = document.getElementById('my_video');
+            if (video != null){
+                video.parentNode.removeChild(video);
+            }
+        }
+    }catch(e){
+        
+        let video = document.getElementById('my_video');
+        if (video != null){
+            video.parentNode.removeChild(video);
+        }
+    }
+</script>
+
+        </main><footer class="site-footer">
+	<span class="right">
+		<em>Apollo&#39;s blog</em>
+	</span>
+</footer>
+</body>
+    <script>
+        
+    </script>
+</html>

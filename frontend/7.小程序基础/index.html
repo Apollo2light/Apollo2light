@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang=en-us><head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title> 7 - Apollo&#39;s blog</title>
+    <meta name="description" content="1.简介 1.每个用户针对每个公众号会产生一个安全的OpenID 2.一个用户虽然对多个公众号和应用有多个不同的OpenID，但他对所有这些同一开放平台账号下的公众号和应用，只有一个UnionID 3.在申请到认证公众号之前，申请一个接口测试号，立即开始接口测试开发 4.每个接口都有每日接口调用频次限制 5.公众平台以access_token为接口调用凭据，它在2小时内有效，1天内获取次数有限 6.公众平台接口调用仅支持80端口 7.公众号主要通过公众号消息会话 公众号内网页来为用户提供服务 8.公众号消息会话：公众号是以微信用户的一个联系人形式存在的，消息会话是公众号与用户交互的基础 9.消息服务的类型：群发消息，被动回复消息(加解密)，客服消息，模板消息 10.公众号内网页：获取用户的基本信息，微信JS-SDK EncodingAESKey: ZroCcwPJ2wVUemo94iPc8DJHiEXi3lHcJ3aXKDwUI2r 2.步骤 1.申请自己服务器，搭建web服务，申请公众号，在微信公众号平台的设置与开发-基本配置添加url(开发者ip)，token(验证开发者)和EncodingAESKey(消息加密密钥) 2.在微信公众号平台填好开发者信息后点击提交，微信服务器会向开发者服务器发送signature，timestamp，nonce，开发者用token, timestamp, nonce组合加密生成hashcode，对比微信发来的signature和自己生成的hashcode是否一致，如果一致返回echostr到微信服务器 3.用户发送消息到公众号，微信服务器将消息包装成xml格式发往开发者服务器，开发者服务器解析后发回内容到微信服务器，微信服务器解析后发给用户 微信文档：https://developers.weixin.qq.com/doc/offiaccount/Getting_Started/Getting_Started_Guide.html
+centos防火墙：https://blog.csdn.net/s_p_j/article/details/80979450 https://blog.csdn.net/Linda_Lindaaaa/article/details/88836146">
+    <link rel="canonical" href="https://Apollo2light.github.io/Apollo2light/frontend/7.%E5%B0%8F%E7%A8%8B%E5%BA%8F%E5%9F%BA%E7%A1%80/">
+    <meta property="og:title" content="7">
+    <meta property="og:type" content="article">
+    <meta property="og:url" content="https://Apollo2light.github.io/Apollo2light/frontend/7.%E5%B0%8F%E7%A8%8B%E5%BA%8F%E5%9F%BA%E7%A1%80/">
+    <meta property="og:description" content="1.简介 1.每个用户针对每个公众号会产生一个安全的OpenID 2.一个用户虽然对多个公众号和应用有多个不同的OpenID，但他对所有这些同一开放平台账号下的公众号和应用，只有一个UnionID 3.在申请到认证公众号之前，申请一个接口测试号，立即开始接口测试开发 4.每个接口都有每日接口调用频次限制 5.公众平台以access_token为接口调用凭据，它在2小时内有效，1天内获取次数有限 6.公众平台接口调用仅支持80端口 7.公众号主要通过公众号消息会话 公众号内网页来为用户提供服务 8.公众号消息会话：公众号是以微信用户的一个联系人形式存在的，消息会话是公众号与用户交互的基础 9.消息服务的类型：群发消息，被动回复消息(加解密)，客服消息，模板消息 10.公众号内网页：获取用户的基本信息，微信JS-SDK EncodingAESKey: ZroCcwPJ2wVUemo94iPc8DJHiEXi3lHcJ3aXKDwUI2r 2.步骤 1.申请自己服务器，搭建web服务，申请公众号，在微信公众号平台的设置与开发-基本配置添加url(开发者ip)，token(验证开发者)和EncodingAESKey(消息加密密钥) 2.在微信公众号平台填好开发者信息后点击提交，微信服务器会向开发者服务器发送signature，timestamp，nonce，开发者用token, timestamp, nonce组合加密生成hashcode，对比微信发来的signature和自己生成的hashcode是否一致，如果一致返回echostr到微信服务器 3.用户发送消息到公众号，微信服务器将消息包装成xml格式发往开发者服务器，开发者服务器解析后发回内容到微信服务器，微信服务器解析后发给用户 微信文档：https://developers.weixin.qq.com/doc/offiaccount/Getting_Started/Getting_Started_Guide.html
+centos防火墙：https://blog.csdn.net/s_p_j/article/details/80979450 https://blog.csdn.net/Linda_Lindaaaa/article/details/88836146">
+    <meta property="og:site_name" content="Apollo&#39;s blog">
+    <link rel="stylesheet" href="https://Apollo2light.github.io/Apollo2light/css/main.min.7fdf1d02dafd1a6eb5cfd0d707e17e33515b866f5d305a0ab01a4095577484fe.css" integrity="sha256-f98dAtr9Gm61z9DXB&#43;F&#43;M1Fbhm9dMFoKsBpAlVd0hP4=">
+    <meta name="generator" content="Hugo 0.73.0" />
+    <script type="module" src="https://unpkg.com/ionicons@5.1.2/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule="" src="https://unpkg.com/ionicons@5.1.2/dist/ionicons/ionicons.js"></script>
+    
+</head>
+<body><header class="site-header">
+    <nav class="site-nav" role="navigation" aria-label="breadcrumb">
+    <ol itemscope itemtype="https://schema.org/BreadcrumbList" class="breadcrumb"><li class="breadcrumb-item  " 
+  itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+  <a itemtype="https://schema.org/Thing" itemprop="item" href="https://Apollo2light.github.io/Apollo2light/">
+    <span itemprop="name">Apollo&#39;s blog</span>
+  </a>
+  <meta itemprop="position" content="0" />
+</li>/<li class="breadcrumb-item  " 
+  itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+  <a itemtype="https://schema.org/Thing" itemprop="item" href="https://Apollo2light.github.io/Apollo2light/frontend/">
+    <span itemprop="name">frontend</span>
+  </a>
+  <meta itemprop="position" content="0" />
+</li>/<li class="breadcrumb-item active hidden" aria-current="page"
+  itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+  <a itemtype="https://schema.org/Thing" itemprop="item" href="https://Apollo2light.github.io/Apollo2light/frontend/7.%E5%B0%8F%E7%A8%8B%E5%BA%8F%E5%9F%BA%E7%A1%80/">
+    <span itemprop="name">7.%E5%B0%8F%E7%A8%8B%E5%BA%8F%E5%9F%BA%E7%A1%80</span>
+  </a>
+  <meta itemprop="position" content="1" />
+</li></ol>
+    </nav>
+    <h1 class="site-title hidden">
+		<a href="https://Apollo2light.github.io/Apollo2light/">Apollo&#39;s blog</a>
+    </h1>
+</header><main id="content">
+<article role="article" class="content post h-entry" itemscope="" itemtype="http://schema.org/BlogPosting">
+    <header class="post-header">        
+        <h2 class="post-title" itemprop="name headline">7</h2>
+        <span class="post-meta">
+            <time class="date-published" datetime="2022-04-26T23:00:10&#43;07:00" itemprop="datePublished">
+                Tue, 26 Apr 2022
+            </time>
+            
+        </span>
+    </header>
+    <div class="post-content" itemprop="articleBody">
+        <h2 id="1简介">1.简介</h2>
+<pre><code>1.每个用户针对每个公众号会产生一个安全的OpenID
+
+2.一个用户虽然对多个公众号和应用有多个不同的OpenID，但他对所有这些同一开放平台账号下的公众号和应用，只有一个UnionID
+
+3.在申请到认证公众号之前，申请一个接口测试号，立即开始接口测试开发
+
+4.每个接口都有每日接口调用频次限制
+
+5.公众平台以access_token为接口调用凭据，它在2小时内有效，1天内获取次数有限
+
+6.公众平台接口调用仅支持80端口
+
+7.公众号主要通过公众号消息会话  公众号内网页来为用户提供服务
+
+8.公众号消息会话：公众号是以微信用户的一个联系人形式存在的，消息会话是公众号与用户交互的基础
+
+9.消息服务的类型：群发消息，被动回复消息(加解密)，客服消息，模板消息
+
+
+10.公众号内网页：获取用户的基本信息，微信JS-SDK
+
+EncodingAESKey: ZroCcwPJ2wVUemo94iPc8DJHiEXi3lHcJ3aXKDwUI2r
+</code></pre><h2 id="2步骤">2.步骤</h2>
+<pre><code>1.申请自己服务器，搭建web服务，申请公众号，在微信公众号平台的设置与开发-基本配置添加url(开发者ip)，token(验证开发者)和EncodingAESKey(消息加密密钥)
+
+2.在微信公众号平台填好开发者信息后点击提交，微信服务器会向开发者服务器发送signature，timestamp，nonce，开发者用token, timestamp, nonce组合加密生成hashcode，对比微信发来的signature和自己生成的hashcode是否一致，如果一致返回echostr到微信服务器
+
+3.用户发送消息到公众号，微信服务器将消息包装成xml格式发往开发者服务器，开发者服务器解析后发回内容到微信服务器，微信服务器解析后发给用户
+</code></pre><p>微信文档：https://developers.weixin.qq.com/doc/offiaccount/Getting_Started/Getting_Started_Guide.html</p>
+<p>centos防火墙：https://blog.csdn.net/s_p_j/article/details/80979450
+<a href="https://blog.csdn.net/Linda_Lindaaaa/article/details/88836146">https://blog.csdn.net/Linda_Lindaaaa/article/details/88836146</a></p>
+
+    </div>
+    <video id="my_video" style="height: 300px;width:100%" controls="controls"></video>
+
+</article>
+<div class="pagination">
+    
+    <div class="prev"> <a href="https://Apollo2light.github.io/Apollo2light/frontend/4.jquery%E5%9F%BA%E7%A1%80/">Previous Post</a> </div>
+    
+    
+    <div class="next"> <a href="https://Apollo2light.github.io/Apollo2light/frontend/8.ts%E5%9F%BA%E7%A1%80/">Next Post</a> </div>
+    
+</div>
+
+
+<script>
+    try{
+        
+        let src = document.getElementsByTagName('code')[0].innerText;
+        
+        if(src.indexOf("mp4")!=-1){
+            document.getElementById('my_video').setAttribute("src",src)
+        }else{
+            
+            let video = document.getElementById('my_video');
+            if (video != null){
+                video.parentNode.removeChild(video);
+            }
+        }
+    }catch(e){
+        
+        let video = document.getElementById('my_video');
+        if (video != null){
+            video.parentNode.removeChild(video);
+        }
+    }
+</script>
+
+        </main><footer class="site-footer">
+	<span class="right">
+		<em>Apollo&#39;s blog</em>
+	</span>
+</footer>
+</body>
+    <script>
+        
+    </script>
+</html>
