@@ -5,13 +5,13 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title> 3.js基础 - Apollo&#39;s blog</title>
     <meta name="description" content="0.前提 javascript包括三部分：
- 1.ECMA：基础语法 2.DOM: 操作文档节点 3.BOM：操作浏览器节点  1.变量  值：复制新内存 引用：指向同一块内存的地址  let obj0 = { name:&#34;deepcopy&#34;, description:&#34;copy all args from object except its own prop&#34;, arr:[&#34;refrence&#34;,&#34;data&#34;] } let obj1 = { name:&#34;deepcopy&#34;, description:&#34;copy all args from object except its own prop&#34;, arr:[&#34;refrence&#34;,&#34;data&#34;], obje: obj0 } /** * 深拷贝 */ function deepCopy(obj){ //边界判断  if(typeof obj !=&#34;object&#34; || obj == null){ return obj; } //定义返回结果  let result; if(obj instanceof Array){ //待拷贝的对象是数组类型  result = [] }else{ //待拷贝的对象是object类型  result = {} } //开始拷贝  for (const key in obj) { //只拷贝obj自身的属性  if (obj.">
+ 1.ECMA：基础语法 2.DOM: 操作文档节点 3.BOM：操作浏览器节点 str方法：https://www.runoob.com/js/js-obj-string.html arr方法：https://www.runoob.com/jsref/jsref-obj-array.html reg方法：https://www.runoob.com/jsref/jsref-obj-regexp.html  1.变量  值：复制新内存 引用：指向同一块内存的地址  let obj0 = { name:&#34;deepcopy&#34;, description:&#34;copy all args from object except its own prop&#34;, arr:[&#34;refrence&#34;,&#34;data&#34;] } let obj1 = { name:&#34;deepcopy&#34;, description:&#34;copy all args from object except its own prop&#34;, arr:[&#34;refrence&#34;,&#34;data&#34;], obje: obj0 } /** * 深拷贝 */ function deepCopy(obj){ //边界判断  if(typeof obj !=&#34;object&#34; || obj == null){ return obj; } //定义返回结果  let result; if(obj instanceof Array){ //待拷贝的对象是数组类型  result = [] }else{ //待拷贝的对象是object类型  result = {} } //开始拷贝  for (const key in obj) { //只拷贝obj自身的属性  if (obj.">
     <link rel="canonical" href="https://Apollo2light.github.io/Apollo2light/frontend/3.js%E5%9F%BA%E7%A1%80/">
     <meta property="og:title" content="3.js基础">
     <meta property="og:type" content="article">
     <meta property="og:url" content="https://Apollo2light.github.io/Apollo2light/frontend/3.js%E5%9F%BA%E7%A1%80/">
     <meta property="og:description" content="0.前提 javascript包括三部分：
- 1.ECMA：基础语法 2.DOM: 操作文档节点 3.BOM：操作浏览器节点  1.变量  值：复制新内存 引用：指向同一块内存的地址  let obj0 = { name:&#34;deepcopy&#34;, description:&#34;copy all args from object except its own prop&#34;, arr:[&#34;refrence&#34;,&#34;data&#34;] } let obj1 = { name:&#34;deepcopy&#34;, description:&#34;copy all args from object except its own prop&#34;, arr:[&#34;refrence&#34;,&#34;data&#34;], obje: obj0 } /** * 深拷贝 */ function deepCopy(obj){ //边界判断  if(typeof obj !=&#34;object&#34; || obj == null){ return obj; } //定义返回结果  let result; if(obj instanceof Array){ //待拷贝的对象是数组类型  result = [] }else{ //待拷贝的对象是object类型  result = {} } //开始拷贝  for (const key in obj) { //只拷贝obj自身的属性  if (obj.">
+ 1.ECMA：基础语法 2.DOM: 操作文档节点 3.BOM：操作浏览器节点 str方法：https://www.runoob.com/js/js-obj-string.html arr方法：https://www.runoob.com/jsref/jsref-obj-array.html reg方法：https://www.runoob.com/jsref/jsref-obj-regexp.html  1.变量  值：复制新内存 引用：指向同一块内存的地址  let obj0 = { name:&#34;deepcopy&#34;, description:&#34;copy all args from object except its own prop&#34;, arr:[&#34;refrence&#34;,&#34;data&#34;] } let obj1 = { name:&#34;deepcopy&#34;, description:&#34;copy all args from object except its own prop&#34;, arr:[&#34;refrence&#34;,&#34;data&#34;], obje: obj0 } /** * 深拷贝 */ function deepCopy(obj){ //边界判断  if(typeof obj !=&#34;object&#34; || obj == null){ return obj; } //定义返回结果  let result; if(obj instanceof Array){ //待拷贝的对象是数组类型  result = [] }else{ //待拷贝的对象是object类型  result = {} } //开始拷贝  for (const key in obj) { //只拷贝obj自身的属性  if (obj.">
     <meta property="og:site_name" content="Apollo&#39;s blog">
     <link rel="stylesheet" href="https://Apollo2light.github.io/Apollo2light/css/main.min.7fdf1d02dafd1a6eb5cfd0d707e17e33515b866f5d305a0ab01a4095577484fe.css" integrity="sha256-f98dAtr9Gm61z9DXB&#43;F&#43;M1Fbhm9dMFoKsBpAlVd0hP4=">
     <meta name="generator" content="Hugo 0.73.0" />
@@ -62,6 +62,9 @@
 <li>1.ECMA：基础语法</li>
 <li>2.DOM: 操作文档节点</li>
 <li>3.BOM：操作浏览器节点</li>
+<li>str方法：https://www.runoob.com/js/js-obj-string.html</li>
+<li>arr方法：https://www.runoob.com/jsref/jsref-obj-array.html</li>
+<li>reg方法：https://www.runoob.com/jsref/jsref-obj-regexp.html</li>
 </ul>
 <h2 id="1变量">1.变量</h2>
 <ul>

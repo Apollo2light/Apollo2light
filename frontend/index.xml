@@ -100,7 +100,7 @@ $()或者jQuery() 在jquery2.0.3中，它是将其挂载到了window全局对象
       
       <guid>https://Apollo2light.github.io/Apollo2light/frontend/3.js%E5%9F%BA%E7%A1%80/</guid>
       <description>0.前提 javascript包括三部分：
- 1.ECMA：基础语法 2.DOM: 操作文档节点 3.BOM：操作浏览器节点  1.变量  值：复制新内存 引用：指向同一块内存的地址  let obj0 = { name:&amp;#34;deepcopy&amp;#34;, description:&amp;#34;copy all args from object except its own prop&amp;#34;, arr:[&amp;#34;refrence&amp;#34;,&amp;#34;data&amp;#34;] } let obj1 = { name:&amp;#34;deepcopy&amp;#34;, description:&amp;#34;copy all args from object except its own prop&amp;#34;, arr:[&amp;#34;refrence&amp;#34;,&amp;#34;data&amp;#34;], obje: obj0 } /** * 深拷贝 */ function deepCopy(obj){ //边界判断  if(typeof obj !=&amp;#34;object&amp;#34; || obj == null){ return obj; } //定义返回结果  let result; if(obj instanceof Array){ //待拷贝的对象是数组类型  result = [] }else{ //待拷贝的对象是object类型  result = {} } //开始拷贝  for (const key in obj) { //只拷贝obj自身的属性  if (obj.</description>
+ 1.ECMA：基础语法 2.DOM: 操作文档节点 3.BOM：操作浏览器节点 str方法：https://www.runoob.com/js/js-obj-string.html arr方法：https://www.runoob.com/jsref/jsref-obj-array.html reg方法：https://www.runoob.com/jsref/jsref-obj-regexp.html  1.变量  值：复制新内存 引用：指向同一块内存的地址  let obj0 = { name:&amp;#34;deepcopy&amp;#34;, description:&amp;#34;copy all args from object except its own prop&amp;#34;, arr:[&amp;#34;refrence&amp;#34;,&amp;#34;data&amp;#34;] } let obj1 = { name:&amp;#34;deepcopy&amp;#34;, description:&amp;#34;copy all args from object except its own prop&amp;#34;, arr:[&amp;#34;refrence&amp;#34;,&amp;#34;data&amp;#34;], obje: obj0 } /** * 深拷贝 */ function deepCopy(obj){ //边界判断  if(typeof obj !=&amp;#34;object&amp;#34; || obj == null){ return obj; } //定义返回结果  let result; if(obj instanceof Array){ //待拷贝的对象是数组类型  result = [] }else{ //待拷贝的对象是object类型  result = {} } //开始拷贝  for (const key in obj) { //只拷贝obj自身的属性  if (obj.</description>
     </item>
     
     <item>
@@ -109,7 +109,7 @@ $()或者jQuery() 在jquery2.0.3中，它是将其挂载到了window全局对象
       <pubDate>Tue, 26 Apr 2022 22:48:26 +0800</pubDate>
       
       <guid>https://Apollo2light.github.io/Apollo2light/frontend/2.css%E5%9F%BA%E7%A1%80/</guid>
-      <description></description>
+      <description>css资料  css属性：https://www.runoob.com/cssref/css-reference.html css选择器：https://www.runoob.com/cssref/css-selectors.html css动画：https://www.runoob.com/cssref/css-selectors.html css单位：https://www.runoob.com/cssref/css-units.html  flex布局：容器和子项目设置属性 /* 容器： */ display：flex； flex-direction：row/column/row-reverse justify-content：flex-*/center/space-* align-items：center flex-wrap：wrap align-content：center flex-flow：column wrap； /* 子项目： */ flex：1； align-self：flex-end order：-1 </description>
     </item>
     
     <item>
@@ -118,7 +118,7 @@ $()或者jQuery() 在jquery2.0.3中，它是将其挂载到了window全局对象
       <pubDate>Tue, 26 Apr 2022 22:48:19 +0800</pubDate>
       
       <guid>https://Apollo2light.github.io/Apollo2light/frontend/1.html%E5%9F%BA%E7%A1%80/</guid>
-      <description></description>
+      <description>html资料  html标签：https://www.runoob.com/tags/ref-byfunc.html html5新标签：https://www.runoob.com/html/html5-new-element.html html属性：https://www.runoob.com/tags/ref-standardattributes.html html事件：https://www.runoob.com/tags/ref-eventattributes.html 音视频：https://www.runoob.com/tags/ref-av-dom.html canvas属性：https://www.runoob.com/tags/ref-canvas.html http状态码：https://www.runoob.com/tags/html-httpmessages.html  </description>
     </item>
     
   </channel>
