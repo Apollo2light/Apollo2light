@@ -3,14 +3,14 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title> 2.git配置多账号 - Apollo&#39;s blog</title>
+    <title> 2.git多账号 - Apollo&#39;s blog</title>
     <meta name="description" content="0.使用 使用的都是ssh协议
 git clone git@Apollo2light.github.com:Apollo2light/Apollo2light.git 1.单客户端多账号 1.1 问题描述 单个客户端如何管理 多个账号在多个代码托管平台的代码拉取推送？
  a用户  github.come gitee.com   b用户  github.com gitee.com    1.2 解决方案  1.本地生成多个账号对应不同平台的ssh公私钥 2.将公钥部署到对应平台 3.本地拉取推送  1.2.1 生成公私钥 #进入公私钥配置地址 cd ~/.ssh/ #生成公私钥,ed25519为生成时使用的算法 ssh-keygen -t ed25519 -C &#34;a@qq.com&#34; ssh-keygen -t ed25519 -C &#34;b@qq.com&#34; #添加到ssh-agent，加快速度 eval &#34;$(ssh-agent -s)&#34; ssh-add -K ~/.ssh/id_a_ed25519 ssh-add -K ~/.ssh/id_b_ed25519 #配置访问时不同用户对应的私钥 vim config #======================== #github gaoyakang Host gaoyakang.github.com HostName github.com IdentityFile ~/.ssh/id_306_ed25519 user git #github apollo Host Apollo2light.">
-    <link rel="canonical" href="https://Apollo2light.github.io/Apollo2light/tools/2.git%E9%85%8D%E7%BD%AE%E5%A4%9A%E8%B4%A6%E5%8F%B7/">
-    <meta property="og:title" content="2.git配置多账号">
+    <link rel="canonical" href="https://Apollo2light.github.io/Apollo2light/tools/2.git%E5%A4%9A%E8%B4%A6%E5%8F%B7/">
+    <meta property="og:title" content="2.git多账号">
     <meta property="og:type" content="article">
-    <meta property="og:url" content="https://Apollo2light.github.io/Apollo2light/tools/2.git%E9%85%8D%E7%BD%AE%E5%A4%9A%E8%B4%A6%E5%8F%B7/">
+    <meta property="og:url" content="https://Apollo2light.github.io/Apollo2light/tools/2.git%E5%A4%9A%E8%B4%A6%E5%8F%B7/">
     <meta property="og:description" content="0.使用 使用的都是ssh协议
 git clone git@Apollo2light.github.com:Apollo2light/Apollo2light.git 1.单客户端多账号 1.1 问题描述 单个客户端如何管理 多个账号在多个代码托管平台的代码拉取推送？
  a用户  github.come gitee.com   b用户  github.com gitee.com    1.2 解决方案  1.本地生成多个账号对应不同平台的ssh公私钥 2.将公钥部署到对应平台 3.本地拉取推送  1.2.1 生成公私钥 #进入公私钥配置地址 cd ~/.ssh/ #生成公私钥,ed25519为生成时使用的算法 ssh-keygen -t ed25519 -C &#34;a@qq.com&#34; ssh-keygen -t ed25519 -C &#34;b@qq.com&#34; #添加到ssh-agent，加快速度 eval &#34;$(ssh-agent -s)&#34; ssh-add -K ~/.ssh/id_a_ed25519 ssh-add -K ~/.ssh/id_b_ed25519 #配置访问时不同用户对应的私钥 vim config #======================== #github gaoyakang Host gaoyakang.github.com HostName github.com IdentityFile ~/.ssh/id_306_ed25519 user git #github apollo Host Apollo2light.">
@@ -37,8 +37,8 @@ git clone git@Apollo2light.github.com:Apollo2light/Apollo2light.git 1.单客户�
   <meta itemprop="position" content="0" />
 </li>/<li class="breadcrumb-item active hidden" aria-current="page"
   itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
-  <a itemtype="https://schema.org/Thing" itemprop="item" href="https://Apollo2light.github.io/Apollo2light/tools/2.git%E9%85%8D%E7%BD%AE%E5%A4%9A%E8%B4%A6%E5%8F%B7/">
-    <span itemprop="name">2.git%E9%85%8D%E7%BD%AE%E5%A4%9A%E8%B4%A6%E5%8F%B7</span>
+  <a itemtype="https://schema.org/Thing" itemprop="item" href="https://Apollo2light.github.io/Apollo2light/tools/2.git%E5%A4%9A%E8%B4%A6%E5%8F%B7/">
+    <span itemprop="name">2.git%E5%A4%9A%E8%B4%A6%E5%8F%B7</span>
   </a>
   <meta itemprop="position" content="1" />
 </li></ol>
@@ -49,10 +49,10 @@ git clone git@Apollo2light.github.com:Apollo2light/Apollo2light.git 1.单客户�
 </header><main id="content">
 <article role="article" class="content post h-entry" itemscope="" itemtype="http://schema.org/BlogPosting">
     <header class="post-header">        
-        <h2 class="post-title" itemprop="name headline">2.git配置多账号</h2>
+        <h2 class="post-title" itemprop="name headline">2.git多账号</h2>
         <span class="post-meta">
-            <time class="date-published" datetime="2022-04-26T18:25:43&#43;07:00" itemprop="datePublished">
-                Tue, 26 Apr 2022
+            <time class="date-published" datetime="2022-04-29T02:30:38&#43;07:00" itemprop="datePublished">
+                Fri, 29 Apr 2022
             </time>
             
         </span>
@@ -61,7 +61,6 @@ git clone git@Apollo2light.github.com:Apollo2light/Apollo2light.git 1.单客户�
         <h2 id="0使用">0.使用</h2>
 <p>使用的都是ssh协议</p>
 <pre><code>git clone git@Apollo2light.github.com:Apollo2light/Apollo2light.git
-
 </code></pre><h2 id="1单客户端多账号">1.单客户端多账号</h2>
 <h3 id="11-问题描述">1.1 问题描述</h3>
 <p><code>单个客户端如何管理 多个账号在多个代码托管平台的代码拉取推送？</code></p>
@@ -135,7 +134,7 @@ cat ~/.ssh/id_a_ed25519.pub
 cat ~/.ssh/id_b_ed25519.pub
 
 </code></pre></div><p>添加到网站比较简单，在github上<code>settings &gt; SSH and GPG keys &gt; New SSH Keys</code></p>
-<p><img src="https://s3.bmp.ovh/imgs/2022/04/26/f14df3d8064644fd.png" alt=""></p>
+<p><img src="https://cdn.jsdelivr.net/gh/Apollo2light/apolloblogpicture/img/%E6%88%AA%E5%B1%8F2022-04-29%20%E4%B8%8A%E5%8D%882.37.43.png" alt="截屏2022-04-29 上午2.37.43"></p>
 <h4 id="124-本地拉取推送">1.2.4 本地拉取推送</h4>
 <ul>
 <li>Apollo2light用户有Apollo2light仓库,只演示github，gitee同理已经测试过没问题</li>
@@ -177,8 +176,10 @@ git push
 </article>
 <div class="pagination">
     
+    <div class="prev"> <a href="https://Apollo2light.github.io/Apollo2light/tools/1.git%E5%AD%A6%E4%B9%A0/">Previous Post</a> </div>
     
-    <div class="next"> <a href="https://Apollo2light.github.io/Apollo2light/tools/1.git%E5%8E%9F%E7%90%86/">Next Post</a> </div>
+    
+    <div class="next"> <a href="https://Apollo2light.github.io/Apollo2light/tools/3.git%E5%8D%9A%E5%AE%A2/">Next Post</a> </div>
     
 </div>
 

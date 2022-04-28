@@ -3,16 +3,18 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title> 1.git原理 - Apollo&#39;s blog</title>
-    <meta name="description" content="1.分布式版本控制系统 1.1 本质 git是分布式版本控制系统，它与集中式版本控制的本质区别是：
+    <title> 1.git学习 - Apollo&#39;s blog</title>
+    <meta name="description" content="0.必知 学习git就3点：分区，分支与远程。
+1.分布式版本控制系统 1.1 本质 git是分布式版本控制系统，它与集中式版本控制的本质区别是：
  分布式：客户端并不只提取最新版本的文件快照， 而是把代码仓库完整地镜像下来，包括完整的历史记录 集中式：客户端只提取最新版本的文件快照，不包括完整的历史记录  1.2 配置  /etc/gitconfig 文件：系统级别，git config –system对当前操作系统所有用户生效 ~/.gitconfig 文件：用户级别，git config –global 对当前操作系统该用户生效 .git/config 文件：当前文件级别，git config –local仅针对当前项目有效  git config —list #配置列表 git config --global user.name #用户名 git config --global user.email #用户邮箱 1.3 分区 对于任何一个文件，在 Git 内都只有三种状态：
  已提交（committed）：该文件已经被安全地保存在本地数据库中了 已修改（modified）：修改了某个文件 已暂存（staged）：已修改的文件放在下次提交时要保存的清单中  因此可以看到 Git 管理项目时，文件流转的三个区域：
  工作目录：编辑代码 暂存区域：完成编辑但未提交 本地仓库：.git目录，存放数据和修改信息  HEAD：指向当前所处分支 description：仅供 GitWeb 程序使用，无需关心 info/：全局性排除文件 config：配置文件 hooks/：客户端或服务端的钩子脚本 index：暂存区信息 objects/：所有存储的数据 refs/：存储指向数据（分支、远程仓库和标签等)的提交对象的指针    2.">
-    <link rel="canonical" href="https://Apollo2light.github.io/Apollo2light/tools/1.git%E5%8E%9F%E7%90%86/">
-    <meta property="og:title" content="1.git原理">
+    <link rel="canonical" href="https://Apollo2light.github.io/Apollo2light/tools/1.git%E5%AD%A6%E4%B9%A0/">
+    <meta property="og:title" content="1.git学习">
     <meta property="og:type" content="article">
-    <meta property="og:url" content="https://Apollo2light.github.io/Apollo2light/tools/1.git%E5%8E%9F%E7%90%86/">
-    <meta property="og:description" content="1.分布式版本控制系统 1.1 本质 git是分布式版本控制系统，它与集中式版本控制的本质区别是：
+    <meta property="og:url" content="https://Apollo2light.github.io/Apollo2light/tools/1.git%E5%AD%A6%E4%B9%A0/">
+    <meta property="og:description" content="0.必知 学习git就3点：分区，分支与远程。
+1.分布式版本控制系统 1.1 本质 git是分布式版本控制系统，它与集中式版本控制的本质区别是：
  分布式：客户端并不只提取最新版本的文件快照， 而是把代码仓库完整地镜像下来，包括完整的历史记录 集中式：客户端只提取最新版本的文件快照，不包括完整的历史记录  1.2 配置  /etc/gitconfig 文件：系统级别，git config –system对当前操作系统所有用户生效 ~/.gitconfig 文件：用户级别，git config –global 对当前操作系统该用户生效 .git/config 文件：当前文件级别，git config –local仅针对当前项目有效  git config —list #配置列表 git config --global user.name #用户名 git config --global user.email #用户邮箱 1.3 分区 对于任何一个文件，在 Git 内都只有三种状态：
  已提交（committed）：该文件已经被安全地保存在本地数据库中了 已修改（modified）：修改了某个文件 已暂存（staged）：已修改的文件放在下次提交时要保存的清单中  因此可以看到 Git 管理项目时，文件流转的三个区域：
  工作目录：编辑代码 暂存区域：完成编辑但未提交 本地仓库：.git目录，存放数据和修改信息  HEAD：指向当前所处分支 description：仅供 GitWeb 程序使用，无需关心 info/：全局性排除文件 config：配置文件 hooks/：客户端或服务端的钩子脚本 index：暂存区信息 objects/：所有存储的数据 refs/：存储指向数据（分支、远程仓库和标签等)的提交对象的指针    2.">
@@ -39,8 +41,8 @@
   <meta itemprop="position" content="0" />
 </li>/<li class="breadcrumb-item active hidden" aria-current="page"
   itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
-  <a itemtype="https://schema.org/Thing" itemprop="item" href="https://Apollo2light.github.io/Apollo2light/tools/1.git%E5%8E%9F%E7%90%86/">
-    <span itemprop="name">1.git%E5%8E%9F%E7%90%86</span>
+  <a itemtype="https://schema.org/Thing" itemprop="item" href="https://Apollo2light.github.io/Apollo2light/tools/1.git%E5%AD%A6%E4%B9%A0/">
+    <span itemprop="name">1.git%E5%AD%A6%E4%B9%A0</span>
   </a>
   <meta itemprop="position" content="1" />
 </li></ol>
@@ -51,16 +53,18 @@
 </header><main id="content">
 <article role="article" class="content post h-entry" itemscope="" itemtype="http://schema.org/BlogPosting">
     <header class="post-header">        
-        <h2 class="post-title" itemprop="name headline">1.git原理</h2>
+        <h2 class="post-title" itemprop="name headline">1.git学习</h2>
         <span class="post-meta">
-            <time class="date-published" datetime="2022-04-26T19:01:11&#43;07:00" itemprop="datePublished">
-                Tue, 26 Apr 2022
+            <time class="date-published" datetime="2022-04-29T02:29:45&#43;07:00" itemprop="datePublished">
+                Fri, 29 Apr 2022
             </time>
             
         </span>
     </header>
     <div class="post-content" itemprop="articleBody">
-        <h2 id="1分布式版本控制系统">1.分布式版本控制系统</h2>
+        <h2 id="0必知">0.必知</h2>
+<p>学习git就3点：分区，分支与远程。</p>
+<h2 id="1分布式版本控制系统">1.分布式版本控制系统</h2>
 <h3 id="11-本质">1.1 本质</h3>
 <p>git是分布式版本控制系统，它与集中式版本控制的本质区别是：</p>
 <ul>
@@ -326,10 +330,8 @@ git symbolic-ref HEAD refs/heads/test
 </article>
 <div class="pagination">
     
-    <div class="prev"> <a href="https://Apollo2light.github.io/Apollo2light/tools/2.git%E9%85%8D%E7%BD%AE%E5%A4%9A%E8%B4%A6%E5%8F%B7/">Previous Post</a> </div>
     
-    
-    <div class="next"> <a href="https://Apollo2light.github.io/Apollo2light/tools/3.hugo%E5%8D%9A%E5%AE%A2/">Next Post</a> </div>
+    <div class="next"> <a href="https://Apollo2light.github.io/Apollo2light/tools/2.git%E5%A4%9A%E8%B4%A6%E5%8F%B7/">Next Post</a> </div>
     
 </div>
 
