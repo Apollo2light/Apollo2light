@@ -1,0 +1,360 @@
+<!DOCTYPE html>
+<html lang=en-us><head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title> 6.java杂项 - Apollo&#39;s blog</title>
+    <meta name="description" content="1.泛型 泛型：检测或设置引用数据类型
+ 在集合中加泛型可以规定存入集合的数据类型，便于后续遍历 在类中加泛型可以后期传入具体的数据类型，而不必提前规定  package wiki.mrx.www; class Testa&lt;E&gt; { public void test(E m){ } } public class Test { public static void main(String[] args) { Testa&lt;String&gt; t = new Testa&lt;&gt;(); t.test(&#34;test&#34;); } } 2.异常 异常都继承于Throwable类，具体分类如下：
+ Error Exception  检查异常 运行时异常 可以使用如下结构处理异常：    try{ }catch (Exception e){ e.printStackTrace(); }finally { } 3.注解 注解Annotation：代码编译时会被读取并自动操作标记好的内容
+JDK内置了3个注解：@Override重写，@Deprecated过时标记 @SuppressWarnings抑制警告
+jdk5.0提供了4个源注解：Retention生命周期 Target作用目标 Documented文档 Inherited继承
+4.枚举 枚举类enum：可创建的对象个数是有限的，确定的
+package wiki.mrx; public class Season { private final String seasonName; private final String seasonDesc; private Season(String seasonName, String seasonDesc) { this.">
+    <link rel="canonical" href="https://Apollo2light.github.io/Apollo2light/backend/6.java%E6%9D%82%E9%A1%B9/">
+    <meta property="og:title" content="6.java杂项">
+    <meta property="og:type" content="article">
+    <meta property="og:url" content="https://Apollo2light.github.io/Apollo2light/backend/6.java%E6%9D%82%E9%A1%B9/">
+    <meta property="og:description" content="1.泛型 泛型：检测或设置引用数据类型
+ 在集合中加泛型可以规定存入集合的数据类型，便于后续遍历 在类中加泛型可以后期传入具体的数据类型，而不必提前规定  package wiki.mrx.www; class Testa&lt;E&gt; { public void test(E m){ } } public class Test { public static void main(String[] args) { Testa&lt;String&gt; t = new Testa&lt;&gt;(); t.test(&#34;test&#34;); } } 2.异常 异常都继承于Throwable类，具体分类如下：
+ Error Exception  检查异常 运行时异常 可以使用如下结构处理异常：    try{ }catch (Exception e){ e.printStackTrace(); }finally { } 3.注解 注解Annotation：代码编译时会被读取并自动操作标记好的内容
+JDK内置了3个注解：@Override重写，@Deprecated过时标记 @SuppressWarnings抑制警告
+jdk5.0提供了4个源注解：Retention生命周期 Target作用目标 Documented文档 Inherited继承
+4.枚举 枚举类enum：可创建的对象个数是有限的，确定的
+package wiki.mrx; public class Season { private final String seasonName; private final String seasonDesc; private Season(String seasonName, String seasonDesc) { this.">
+    <meta property="og:site_name" content="Apollo&#39;s blog">
+    <link rel="stylesheet" href="https://Apollo2light.github.io/Apollo2light/css/main.min.7fdf1d02dafd1a6eb5cfd0d707e17e33515b866f5d305a0ab01a4095577484fe.css" integrity="sha256-f98dAtr9Gm61z9DXB&#43;F&#43;M1Fbhm9dMFoKsBpAlVd0hP4=">
+    <meta name="generator" content="Hugo 0.73.0" />
+    <script type="module" src="https://unpkg.com/ionicons@5.1.2/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule="" src="https://unpkg.com/ionicons@5.1.2/dist/ionicons/ionicons.js"></script>
+    
+</head>
+<body><header class="site-header">
+    <nav class="site-nav" role="navigation" aria-label="breadcrumb">
+        <ol itemscope itemtype="https://schema.org/BreadcrumbList" class="breadcrumb"><li class="breadcrumb-item  " 
+    itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+    <a itemtype="https://schema.org/Thing" itemprop="item" href="https://Apollo2light.github.io/Apollo2light/">
+        <span itemprop="name">Apollo&#39;s blog</span>
+    </a>
+    <meta itemprop="position"
+          content="0"/>
+</li>/<li class="breadcrumb-item  " 
+    itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+    <a itemtype="https://schema.org/Thing" itemprop="item" href="https://Apollo2light.github.io/Apollo2light/backend/">
+        <span itemprop="name">backend</span>
+    </a>
+    <meta itemprop="position"
+          content="0"/>
+</li>/<li class="breadcrumb-item active hidden" aria-current="page"
+    itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+    <a itemtype="https://schema.org/Thing" itemprop="item" href="https://Apollo2light.github.io/Apollo2light/backend/6.java%E6%9D%82%E9%A1%B9/">
+        <span itemprop="name">6.java%E6%9D%82%E9%A1%B9</span>
+    </a>
+    <meta itemprop="position"
+          content="1"/>
+</li></ol>
+    </nav>
+    <h1 class="site-title hidden">
+        <a href="https://Apollo2light.github.io/Apollo2light/">Apollo&#39;s blog</a>
+    </h1>
+</header><main id="content">
+<article role="article" class="content post h-entry" itemscope="" itemtype="http://schema.org/BlogPosting">
+    <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">6.java杂项</h2>
+        <span class="post-meta">
+            <time class="date-published" datetime=" 2021-06-01T17:40:00&#43;07:00" itemprop="datePublished">
+                Tue, 1 Jun 2021
+            </time>
+            
+        </span>
+    </header>
+    <div class="post-content" itemprop="articleBody">
+        <h2 id="1泛型">1.泛型</h2>
+<p><code>泛型：检测或设置引用数据类型</code></p>
+<ul>
+<li>在集合中加泛型可以规定存入集合的数据类型，便于后续遍历</li>
+<li>在类中加泛型可以后期传入具体的数据类型，而不必提前规定</li>
+</ul>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#f92672">package</span> wiki.mrx.www<span style="color:#f92672">;</span>
+
+<span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Testa</span><span style="color:#f92672">&lt;</span>E<span style="color:#f92672">&gt;</span> <span style="color:#f92672">{</span>
+    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">test</span><span style="color:#f92672">(</span>E m<span style="color:#f92672">){</span>
+
+    <span style="color:#f92672">}</span>
+<span style="color:#f92672">}</span>
+
+<span style="color:#66d9ef">public</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Test</span> <span style="color:#f92672">{</span>
+    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">static</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">main</span><span style="color:#f92672">(</span>String<span style="color:#f92672">[]</span> args<span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+       Testa<span style="color:#f92672">&lt;</span>String<span style="color:#f92672">&gt;</span> t <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> Testa<span style="color:#f92672">&lt;&gt;();</span>
+       t<span style="color:#f92672">.</span><span style="color:#a6e22e">test</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#34;test&#34;</span><span style="color:#f92672">);</span>
+    <span style="color:#f92672">}</span>
+<span style="color:#f92672">}</span>
+</code></pre></div><h2 id="2异常">2.异常</h2>
+<p><code>异常都继承于Throwable类，具体分类如下：</code></p>
+<ul>
+<li>Error</li>
+<li>Exception
+<ul>
+<li>检查异常</li>
+<li>运行时异常
+<code>可以使用如下结构处理异常：</code></li>
+</ul>
+</li>
+</ul>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#66d9ef">try</span><span style="color:#f92672">{</span>
+            
+<span style="color:#f92672">}</span><span style="color:#66d9ef">catch</span> <span style="color:#f92672">(</span>Exception e<span style="color:#f92672">){</span>
+    e<span style="color:#f92672">.</span><span style="color:#a6e22e">printStackTrace</span><span style="color:#f92672">();</span>
+<span style="color:#f92672">}</span><span style="color:#66d9ef">finally</span> <span style="color:#f92672">{</span>
+            
+<span style="color:#f92672">}</span>
+</code></pre></div><h2 id="3注解">3.注解</h2>
+<p><code>注解Annotation：代码编译时会被读取并自动操作标记好的内容</code></p>
+<p><code>JDK内置了3个注解：@Override重写，@Deprecated过时标记 @SuppressWarnings抑制警告</code></p>
+<p><code>jdk5.0提供了4个源注解：Retention生命周期 Target作用目标 Documented文档 Inherited继承</code></p>
+<h2 id="4枚举">4.枚举</h2>
+<p><code>枚举类enum：可创建的对象个数是有限的，确定的</code></p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#f92672">package</span> wiki.mrx<span style="color:#f92672">;</span>
+
+<span style="color:#66d9ef">public</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Season</span> <span style="color:#f92672">{</span>
+    <span style="color:#66d9ef">private</span> <span style="color:#66d9ef">final</span> String seasonName<span style="color:#f92672">;</span>
+    <span style="color:#66d9ef">private</span> <span style="color:#66d9ef">final</span> String seasonDesc<span style="color:#f92672">;</span>
+
+    <span style="color:#66d9ef">private</span> <span style="color:#a6e22e">Season</span><span style="color:#f92672">(</span>String seasonName<span style="color:#f92672">,</span> String seasonDesc<span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+        <span style="color:#66d9ef">this</span><span style="color:#f92672">.</span><span style="color:#a6e22e">seasonName</span> <span style="color:#f92672">=</span> seasonName<span style="color:#f92672">;</span>
+        <span style="color:#66d9ef">this</span><span style="color:#f92672">.</span><span style="color:#a6e22e">seasonDesc</span> <span style="color:#f92672">=</span> seasonDesc<span style="color:#f92672">;</span>
+    <span style="color:#f92672">}</span>
+
+    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">static</span> <span style="color:#66d9ef">final</span> Season SPRING <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> Season<span style="color:#f92672">(</span><span style="color:#e6db74">&#34;春天&#34;</span><span style="color:#f92672">,</span><span style="color:#e6db74">&#34;春暖花开&#34;</span><span style="color:#f92672">);</span>
+    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">static</span> <span style="color:#66d9ef">final</span> Season SUMMER <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> Season<span style="color:#f92672">(</span><span style="color:#e6db74">&#34;夏天&#34;</span><span style="color:#f92672">,</span><span style="color:#e6db74">&#34;夏日炎炎&#34;</span><span style="color:#f92672">);</span>
+    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">static</span> <span style="color:#66d9ef">final</span> Season AUTUMN <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> Season<span style="color:#f92672">(</span><span style="color:#e6db74">&#34;秋天&#34;</span><span style="color:#f92672">,</span><span style="color:#e6db74">&#34;秋高气爽&#34;</span><span style="color:#f92672">);</span>
+    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">static</span> <span style="color:#66d9ef">final</span> Season WINTER <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> Season<span style="color:#f92672">(</span><span style="color:#e6db74">&#34;冬天&#34;</span><span style="color:#f92672">,</span><span style="color:#e6db74">&#34;寒冬腊月&#34;</span><span style="color:#f92672">);</span>
+
+    <span style="color:#66d9ef">public</span> String <span style="color:#a6e22e">getSeasonName</span><span style="color:#f92672">()</span> <span style="color:#f92672">{</span>
+        <span style="color:#66d9ef">return</span> seasonName<span style="color:#f92672">;</span>
+    <span style="color:#f92672">}</span>
+
+    <span style="color:#66d9ef">public</span> String <span style="color:#a6e22e">getSeasonDesc</span><span style="color:#f92672">()</span> <span style="color:#f92672">{</span>
+        <span style="color:#66d9ef">return</span> seasonDesc<span style="color:#f92672">;</span>
+    <span style="color:#f92672">}</span>
+
+    <span style="color:#a6e22e">@Override</span>
+    <span style="color:#66d9ef">public</span> String <span style="color:#a6e22e">toString</span><span style="color:#f92672">()</span> <span style="color:#f92672">{</span>
+        <span style="color:#66d9ef">return</span> <span style="color:#e6db74">&#34;Season{&#34;</span> <span style="color:#f92672">+</span>
+                <span style="color:#e6db74">&#34;seasonName=&#39;&#34;</span> <span style="color:#f92672">+</span> seasonName <span style="color:#f92672">+</span> <span style="color:#e6db74">&#39;\&#39;&#39;</span> <span style="color:#f92672">+</span>
+                <span style="color:#e6db74">&#34;, seasonDesc=&#39;&#34;</span> <span style="color:#f92672">+</span> seasonDesc <span style="color:#f92672">+</span> <span style="color:#e6db74">&#39;\&#39;&#39;</span> <span style="color:#f92672">+</span>
+                <span style="color:#e6db74">&#39;}&#39;</span><span style="color:#f92672">;</span>
+    <span style="color:#f92672">}</span>
+<span style="color:#f92672">}</span>
+
+
+</code></pre></div><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#f92672">package</span> wiki.mrx<span style="color:#f92672">;</span>
+
+<span style="color:#66d9ef">public</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">TestSeason</span> <span style="color:#f92672">{</span>
+    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">static</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">main</span><span style="color:#f92672">(</span>String<span style="color:#f92672">[]</span> args<span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+        Season summer <span style="color:#f92672">=</span> Season<span style="color:#f92672">.</span><span style="color:#a6e22e">SUMMER</span><span style="color:#f92672">;</span>
+        System<span style="color:#f92672">.</span><span style="color:#a6e22e">out</span><span style="color:#f92672">.</span><span style="color:#a6e22e">println</span><span style="color:#f92672">(</span>summer<span style="color:#f92672">);</span>
+    <span style="color:#f92672">}</span>
+<span style="color:#f92672">}</span>
+
+</code></pre></div><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#f92672">package</span> wiki.mrx<span style="color:#f92672">;</span>
+
+<span style="color:#66d9ef">public</span> <span style="color:#66d9ef">enum</span> Season <span style="color:#f92672">{</span>
+    SPRING<span style="color:#f92672">(</span><span style="color:#e6db74">&#34;春天&#34;</span><span style="color:#f92672">,</span><span style="color:#e6db74">&#34;春暖花开&#34;</span><span style="color:#f92672">),</span>
+    SUMMER<span style="color:#f92672">(</span><span style="color:#e6db74">&#34;夏天&#34;</span><span style="color:#f92672">,</span><span style="color:#e6db74">&#34;夏日炎炎&#34;</span><span style="color:#f92672">),</span>
+    AUTUMN<span style="color:#f92672">(</span><span style="color:#e6db74">&#34;秋天&#34;</span><span style="color:#f92672">,</span><span style="color:#e6db74">&#34;秋高气爽&#34;</span><span style="color:#f92672">),</span>
+    WINTER<span style="color:#f92672">(</span><span style="color:#e6db74">&#34;冬天&#34;</span><span style="color:#f92672">,</span><span style="color:#e6db74">&#34;寒冬腊月&#34;</span><span style="color:#f92672">);</span>
+    <span style="color:#66d9ef">private</span> <span style="color:#66d9ef">final</span> String seasonName<span style="color:#f92672">;</span>
+    <span style="color:#66d9ef">private</span> <span style="color:#66d9ef">final</span> String seasonDesc<span style="color:#f92672">;</span>
+
+    <span style="color:#66d9ef">private</span> <span style="color:#a6e22e">Season</span><span style="color:#f92672">(</span>String seasonName<span style="color:#f92672">,</span> String seasonDesc<span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+        <span style="color:#66d9ef">this</span><span style="color:#f92672">.</span><span style="color:#a6e22e">seasonName</span> <span style="color:#f92672">=</span> seasonName<span style="color:#f92672">;</span>
+        <span style="color:#66d9ef">this</span><span style="color:#f92672">.</span><span style="color:#a6e22e">seasonDesc</span> <span style="color:#f92672">=</span> seasonDesc<span style="color:#f92672">;</span>
+    <span style="color:#f92672">}</span>
+
+    
+
+    <span style="color:#66d9ef">public</span> String <span style="color:#a6e22e">getSeasonName</span><span style="color:#f92672">()</span> <span style="color:#f92672">{</span>
+        <span style="color:#66d9ef">return</span> seasonName<span style="color:#f92672">;</span>
+    <span style="color:#f92672">}</span>
+
+    <span style="color:#66d9ef">public</span> String <span style="color:#a6e22e">getSeasonDesc</span><span style="color:#f92672">()</span> <span style="color:#f92672">{</span>
+        <span style="color:#66d9ef">return</span> seasonDesc<span style="color:#f92672">;</span>
+    <span style="color:#f92672">}</span>
+
+    <span style="color:#a6e22e">@Override</span>
+    <span style="color:#66d9ef">public</span> String <span style="color:#a6e22e">toString</span><span style="color:#f92672">()</span> <span style="color:#f92672">{</span>
+        <span style="color:#66d9ef">return</span> <span style="color:#e6db74">&#34;Season{&#34;</span> <span style="color:#f92672">+</span>
+                <span style="color:#e6db74">&#34;seasonName=&#39;&#34;</span> <span style="color:#f92672">+</span> seasonName <span style="color:#f92672">+</span> <span style="color:#e6db74">&#39;\&#39;&#39;</span> <span style="color:#f92672">+</span>
+                <span style="color:#e6db74">&#34;, seasonDesc=&#39;&#34;</span> <span style="color:#f92672">+</span> seasonDesc <span style="color:#f92672">+</span> <span style="color:#e6db74">&#39;\&#39;&#39;</span> <span style="color:#f92672">+</span>
+                <span style="color:#e6db74">&#39;}&#39;</span><span style="color:#f92672">;</span>
+    <span style="color:#f92672">}</span>
+<span style="color:#f92672">}</span>
+
+</code></pre></div><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#f92672">package</span> wiki.mrx<span style="color:#f92672">;</span>
+
+<span style="color:#66d9ef">public</span> <span style="color:#66d9ef">enum</span> Season <span style="color:#f92672">{</span>
+    SPRING<span style="color:#f92672">,</span>
+    SUMMER<span style="color:#f92672">,</span>
+    AUTUMN<span style="color:#f92672">,</span>
+    WINTER<span style="color:#f92672">;</span>
+
+<span style="color:#f92672">}</span>
+
+
+</code></pre></div><h2 id="5反射reflect">5.反射reflect</h2>
+<p><code>反射：动态获取和调用类或对象信息的机制主要了解以下5类：</code></p>
+<ul>
+<li>Class类</li>
+<li>ClassLoader类</li>
+<li>Constructor类</li>
+<li>Methods类</li>
+<li>Field类</li>
+</ul>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java">反射获取字节码对象
+
+<span style="color:#a6e22e">类加载器</span><span style="color:#f92672">(</span>ClassLoader<span style="color:#f92672">)</span><span style="color:#960050;background-color:#1e0010">：</span>将<span style="color:#f92672">.</span><span style="color:#a6e22e">class文件加载到内存生成class对象</span>
+
+获取class对象方法<span style="color:#960050;background-color:#1e0010">：</span>
+1<span style="color:#f92672">.</span><span style="color:#a6e22e">getClass</span><span style="color:#f92672">()</span>
+2<span style="color:#f92672">.</span><span style="color:#a6e22e">类名</span><span style="color:#f92672">.</span><span style="color:#a6e22e">class</span>
+3<span style="color:#f92672">.</span><span style="color:#a6e22e">Class</span><span style="color:#f92672">.</span><span style="color:#a6e22e">forName</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#34;类的正名&#34;</span><span style="color:#f92672">)</span>
+
+Student stu <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> Student<span style="color:#f92672">();</span>
+Class c1 <span style="color:#f92672">=</span> stu<span style="color:#f92672">.</span><span style="color:#a6e22e">getClass</span><span style="color:#f92672">();</span>
+Class c2 <span style="color:#f92672">=</span> Student<span style="color:#f92672">.</span><span style="color:#a6e22e">class</span><span style="color:#f92672">;</span>
+Class c3 <span style="color:#f92672">=</span> Class<span style="color:#f92672">.</span><span style="color:#a6e22e">forName</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#34;com.company.Student&#34;</span><span style="color:#f92672">);</span>
+</code></pre></div><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java">反射获取构造器对象
+
+Class c<span style="color:#f92672">=</span>Class<span style="color:#f92672">.</span><span style="color:#a6e22e">forName</span><span style="color:#f92672">(</span>正名<span style="color:#f92672">)</span>
+
+c<span style="color:#f92672">.</span><span style="color:#a6e22e">getConstructor</span><span style="color:#f92672">()</span>公共无参构造
+
+Constructor c2<span style="color:#f92672">=</span>c<span style="color:#f92672">.</span><span style="color:#a6e22e">getConstructor</span><span style="color:#f92672">(</span>String<span style="color:#f92672">.</span><span style="color:#a6e22e">class</span><span style="color:#f92672">)</span>公共有参构造
+
+c<span style="color:#f92672">.</span><span style="color:#a6e22e">getDeclaredConstructor</span><span style="color:#f92672">(</span><span style="color:#66d9ef">int</span><span style="color:#f92672">.</span><span style="color:#a6e22e">class</span><span style="color:#f92672">)</span>私有有参构造
+
+Constructor<span style="color:#f92672">[]</span> cs<span style="color:#f92672">=</span>c<span style="color:#f92672">.</span><span style="color:#a6e22e">getConstructors</span><span style="color:#f92672">()</span>所有构造
+
+c2<span style="color:#f92672">.</span><span style="color:#a6e22e">getName</span><span style="color:#f92672">()</span>获取构造器名字
+
+Student stu<span style="color:#f92672">=(</span>Student<span style="color:#f92672">)</span> c2<span style="color:#f92672">.</span><span style="color:#a6e22e">newInstance</span><span style="color:#f92672">(</span>张<span style="color:#f92672">)</span>创造对象
+
+</code></pre></div><pre><code>反射获取成员方法
+
+
+
+</code></pre><h2 id="6gui基础">6.GUI基础</h2>
+<ul>
+<li>AWT
+<ul>
+<li>组件：button，label，textarea&hellip;</li>
+<li>容器
+<ul>
+<li>窗口window
+<ul>
+<li>frame</li>
+<li>dialog</li>
+</ul>
+</li>
+<li>面板panel
+<ul>
+<li>applet</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>SWIG
+<ul>
+<li>jFrame</li>
+<li></li>
+</ul>
+</li>
+</ul>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#75715e">//awt例子
+</span><span style="color:#75715e"></span><span style="color:#f92672">package</span> wiki.mrx<span style="color:#f92672">;</span>
+
+<span style="color:#f92672">import</span> java.awt.*<span style="color:#f92672">;</span>
+<span style="color:#f92672">import</span> java.awt.event.WindowAdapter<span style="color:#f92672">;</span>
+<span style="color:#f92672">import</span> java.awt.event.WindowEvent<span style="color:#f92672">;</span>
+
+<span style="color:#66d9ef">public</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">TestGUI</span> <span style="color:#f92672">{</span>
+    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">static</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">main</span><span style="color:#f92672">(</span>String<span style="color:#f92672">[]</span> args<span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+        <span style="color:#75715e">//1.新建窗口和面板
+</span><span style="color:#75715e"></span>        Frame frame <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> Frame<span style="color:#f92672">();</span>
+        Panel panel <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> Panel<span style="color:#f92672">();</span>
+
+        <span style="color:#75715e">//2.窗口属性设置
+</span><span style="color:#75715e"></span>        frame<span style="color:#f92672">.</span><span style="color:#a6e22e">setLayout</span><span style="color:#f92672">(</span><span style="color:#66d9ef">null</span><span style="color:#f92672">);</span>
+        frame<span style="color:#f92672">.</span><span style="color:#a6e22e">setBounds</span><span style="color:#f92672">(</span>300<span style="color:#f92672">,</span>300<span style="color:#f92672">,</span>500<span style="color:#f92672">,</span>500<span style="color:#f92672">);</span>
+        frame<span style="color:#f92672">.</span><span style="color:#a6e22e">setBackground</span><span style="color:#f92672">(</span><span style="color:#66d9ef">new</span> Color<span style="color:#f92672">(</span>3<span style="color:#f92672">,</span>6<span style="color:#f92672">,</span>9<span style="color:#f92672">));</span>
+
+        <span style="color:#75715e">//3.面板属性设置
+</span><span style="color:#75715e"></span>        panel<span style="color:#f92672">.</span><span style="color:#a6e22e">setBounds</span><span style="color:#f92672">(</span>50<span style="color:#f92672">,</span>50<span style="color:#f92672">,</span>400<span style="color:#f92672">,</span>400<span style="color:#f92672">);</span>
+        panel<span style="color:#f92672">.</span><span style="color:#a6e22e">setBackground</span><span style="color:#f92672">(</span><span style="color:#66d9ef">new</span> Color<span style="color:#f92672">(</span>0<span style="color:#f92672">,</span> 251<span style="color:#f92672">,</span> 141<span style="color:#f92672">));</span>
+
+        <span style="color:#75715e">//4.窗口中放置面板
+</span><span style="color:#75715e"></span>        frame<span style="color:#f92672">.</span><span style="color:#a6e22e">add</span><span style="color:#f92672">(</span>panel<span style="color:#f92672">);</span>
+        frame<span style="color:#f92672">.</span><span style="color:#a6e22e">setVisible</span><span style="color:#f92672">(</span><span style="color:#66d9ef">true</span><span style="color:#f92672">);</span>
+
+        <span style="color:#75715e">//5.创建监听事件
+</span><span style="color:#75715e"></span>        frame<span style="color:#f92672">.</span><span style="color:#a6e22e">addWindowListener</span><span style="color:#f92672">(</span><span style="color:#66d9ef">new</span> WindowAdapter<span style="color:#f92672">()</span> <span style="color:#f92672">{</span>
+            <span style="color:#a6e22e">@Override</span>
+            <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">windowClosing</span><span style="color:#f92672">(</span>WindowEvent e<span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+                System<span style="color:#f92672">.</span><span style="color:#a6e22e">exit</span><span style="color:#f92672">(</span>0<span style="color:#f92672">);</span>
+            <span style="color:#f92672">}</span>
+        <span style="color:#f92672">});</span>
+    <span style="color:#f92672">}</span>
+<span style="color:#f92672">}</span>
+
+
+</code></pre></div>
+    </div>
+    <video id="my_video" style="height: 300px;width:100%" controls="controls"></video>
+
+</article>
+<div class="pagination">
+    
+    <div class="prev"><a href="https://Apollo2light.github.io/Apollo2light/backend/5.java%E9%9B%86%E5%90%88%E6%A1%86%E6%9E%B6/">Previous Post</a></div>
+    
+    
+    <div class="next"><a href="https://Apollo2light.github.io/Apollo2light/backend/7.%E6%95%B0%E6%8D%AE%E5%BA%93/">Next Post</a></div>
+    
+</div>
+
+
+<script>
+    try {
+        
+        let src = document.getElementsByTagName('code')[0].innerText;
+        
+        if (src.indexOf("mp4") != -1) {
+            document.getElementById('my_video').setAttribute("src", src)
+        } else {
+            
+            let video = document.getElementById('my_video');
+            if (video != null) {
+                video.parentNode.removeChild(video);
+            }
+        }
+    } catch (e) {
+        
+        let video = document.getElementById('my_video');
+        if (video != null) {
+            video.parentNode.removeChild(video);
+        }
+    }
+</script>
+
+</main><footer class="site-footer">
+	<span class="right">
+		<em>Apollo&#39;s blog</em>
+	</span>
+</footer>
+</body>
+<script>
+
+</script>
+</html>

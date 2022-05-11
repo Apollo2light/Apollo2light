@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang=en-us><head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title> java面向对象 - Apollo&#39;s blog</title>
+    <meta name="description" content="先有逻辑正确的思路，剩余的是重复的实践与积累
+1.面向对象 ===========================================
+1.1 类是有属性，方法和构造器的模版，对象是实例
+===========================================
+1.2 面向对象的三大特性：
+===========================================
+ 封装：修饰符，get,set方法 继承：extends，super，源头object 多态：同一行为，不同子类有不同表现，继承，子类重写父类方法，父类引用指向子类实例  //父类 package wiki.mrx.www; public class Person { //属性  private String name; static int age; //构造器：用于初始化数据  public Person(String name, int age) { this.name = name; this.age = age; } //get方法  public String getName() { return name; } public static int getAge() { return age; } //set方法  public void setName(String name) { this.name = name; } public static void setAge(int age) { Person.">
+    <link rel="canonical" href="https://Apollo2light.github.io/Apollo2light/backend/1.java%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1/">
+    <meta property="og:title" content="java面向对象">
+    <meta property="og:type" content="article">
+    <meta property="og:url" content="https://Apollo2light.github.io/Apollo2light/backend/1.java%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1/">
+    <meta property="og:description" content="先有逻辑正确的思路，剩余的是重复的实践与积累
+1.面向对象 ===========================================
+1.1 类是有属性，方法和构造器的模版，对象是实例
+===========================================
+1.2 面向对象的三大特性：
+===========================================
+ 封装：修饰符，get,set方法 继承：extends，super，源头object 多态：同一行为，不同子类有不同表现，继承，子类重写父类方法，父类引用指向子类实例  //父类 package wiki.mrx.www; public class Person { //属性  private String name; static int age; //构造器：用于初始化数据  public Person(String name, int age) { this.name = name; this.age = age; } //get方法  public String getName() { return name; } public static int getAge() { return age; } //set方法  public void setName(String name) { this.name = name; } public static void setAge(int age) { Person.">
+    <meta property="og:site_name" content="Apollo&#39;s blog">
+    <link rel="stylesheet" href="https://Apollo2light.github.io/Apollo2light/css/main.min.7fdf1d02dafd1a6eb5cfd0d707e17e33515b866f5d305a0ab01a4095577484fe.css" integrity="sha256-f98dAtr9Gm61z9DXB&#43;F&#43;M1Fbhm9dMFoKsBpAlVd0hP4=">
+    <meta name="generator" content="Hugo 0.73.0" />
+    <script type="module" src="https://unpkg.com/ionicons@5.1.2/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule="" src="https://unpkg.com/ionicons@5.1.2/dist/ionicons/ionicons.js"></script>
+    
+</head>
+<body><header class="site-header">
+    <nav class="site-nav" role="navigation" aria-label="breadcrumb">
+        <ol itemscope itemtype="https://schema.org/BreadcrumbList" class="breadcrumb"><li class="breadcrumb-item  " 
+    itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+    <a itemtype="https://schema.org/Thing" itemprop="item" href="https://Apollo2light.github.io/Apollo2light/">
+        <span itemprop="name">Apollo&#39;s blog</span>
+    </a>
+    <meta itemprop="position"
+          content="0"/>
+</li>/<li class="breadcrumb-item  " 
+    itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+    <a itemtype="https://schema.org/Thing" itemprop="item" href="https://Apollo2light.github.io/Apollo2light/backend/">
+        <span itemprop="name">backend</span>
+    </a>
+    <meta itemprop="position"
+          content="0"/>
+</li>/<li class="breadcrumb-item active hidden" aria-current="page"
+    itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+    <a itemtype="https://schema.org/Thing" itemprop="item" href="https://Apollo2light.github.io/Apollo2light/backend/1.java%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1/">
+        <span itemprop="name">1.java%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1</span>
+    </a>
+    <meta itemprop="position"
+          content="1"/>
+</li></ol>
+    </nav>
+    <h1 class="site-title hidden">
+        <a href="https://Apollo2light.github.io/Apollo2light/">Apollo&#39;s blog</a>
+    </h1>
+</header><main id="content">
+<article role="article" class="content post h-entry" itemscope="" itemtype="http://schema.org/BlogPosting">
+    <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">java面向对象</h2>
+        <span class="post-meta">
+            <time class="date-published" datetime=" 2021-06-01T17:22:15&#43;07:00" itemprop="datePublished">
+                Tue, 1 Jun 2021
+            </time>
+            
+        </span>
+    </header>
+    <div class="post-content" itemprop="articleBody">
+        <p><code>先有逻辑正确的思路，剩余的是重复的实践与积累</code></p>
+<h2 id="1面向对象">1.面向对象</h2>
+<p><code>===========================================</code></p>
+<p><code>1.1 类是有属性，方法和构造器的模版，对象是实例</code></p>
+<p><code>===========================================</code></p>
+<p><code>1.2 面向对象的三大特性：</code></p>
+<p><code>===========================================</code></p>
+<ul>
+<li>封装：修饰符，get,set方法</li>
+<li>继承：extends，super，源头object</li>
+<li>多态：同一行为，不同子类有不同表现，继承，子类重写父类方法，父类引用指向子类实例</li>
+</ul>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#75715e">//父类
+</span><span style="color:#75715e"></span><span style="color:#f92672">package</span> wiki.mrx.www<span style="color:#f92672">;</span>
+
+<span style="color:#66d9ef">public</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Person</span> <span style="color:#f92672">{</span>
+
+    <span style="color:#75715e">//属性
+</span><span style="color:#75715e"></span>    <span style="color:#66d9ef">private</span> String name<span style="color:#f92672">;</span>
+    <span style="color:#66d9ef">static</span> <span style="color:#66d9ef">int</span> age<span style="color:#f92672">;</span>
+
+    <span style="color:#75715e">//构造器：用于初始化数据
+</span><span style="color:#75715e"></span>    <span style="color:#66d9ef">public</span> <span style="color:#a6e22e">Person</span><span style="color:#f92672">(</span>String name<span style="color:#f92672">,</span> <span style="color:#66d9ef">int</span> age<span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+        <span style="color:#66d9ef">this</span><span style="color:#f92672">.</span><span style="color:#a6e22e">name</span> <span style="color:#f92672">=</span> name<span style="color:#f92672">;</span>
+        <span style="color:#66d9ef">this</span><span style="color:#f92672">.</span><span style="color:#a6e22e">age</span> <span style="color:#f92672">=</span> age<span style="color:#f92672">;</span>
+    <span style="color:#f92672">}</span>
+
+    <span style="color:#75715e">//get方法
+</span><span style="color:#75715e"></span>    <span style="color:#66d9ef">public</span> String <span style="color:#a6e22e">getName</span><span style="color:#f92672">()</span> <span style="color:#f92672">{</span>
+        <span style="color:#66d9ef">return</span> name<span style="color:#f92672">;</span>
+    <span style="color:#f92672">}</span>
+
+    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">static</span> <span style="color:#66d9ef">int</span> <span style="color:#a6e22e">getAge</span><span style="color:#f92672">()</span> <span style="color:#f92672">{</span>
+        <span style="color:#66d9ef">return</span> age<span style="color:#f92672">;</span>
+    <span style="color:#f92672">}</span>
+    <span style="color:#75715e">//set方法
+</span><span style="color:#75715e"></span>    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">setName</span><span style="color:#f92672">(</span>String name<span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+        <span style="color:#66d9ef">this</span><span style="color:#f92672">.</span><span style="color:#a6e22e">name</span> <span style="color:#f92672">=</span> name<span style="color:#f92672">;</span>
+    <span style="color:#f92672">}</span>
+
+    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">static</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">setAge</span><span style="color:#f92672">(</span><span style="color:#66d9ef">int</span> age<span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+        Person<span style="color:#f92672">.</span><span style="color:#a6e22e">age</span> <span style="color:#f92672">=</span> age<span style="color:#f92672">;</span>
+    <span style="color:#f92672">}</span>
+
+    <span style="color:#75715e">//自定义方法
+</span><span style="color:#75715e"></span>    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">eat</span><span style="color:#f92672">(){</span>
+        System<span style="color:#f92672">.</span><span style="color:#a6e22e">out</span><span style="color:#f92672">.</span><span style="color:#a6e22e">println</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#34;人可以吃饭&#34;</span><span style="color:#f92672">);</span>
+    <span style="color:#f92672">}</span>
+<span style="color:#f92672">}</span>
+</code></pre></div><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#75715e">//Teacher子类
+</span><span style="color:#75715e"></span><span style="color:#f92672">package</span> wiki.mrx.www<span style="color:#f92672">;</span>
+
+<span style="color:#66d9ef">public</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Teacher</span> <span style="color:#66d9ef">extends</span> Person<span style="color:#f92672">{</span>
+    <span style="color:#75715e">//构造器
+</span><span style="color:#75715e"></span>    <span style="color:#66d9ef">public</span> <span style="color:#a6e22e">Teacher</span><span style="color:#f92672">(</span>String name<span style="color:#f92672">,</span> <span style="color:#66d9ef">int</span> age<span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+        <span style="color:#66d9ef">super</span><span style="color:#f92672">(</span>name<span style="color:#f92672">,</span> age<span style="color:#f92672">);</span>
+    <span style="color:#f92672">}</span>
+    <span style="color:#75715e">//重写父类eat方法
+</span><span style="color:#75715e"></span>    <span style="color:#a6e22e">@Override</span>
+    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">eat</span><span style="color:#f92672">()</span> <span style="color:#f92672">{</span>
+        System<span style="color:#f92672">.</span><span style="color:#a6e22e">out</span><span style="color:#f92672">.</span><span style="color:#a6e22e">println</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#34;老师在教师食堂吃饭&#34;</span><span style="color:#f92672">);</span>
+    <span style="color:#f92672">}</span>
+    <span style="color:#75715e">//自定义方法
+</span><span style="color:#75715e"></span>    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">teac</span><span style="color:#f92672">(){</span>
+        System<span style="color:#f92672">.</span><span style="color:#a6e22e">out</span><span style="color:#f92672">.</span><span style="color:#a6e22e">println</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#34;老师能教学&#34;</span><span style="color:#f92672">);</span>
+    <span style="color:#f92672">}</span>
+<span style="color:#f92672">}</span>
+
+
+</code></pre></div><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#75715e">//Student子类
+</span><span style="color:#75715e"></span><span style="color:#f92672">package</span> wiki.mrx.www<span style="color:#f92672">;</span>
+
+<span style="color:#66d9ef">public</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Student</span> <span style="color:#66d9ef">extends</span> Person<span style="color:#f92672">{</span>
+    <span style="color:#66d9ef">public</span> <span style="color:#a6e22e">Student</span><span style="color:#f92672">(</span>String name<span style="color:#f92672">,</span> <span style="color:#66d9ef">int</span> age<span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+        <span style="color:#66d9ef">super</span><span style="color:#f92672">(</span>name<span style="color:#f92672">,</span> age<span style="color:#f92672">);</span>
+    <span style="color:#f92672">}</span>
+    <span style="color:#75715e">//重写父类eat方法
+</span><span style="color:#75715e"></span>    <span style="color:#a6e22e">@Override</span>
+    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">eat</span><span style="color:#f92672">()</span> <span style="color:#f92672">{</span>
+        System<span style="color:#f92672">.</span><span style="color:#a6e22e">out</span><span style="color:#f92672">.</span><span style="color:#a6e22e">println</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#34;学生在学生食堂吃饭&#34;</span><span style="color:#f92672">);</span>
+    <span style="color:#f92672">}</span>
+
+    <span style="color:#75715e">//自定义方法
+</span><span style="color:#75715e"></span>    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">study</span><span style="color:#f92672">(){</span>
+        System<span style="color:#f92672">.</span><span style="color:#a6e22e">out</span><span style="color:#f92672">.</span><span style="color:#a6e22e">println</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#34;学生可以学习&#34;</span><span style="color:#f92672">);</span>
+    <span style="color:#f92672">}</span>
+<span style="color:#f92672">}</span>
+
+</code></pre></div><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#75715e">//测试类
+</span><span style="color:#75715e"></span><span style="color:#f92672">package</span> wiki.mrx.www<span style="color:#f92672">;</span>
+
+<span style="color:#66d9ef">public</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Test</span> <span style="color:#f92672">{</span>
+    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">static</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">main</span><span style="color:#f92672">(</span>String<span style="color:#f92672">[]</span> args<span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+        Teacher t <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> Teacher<span style="color:#f92672">(</span><span style="color:#e6db74">&#34;王老师&#34;</span><span style="color:#f92672">,</span>33<span style="color:#f92672">);</span>
+        Person p1 <span style="color:#f92672">=</span> t<span style="color:#f92672">;</span>
+        Person p2 <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> Student<span style="color:#f92672">(</span><span style="color:#e6db74">&#34;小明&#34;</span><span style="color:#f92672">,</span>18<span style="color:#f92672">);</span>
+        p1<span style="color:#f92672">.</span><span style="color:#a6e22e">eat</span><span style="color:#f92672">();</span><span style="color:#75715e">//老师在教师食堂吃饭
+</span><span style="color:#75715e"></span>        p2<span style="color:#f92672">.</span><span style="color:#a6e22e">eat</span><span style="color:#f92672">();</span><span style="color:#75715e">//学生在学生食堂吃饭
+</span><span style="color:#75715e"></span>        t<span style="color:#f92672">.</span><span style="color:#a6e22e">teac</span><span style="color:#f92672">();</span>
+
+    <span style="color:#f92672">}</span>
+<span style="color:#f92672">}</span>
+
+</code></pre></div><p><code>===========================================</code></p>
+<p><code>1.3 接口interface中的抽象方法是规范</code></p>
+<p><code>实现类implements接口中重写的抽象方法是具体实现</code></p>
+<p><code>接口相比于抽象类可以实现多继承</code></p>
+<p><code>===========================================</code></p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#75715e">//Student接口多继承person和cat接口
+</span><span style="color:#75715e"></span><span style="color:#f92672">package</span> wiki.mrx.www<span style="color:#f92672">;</span>
+
+<span style="color:#66d9ef">public</span> <span style="color:#66d9ef">interface</span> <span style="color:#a6e22e">Person</span> <span style="color:#f92672">{</span>
+    <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">eat</span><span style="color:#f92672">();</span>
+<span style="color:#f92672">}</span>
+
+<span style="color:#66d9ef">interface</span> <span style="color:#a6e22e">Cat</span> <span style="color:#f92672">{</span>
+    <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">sleep</span><span style="color:#f92672">();</span>
+<span style="color:#f92672">}</span>
+
+<span style="color:#66d9ef">interface</span> <span style="color:#a6e22e">Student</span> <span style="color:#66d9ef">extends</span> Person<span style="color:#f92672">,</span> Cat<span style="color:#f92672">{</span>
+    <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">study</span><span style="color:#f92672">();</span>
+<span style="color:#f92672">}</span>
+</code></pre></div><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#75715e">//StudentImp类是student接口的实现类，重写了他的抽象方法
+</span><span style="color:#75715e"></span><span style="color:#f92672">package</span> wiki.mrx.www<span style="color:#f92672">;</span>
+
+<span style="color:#66d9ef">public</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">StudentImp</span> <span style="color:#66d9ef">implements</span> Student<span style="color:#f92672">{</span>
+    <span style="color:#66d9ef">public</span> <span style="color:#a6e22e">StudentImp</span><span style="color:#f92672">()</span> <span style="color:#f92672">{</span>
+        <span style="color:#66d9ef">super</span><span style="color:#f92672">();</span>
+    <span style="color:#f92672">}</span>
+
+    <span style="color:#a6e22e">@Override</span>
+    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">eat</span><span style="color:#f92672">()</span> <span style="color:#f92672">{</span>
+        System<span style="color:#f92672">.</span><span style="color:#a6e22e">out</span><span style="color:#f92672">.</span><span style="color:#a6e22e">println</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#34;学生可以吃&#34;</span><span style="color:#f92672">);</span>
+    <span style="color:#f92672">}</span>
+
+    <span style="color:#a6e22e">@Override</span>
+    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">sleep</span><span style="color:#f92672">()</span> <span style="color:#f92672">{</span>
+        System<span style="color:#f92672">.</span><span style="color:#a6e22e">out</span><span style="color:#f92672">.</span><span style="color:#a6e22e">println</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#34;学生可以睡觉&#34;</span><span style="color:#f92672">);</span>
+    <span style="color:#f92672">}</span>
+
+    <span style="color:#a6e22e">@Override</span>
+    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">study</span><span style="color:#f92672">()</span> <span style="color:#f92672">{</span>
+        System<span style="color:#f92672">.</span><span style="color:#a6e22e">out</span><span style="color:#f92672">.</span><span style="color:#a6e22e">println</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#34;学生可以学习&#34;</span><span style="color:#f92672">);</span>
+    <span style="color:#f92672">}</span>
+<span style="color:#f92672">}</span>
+
+</code></pre></div><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#f92672">package</span> wiki.mrx.www<span style="color:#f92672">;</span>
+
+<span style="color:#66d9ef">public</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Test</span> <span style="color:#f92672">{</span>
+    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">static</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">main</span><span style="color:#f92672">(</span>String<span style="color:#f92672">[]</span> args<span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+        StudentImp s <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> StudentImp<span style="color:#f92672">();</span>
+        s<span style="color:#f92672">.</span><span style="color:#a6e22e">eat</span><span style="color:#f92672">();</span>
+        s<span style="color:#f92672">.</span><span style="color:#a6e22e">sleep</span><span style="color:#f92672">();</span>
+        s<span style="color:#f92672">.</span><span style="color:#a6e22e">study</span><span style="color:#f92672">();</span>
+    <span style="color:#f92672">}</span>
+<span style="color:#f92672">}</span>
+
+</code></pre></div>
+    </div>
+    <video id="my_video" style="height: 300px;width:100%" controls="controls"></video>
+
+</article>
+<div class="pagination">
+    
+    
+    <div class="next"><a href="https://Apollo2light.github.io/Apollo2light/backend/2.java%E5%A4%9A%E7%BA%BF%E7%A8%8B/">Next Post</a></div>
+    
+</div>
+
+
+<script>
+    try {
+        
+        let src = document.getElementsByTagName('code')[0].innerText;
+        
+        if (src.indexOf("mp4") != -1) {
+            document.getElementById('my_video').setAttribute("src", src)
+        } else {
+            
+            let video = document.getElementById('my_video');
+            if (video != null) {
+                video.parentNode.removeChild(video);
+            }
+        }
+    } catch (e) {
+        
+        let video = document.getElementById('my_video');
+        if (video != null) {
+            video.parentNode.removeChild(video);
+        }
+    }
+</script>
+
+</main><footer class="site-footer">
+	<span class="right">
+		<em>Apollo&#39;s blog</em>
+	</span>
+</footer>
+</body>
+<script>
+
+</script>
+</html>

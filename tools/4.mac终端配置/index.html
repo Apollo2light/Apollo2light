@@ -29,35 +29,38 @@ cat /etc/shells 2.默认shell
 </head>
 <body><header class="site-header">
     <nav class="site-nav" role="navigation" aria-label="breadcrumb">
-    <ol itemscope itemtype="https://schema.org/BreadcrumbList" class="breadcrumb"><li class="breadcrumb-item  " 
-  itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
-  <a itemtype="https://schema.org/Thing" itemprop="item" href="https://Apollo2light.github.io/Apollo2light/">
-    <span itemprop="name">Apollo&#39;s blog</span>
-  </a>
-  <meta itemprop="position" content="0" />
+        <ol itemscope itemtype="https://schema.org/BreadcrumbList" class="breadcrumb"><li class="breadcrumb-item  " 
+    itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+    <a itemtype="https://schema.org/Thing" itemprop="item" href="https://Apollo2light.github.io/Apollo2light/">
+        <span itemprop="name">Apollo&#39;s blog</span>
+    </a>
+    <meta itemprop="position"
+          content="0"/>
 </li>/<li class="breadcrumb-item  " 
-  itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
-  <a itemtype="https://schema.org/Thing" itemprop="item" href="https://Apollo2light.github.io/Apollo2light/tools/">
-    <span itemprop="name">tools</span>
-  </a>
-  <meta itemprop="position" content="0" />
+    itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+    <a itemtype="https://schema.org/Thing" itemprop="item" href="https://Apollo2light.github.io/Apollo2light/tools/">
+        <span itemprop="name">tools</span>
+    </a>
+    <meta itemprop="position"
+          content="0"/>
 </li>/<li class="breadcrumb-item active hidden" aria-current="page"
-  itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
-  <a itemtype="https://schema.org/Thing" itemprop="item" href="https://Apollo2light.github.io/Apollo2light/tools/4.mac%E7%BB%88%E7%AB%AF%E9%85%8D%E7%BD%AE/">
-    <span itemprop="name">4.mac%E7%BB%88%E7%AB%AF%E9%85%8D%E7%BD%AE</span>
-  </a>
-  <meta itemprop="position" content="1" />
+    itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+    <a itemtype="https://schema.org/Thing" itemprop="item" href="https://Apollo2light.github.io/Apollo2light/tools/4.mac%E7%BB%88%E7%AB%AF%E9%85%8D%E7%BD%AE/">
+        <span itemprop="name">4.mac%E7%BB%88%E7%AB%AF%E9%85%8D%E7%BD%AE</span>
+    </a>
+    <meta itemprop="position"
+          content="1"/>
 </li></ol>
     </nav>
     <h1 class="site-title hidden">
-		<a href="https://Apollo2light.github.io/Apollo2light/">Apollo&#39;s blog</a>
+        <a href="https://Apollo2light.github.io/Apollo2light/">Apollo&#39;s blog</a>
     </h1>
 </header><main id="content">
 <article role="article" class="content post h-entry" itemscope="" itemtype="http://schema.org/BlogPosting">
-    <header class="post-header">        
+    <header class="post-header">
         <h2 class="post-title" itemprop="name headline">4.mac终端配置</h2>
         <span class="post-meta">
-            <time class="date-published" datetime="2022-04-29T02:33:28&#43;07:00" itemprop="datePublished">
+            <time class="date-published" datetime=" 2022-04-29T02:33:28&#43;07:00" itemprop="datePublished">
                 Fri, 29 Apr 2022
             </time>
             
@@ -81,7 +84,8 @@ export PATH<span style="color:#f92672">=</span>/usr/bin:/usr/sbin:/bin:/sbin:/us
 - d. ~/.bash_login
 - e. ~/.profile
 - f. ~/.bashrc<span style="color:#f92672">(</span>启动终端自动加载<span style="color:#f92672">)</span>
-</code></pre></div><h2 id="2配置环境变量">2.配置环境变量</h2>
+</code></pre></div><p><img src="https://cdn.jsdelivr.net/gh/Apollo2light/apolloblogpicture/img/%E6%88%AA%E5%B1%8F2022-05-12%20%E4%B8%8A%E5%8D%881.31.47.png" alt="截屏2022-05-12 上午1.31.47"></p>
+<h2 id="2配置环境变量">2.配置环境变量</h2>
 <p><code>Mac的usr/bin目录是不允许增删文件的，可以通过向usr/local/bin增删文件来实现在终端里直接运行</code></p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell"><span style="color:#75715e">#移动软件</span>
 sudo mv -f 文件名 /usr/local
@@ -123,42 +127,42 @@ https://www.cnblogs.com/easyidea/p/10122123.html
 </article>
 <div class="pagination">
     
-    <div class="prev"> <a href="https://Apollo2light.github.io/Apollo2light/tools/3.git%E5%8D%9A%E5%AE%A2/">Previous Post</a> </div>
+    <div class="prev"><a href="https://Apollo2light.github.io/Apollo2light/tools/3.git%E5%8D%9A%E5%AE%A2/">Previous Post</a></div>
     
     
 </div>
 
 
 <script>
-    try{
+    try {
         
         let src = document.getElementsByTagName('code')[0].innerText;
         
-        if(src.indexOf("mp4")!=-1){
-            document.getElementById('my_video').setAttribute("src",src)
-        }else{
+        if (src.indexOf("mp4") != -1) {
+            document.getElementById('my_video').setAttribute("src", src)
+        } else {
             
             let video = document.getElementById('my_video');
-            if (video != null){
+            if (video != null) {
                 video.parentNode.removeChild(video);
             }
         }
-    }catch(e){
+    } catch (e) {
         
         let video = document.getElementById('my_video');
-        if (video != null){
+        if (video != null) {
             video.parentNode.removeChild(video);
         }
     }
 </script>
 
-        </main><footer class="site-footer">
+</main><footer class="site-footer">
 	<span class="right">
 		<em>Apollo&#39;s blog</em>
 	</span>
 </footer>
 </body>
-    <script>
-        
-    </script>
+<script>
+
+</script>
 </html>

@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang=en-us><head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title> 5。java集合容器 - Apollo&#39;s blog</title>
+    <meta name="description" content="1.基础知识 算法：解决问题的方法，可用时间复杂度，空间复杂度来评判效率
+数据结构：组织管理数据
+逻辑上表现为：线性表，图，树，堆，栈
+物理上表现为：紧密顺序结构，跳转链式结构
+集合用于存储引用类型数据，具体分为：
+ Collection接口  List子接口  ArrayList实现类 Vector实现类 LinkedList实现类   Set子接口  HashSet实现类  LinkedHashSet实现类   TreeSet实现类     Map接口  HashMap TreeMap    2.Collection接口 package wiki.mrx.www; import java.util.ArrayList; import java.util.Collection; import java.util.Iterator; public class TestCollection { public static void main(String[] args) { //创建对象  Collection col = new ArrayList(); //增  col.add(18); col.add(18); col.add(18); col.add(18); //增强型for循环遍历  for (Object o: col) { System.">
+    <link rel="canonical" href="https://Apollo2light.github.io/Apollo2light/backend/5.java%E9%9B%86%E5%90%88%E6%A1%86%E6%9E%B6/">
+    <meta property="og:title" content="5。java集合容器">
+    <meta property="og:type" content="article">
+    <meta property="og:url" content="https://Apollo2light.github.io/Apollo2light/backend/5.java%E9%9B%86%E5%90%88%E6%A1%86%E6%9E%B6/">
+    <meta property="og:description" content="1.基础知识 算法：解决问题的方法，可用时间复杂度，空间复杂度来评判效率
+数据结构：组织管理数据
+逻辑上表现为：线性表，图，树，堆，栈
+物理上表现为：紧密顺序结构，跳转链式结构
+集合用于存储引用类型数据，具体分为：
+ Collection接口  List子接口  ArrayList实现类 Vector实现类 LinkedList实现类   Set子接口  HashSet实现类  LinkedHashSet实现类   TreeSet实现类     Map接口  HashMap TreeMap    2.Collection接口 package wiki.mrx.www; import java.util.ArrayList; import java.util.Collection; import java.util.Iterator; public class TestCollection { public static void main(String[] args) { //创建对象  Collection col = new ArrayList(); //增  col.add(18); col.add(18); col.add(18); col.add(18); //增强型for循环遍历  for (Object o: col) { System.">
+    <meta property="og:site_name" content="Apollo&#39;s blog">
+    <link rel="stylesheet" href="https://Apollo2light.github.io/Apollo2light/css/main.min.7fdf1d02dafd1a6eb5cfd0d707e17e33515b866f5d305a0ab01a4095577484fe.css" integrity="sha256-f98dAtr9Gm61z9DXB&#43;F&#43;M1Fbhm9dMFoKsBpAlVd0hP4=">
+    <meta name="generator" content="Hugo 0.73.0" />
+    <script type="module" src="https://unpkg.com/ionicons@5.1.2/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule="" src="https://unpkg.com/ionicons@5.1.2/dist/ionicons/ionicons.js"></script>
+    
+</head>
+<body><header class="site-header">
+    <nav class="site-nav" role="navigation" aria-label="breadcrumb">
+        <ol itemscope itemtype="https://schema.org/BreadcrumbList" class="breadcrumb"><li class="breadcrumb-item  " 
+    itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+    <a itemtype="https://schema.org/Thing" itemprop="item" href="https://Apollo2light.github.io/Apollo2light/">
+        <span itemprop="name">Apollo&#39;s blog</span>
+    </a>
+    <meta itemprop="position"
+          content="0"/>
+</li>/<li class="breadcrumb-item  " 
+    itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+    <a itemtype="https://schema.org/Thing" itemprop="item" href="https://Apollo2light.github.io/Apollo2light/backend/">
+        <span itemprop="name">backend</span>
+    </a>
+    <meta itemprop="position"
+          content="0"/>
+</li>/<li class="breadcrumb-item active hidden" aria-current="page"
+    itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+    <a itemtype="https://schema.org/Thing" itemprop="item" href="https://Apollo2light.github.io/Apollo2light/backend/5.java%E9%9B%86%E5%90%88%E6%A1%86%E6%9E%B6/">
+        <span itemprop="name">5.java%E9%9B%86%E5%90%88%E6%A1%86%E6%9E%B6</span>
+    </a>
+    <meta itemprop="position"
+          content="1"/>
+</li></ol>
+    </nav>
+    <h1 class="site-title hidden">
+        <a href="https://Apollo2light.github.io/Apollo2light/">Apollo&#39;s blog</a>
+    </h1>
+</header><main id="content">
+<article role="article" class="content post h-entry" itemscope="" itemtype="http://schema.org/BlogPosting">
+    <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">5。java集合容器</h2>
+        <span class="post-meta">
+            <time class="date-published" datetime=" 2021-06-01T17:39:34&#43;07:00" itemprop="datePublished">
+                Tue, 1 Jun 2021
+            </time>
+            
+        </span>
+    </header>
+    <div class="post-content" itemprop="articleBody">
+        <h2 id="1基础知识">1.基础知识</h2>
+<p><code>算法：解决问题的方法，可用时间复杂度，空间复杂度来评判效率</code></p>
+<p><code>数据结构：组织管理数据</code></p>
+<p><code>逻辑上表现为：线性表，图，树，堆，栈</code></p>
+<p><code>物理上表现为：紧密顺序结构，跳转链式结构</code></p>
+<p><code>集合用于存储引用类型数据，具体分为：</code></p>
+<ul>
+<li>Collection接口
+<ul>
+<li>List子接口
+<ul>
+<li>ArrayList实现类</li>
+<li>Vector实现类</li>
+<li>LinkedList实现类</li>
+</ul>
+</li>
+<li>Set子接口
+<ul>
+<li>HashSet实现类
+<ul>
+<li>LinkedHashSet实现类</li>
+</ul>
+</li>
+<li>TreeSet实现类</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>Map接口
+<ul>
+<li>HashMap</li>
+<li>TreeMap</li>
+</ul>
+</li>
+</ul>
+<h2 id="2collection接口">2.Collection接口</h2>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#f92672">package</span> wiki.mrx.www<span style="color:#f92672">;</span>
+
+<span style="color:#f92672">import</span> java.util.ArrayList<span style="color:#f92672">;</span>
+<span style="color:#f92672">import</span> java.util.Collection<span style="color:#f92672">;</span>
+<span style="color:#f92672">import</span> java.util.Iterator<span style="color:#f92672">;</span>
+
+<span style="color:#66d9ef">public</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">TestCollection</span> <span style="color:#f92672">{</span>
+    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">static</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">main</span><span style="color:#f92672">(</span>String<span style="color:#f92672">[]</span> args<span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+        <span style="color:#75715e">//创建对象
+</span><span style="color:#75715e"></span>        Collection col <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> ArrayList<span style="color:#f92672">();</span>
+
+        <span style="color:#75715e">//增
+</span><span style="color:#75715e"></span>        col<span style="color:#f92672">.</span><span style="color:#a6e22e">add</span><span style="color:#f92672">(</span>18<span style="color:#f92672">);</span>
+        col<span style="color:#f92672">.</span><span style="color:#a6e22e">add</span><span style="color:#f92672">(</span>18<span style="color:#f92672">);</span>
+        col<span style="color:#f92672">.</span><span style="color:#a6e22e">add</span><span style="color:#f92672">(</span>18<span style="color:#f92672">);</span>
+        col<span style="color:#f92672">.</span><span style="color:#a6e22e">add</span><span style="color:#f92672">(</span>18<span style="color:#f92672">);</span>
+
+        <span style="color:#75715e">//增强型for循环遍历
+</span><span style="color:#75715e"></span>        <span style="color:#66d9ef">for</span> <span style="color:#f92672">(</span>Object o<span style="color:#f92672">:</span> col<span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+            System<span style="color:#f92672">.</span><span style="color:#a6e22e">out</span><span style="color:#f92672">.</span><span style="color:#a6e22e">println</span><span style="color:#f92672">(</span>o<span style="color:#f92672">);</span>
+        <span style="color:#f92672">}</span>
+        
+        <span style="color:#75715e">//iterator遍历
+</span><span style="color:#75715e"></span>        Iterator it <span style="color:#f92672">=</span> col<span style="color:#f92672">.</span><span style="color:#a6e22e">iterator</span><span style="color:#f92672">();</span>
+        <span style="color:#66d9ef">while</span> <span style="color:#f92672">(</span>it<span style="color:#f92672">.</span><span style="color:#a6e22e">hasNext</span><span style="color:#f92672">()){</span>
+            System<span style="color:#f92672">.</span><span style="color:#a6e22e">out</span><span style="color:#f92672">.</span><span style="color:#a6e22e">println</span><span style="color:#f92672">(</span>it<span style="color:#f92672">.</span><span style="color:#a6e22e">next</span><span style="color:#f92672">());</span>
+        <span style="color:#f92672">}</span>
+
+        <span style="color:#75715e">//删
+</span><span style="color:#75715e"></span>        col<span style="color:#f92672">.</span><span style="color:#a6e22e">clear</span><span style="color:#f92672">();</span>
+        col<span style="color:#f92672">.</span><span style="color:#a6e22e">remove</span><span style="color:#f92672">(</span>18<span style="color:#f92672">);</span>
+        
+        <span style="color:#75715e">//查
+</span><span style="color:#75715e"></span>        col<span style="color:#f92672">.</span><span style="color:#a6e22e">size</span><span style="color:#f92672">();</span>
+        col<span style="color:#f92672">.</span><span style="color:#a6e22e">isEmpty</span><span style="color:#f92672">();</span>
+        col<span style="color:#f92672">.</span><span style="color:#a6e22e">equals</span><span style="color:#f92672">(</span><span style="color:#66d9ef">null</span><span style="color:#f92672">);</span>
+        col<span style="color:#f92672">.</span><span style="color:#a6e22e">contains</span><span style="color:#f92672">(</span>18<span style="color:#f92672">);</span>
+        
+        System<span style="color:#f92672">.</span><span style="color:#a6e22e">out</span><span style="color:#f92672">.</span><span style="color:#a6e22e">println</span><span style="color:#f92672">(</span>col<span style="color:#f92672">);</span>
+    <span style="color:#f92672">}</span>
+<span style="color:#f92672">}</span>
+
+</code></pre></div><h3 id="21-list接口">2.1 List接口</h3>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#f92672">package</span> wiki.mrx.www<span style="color:#f92672">;</span>
+
+<span style="color:#f92672">import</span> java.util.ArrayList<span style="color:#f92672">;</span>
+<span style="color:#f92672">import</span> java.util.Iterator<span style="color:#f92672">;</span>
+<span style="color:#f92672">import</span> java.util.List<span style="color:#f92672">;</span>
+
+<span style="color:#66d9ef">public</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">TestList</span> <span style="color:#f92672">{</span>
+    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">static</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">main</span><span style="color:#f92672">(</span>String<span style="color:#f92672">[]</span> args<span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+        <span style="color:#75715e">//创建对象
+</span><span style="color:#75715e"></span>        List list <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> ArrayList<span style="color:#f92672">();</span>
+
+        <span style="color:#75715e">//增加
+</span><span style="color:#75715e"></span>        list<span style="color:#f92672">.</span><span style="color:#a6e22e">add</span><span style="color:#f92672">(</span>18<span style="color:#f92672">);</span>
+        list<span style="color:#f92672">.</span><span style="color:#a6e22e">add</span><span style="color:#f92672">(</span>18<span style="color:#f92672">);</span>
+        list<span style="color:#f92672">.</span><span style="color:#a6e22e">add</span><span style="color:#f92672">(</span>18<span style="color:#f92672">);</span>
+        list<span style="color:#f92672">.</span><span style="color:#a6e22e">add</span><span style="color:#f92672">(</span>3<span style="color:#f92672">,</span>88<span style="color:#f92672">);</span>
+
+        <span style="color:#75715e">//删除
+</span><span style="color:#75715e"></span>        list<span style="color:#f92672">.</span><span style="color:#a6e22e">remove</span><span style="color:#f92672">(</span>2<span style="color:#f92672">);</span>
+
+        <span style="color:#75715e">//修改
+</span><span style="color:#75715e"></span>        list<span style="color:#f92672">.</span><span style="color:#a6e22e">set</span><span style="color:#f92672">(</span>2<span style="color:#f92672">,</span>99<span style="color:#f92672">);</span>
+
+        <span style="color:#75715e">//查询
+</span><span style="color:#75715e"></span>        <span style="color:#66d9ef">for</span> <span style="color:#f92672">(</span><span style="color:#66d9ef">int</span> i <span style="color:#f92672">=</span> 0<span style="color:#f92672">;</span> i <span style="color:#f92672">&lt;</span> list<span style="color:#f92672">.</span><span style="color:#a6e22e">size</span><span style="color:#f92672">();</span> i<span style="color:#f92672">++)</span> <span style="color:#f92672">{</span>
+            System<span style="color:#f92672">.</span><span style="color:#a6e22e">out</span><span style="color:#f92672">.</span><span style="color:#a6e22e">println</span><span style="color:#f92672">(</span>list<span style="color:#f92672">.</span><span style="color:#a6e22e">get</span><span style="color:#f92672">(</span>i<span style="color:#f92672">));</span>
+        <span style="color:#f92672">}</span>
+
+        <span style="color:#66d9ef">for</span> <span style="color:#f92672">(</span>Object o <span style="color:#f92672">:</span> list<span style="color:#f92672">){</span>
+            System<span style="color:#f92672">.</span><span style="color:#a6e22e">out</span><span style="color:#f92672">.</span><span style="color:#a6e22e">println</span><span style="color:#f92672">(</span>o<span style="color:#f92672">);</span>
+        <span style="color:#f92672">}</span>
+
+        Iterator it <span style="color:#f92672">=</span> list<span style="color:#f92672">.</span><span style="color:#a6e22e">iterator</span><span style="color:#f92672">();</span>
+        <span style="color:#66d9ef">while</span> <span style="color:#f92672">(</span>it<span style="color:#f92672">.</span><span style="color:#a6e22e">hasNext</span><span style="color:#f92672">()){</span>
+            System<span style="color:#f92672">.</span><span style="color:#a6e22e">out</span><span style="color:#f92672">.</span><span style="color:#a6e22e">println</span><span style="color:#f92672">(</span>it<span style="color:#f92672">.</span><span style="color:#a6e22e">next</span><span style="color:#f92672">());</span>
+        <span style="color:#f92672">}</span>
+    <span style="color:#f92672">}</span>
+<span style="color:#f92672">}</span>
+
+</code></pre></div><h4 id="211-arraylist实现类jdk18源码">2.1.1 ArrayList实现类jdk1.8源码</h4>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#66d9ef">transient</span> Object<span style="color:#f92672">[]</span> elementData<span style="color:#f92672">;</span><span style="color:#75715e">//源码底层存储空间是一个object类型的数组，所以可以传入任意类型的数据
+</span><span style="color:#75715e"></span><span style="color:#66d9ef">private</span> <span style="color:#66d9ef">int</span> size<span style="color:#f92672">;</span><span style="color:#75715e">//存储空间的大小
+</span><span style="color:#75715e"></span>
+<span style="color:#66d9ef">private</span> <span style="color:#66d9ef">static</span> <span style="color:#66d9ef">final</span> Object<span style="color:#f92672">[]</span> DEFAULTCAPACITY_EMPTY_ELEMENTDATA <span style="color:#f92672">=</span> <span style="color:#f92672">{};</span>
+<span style="color:#66d9ef">this</span><span style="color:#f92672">.</span><span style="color:#a6e22e">elementData</span> <span style="color:#f92672">=</span> DEFAULTCAPACITY_EMPTY_ELEMENTDATA<span style="color:#f92672">;</span><span style="color:#75715e">//当new ArrayList()时，elementData=空数组
+</span><span style="color:#75715e"></span>
+ensureCapacityInternal<span style="color:#f92672">(</span>size <span style="color:#f92672">+</span> 1<span style="color:#f92672">);</span><span style="color:#75715e">//当调用al.add(1)时,会先进行扩容10
+</span><span style="color:#75715e"></span>elementData <span style="color:#f92672">=</span> Arrays<span style="color:#f92672">.</span><span style="color:#a6e22e">copyOf</span><span style="color:#f92672">(</span>elementData<span style="color:#f92672">,</span> newCapacity<span style="color:#f92672">);</span>
+</code></pre></div><h4 id="212-linkedlist实现类jdk18源码">2.1.2 LinkedList实现类jdk1.8源码</h4>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">LinkedList</span><span style="color:#f92672">&lt;</span>E<span style="color:#f92672">&gt;</span><span style="color:#75715e">//源码底层泛型为E，说明数据类型在创建对象是确定
+</span><span style="color:#75715e">//存储空间是包含头尾节点的链表node
+</span><span style="color:#75715e"></span><span style="color:#66d9ef">transient</span> Node<span style="color:#f92672">&lt;</span>E<span style="color:#f92672">&gt;</span> first<span style="color:#f92672">;</span>
+<span style="color:#66d9ef">transient</span> Node<span style="color:#f92672">&lt;</span>E<span style="color:#f92672">&gt;</span> last<span style="color:#f92672">;</span>
+Node<span style="color:#f92672">(</span>Node<span style="color:#f92672">&lt;</span>E<span style="color:#f92672">&gt;</span> prev<span style="color:#f92672">,</span> E element<span style="color:#f92672">,</span> Node<span style="color:#f92672">&lt;</span>E<span style="color:#f92672">&gt;</span> next<span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+    <span style="color:#66d9ef">this</span><span style="color:#f92672">.</span><span style="color:#a6e22e">item</span> <span style="color:#f92672">=</span> element<span style="color:#f92672">;</span>
+    <span style="color:#66d9ef">this</span><span style="color:#f92672">.</span><span style="color:#a6e22e">next</span> <span style="color:#f92672">=</span> next<span style="color:#f92672">;</span>
+    <span style="color:#66d9ef">this</span><span style="color:#f92672">.</span><span style="color:#a6e22e">prev</span> <span style="color:#f92672">=</span> prev<span style="color:#f92672">;</span>
+ <span style="color:#f92672">}</span>
+<span style="color:#75715e">//add添加时
+</span><span style="color:#75715e"></span><span style="color:#66d9ef">void</span> <span style="color:#a6e22e">linkLast</span><span style="color:#f92672">(</span>E e<span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+    <span style="color:#75715e">//last节点给1，如果是第一个元素1为null
+</span><span style="color:#75715e"></span>    <span style="color:#66d9ef">final</span> Node<span style="color:#f92672">&lt;</span>E<span style="color:#f92672">&gt;</span> l <span style="color:#f92672">=</span> last<span style="color:#f92672">;</span>
+    <span style="color:#75715e">//包装对象
+</span><span style="color:#75715e"></span>    <span style="color:#66d9ef">final</span> Node<span style="color:#f92672">&lt;</span>E<span style="color:#f92672">&gt;</span> newNode <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> Node<span style="color:#f92672">&lt;&gt;(</span>l<span style="color:#f92672">,</span> e<span style="color:#f92672">,</span> <span style="color:#66d9ef">null</span><span style="color:#f92672">);</span>
+    <span style="color:#75715e">//last节点指向包装好的对象
+</span><span style="color:#75715e"></span>    last <span style="color:#f92672">=</span> newNode<span style="color:#f92672">;</span>
+    <span style="color:#66d9ef">if</span> <span style="color:#f92672">(</span>l <span style="color:#f92672">==</span> <span style="color:#66d9ef">null</span><span style="color:#f92672">)</span><span style="color:#75715e">//如果添加的是第一个节点
+</span><span style="color:#75715e"></span>        first <span style="color:#f92672">=</span> newNode<span style="color:#f92672">;</span><span style="color:#75715e">//first指向新节点
+</span><span style="color:#75715e"></span>    <span style="color:#66d9ef">else</span><span style="color:#75715e">//如果添加的不是第一个节点
+</span><span style="color:#75715e"></span>        l<span style="color:#f92672">.</span><span style="color:#a6e22e">next</span> <span style="color:#f92672">=</span> newNode<span style="color:#f92672">;</span><span style="color:#75715e">//将l的下一个指向新节点
+</span><span style="color:#75715e"></span>    size<span style="color:#f92672">++;</span><span style="color:#75715e">//集合元素数量加1
+</span><span style="color:#75715e"></span>    modCount<span style="color:#f92672">++;</span>
+<span style="color:#f92672">}</span>
+
+</code></pre></div><h3 id="22-set子接口">2.2 Set子接口</h3>
+<p><code>相比于list的有序，不唯一，set接口具有唯一(基本数据类型)，无序的特点，它在遍历时可使用迭代器或者增强型for循环</code></p>
+<h3 id="221-hashset实现类">2.2.1 HashSet实现类</h3>
+<pre><code>hashset的底层实际是：哈希表 = 数组 + 链表
+</code></pre><h4 id="2211-linkedhashset实现类">2.2.1.1 LinkedHashSet实现类</h4>
+<p><code>LinkedHashSet存储的数据是唯一的，按照输入顺序输出的</code></p>
+<h3 id="222-treeset实现类">2.2.2 TreeSet实现类</h3>
+<pre><code>
+</code></pre><h2 id="3map接口">3.Map接口</h2>
+<h3 id="31-hashmap">3.1 HashMap</h3>
+<pre><code>
+</code></pre><h3 id="32-treemap">3.2 TreeMap</h3>
+<pre><code>
+</code></pre>
+    </div>
+    <video id="my_video" style="height: 300px;width:100%" controls="controls"></video>
+
+</article>
+<div class="pagination">
+    
+    <div class="prev"><a href="https://Apollo2light.github.io/Apollo2light/backend/4.java%E7%BD%91%E7%BB%9C%E7%BC%96%E7%A8%8B/">Previous Post</a></div>
+    
+    
+    <div class="next"><a href="https://Apollo2light.github.io/Apollo2light/backend/6.java%E6%9D%82%E9%A1%B9/">Next Post</a></div>
+    
+</div>
+
+
+<script>
+    try {
+        
+        let src = document.getElementsByTagName('code')[0].innerText;
+        
+        if (src.indexOf("mp4") != -1) {
+            document.getElementById('my_video').setAttribute("src", src)
+        } else {
+            
+            let video = document.getElementById('my_video');
+            if (video != null) {
+                video.parentNode.removeChild(video);
+            }
+        }
+    } catch (e) {
+        
+        let video = document.getElementById('my_video');
+        if (video != null) {
+            video.parentNode.removeChild(video);
+        }
+    }
+</script>
+
+</main><footer class="site-footer">
+	<span class="right">
+		<em>Apollo&#39;s blog</em>
+	</span>
+</footer>
+</body>
+<script>
+
+</script>
+</html>

@@ -1,0 +1,416 @@
+<!DOCTYPE html>
+<html lang=en-us><head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title> 4.java网络编程 - Apollo&#39;s blog</title>
+    <meta name="description" content="1.基础知识 网络互联需要ip和端口，传输时需要遵守一定的规则，这个规则就是网络传输协议，即四层传输协议：
+ 应用层http 传输层udp,tcp 网络层ip 链路层  2.tcp协议 三次握手：客户端与服务器建立连接
+四次挥手：客户端与服务器断开连接
+//客户端 package wiki.mrx.www; import java.io.*; import java.net.Socket; import java.util.Scanner; public class TestClient { public static void main(String[] args){ System.out.println(&#34;客户端启动了&#34;); //1.创建套接字，指定ip和端口  Socket s = null; OutputStream os = null; ObjectOutputStream oos = null; InputStream is = null; DataInputStream dis = null; try { s = new Socket(&#34;192.168.18.5&#34;,8888); //录入账号密码  Scanner sc = new Scanner(System.in); System.out.println(&#34;请录入账号：&#34;); String name = sc.next(); System.">
+    <link rel="canonical" href="https://Apollo2light.github.io/Apollo2light/backend/4.java%E7%BD%91%E7%BB%9C%E7%BC%96%E7%A8%8B/">
+    <meta property="og:title" content="4.java网络编程">
+    <meta property="og:type" content="article">
+    <meta property="og:url" content="https://Apollo2light.github.io/Apollo2light/backend/4.java%E7%BD%91%E7%BB%9C%E7%BC%96%E7%A8%8B/">
+    <meta property="og:description" content="1.基础知识 网络互联需要ip和端口，传输时需要遵守一定的规则，这个规则就是网络传输协议，即四层传输协议：
+ 应用层http 传输层udp,tcp 网络层ip 链路层  2.tcp协议 三次握手：客户端与服务器建立连接
+四次挥手：客户端与服务器断开连接
+//客户端 package wiki.mrx.www; import java.io.*; import java.net.Socket; import java.util.Scanner; public class TestClient { public static void main(String[] args){ System.out.println(&#34;客户端启动了&#34;); //1.创建套接字，指定ip和端口  Socket s = null; OutputStream os = null; ObjectOutputStream oos = null; InputStream is = null; DataInputStream dis = null; try { s = new Socket(&#34;192.168.18.5&#34;,8888); //录入账号密码  Scanner sc = new Scanner(System.in); System.out.println(&#34;请录入账号：&#34;); String name = sc.next(); System.">
+    <meta property="og:site_name" content="Apollo&#39;s blog">
+    <link rel="stylesheet" href="https://Apollo2light.github.io/Apollo2light/css/main.min.7fdf1d02dafd1a6eb5cfd0d707e17e33515b866f5d305a0ab01a4095577484fe.css" integrity="sha256-f98dAtr9Gm61z9DXB&#43;F&#43;M1Fbhm9dMFoKsBpAlVd0hP4=">
+    <meta name="generator" content="Hugo 0.73.0" />
+    <script type="module" src="https://unpkg.com/ionicons@5.1.2/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule="" src="https://unpkg.com/ionicons@5.1.2/dist/ionicons/ionicons.js"></script>
+    
+</head>
+<body><header class="site-header">
+    <nav class="site-nav" role="navigation" aria-label="breadcrumb">
+        <ol itemscope itemtype="https://schema.org/BreadcrumbList" class="breadcrumb"><li class="breadcrumb-item  " 
+    itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+    <a itemtype="https://schema.org/Thing" itemprop="item" href="https://Apollo2light.github.io/Apollo2light/">
+        <span itemprop="name">Apollo&#39;s blog</span>
+    </a>
+    <meta itemprop="position"
+          content="0"/>
+</li>/<li class="breadcrumb-item  " 
+    itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+    <a itemtype="https://schema.org/Thing" itemprop="item" href="https://Apollo2light.github.io/Apollo2light/backend/">
+        <span itemprop="name">backend</span>
+    </a>
+    <meta itemprop="position"
+          content="0"/>
+</li>/<li class="breadcrumb-item active hidden" aria-current="page"
+    itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+    <a itemtype="https://schema.org/Thing" itemprop="item" href="https://Apollo2light.github.io/Apollo2light/backend/4.java%E7%BD%91%E7%BB%9C%E7%BC%96%E7%A8%8B/">
+        <span itemprop="name">4.java%E7%BD%91%E7%BB%9C%E7%BC%96%E7%A8%8B</span>
+    </a>
+    <meta itemprop="position"
+          content="1"/>
+</li></ol>
+    </nav>
+    <h1 class="site-title hidden">
+        <a href="https://Apollo2light.github.io/Apollo2light/">Apollo&#39;s blog</a>
+    </h1>
+</header><main id="content">
+<article role="article" class="content post h-entry" itemscope="" itemtype="http://schema.org/BlogPosting">
+    <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">4.java网络编程</h2>
+        <span class="post-meta">
+            <time class="date-published" datetime=" 2021-06-01T17:37:49&#43;07:00" itemprop="datePublished">
+                Tue, 1 Jun 2021
+            </time>
+            
+        </span>
+    </header>
+    <div class="post-content" itemprop="articleBody">
+        <h2 id="1基础知识">1.基础知识</h2>
+<p><code>网络互联需要ip和端口，传输时需要遵守一定的规则，这个规则就是网络传输协议，即四层传输协议：</code></p>
+<ul>
+<li>应用层http</li>
+<li>传输层udp,tcp</li>
+<li>网络层ip</li>
+<li>链路层</li>
+</ul>
+<h2 id="2tcp协议">2.tcp协议</h2>
+<p><code>三次握手：客户端与服务器建立连接</code></p>
+<p><code>四次挥手：客户端与服务器断开连接</code></p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#75715e">//客户端
+</span><span style="color:#75715e"></span><span style="color:#f92672">package</span> wiki.mrx.www<span style="color:#f92672">;</span>
+
+<span style="color:#f92672">import</span> java.io.*<span style="color:#f92672">;</span>
+<span style="color:#f92672">import</span> java.net.Socket<span style="color:#f92672">;</span>
+<span style="color:#f92672">import</span> java.util.Scanner<span style="color:#f92672">;</span>
+
+<span style="color:#66d9ef">public</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">TestClient</span> <span style="color:#f92672">{</span>
+    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">static</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">main</span><span style="color:#f92672">(</span>String<span style="color:#f92672">[]</span> args<span style="color:#f92672">){</span>
+        System<span style="color:#f92672">.</span><span style="color:#a6e22e">out</span><span style="color:#f92672">.</span><span style="color:#a6e22e">println</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#34;客户端启动了&#34;</span><span style="color:#f92672">);</span>
+        <span style="color:#75715e">//1.创建套接字，指定ip和端口
+</span><span style="color:#75715e"></span>        Socket s <span style="color:#f92672">=</span> <span style="color:#66d9ef">null</span><span style="color:#f92672">;</span>
+        OutputStream os <span style="color:#f92672">=</span> <span style="color:#66d9ef">null</span><span style="color:#f92672">;</span>
+        ObjectOutputStream oos <span style="color:#f92672">=</span> <span style="color:#66d9ef">null</span><span style="color:#f92672">;</span>
+        InputStream is <span style="color:#f92672">=</span> <span style="color:#66d9ef">null</span><span style="color:#f92672">;</span>
+        DataInputStream dis <span style="color:#f92672">=</span> <span style="color:#66d9ef">null</span><span style="color:#f92672">;</span>
+        <span style="color:#66d9ef">try</span> <span style="color:#f92672">{</span>
+            s <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> Socket<span style="color:#f92672">(</span><span style="color:#e6db74">&#34;192.168.18.5&#34;</span><span style="color:#f92672">,</span>8888<span style="color:#f92672">);</span>
+            <span style="color:#75715e">//录入账号密码
+</span><span style="color:#75715e"></span>            Scanner sc <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> Scanner<span style="color:#f92672">(</span>System<span style="color:#f92672">.</span><span style="color:#a6e22e">in</span><span style="color:#f92672">);</span>
+            System<span style="color:#f92672">.</span><span style="color:#a6e22e">out</span><span style="color:#f92672">.</span><span style="color:#a6e22e">println</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#34;请录入账号：&#34;</span><span style="color:#f92672">);</span>
+            String name <span style="color:#f92672">=</span> sc<span style="color:#f92672">.</span><span style="color:#a6e22e">next</span><span style="color:#f92672">();</span>
+            System<span style="color:#f92672">.</span><span style="color:#a6e22e">out</span><span style="color:#f92672">.</span><span style="color:#a6e22e">println</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#34;请录入密码：&#34;</span><span style="color:#f92672">);</span>
+            String pwd <span style="color:#f92672">=</span> sc<span style="color:#f92672">.</span><span style="color:#a6e22e">next</span><span style="color:#f92672">();</span>
+            User user <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> User<span style="color:#f92672">(</span>name<span style="color:#f92672">,</span>pwd<span style="color:#f92672">);</span>
+
+
+            <span style="color:#75715e">//2.向服务器发送数据
+</span><span style="color:#75715e"></span>            os <span style="color:#f92672">=</span> s<span style="color:#f92672">.</span><span style="color:#a6e22e">getOutputStream</span><span style="color:#f92672">();</span>
+            oos <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> ObjectOutputStream<span style="color:#f92672">(</span>os<span style="color:#f92672">);</span>
+            oos<span style="color:#f92672">.</span><span style="color:#a6e22e">writeObject</span><span style="color:#f92672">(</span>user<span style="color:#f92672">);</span>
+
+            <span style="color:#75715e">//3.接受服务器回话
+</span><span style="color:#75715e"></span>            is <span style="color:#f92672">=</span> s<span style="color:#f92672">.</span><span style="color:#a6e22e">getInputStream</span><span style="color:#f92672">();</span>
+            dis <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> DataInputStream<span style="color:#f92672">(</span>is<span style="color:#f92672">);</span>
+            <span style="color:#66d9ef">boolean</span> b <span style="color:#f92672">=</span> dis<span style="color:#f92672">.</span><span style="color:#a6e22e">readBoolean</span><span style="color:#f92672">();</span>
+            <span style="color:#66d9ef">if</span><span style="color:#f92672">(</span>b<span style="color:#f92672">){</span>
+                System<span style="color:#f92672">.</span><span style="color:#a6e22e">out</span><span style="color:#f92672">.</span><span style="color:#a6e22e">println</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#34;登录成功&#34;</span><span style="color:#f92672">);</span>
+            <span style="color:#f92672">}</span><span style="color:#66d9ef">else</span><span style="color:#f92672">{</span>
+                System<span style="color:#f92672">.</span><span style="color:#a6e22e">out</span><span style="color:#f92672">.</span><span style="color:#a6e22e">println</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#34;登陆失败&#34;</span><span style="color:#f92672">);</span>
+            <span style="color:#f92672">}</span>
+        <span style="color:#f92672">}</span> <span style="color:#66d9ef">catch</span> <span style="color:#f92672">(</span>IOException e<span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+            e<span style="color:#f92672">.</span><span style="color:#a6e22e">printStackTrace</span><span style="color:#f92672">();</span>
+        <span style="color:#f92672">}</span><span style="color:#66d9ef">finally</span> <span style="color:#f92672">{</span>
+            <span style="color:#75715e">//4.关闭流和网络资源
+</span><span style="color:#75715e"></span>            <span style="color:#66d9ef">try</span> <span style="color:#f92672">{</span>
+                dis<span style="color:#f92672">.</span><span style="color:#a6e22e">close</span><span style="color:#f92672">();</span>
+            <span style="color:#f92672">}</span> <span style="color:#66d9ef">catch</span> <span style="color:#f92672">(</span>IOException e<span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+                e<span style="color:#f92672">.</span><span style="color:#a6e22e">printStackTrace</span><span style="color:#f92672">();</span>
+            <span style="color:#f92672">}</span>
+            <span style="color:#66d9ef">try</span> <span style="color:#f92672">{</span>
+                is<span style="color:#f92672">.</span><span style="color:#a6e22e">close</span><span style="color:#f92672">();</span>
+            <span style="color:#f92672">}</span> <span style="color:#66d9ef">catch</span> <span style="color:#f92672">(</span>IOException e<span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+                e<span style="color:#f92672">.</span><span style="color:#a6e22e">printStackTrace</span><span style="color:#f92672">();</span>
+            <span style="color:#f92672">}</span>
+            <span style="color:#66d9ef">try</span> <span style="color:#f92672">{</span>
+                oos<span style="color:#f92672">.</span><span style="color:#a6e22e">close</span><span style="color:#f92672">();</span>
+            <span style="color:#f92672">}</span> <span style="color:#66d9ef">catch</span> <span style="color:#f92672">(</span>IOException e<span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+                e<span style="color:#f92672">.</span><span style="color:#a6e22e">printStackTrace</span><span style="color:#f92672">();</span>
+            <span style="color:#f92672">}</span>
+            <span style="color:#66d9ef">try</span> <span style="color:#f92672">{</span>
+                os<span style="color:#f92672">.</span><span style="color:#a6e22e">close</span><span style="color:#f92672">();</span>
+            <span style="color:#f92672">}</span> <span style="color:#66d9ef">catch</span> <span style="color:#f92672">(</span>IOException e<span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+                e<span style="color:#f92672">.</span><span style="color:#a6e22e">printStackTrace</span><span style="color:#f92672">();</span>
+            <span style="color:#f92672">}</span>
+            <span style="color:#66d9ef">try</span> <span style="color:#f92672">{</span>
+                s<span style="color:#f92672">.</span><span style="color:#a6e22e">close</span><span style="color:#f92672">();</span>
+            <span style="color:#f92672">}</span> <span style="color:#66d9ef">catch</span> <span style="color:#f92672">(</span>IOException e<span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+                e<span style="color:#f92672">.</span><span style="color:#a6e22e">printStackTrace</span><span style="color:#f92672">();</span>
+            <span style="color:#f92672">}</span>
+        <span style="color:#f92672">}</span>
+    <span style="color:#f92672">}</span>
+<span style="color:#f92672">}</span>
+
+</code></pre></div><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#75715e">//服务端
+</span><span style="color:#75715e"></span><span style="color:#f92672">package</span> wiki.mrx.www<span style="color:#f92672">;</span>
+
+<span style="color:#f92672">import</span> java.io.*<span style="color:#f92672">;</span>
+<span style="color:#f92672">import</span> java.net.ServerSocket<span style="color:#f92672">;</span>
+<span style="color:#f92672">import</span> java.net.Socket<span style="color:#f92672">;</span>
+
+<span style="color:#66d9ef">public</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">TestServer</span> <span style="color:#f92672">{</span>
+    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">static</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">main</span><span style="color:#f92672">(</span>String<span style="color:#f92672">[]</span> args<span style="color:#f92672">){</span>
+        System<span style="color:#f92672">.</span><span style="color:#a6e22e">out</span><span style="color:#f92672">.</span><span style="color:#a6e22e">println</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#34;服务器启动了&#34;</span><span style="color:#f92672">);</span>
+        <span style="color:#75715e">//1.创建套接字，指定IP和端口
+</span><span style="color:#75715e"></span>        ServerSocket ss <span style="color:#f92672">=</span> <span style="color:#66d9ef">null</span><span style="color:#f92672">;</span>
+        Socket s <span style="color:#f92672">=</span> <span style="color:#66d9ef">null</span><span style="color:#f92672">;</span>
+        <span style="color:#66d9ef">int</span> count <span style="color:#f92672">=</span> 0<span style="color:#f92672">;</span><span style="color:#75715e">//访客计数器
+</span><span style="color:#75715e"></span>        <span style="color:#66d9ef">try</span> <span style="color:#f92672">{</span>
+            ss <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> ServerSocket<span style="color:#f92672">(</span>8888<span style="color:#f92672">);</span>
+           <span style="color:#75715e">//死循环一直监听8888端口传来的套接字
+</span><span style="color:#75715e"></span>            <span style="color:#66d9ef">while</span> <span style="color:#f92672">(</span><span style="color:#66d9ef">true</span><span style="color:#f92672">){</span>
+               s <span style="color:#f92672">=</span> ss<span style="color:#f92672">.</span><span style="color:#a6e22e">accept</span><span style="color:#f92672">();</span>
+               <span style="color:#75715e">//接收到套接字后开启一个线程去处理
+</span><span style="color:#75715e"></span>               <span style="color:#66d9ef">new</span> ServerThread<span style="color:#f92672">(</span>s<span style="color:#f92672">).</span><span style="color:#a6e22e">start</span><span style="color:#f92672">();</span>
+               count<span style="color:#f92672">++;</span>
+                System<span style="color:#f92672">.</span><span style="color:#a6e22e">out</span><span style="color:#f92672">.</span><span style="color:#a6e22e">println</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#34;共有&#34;</span><span style="color:#f92672">+</span>count<span style="color:#f92672">+</span><span style="color:#e6db74">&#34;次访问！&#34;</span><span style="color:#f92672">);</span>
+           <span style="color:#f92672">}</span>
+        <span style="color:#f92672">}</span> <span style="color:#66d9ef">catch</span> <span style="color:#f92672">(</span>IOException e<span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+            e<span style="color:#f92672">.</span><span style="color:#a6e22e">printStackTrace</span><span style="color:#f92672">();</span>
+        <span style="color:#f92672">}</span><span style="color:#66d9ef">finally</span> <span style="color:#f92672">{</span>
+            <span style="color:#66d9ef">try</span> <span style="color:#f92672">{</span>
+                ss<span style="color:#f92672">.</span><span style="color:#a6e22e">close</span><span style="color:#f92672">();</span>
+            <span style="color:#f92672">}</span> <span style="color:#66d9ef">catch</span> <span style="color:#f92672">(</span>IOException e<span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+                e<span style="color:#f92672">.</span><span style="color:#a6e22e">printStackTrace</span><span style="color:#f92672">();</span>
+            <span style="color:#f92672">}</span>
+        <span style="color:#f92672">}</span>
+    <span style="color:#f92672">}</span>
+<span style="color:#f92672">}</span>
+
+
+</code></pre></div><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#75715e">//服务端线程轮循
+</span><span style="color:#75715e"></span><span style="color:#f92672">package</span> wiki.mrx.www<span style="color:#f92672">;</span>
+
+<span style="color:#f92672">import</span> java.io.*<span style="color:#f92672">;</span>
+<span style="color:#f92672">import</span> java.net.ServerSocket<span style="color:#f92672">;</span>
+<span style="color:#f92672">import</span> java.net.Socket<span style="color:#f92672">;</span>
+
+<span style="color:#66d9ef">public</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">ServerThread</span> <span style="color:#66d9ef">extends</span> Thread <span style="color:#f92672">{</span>
+    InputStream is <span style="color:#f92672">=</span> <span style="color:#66d9ef">null</span><span style="color:#f92672">;</span>
+    ObjectInputStream ois <span style="color:#f92672">=</span> <span style="color:#66d9ef">null</span><span style="color:#f92672">;</span>
+    OutputStream os <span style="color:#f92672">=</span> <span style="color:#66d9ef">null</span><span style="color:#f92672">;</span>
+    DataOutputStream dos <span style="color:#f92672">=</span> <span style="color:#66d9ef">null</span><span style="color:#f92672">;</span>
+    Socket s <span style="color:#f92672">=</span> <span style="color:#66d9ef">null</span><span style="color:#f92672">;</span>
+    <span style="color:#66d9ef">public</span> <span style="color:#a6e22e">ServerThread</span><span style="color:#f92672">(</span>Socket s<span style="color:#f92672">){</span>
+         <span style="color:#66d9ef">this</span><span style="color:#f92672">.</span><span style="color:#a6e22e">s</span> <span style="color:#f92672">=</span> s<span style="color:#f92672">;</span>
+    <span style="color:#f92672">}</span>
+    <span style="color:#a6e22e">@Override</span>
+    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">run</span><span style="color:#f92672">()</span> <span style="color:#f92672">{</span>
+        <span style="color:#66d9ef">try</span> <span style="color:#f92672">{</span>
+
+            <span style="color:#75715e">//2.接受客户端消息
+</span><span style="color:#75715e"></span>            is <span style="color:#f92672">=</span> s<span style="color:#f92672">.</span><span style="color:#a6e22e">getInputStream</span><span style="color:#f92672">();</span>
+            ois <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> ObjectInputStream<span style="color:#f92672">(</span>is<span style="color:#f92672">);</span>
+            User user <span style="color:#f92672">=</span> <span style="color:#f92672">(</span>User<span style="color:#f92672">)(</span>ois<span style="color:#f92672">.</span><span style="color:#a6e22e">readObject</span><span style="color:#f92672">());</span>
+            <span style="color:#66d9ef">boolean</span> flag <span style="color:#f92672">=</span> <span style="color:#66d9ef">false</span><span style="color:#f92672">;</span>
+            <span style="color:#66d9ef">if</span><span style="color:#f92672">(</span>user<span style="color:#f92672">.</span><span style="color:#a6e22e">getName</span><span style="color:#f92672">().</span><span style="color:#a6e22e">equals</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#34;kk&#34;</span><span style="color:#f92672">)</span> <span style="color:#f92672">&amp;&amp;</span> user<span style="color:#f92672">.</span><span style="color:#a6e22e">getPwd</span><span style="color:#f92672">().</span><span style="color:#a6e22e">equals</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#34;123&#34;</span><span style="color:#f92672">)){</span>
+                flag <span style="color:#f92672">=</span> <span style="color:#66d9ef">true</span><span style="color:#f92672">;</span>
+            <span style="color:#f92672">}</span>
+
+            <span style="color:#75715e">//3.向客户端发消息
+</span><span style="color:#75715e"></span>            os <span style="color:#f92672">=</span> s<span style="color:#f92672">.</span><span style="color:#a6e22e">getOutputStream</span><span style="color:#f92672">();</span>
+            dos <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> DataOutputStream<span style="color:#f92672">(</span>os<span style="color:#f92672">);</span>
+            dos<span style="color:#f92672">.</span><span style="color:#a6e22e">writeBoolean</span><span style="color:#f92672">(</span>flag<span style="color:#f92672">);</span>
+        <span style="color:#f92672">}</span><span style="color:#66d9ef">catch</span> <span style="color:#f92672">(</span>IOException <span style="color:#f92672">|</span> ClassNotFoundException e<span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+            e<span style="color:#f92672">.</span><span style="color:#a6e22e">printStackTrace</span><span style="color:#f92672">();</span>
+        <span style="color:#f92672">}</span> <span style="color:#66d9ef">finally</span> <span style="color:#f92672">{</span>
+            <span style="color:#75715e">//4.关闭网络资源
+</span><span style="color:#75715e"></span>            <span style="color:#66d9ef">try</span> <span style="color:#f92672">{</span>
+                dos<span style="color:#f92672">.</span><span style="color:#a6e22e">close</span><span style="color:#f92672">();</span>
+            <span style="color:#f92672">}</span> <span style="color:#66d9ef">catch</span> <span style="color:#f92672">(</span>IOException e<span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+                e<span style="color:#f92672">.</span><span style="color:#a6e22e">printStackTrace</span><span style="color:#f92672">();</span>
+            <span style="color:#f92672">}</span>
+            <span style="color:#66d9ef">try</span> <span style="color:#f92672">{</span>
+                os<span style="color:#f92672">.</span><span style="color:#a6e22e">close</span><span style="color:#f92672">();</span>
+            <span style="color:#f92672">}</span> <span style="color:#66d9ef">catch</span> <span style="color:#f92672">(</span>IOException e<span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+                e<span style="color:#f92672">.</span><span style="color:#a6e22e">printStackTrace</span><span style="color:#f92672">();</span>
+            <span style="color:#f92672">}</span>
+            <span style="color:#66d9ef">try</span> <span style="color:#f92672">{</span>
+                ois<span style="color:#f92672">.</span><span style="color:#a6e22e">close</span><span style="color:#f92672">();</span>
+            <span style="color:#f92672">}</span> <span style="color:#66d9ef">catch</span> <span style="color:#f92672">(</span>IOException e<span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+                e<span style="color:#f92672">.</span><span style="color:#a6e22e">printStackTrace</span><span style="color:#f92672">();</span>
+            <span style="color:#f92672">}</span>
+            <span style="color:#66d9ef">try</span> <span style="color:#f92672">{</span>
+                is<span style="color:#f92672">.</span><span style="color:#a6e22e">close</span><span style="color:#f92672">();</span>
+            <span style="color:#f92672">}</span> <span style="color:#66d9ef">catch</span> <span style="color:#f92672">(</span>IOException e<span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+                e<span style="color:#f92672">.</span><span style="color:#a6e22e">printStackTrace</span><span style="color:#f92672">();</span>
+            <span style="color:#f92672">}</span>
+        <span style="color:#f92672">}</span>
+    <span style="color:#f92672">}</span>
+<span style="color:#f92672">}</span>
+
+</code></pre></div><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#75715e">//客户端数据包装
+</span><span style="color:#75715e"></span><span style="color:#f92672">package</span> wiki.mrx.www<span style="color:#f92672">;</span>
+
+<span style="color:#f92672">import</span> java.io.Serializable<span style="color:#f92672">;</span>
+
+<span style="color:#66d9ef">public</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">User</span> <span style="color:#66d9ef">implements</span> Serializable <span style="color:#f92672">{</span>
+    <span style="color:#66d9ef">private</span> <span style="color:#66d9ef">static</span> <span style="color:#66d9ef">final</span> <span style="color:#66d9ef">long</span> serialVersionUID <span style="color:#f92672">=</span> <span style="color:#f92672">-</span>8174829232455331182L<span style="color:#f92672">;</span>
+    <span style="color:#66d9ef">private</span> String name<span style="color:#f92672">;</span>
+    <span style="color:#66d9ef">private</span> String pwd<span style="color:#f92672">;</span>
+
+    <span style="color:#66d9ef">public</span> String <span style="color:#a6e22e">getName</span><span style="color:#f92672">()</span> <span style="color:#f92672">{</span>
+        <span style="color:#66d9ef">return</span> name<span style="color:#f92672">;</span>
+    <span style="color:#f92672">}</span>
+
+    <span style="color:#66d9ef">public</span> String <span style="color:#a6e22e">getPwd</span><span style="color:#f92672">()</span> <span style="color:#f92672">{</span>
+        <span style="color:#66d9ef">return</span> pwd<span style="color:#f92672">;</span>
+    <span style="color:#f92672">}</span>
+
+    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">setName</span><span style="color:#f92672">(</span>String name<span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+        <span style="color:#66d9ef">this</span><span style="color:#f92672">.</span><span style="color:#a6e22e">name</span> <span style="color:#f92672">=</span> name<span style="color:#f92672">;</span>
+    <span style="color:#f92672">}</span>
+
+    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">setPwd</span><span style="color:#f92672">(</span>String pwd<span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+        <span style="color:#66d9ef">this</span><span style="color:#f92672">.</span><span style="color:#a6e22e">pwd</span> <span style="color:#f92672">=</span> pwd<span style="color:#f92672">;</span>
+    <span style="color:#f92672">}</span>
+
+    <span style="color:#66d9ef">public</span> <span style="color:#a6e22e">User</span><span style="color:#f92672">(</span>String name<span style="color:#f92672">,</span> String pwd<span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+        <span style="color:#66d9ef">this</span><span style="color:#f92672">.</span><span style="color:#a6e22e">name</span> <span style="color:#f92672">=</span> name<span style="color:#f92672">;</span>
+        <span style="color:#66d9ef">this</span><span style="color:#f92672">.</span><span style="color:#a6e22e">pwd</span> <span style="color:#f92672">=</span> pwd<span style="color:#f92672">;</span>
+    <span style="color:#f92672">}</span>
+<span style="color:#f92672">}</span>
+read
+</code></pre></div><h2 id="3udp协议">3.udp协议</h2>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#f92672">package</span> wiki.mrx.www<span style="color:#f92672">;</span>
+
+<span style="color:#f92672">import</span> java.io.IOException<span style="color:#f92672">;</span>
+<span style="color:#f92672">import</span> java.net.*<span style="color:#f92672">;</span>
+<span style="color:#f92672">import</span> java.nio.charset.StandardCharsets<span style="color:#f92672">;</span>
+<span style="color:#f92672">import</span> java.util.Scanner<span style="color:#f92672">;</span>
+
+<span style="color:#66d9ef">public</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">TestReceive</span> <span style="color:#f92672">{</span>
+    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">static</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">main</span><span style="color:#f92672">(</span>String<span style="color:#f92672">[]</span> args<span style="color:#f92672">){</span>
+        System<span style="color:#f92672">.</span><span style="color:#a6e22e">out</span><span style="color:#f92672">.</span><span style="color:#a6e22e">println</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#34;老师上线了&#34;</span><span style="color:#f92672">);</span>
+        <span style="color:#75715e">//1.创建套接字
+</span><span style="color:#75715e"></span>        DatagramSocket ds <span style="color:#f92672">=</span> <span style="color:#66d9ef">null</span><span style="color:#f92672">;</span>
+        <span style="color:#66d9ef">try</span> <span style="color:#f92672">{</span>
+            ds <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> DatagramSocket<span style="color:#f92672">(</span>9999<span style="color:#f92672">);</span>
+            <span style="color:#66d9ef">while</span> <span style="color:#f92672">(</span><span style="color:#66d9ef">true</span><span style="color:#f92672">){</span>
+                <span style="color:#75715e">//2.接受数据包
+</span><span style="color:#75715e"></span>                <span style="color:#66d9ef">byte</span><span style="color:#f92672">[]</span> b <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> <span style="color:#66d9ef">byte</span><span style="color:#f92672">[</span>1024<span style="color:#f92672">];</span>
+                DatagramPacket dp <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> DatagramPacket<span style="color:#f92672">(</span>b<span style="color:#f92672">,</span>b<span style="color:#f92672">.</span><span style="color:#a6e22e">length</span><span style="color:#f92672">);</span>
+                ds<span style="color:#f92672">.</span><span style="color:#a6e22e">receive</span><span style="color:#f92672">(</span>dp<span style="color:#f92672">);</span>
+                <span style="color:#66d9ef">byte</span><span style="color:#f92672">[]</span> data <span style="color:#f92672">=</span> dp<span style="color:#f92672">.</span><span style="color:#a6e22e">getData</span><span style="color:#f92672">();</span>
+                String s <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> String<span style="color:#f92672">(</span>data<span style="color:#f92672">);</span>
+                System<span style="color:#f92672">.</span><span style="color:#a6e22e">out</span><span style="color:#f92672">.</span><span style="color:#a6e22e">println</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#34;学生：&#34;</span><span style="color:#f92672">+</span>s<span style="color:#f92672">);</span>
+
+                <span style="color:#75715e">//3.开始回复
+</span><span style="color:#75715e"></span>                Scanner sc <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> Scanner<span style="color:#f92672">(</span>System<span style="color:#f92672">.</span><span style="color:#a6e22e">in</span><span style="color:#f92672">);</span>
+                System<span style="color:#f92672">.</span><span style="color:#a6e22e">out</span><span style="color:#f92672">.</span><span style="color:#a6e22e">println</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#34;老师：&#34;</span><span style="color:#f92672">);</span>
+                String str <span style="color:#f92672">=</span> sc<span style="color:#f92672">.</span><span style="color:#a6e22e">next</span><span style="color:#f92672">();</span>
+                <span style="color:#66d9ef">byte</span><span style="color:#f92672">[]</span> bytes <span style="color:#f92672">=</span> str<span style="color:#f92672">.</span><span style="color:#a6e22e">getBytes</span><span style="color:#f92672">();</span>
+                DatagramPacket dp2 <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> DatagramPacket<span style="color:#f92672">(</span>bytes<span style="color:#f92672">,</span>bytes<span style="color:#f92672">.</span><span style="color:#a6e22e">length</span><span style="color:#f92672">,</span> InetAddress<span style="color:#f92672">.</span><span style="color:#a6e22e">getByName</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#34;localhost&#34;</span><span style="color:#f92672">),</span>8888<span style="color:#f92672">);</span>
+                ds<span style="color:#f92672">.</span><span style="color:#a6e22e">send</span><span style="color:#f92672">(</span>dp2<span style="color:#f92672">);</span>
+            <span style="color:#f92672">}</span>
+        <span style="color:#f92672">}</span> <span style="color:#66d9ef">catch</span> <span style="color:#f92672">(</span>IOException e<span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+            e<span style="color:#f92672">.</span><span style="color:#a6e22e">printStackTrace</span><span style="color:#f92672">();</span>
+        <span style="color:#f92672">}</span> <span style="color:#66d9ef">finally</span> <span style="color:#f92672">{</span>
+            <span style="color:#75715e">//4.关闭资源
+</span><span style="color:#75715e"></span>            <span style="color:#66d9ef">assert</span> ds <span style="color:#f92672">!=</span> <span style="color:#66d9ef">null</span><span style="color:#f92672">;</span>
+            ds<span style="color:#f92672">.</span><span style="color:#a6e22e">close</span><span style="color:#f92672">();</span>
+        <span style="color:#f92672">}</span>
+    <span style="color:#f92672">}</span>
+<span style="color:#f92672">}</span>
+
+
+</code></pre></div><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#f92672">package</span> wiki.mrx.www<span style="color:#f92672">;</span>
+
+<span style="color:#f92672">import</span> java.io.IOException<span style="color:#f92672">;</span>
+<span style="color:#f92672">import</span> java.net.*<span style="color:#f92672">;</span>
+<span style="color:#f92672">import</span> java.nio.charset.StandardCharsets<span style="color:#f92672">;</span>
+<span style="color:#f92672">import</span> java.util.Scanner<span style="color:#f92672">;</span>
+
+<span style="color:#66d9ef">public</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">TestSend</span> <span style="color:#f92672">{</span>
+    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">static</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">main</span><span style="color:#f92672">(</span>String<span style="color:#f92672">[]</span> args<span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+        System<span style="color:#f92672">.</span><span style="color:#a6e22e">out</span><span style="color:#f92672">.</span><span style="color:#a6e22e">println</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#34;学生上线&#34;</span><span style="color:#f92672">);</span>
+        <span style="color:#75715e">//1.准备套接字
+</span><span style="color:#75715e"></span>        DatagramSocket ds <span style="color:#f92672">=</span> <span style="color:#66d9ef">null</span><span style="color:#f92672">;</span>
+        <span style="color:#66d9ef">try</span> <span style="color:#f92672">{</span>
+            ds <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> DatagramSocket<span style="color:#f92672">(</span>8888<span style="color:#f92672">);</span>
+            <span style="color:#66d9ef">while</span> <span style="color:#f92672">(</span><span style="color:#66d9ef">true</span><span style="color:#f92672">){</span>
+                <span style="color:#75715e">//2.发送数据包
+</span><span style="color:#75715e"></span>                Scanner sc <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> Scanner<span style="color:#f92672">(</span>System<span style="color:#f92672">.</span><span style="color:#a6e22e">in</span><span style="color:#f92672">);</span>
+                String str <span style="color:#f92672">=</span> sc<span style="color:#f92672">.</span><span style="color:#a6e22e">next</span><span style="color:#f92672">();</span>
+                <span style="color:#66d9ef">byte</span><span style="color:#f92672">[]</span> bytes <span style="color:#f92672">=</span> str<span style="color:#f92672">.</span><span style="color:#a6e22e">getBytes</span><span style="color:#f92672">();</span>
+        <span style="color:#75715e">/*
+</span><span style="color:#75715e">         1.传送数据转化成字节数组
+</span><span style="color:#75715e">         2.字节数组的长度
+</span><span style="color:#75715e">         3.接收方的ip
+</span><span style="color:#75715e">         4.接受方的端口
+</span><span style="color:#75715e">         */</span>
+                DatagramPacket dp <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> DatagramPacket<span style="color:#f92672">(</span>bytes<span style="color:#f92672">,</span>bytes<span style="color:#f92672">.</span><span style="color:#a6e22e">length</span><span style="color:#f92672">,</span> InetAddress<span style="color:#f92672">.</span><span style="color:#a6e22e">getByName</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#34;localhost&#34;</span><span style="color:#f92672">),</span>9999<span style="color:#f92672">);</span>
+                ds<span style="color:#f92672">.</span><span style="color:#a6e22e">send</span><span style="color:#f92672">(</span>dp<span style="color:#f92672">);</span>
+
+                <span style="color:#75715e">//3.接受回复信息
+</span><span style="color:#75715e"></span>                <span style="color:#66d9ef">byte</span><span style="color:#f92672">[]</span> b <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> <span style="color:#66d9ef">byte</span><span style="color:#f92672">[</span>1024<span style="color:#f92672">];</span>
+                DatagramPacket dp2 <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> DatagramPacket<span style="color:#f92672">(</span>b<span style="color:#f92672">,</span>b<span style="color:#f92672">.</span><span style="color:#a6e22e">length</span><span style="color:#f92672">);</span>
+                ds<span style="color:#f92672">.</span><span style="color:#a6e22e">receive</span><span style="color:#f92672">(</span>dp2<span style="color:#f92672">);</span>
+                <span style="color:#66d9ef">byte</span><span style="color:#f92672">[]</span> data <span style="color:#f92672">=</span> dp2<span style="color:#f92672">.</span><span style="color:#a6e22e">getData</span><span style="color:#f92672">();</span>
+                String s <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> String<span style="color:#f92672">(</span>data<span style="color:#f92672">,</span>0<span style="color:#f92672">,</span>dp2<span style="color:#f92672">.</span><span style="color:#a6e22e">getLength</span><span style="color:#f92672">());</span>
+                System<span style="color:#f92672">.</span><span style="color:#a6e22e">out</span><span style="color:#f92672">.</span><span style="color:#a6e22e">println</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#34;老师：&#34;</span><span style="color:#f92672">+</span>s<span style="color:#f92672">);</span>
+            <span style="color:#f92672">}</span>
+        <span style="color:#f92672">}</span> <span style="color:#66d9ef">catch</span> <span style="color:#f92672">(</span>IOException e<span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+            e<span style="color:#f92672">.</span><span style="color:#a6e22e">printStackTrace</span><span style="color:#f92672">();</span>
+        <span style="color:#f92672">}</span> <span style="color:#66d9ef">finally</span> <span style="color:#f92672">{</span>
+            <span style="color:#75715e">//4.关闭资源
+</span><span style="color:#75715e"></span>            <span style="color:#66d9ef">assert</span> ds <span style="color:#f92672">!=</span> <span style="color:#66d9ef">null</span><span style="color:#f92672">;</span>
+            ds<span style="color:#f92672">.</span><span style="color:#a6e22e">close</span><span style="color:#f92672">();</span>
+        <span style="color:#f92672">}</span>
+    <span style="color:#f92672">}</span>
+<span style="color:#f92672">}</span>
+</code></pre></div>
+    </div>
+    <video id="my_video" style="height: 300px;width:100%" controls="controls"></video>
+
+</article>
+<div class="pagination">
+    
+    <div class="prev"><a href="https://Apollo2light.github.io/Apollo2light/backend/3.javaio%E6%B5%81/">Previous Post</a></div>
+    
+    
+    <div class="next"><a href="https://Apollo2light.github.io/Apollo2light/backend/5.java%E9%9B%86%E5%90%88%E6%A1%86%E6%9E%B6/">Next Post</a></div>
+    
+</div>
+
+
+<script>
+    try {
+        
+        let src = document.getElementsByTagName('code')[0].innerText;
+        
+        if (src.indexOf("mp4") != -1) {
+            document.getElementById('my_video').setAttribute("src", src)
+        } else {
+            
+            let video = document.getElementById('my_video');
+            if (video != null) {
+                video.parentNode.removeChild(video);
+            }
+        }
+    } catch (e) {
+        
+        let video = document.getElementById('my_video');
+        if (video != null) {
+            video.parentNode.removeChild(video);
+        }
+    }
+</script>
+
+</main><footer class="site-footer">
+	<span class="right">
+		<em>Apollo&#39;s blog</em>
+	</span>
+</footer>
+</body>
+<script>
+
+</script>
+</html>

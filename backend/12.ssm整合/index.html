@@ -1,0 +1,833 @@
+<!DOCTYPE html>
+<html lang=en-us><head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title> 12.ssm整合 - Apollo&#39;s blog</title>
+    <meta name="description" content="== 建数据库 == ｜ == 建数据库 == ｜ == 建数据库 == ｜
+CREATE DATABASE `ssmbuild`; USE `ssmbuild`; DROP TABLE IF EXISTS `books`; CREATE TABLE `books` ( `bookID` INT(10) NOT NULL AUTO_INCREMENT COMMENT &#39;书id&#39;, `bookName` VARCHAR(100) NOT NULL COMMENT &#39;书名&#39;, `bookCounts` INT(11) NOT NULL COMMENT &#39;数量&#39;, `detail` VARCHAR(200) NOT NULL COMMENT &#39;描述&#39;, KEY `bookID` (`bookID`) )ENGINE=INNODB DEFAULT CHARSET=utf8 INSERT INTO `BOOKS`(`bookID`,`bookName`,`bookCounts`,`detail`)VALUES (1,&#39;java&#39;,1,&#39; 从入门到精通&#39;), (2,&#39;mysql&#39;,10,&#39;从删库到跑路&#39;), (3,&#39;linux&#39;,5,&#39;从入门到入狱&#39;); == 整合mybatis == | == 整合mybatis == | == 整合mybatis == |">
+    <link rel="canonical" href="https://Apollo2light.github.io/Apollo2light/backend/12.ssm%E6%95%B4%E5%90%88/">
+    <meta property="og:title" content="12.ssm整合">
+    <meta property="og:type" content="article">
+    <meta property="og:url" content="https://Apollo2light.github.io/Apollo2light/backend/12.ssm%E6%95%B4%E5%90%88/">
+    <meta property="og:description" content="== 建数据库 == ｜ == 建数据库 == ｜ == 建数据库 == ｜
+CREATE DATABASE `ssmbuild`; USE `ssmbuild`; DROP TABLE IF EXISTS `books`; CREATE TABLE `books` ( `bookID` INT(10) NOT NULL AUTO_INCREMENT COMMENT &#39;书id&#39;, `bookName` VARCHAR(100) NOT NULL COMMENT &#39;书名&#39;, `bookCounts` INT(11) NOT NULL COMMENT &#39;数量&#39;, `detail` VARCHAR(200) NOT NULL COMMENT &#39;描述&#39;, KEY `bookID` (`bookID`) )ENGINE=INNODB DEFAULT CHARSET=utf8 INSERT INTO `BOOKS`(`bookID`,`bookName`,`bookCounts`,`detail`)VALUES (1,&#39;java&#39;,1,&#39; 从入门到精通&#39;), (2,&#39;mysql&#39;,10,&#39;从删库到跑路&#39;), (3,&#39;linux&#39;,5,&#39;从入门到入狱&#39;); == 整合mybatis == | == 整合mybatis == | == 整合mybatis == |">
+    <meta property="og:site_name" content="Apollo&#39;s blog">
+    <link rel="stylesheet" href="https://Apollo2light.github.io/Apollo2light/css/main.min.7fdf1d02dafd1a6eb5cfd0d707e17e33515b866f5d305a0ab01a4095577484fe.css" integrity="sha256-f98dAtr9Gm61z9DXB&#43;F&#43;M1Fbhm9dMFoKsBpAlVd0hP4=">
+    <meta name="generator" content="Hugo 0.73.0" />
+    <script type="module" src="https://unpkg.com/ionicons@5.1.2/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule="" src="https://unpkg.com/ionicons@5.1.2/dist/ionicons/ionicons.js"></script>
+    
+</head>
+<body><header class="site-header">
+    <nav class="site-nav" role="navigation" aria-label="breadcrumb">
+        <ol itemscope itemtype="https://schema.org/BreadcrumbList" class="breadcrumb"><li class="breadcrumb-item  " 
+    itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+    <a itemtype="https://schema.org/Thing" itemprop="item" href="https://Apollo2light.github.io/Apollo2light/">
+        <span itemprop="name">Apollo&#39;s blog</span>
+    </a>
+    <meta itemprop="position"
+          content="0"/>
+</li>/<li class="breadcrumb-item  " 
+    itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+    <a itemtype="https://schema.org/Thing" itemprop="item" href="https://Apollo2light.github.io/Apollo2light/backend/">
+        <span itemprop="name">backend</span>
+    </a>
+    <meta itemprop="position"
+          content="0"/>
+</li>/<li class="breadcrumb-item active hidden" aria-current="page"
+    itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+    <a itemtype="https://schema.org/Thing" itemprop="item" href="https://Apollo2light.github.io/Apollo2light/backend/12.ssm%E6%95%B4%E5%90%88/">
+        <span itemprop="name">12.ssm%E6%95%B4%E5%90%88</span>
+    </a>
+    <meta itemprop="position"
+          content="1"/>
+</li></ol>
+    </nav>
+    <h1 class="site-title hidden">
+        <a href="https://Apollo2light.github.io/Apollo2light/">Apollo&#39;s blog</a>
+    </h1>
+</header><main id="content">
+<article role="article" class="content post h-entry" itemscope="" itemtype="http://schema.org/BlogPosting">
+    <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">12.ssm整合</h2>
+        <span class="post-meta">
+            <time class="date-published" datetime=" 2022-02-28T17:22:55&#43;07:00" itemprop="datePublished">
+                Mon, 28 Feb 2022
+            </time>
+            
+        </span>
+    </header>
+    <div class="post-content" itemprop="articleBody">
+        <p>== 建数据库 == ｜ == 建数据库 == ｜ == 建数据库 == ｜</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sql" data-lang="sql"><span style="color:#66d9ef">CREATE</span> <span style="color:#66d9ef">DATABASE</span> <span style="color:#f92672">`</span>ssmbuild<span style="color:#f92672">`</span>;
+
+USE <span style="color:#f92672">`</span>ssmbuild<span style="color:#f92672">`</span>;
+
+<span style="color:#66d9ef">DROP</span> <span style="color:#66d9ef">TABLE</span> <span style="color:#66d9ef">IF</span> <span style="color:#66d9ef">EXISTS</span> <span style="color:#f92672">`</span>books<span style="color:#f92672">`</span>;
+
+<span style="color:#66d9ef">CREATE</span> <span style="color:#66d9ef">TABLE</span> <span style="color:#f92672">`</span>books<span style="color:#f92672">`</span> (
+	<span style="color:#f92672">`</span>bookID<span style="color:#f92672">`</span> INT(<span style="color:#ae81ff">10</span>) <span style="color:#66d9ef">NOT</span> <span style="color:#66d9ef">NULL</span> AUTO_INCREMENT <span style="color:#66d9ef">COMMENT</span> <span style="color:#e6db74">&#39;书id&#39;</span>,
+	<span style="color:#f92672">`</span>bookName<span style="color:#f92672">`</span> VARCHAR(<span style="color:#ae81ff">100</span>) <span style="color:#66d9ef">NOT</span> <span style="color:#66d9ef">NULL</span> <span style="color:#66d9ef">COMMENT</span> <span style="color:#e6db74">&#39;书名&#39;</span>,
+	<span style="color:#f92672">`</span>bookCounts<span style="color:#f92672">`</span> INT(<span style="color:#ae81ff">11</span>) <span style="color:#66d9ef">NOT</span> <span style="color:#66d9ef">NULL</span> <span style="color:#66d9ef">COMMENT</span> <span style="color:#e6db74">&#39;数量&#39;</span>,
+	<span style="color:#f92672">`</span>detail<span style="color:#f92672">`</span> VARCHAR(<span style="color:#ae81ff">200</span>) <span style="color:#66d9ef">NOT</span> <span style="color:#66d9ef">NULL</span> <span style="color:#66d9ef">COMMENT</span> <span style="color:#e6db74">&#39;描述&#39;</span>,
+	<span style="color:#66d9ef">KEY</span> <span style="color:#f92672">`</span>bookID<span style="color:#f92672">`</span> (<span style="color:#f92672">`</span>bookID<span style="color:#f92672">`</span>)
+)ENGINE<span style="color:#f92672">=</span>INNODB <span style="color:#66d9ef">DEFAULT</span> CHARSET<span style="color:#f92672">=</span>utf8
+
+
+<span style="color:#66d9ef">INSERT</span> <span style="color:#66d9ef">INTO</span> <span style="color:#f92672">`</span>BOOKS<span style="color:#f92672">`</span>(<span style="color:#f92672">`</span>bookID<span style="color:#f92672">`</span>,<span style="color:#f92672">`</span>bookName<span style="color:#f92672">`</span>,<span style="color:#f92672">`</span>bookCounts<span style="color:#f92672">`</span>,<span style="color:#f92672">`</span>detail<span style="color:#f92672">`</span>)<span style="color:#66d9ef">VALUES</span>
+(<span style="color:#ae81ff">1</span>,<span style="color:#e6db74">&#39;java&#39;</span>,<span style="color:#ae81ff">1</span>,<span style="color:#e6db74">&#39; 从入门到精通&#39;</span>),
+(<span style="color:#ae81ff">2</span>,<span style="color:#e6db74">&#39;mysql&#39;</span>,<span style="color:#ae81ff">10</span>,<span style="color:#e6db74">&#39;从删库到跑路&#39;</span>),
+(<span style="color:#ae81ff">3</span>,<span style="color:#e6db74">&#39;linux&#39;</span>,<span style="color:#ae81ff">5</span>,<span style="color:#e6db74">&#39;从入门到入狱&#39;</span>);
+
+</code></pre></div><p>== 整合mybatis == | == 整合mybatis == | == 整合mybatis == |</p>
+<p>第一步：导包</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-xml" data-lang="xml"><span style="color:#75715e">&lt;?xml version=&#34;1.0&#34; encoding=&#34;UTF-8&#34;?&gt;</span>
+<span style="color:#f92672">&lt;project</span> <span style="color:#a6e22e">xmlns=</span><span style="color:#e6db74">&#34;http://maven.apache.org/POM/4.0.0&#34;</span>
+         <span style="color:#a6e22e">xmlns:xsi=</span><span style="color:#e6db74">&#34;http://www.w3.org/2001/XMLSchema-instance&#34;</span>
+         <span style="color:#a6e22e">xsi:schemaLocation=</span><span style="color:#e6db74">&#34;http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd&#34;</span><span style="color:#f92672">&gt;</span>
+    <span style="color:#f92672">&lt;modelVersion&gt;</span>4.0.0<span style="color:#f92672">&lt;/modelVersion&gt;</span>
+
+    <span style="color:#f92672">&lt;groupId&gt;</span>org.example<span style="color:#f92672">&lt;/groupId&gt;</span>
+    <span style="color:#f92672">&lt;artifactId&gt;</span>ssmbuild<span style="color:#f92672">&lt;/artifactId&gt;</span>
+    <span style="color:#f92672">&lt;version&gt;</span>1.0-SNAPSHOT<span style="color:#f92672">&lt;/version&gt;</span>
+
+    <span style="color:#f92672">&lt;dependencies&gt;</span>
+        <span style="color:#f92672">&lt;dependency&gt;</span>
+            <span style="color:#f92672">&lt;groupId&gt;</span>junit<span style="color:#f92672">&lt;/groupId&gt;</span>
+            <span style="color:#f92672">&lt;artifactId&gt;</span>junit<span style="color:#f92672">&lt;/artifactId&gt;</span>
+            <span style="color:#f92672">&lt;version&gt;</span>4.12<span style="color:#f92672">&lt;/version&gt;</span>
+        <span style="color:#f92672">&lt;/dependency&gt;</span>
+
+        <span style="color:#f92672">&lt;dependency&gt;</span>
+            <span style="color:#f92672">&lt;groupId&gt;</span>mysql<span style="color:#f92672">&lt;/groupId&gt;</span>
+            <span style="color:#f92672">&lt;artifactId&gt;</span>mysql-connector-java<span style="color:#f92672">&lt;/artifactId&gt;</span>
+            <span style="color:#f92672">&lt;version&gt;</span>5.1.47<span style="color:#f92672">&lt;/version&gt;</span>
+        <span style="color:#f92672">&lt;/dependency&gt;</span>
+
+        <span style="color:#f92672">&lt;dependency&gt;</span>
+            <span style="color:#f92672">&lt;groupId&gt;</span>com.mchange<span style="color:#f92672">&lt;/groupId&gt;</span>
+            <span style="color:#f92672">&lt;artifactId&gt;</span>c3p0<span style="color:#f92672">&lt;/artifactId&gt;</span>
+            <span style="color:#f92672">&lt;version&gt;</span>0.9.5.5<span style="color:#f92672">&lt;/version&gt;</span>
+        <span style="color:#f92672">&lt;/dependency&gt;</span>
+
+        <span style="color:#f92672">&lt;dependency&gt;</span>
+            <span style="color:#f92672">&lt;groupId&gt;</span>javax.servlet<span style="color:#f92672">&lt;/groupId&gt;</span>
+            <span style="color:#f92672">&lt;artifactId&gt;</span>servlet-api<span style="color:#f92672">&lt;/artifactId&gt;</span>
+            <span style="color:#f92672">&lt;version&gt;</span>2.5<span style="color:#f92672">&lt;/version&gt;</span>
+        <span style="color:#f92672">&lt;/dependency&gt;</span>
+
+        <span style="color:#f92672">&lt;dependency&gt;</span>
+            <span style="color:#f92672">&lt;groupId&gt;</span>javax.servlet.jsp<span style="color:#f92672">&lt;/groupId&gt;</span>
+            <span style="color:#f92672">&lt;artifactId&gt;</span>jsp-api<span style="color:#f92672">&lt;/artifactId&gt;</span>
+            <span style="color:#f92672">&lt;version&gt;</span>2.1<span style="color:#f92672">&lt;/version&gt;</span>
+        <span style="color:#f92672">&lt;/dependency&gt;</span>
+
+        <span style="color:#f92672">&lt;dependency&gt;</span>
+            <span style="color:#f92672">&lt;groupId&gt;</span>javax.servlet.jsp.jstl<span style="color:#f92672">&lt;/groupId&gt;</span>
+            <span style="color:#f92672">&lt;artifactId&gt;</span>jstl<span style="color:#f92672">&lt;/artifactId&gt;</span>
+            <span style="color:#f92672">&lt;version&gt;</span>1.2<span style="color:#f92672">&lt;/version&gt;</span>
+        <span style="color:#f92672">&lt;/dependency&gt;</span>
+
+        <span style="color:#f92672">&lt;dependency&gt;</span>
+            <span style="color:#f92672">&lt;groupId&gt;</span>org.mybatis<span style="color:#f92672">&lt;/groupId&gt;</span>
+            <span style="color:#f92672">&lt;artifactId&gt;</span>mybatis<span style="color:#f92672">&lt;/artifactId&gt;</span>
+            <span style="color:#f92672">&lt;version&gt;</span>3.5.9<span style="color:#f92672">&lt;/version&gt;</span>
+        <span style="color:#f92672">&lt;/dependency&gt;</span>
+
+        <span style="color:#f92672">&lt;dependency&gt;</span>
+            <span style="color:#f92672">&lt;groupId&gt;</span>org.mybatis<span style="color:#f92672">&lt;/groupId&gt;</span>
+            <span style="color:#f92672">&lt;artifactId&gt;</span>mybatis-spring<span style="color:#f92672">&lt;/artifactId&gt;</span>
+            <span style="color:#f92672">&lt;version&gt;</span>2.0.2<span style="color:#f92672">&lt;/version&gt;</span>
+        <span style="color:#f92672">&lt;/dependency&gt;</span>
+
+        <span style="color:#f92672">&lt;dependency&gt;</span>
+            <span style="color:#f92672">&lt;groupId&gt;</span>org.springframework<span style="color:#f92672">&lt;/groupId&gt;</span>
+            <span style="color:#f92672">&lt;artifactId&gt;</span>spring-webmvc<span style="color:#f92672">&lt;/artifactId&gt;</span>
+            <span style="color:#f92672">&lt;version&gt;</span>5.3.16<span style="color:#f92672">&lt;/version&gt;</span>
+        <span style="color:#f92672">&lt;/dependency&gt;</span>
+
+        <span style="color:#f92672">&lt;dependency&gt;</span>
+            <span style="color:#f92672">&lt;groupId&gt;</span>org.springframework<span style="color:#f92672">&lt;/groupId&gt;</span>
+            <span style="color:#f92672">&lt;artifactId&gt;</span>spring-jdbc<span style="color:#f92672">&lt;/artifactId&gt;</span>
+            <span style="color:#f92672">&lt;version&gt;</span>5.3.16<span style="color:#f92672">&lt;/version&gt;</span>
+        <span style="color:#f92672">&lt;/dependency&gt;</span>
+
+        <span style="color:#f92672">&lt;dependency&gt;</span>
+            <span style="color:#f92672">&lt;groupId&gt;</span>org.projectlombok<span style="color:#f92672">&lt;/groupId&gt;</span>
+            <span style="color:#f92672">&lt;artifactId&gt;</span>lombok<span style="color:#f92672">&lt;/artifactId&gt;</span>
+            <span style="color:#f92672">&lt;version&gt;</span>1.18.22<span style="color:#f92672">&lt;/version&gt;</span>
+        <span style="color:#f92672">&lt;/dependency&gt;</span>
+    <span style="color:#f92672">&lt;/dependencies&gt;</span>
+
+    <span style="color:#f92672">&lt;build&gt;</span>
+        <span style="color:#f92672">&lt;resources&gt;</span>
+            <span style="color:#f92672">&lt;resource&gt;</span>
+                <span style="color:#f92672">&lt;directory&gt;</span>src/main/java<span style="color:#f92672">&lt;/directory&gt;</span>
+                <span style="color:#f92672">&lt;includes&gt;</span>
+                    <span style="color:#f92672">&lt;include&gt;</span>**/*.properties<span style="color:#f92672">&lt;/include&gt;</span>
+                    <span style="color:#f92672">&lt;include&gt;</span>**/*.xml<span style="color:#f92672">&lt;/include&gt;</span>
+                <span style="color:#f92672">&lt;/includes&gt;</span>
+                <span style="color:#f92672">&lt;filtering&gt;</span>false<span style="color:#f92672">&lt;/filtering&gt;</span>
+            <span style="color:#f92672">&lt;/resource&gt;</span>
+            <span style="color:#f92672">&lt;resource&gt;</span>
+                <span style="color:#f92672">&lt;directory&gt;</span>src/main/resources<span style="color:#f92672">&lt;/directory&gt;</span>
+                <span style="color:#f92672">&lt;includes&gt;</span>
+                    <span style="color:#f92672">&lt;include&gt;</span>**/*.properties<span style="color:#f92672">&lt;/include&gt;</span>
+                    <span style="color:#f92672">&lt;include&gt;</span>**/*.xml<span style="color:#f92672">&lt;/include&gt;</span>
+                <span style="color:#f92672">&lt;/includes&gt;</span>
+                <span style="color:#f92672">&lt;filtering&gt;</span>false<span style="color:#f92672">&lt;/filtering&gt;</span>
+            <span style="color:#f92672">&lt;/resource&gt;</span>
+        <span style="color:#f92672">&lt;/resources&gt;</span>
+    <span style="color:#f92672">&lt;/build&gt;</span>
+<span style="color:#f92672">&lt;/project&gt;</span>
+</code></pre></div><p>第二步：目录结构</p>
+<p>main</p>
+<ul>
+<li>java</li>
+<li>wiki</li>
+<li>mrx
+- controller
+- dao
+- pojo
+- service</li>
+<li>resources</li>
+<li>applicationContext.xml</li>
+<li>mybatis-config.xml</li>
+<li>database.properties</li>
+</ul>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-xml" data-lang="xml">applicationContext.xml
+<span style="color:#75715e">&lt;?xml version=&#34;1.0&#34; encoding=&#34;UTF-8&#34;?&gt;</span>
+<span style="color:#f92672">&lt;beans</span> <span style="color:#a6e22e">xmlns=</span><span style="color:#e6db74">&#34;http://www.springframework.org/schema/beans&#34;</span>
+     <span style="color:#a6e22e">xmlns:xsi=</span><span style="color:#e6db74">&#34;http://www.w3.org/2001/XMLSchema-instance&#34;</span>
+     <span style="color:#a6e22e">xsi:schemaLocation=</span><span style="color:#e6db74">&#34;http://www.springframework.org/schema/beans
+</span><span style="color:#e6db74">      https://www.springframework.org/schema/beans/spring-beans.xsd&#34;</span><span style="color:#f92672">&gt;</span>
+<span style="color:#f92672">&lt;/beans&gt;</span>
+
+
+</code></pre></div><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-xml" data-lang="xml"><span style="color:#75715e">&lt;?xml version=&#34;1.0&#34; encoding=&#34;UTF-8&#34; ?&gt;</span>
+<span style="color:#75715e">&lt;!DOCTYPE configuration
+</span><span style="color:#75715e">        PUBLIC &#34;-//mybatis.org//DTD Config 3.0//EN&#34;
+</span><span style="color:#75715e">        &#34;http://mybatis.org/dtd/mybatis-3-config.dtd&#34;&gt;</span>
+<span style="color:#f92672">&lt;configuration&gt;</span>
+    <span style="color:#75715e">&lt;!--1.配置数据源交给spring去做--&gt;</span>
+    <span style="color:#75715e">&lt;!--2.配置别名--&gt;</span>
+    <span style="color:#f92672">&lt;typeAliases&gt;</span>
+        <span style="color:#f92672">&lt;package</span> <span style="color:#a6e22e">name=</span><span style="color:#e6db74">&#34;wiki.mrx.pojo&#34;</span><span style="color:#f92672">/&gt;</span>
+    <span style="color:#f92672">&lt;/typeAliases&gt;</span>
+    <span style="color:#75715e">&lt;!--3.绑定mapper--&gt;</span>
+    <span style="color:#f92672">&lt;mappers&gt;</span>
+        <span style="color:#f92672">&lt;mapper</span> <span style="color:#a6e22e">class=</span><span style="color:#e6db74">&#34;wiki.mrx.dao.BookMapper&#34;</span><span style="color:#f92672">/&gt;</span>
+    <span style="color:#f92672">&lt;/mappers&gt;</span>
+<span style="color:#f92672">&lt;/configuration&gt;</span>
+</code></pre></div><pre><code>driver=com.mysql.jdbc.Driver
+url=jdbc:mysql://localhost:3306/ssmbuild?useSSL=false&amp;useUnicode=true&amp;characterEncoding=UTF8
+username=root
+password=rootroot
+
+</code></pre><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#a6e22e">@Data</span>
+<span style="color:#a6e22e">@AllArgsConstructor</span>
+<span style="color:#a6e22e">@NoArgsConstructor</span>
+<span style="color:#66d9ef">public</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Books</span> <span style="color:#f92672">{</span>
+    <span style="color:#66d9ef">private</span> <span style="color:#66d9ef">int</span> bookID<span style="color:#f92672">;</span>
+    <span style="color:#66d9ef">private</span> String bookName<span style="color:#f92672">;</span>
+    <span style="color:#66d9ef">private</span> <span style="color:#66d9ef">int</span> bookCounts<span style="color:#f92672">;</span>
+    <span style="color:#66d9ef">private</span> String details<span style="color:#f92672">;</span>
+<span style="color:#f92672">}</span>
+
+</code></pre></div><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">interface</span> <span style="color:#a6e22e">BookMapper</span> <span style="color:#f92672">{</span>
+    <span style="color:#75715e">//增加，删除，修改，查询一本书
+</span><span style="color:#75715e"></span>    <span style="color:#66d9ef">int</span> <span style="color:#a6e22e">addBook</span><span style="color:#f92672">(</span>Books book<span style="color:#f92672">);</span>
+
+    <span style="color:#66d9ef">int</span> <span style="color:#a6e22e">deleteBook</span><span style="color:#f92672">(</span><span style="color:#a6e22e">@Param</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#34;bookID&#34;</span><span style="color:#f92672">)</span> <span style="color:#66d9ef">int</span> id<span style="color:#f92672">);</span>
+
+    <span style="color:#66d9ef">int</span> <span style="color:#a6e22e">updateBook</span><span style="color:#f92672">(</span>Books books<span style="color:#f92672">);</span>
+
+    Books <span style="color:#a6e22e">queryBookById</span><span style="color:#f92672">(</span><span style="color:#66d9ef">int</span> id<span style="color:#f92672">);</span>
+
+    List<span style="color:#f92672">&lt;</span>Books<span style="color:#f92672">&gt;</span> <span style="color:#a6e22e">queryAllBooks</span><span style="color:#f92672">();</span>
+<span style="color:#f92672">}</span>
+
+</code></pre></div><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-xml" data-lang="xml"><span style="color:#75715e">&lt;?xml version=&#34;1.0&#34; encoding=&#34;UTF-8&#34; ?&gt;</span>
+<span style="color:#75715e">&lt;!DOCTYPE mapper
+</span><span style="color:#75715e">        PUBLIC &#34;-//mybatis.org//DTD Config 3.0//EN&#34;
+</span><span style="color:#75715e">        &#34;http://mybatis.org/dtd/mybatis-3-mapper.dtd&#34;&gt;</span>
+<span style="color:#f92672">&lt;mapper</span> <span style="color:#a6e22e">namespace=</span><span style="color:#e6db74">&#34;wiki.mrx.dao.BookMapper&#34;</span><span style="color:#f92672">&gt;</span>
+    <span style="color:#f92672">&lt;insert</span> <span style="color:#a6e22e">id=</span><span style="color:#e6db74">&#34;addBook&#34;</span> <span style="color:#a6e22e">parameterType=</span><span style="color:#e6db74">&#34;Books&#34;</span><span style="color:#f92672">&gt;</span>
+        insert into ssmbuild.books (bookName,bookCounts,detail)
+        values (#{bookName},#{bookCount},#{detail});
+    <span style="color:#f92672">&lt;/insert&gt;</span>
+    
+    <span style="color:#f92672">&lt;delete</span> <span style="color:#a6e22e">id=</span><span style="color:#e6db74">&#34;deleteBook&#34;</span> <span style="color:#a6e22e">parameterType=</span><span style="color:#e6db74">&#34;int&#34;</span><span style="color:#f92672">&gt;</span>
+        delete from ssmbuild.books where bookID=#{bookID};
+    <span style="color:#f92672">&lt;/delete&gt;</span>
+    
+    <span style="color:#f92672">&lt;update</span> <span style="color:#a6e22e">id=</span><span style="color:#e6db74">&#34;updateBook&#34;</span> <span style="color:#a6e22e">parameterType=</span><span style="color:#e6db74">&#34;Books&#34;</span><span style="color:#f92672">&gt;</span>
+        update ssmbuild.books 
+        set bookName=#{bookName},bookCounts=#{bookCounts},detail=#{detail}
+        where bookID=#{bookID};
+    <span style="color:#f92672">&lt;/update&gt;</span>
+    
+    <span style="color:#f92672">&lt;select</span> <span style="color:#a6e22e">id=</span><span style="color:#e6db74">&#34;queryBookById&#34;</span> <span style="color:#a6e22e">resultType=</span><span style="color:#e6db74">&#34;Books&#34;</span><span style="color:#f92672">&gt;</span>
+        select * from ssmbuild.books
+        where bookID=#{bookID};
+    <span style="color:#f92672">&lt;/select&gt;</span>
+    
+    <span style="color:#f92672">&lt;select</span> <span style="color:#a6e22e">id=</span><span style="color:#e6db74">&#34;queryAllBooks&#34;</span> <span style="color:#a6e22e">resultType=</span><span style="color:#e6db74">&#34;Books&#34;</span><span style="color:#f92672">&gt;</span>
+        select * from ssmbuild.books;
+    <span style="color:#f92672">&lt;/select&gt;</span>
+<span style="color:#f92672">&lt;/mapper&gt;</span>
+</code></pre></div><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#f92672">package</span> wiki.mrx.service<span style="color:#f92672">;</span>
+
+<span style="color:#f92672">import</span> org.apache.ibatis.annotations.Param<span style="color:#f92672">;</span>
+<span style="color:#f92672">import</span> wiki.mrx.pojo.Books<span style="color:#f92672">;</span>
+
+<span style="color:#f92672">import</span> java.util.List<span style="color:#f92672">;</span>
+
+<span style="color:#66d9ef">public</span> <span style="color:#66d9ef">interface</span> <span style="color:#a6e22e">BookService</span> <span style="color:#f92672">{</span>
+    <span style="color:#75715e">//增加，删除，修改，查询一本书
+</span><span style="color:#75715e"></span>    <span style="color:#66d9ef">int</span> <span style="color:#a6e22e">addBook</span><span style="color:#f92672">(</span>Books books<span style="color:#f92672">);</span>
+
+    <span style="color:#66d9ef">int</span> <span style="color:#a6e22e">deleteBook</span><span style="color:#f92672">(</span><span style="color:#66d9ef">int</span> id<span style="color:#f92672">);</span>
+
+    <span style="color:#66d9ef">int</span> <span style="color:#a6e22e">updateBook</span><span style="color:#f92672">(</span>Books books<span style="color:#f92672">);</span>
+
+    Books <span style="color:#a6e22e">queryBookById</span><span style="color:#f92672">(</span><span style="color:#66d9ef">int</span> id<span style="color:#f92672">);</span>
+
+    List<span style="color:#f92672">&lt;</span>Books<span style="color:#f92672">&gt;</span> <span style="color:#a6e22e">queryAllBooks</span><span style="color:#f92672">();</span>
+<span style="color:#f92672">}</span>
+</code></pre></div><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#f92672">package</span> wiki.mrx.service<span style="color:#f92672">;</span>
+
+<span style="color:#f92672">import</span> wiki.mrx.dao.BookMapper<span style="color:#f92672">;</span>
+<span style="color:#f92672">import</span> wiki.mrx.pojo.Books<span style="color:#f92672">;</span>
+
+<span style="color:#f92672">import</span> java.util.List<span style="color:#f92672">;</span>
+
+<span style="color:#66d9ef">public</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">BookServiceImpl</span> <span style="color:#66d9ef">implements</span> BookService<span style="color:#f92672">{</span>
+    <span style="color:#75715e">//service层调dao层
+</span><span style="color:#75715e"></span>    <span style="color:#66d9ef">private</span> BookMapper bookMapper<span style="color:#f92672">;</span>
+
+    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">setBookMapper</span><span style="color:#f92672">(</span>BookMapper bookMapper<span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+        <span style="color:#66d9ef">this</span><span style="color:#f92672">.</span><span style="color:#a6e22e">bookMapper</span> <span style="color:#f92672">=</span> bookMapper<span style="color:#f92672">;</span>
+    <span style="color:#f92672">}</span>
+
+    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">int</span> <span style="color:#a6e22e">addBook</span><span style="color:#f92672">(</span>Books books<span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+        <span style="color:#66d9ef">return</span> bookMapper<span style="color:#f92672">.</span><span style="color:#a6e22e">addBook</span><span style="color:#f92672">(</span>books<span style="color:#f92672">);</span>
+    <span style="color:#f92672">}</span>
+
+    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">int</span> <span style="color:#a6e22e">deleteBook</span><span style="color:#f92672">(</span><span style="color:#66d9ef">int</span> id<span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+        <span style="color:#66d9ef">return</span> bookMapper<span style="color:#f92672">.</span><span style="color:#a6e22e">deleteBook</span><span style="color:#f92672">(</span>id<span style="color:#f92672">);</span>
+    <span style="color:#f92672">}</span>
+
+    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">int</span> <span style="color:#a6e22e">updateBook</span><span style="color:#f92672">(</span>Books books<span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+        <span style="color:#66d9ef">return</span> bookMapper<span style="color:#f92672">.</span><span style="color:#a6e22e">updateBook</span><span style="color:#f92672">(</span>books<span style="color:#f92672">);</span>
+    <span style="color:#f92672">}</span>
+
+    <span style="color:#66d9ef">public</span> Books <span style="color:#a6e22e">queryBookById</span><span style="color:#f92672">(</span><span style="color:#66d9ef">int</span> id<span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+        <span style="color:#66d9ef">return</span> bookMapper<span style="color:#f92672">.</span><span style="color:#a6e22e">queryBookById</span><span style="color:#f92672">(</span>id<span style="color:#f92672">);</span>
+    <span style="color:#f92672">}</span>
+
+    <span style="color:#66d9ef">public</span> List<span style="color:#f92672">&lt;</span>Books<span style="color:#f92672">&gt;</span> <span style="color:#a6e22e">queryAllBooks</span><span style="color:#f92672">()</span> <span style="color:#f92672">{</span>
+        <span style="color:#66d9ef">return</span> bookMapper<span style="color:#f92672">.</span><span style="color:#a6e22e">queryAllBooks</span><span style="color:#f92672">();</span>
+    <span style="color:#f92672">}</span>
+<span style="color:#f92672">}</span>
+
+</code></pre></div><p>== 整合spring == ｜ == 整合spring == ｜ == 整合spring == ｜</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-xml" data-lang="xml">spring-dao.xml
+
+<span style="color:#75715e">&lt;?xml version=&#34;1.0&#34; encoding=&#34;UTF-8&#34;?&gt;</span>
+<span style="color:#f92672">&lt;beans</span> <span style="color:#a6e22e">xmlns=</span><span style="color:#e6db74">&#34;http://www.springframework.org/schema/beans&#34;</span>
+       <span style="color:#a6e22e">xmlns:xsi=</span><span style="color:#e6db74">&#34;http://www.w3.org/2001/XMLSchema-instance&#34;</span>
+       <span style="color:#a6e22e">xmlns:context=</span><span style="color:#e6db74">&#34;http://www.springframework.org/schema/context&#34;</span>
+       <span style="color:#a6e22e">xsi:schemaLocation=</span><span style="color:#e6db74">&#34;http://www.springframework.org/schema/beans
+</span><span style="color:#e6db74">        https://www.springframework.org/schema/beans/spring-beans.xsd
+</span><span style="color:#e6db74">        http://www.springframework.org/schema/context
+</span><span style="color:#e6db74">        https://www.springframework.org/schema/context/spring-context.xsd&#34;</span><span style="color:#f92672">&gt;</span>
+
+        <span style="color:#75715e">&lt;!--1.关联数据库配置,通过spring读取mybatis原本要去读取的配置文件--&gt;</span>
+        <span style="color:#f92672">&lt;context:property-placeholder</span> <span style="color:#a6e22e">location=</span><span style="color:#e6db74">&#34;classpath:database.properties&#34;</span><span style="color:#f92672">/&gt;</span>
+
+        <span style="color:#75715e">&lt;!--2.连接池--&gt;</span>
+        <span style="color:#f92672">&lt;bean</span> <span style="color:#a6e22e">id=</span><span style="color:#e6db74">&#34;dataSource&#34;</span> <span style="color:#a6e22e">class=</span><span style="color:#e6db74">&#34;com.mchange.v2.c3p0.ComboPooledDataSource&#34;</span><span style="color:#f92672">&gt;</span>
+            <span style="color:#f92672">&lt;property</span> <span style="color:#a6e22e">name=</span><span style="color:#e6db74">&#34;driverClass&#34;</span> <span style="color:#a6e22e">value=</span><span style="color:#e6db74">&#34;${jdbc.driver}&#34;</span><span style="color:#f92672">/&gt;</span>
+            <span style="color:#f92672">&lt;property</span> <span style="color:#a6e22e">name=</span><span style="color:#e6db74">&#34;jdbcUrl&#34;</span> <span style="color:#a6e22e">value=</span><span style="color:#e6db74">&#34;${jdbc.url}&#34;</span><span style="color:#f92672">/&gt;</span>
+            <span style="color:#f92672">&lt;property</span> <span style="color:#a6e22e">name=</span><span style="color:#e6db74">&#34;user&#34;</span> <span style="color:#a6e22e">value=</span><span style="color:#e6db74">&#34;${jdbc.username}&#34;</span><span style="color:#f92672">/&gt;</span>
+            <span style="color:#f92672">&lt;property</span> <span style="color:#a6e22e">name=</span><span style="color:#e6db74">&#34;password&#34;</span> <span style="color:#a6e22e">value=</span><span style="color:#e6db74">&#34;${jdbc.password}&#34;</span><span style="color:#f92672">/&gt;</span>
+            <span style="color:#75715e">&lt;!--c3p0私有属性--&gt;</span>
+            <span style="color:#f92672">&lt;property</span> <span style="color:#a6e22e">name=</span><span style="color:#e6db74">&#34;maxPoolSize&#34;</span> <span style="color:#a6e22e">value=</span><span style="color:#e6db74">&#34;30&#34;</span><span style="color:#f92672">/&gt;</span>
+            <span style="color:#f92672">&lt;property</span> <span style="color:#a6e22e">name=</span><span style="color:#e6db74">&#34;minPoolSize&#34;</span> <span style="color:#a6e22e">value=</span><span style="color:#e6db74">&#34;10&#34;</span><span style="color:#f92672">/&gt;</span>
+            <span style="color:#f92672">&lt;property</span> <span style="color:#a6e22e">name=</span><span style="color:#e6db74">&#34;autoCommitOnClose&#34;</span> <span style="color:#a6e22e">value=</span><span style="color:#e6db74">&#34;false&#34;</span><span style="color:#f92672">/&gt;</span>
+            <span style="color:#f92672">&lt;property</span> <span style="color:#a6e22e">name=</span><span style="color:#e6db74">&#34;checkoutTimeout&#34;</span> <span style="color:#a6e22e">value=</span><span style="color:#e6db74">&#34;10000&#34;</span><span style="color:#f92672">/&gt;</span>
+            <span style="color:#f92672">&lt;property</span> <span style="color:#a6e22e">name=</span><span style="color:#e6db74">&#34;acquireRetryAttempts&#34;</span> <span style="color:#a6e22e">value=</span><span style="color:#e6db74">&#34;2&#34;</span><span style="color:#f92672">/&gt;</span>
+         <span style="color:#f92672">&lt;/bean&gt;</span>
+        
+        <span style="color:#75715e">&lt;!--3.sqlsessionfactory连接数据源，绑定mybatis配置文件--&gt;</span>
+        <span style="color:#f92672">&lt;bean</span> <span style="color:#a6e22e">id=</span><span style="color:#e6db74">&#34;sqlSessionFactory&#34;</span> <span style="color:#a6e22e">class=</span><span style="color:#e6db74">&#34;org.mybatis.spring.SqlSessionFactoryBean&#34;</span><span style="color:#f92672">&gt;</span>
+            <span style="color:#f92672">&lt;property</span> <span style="color:#a6e22e">name=</span><span style="color:#e6db74">&#34;dataSource&#34;</span> <span style="color:#a6e22e">ref=</span><span style="color:#e6db74">&#34;dataSource&#34;</span><span style="color:#f92672">/&gt;</span>
+            <span style="color:#f92672">&lt;property</span> <span style="color:#a6e22e">name=</span><span style="color:#e6db74">&#34;configLocation&#34;</span> <span style="color:#a6e22e">value=</span><span style="color:#e6db74">&#34;classpath:mybatis-config.xml&#34;</span><span style="color:#f92672">/&gt;</span>
+        <span style="color:#f92672">&lt;/bean&gt;</span>
+        
+        <span style="color:#75715e">&lt;!--4.配置dao接口扫描包--&gt;</span>
+        <span style="color:#f92672">&lt;bean</span> <span style="color:#a6e22e">class=</span><span style="color:#e6db74">&#34;org.mybatis.spring.mapper.MapperScannerConfigurer&#34;</span><span style="color:#f92672">&gt;</span>
+            <span style="color:#75715e">&lt;!--将第3步的sqlSessionFactory注入sqlSessionFactoryBeanName，相当于读取了数据库信息和mybatis的mapper信息--&gt;</span>
+            <span style="color:#f92672">&lt;property</span> <span style="color:#a6e22e">name=</span><span style="color:#e6db74">&#34;sqlSessionFactoryBeanName&#34;</span> <span style="color:#a6e22e">value=</span><span style="color:#e6db74">&#34;sqlSessionFactory&#34;</span><span style="color:#f92672">/&gt;</span>
+            <span style="color:#75715e">&lt;!--配置需要自动扫描的dao包，将sqlSessionFactoryBeanName生成的sqlsession自动注入dao中--&gt;</span>
+            <span style="color:#f92672">&lt;property</span> <span style="color:#a6e22e">name=</span><span style="color:#e6db74">&#34;basePackage&#34;</span> <span style="color:#a6e22e">value=</span><span style="color:#e6db74">&#34;wiki.mrx.dao&#34;</span><span style="color:#f92672">/&gt;</span>
+        <span style="color:#f92672">&lt;/bean&gt;</span>
+<span style="color:#f92672">&lt;/beans&gt;</span>
+</code></pre></div><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-xml" data-lang="xml">spring-service.xml
+<span style="color:#75715e">&lt;?xml version=&#34;1.0&#34; encoding=&#34;UTF-8&#34;?&gt;</span>
+<span style="color:#f92672">&lt;beans</span> <span style="color:#a6e22e">xmlns=</span><span style="color:#e6db74">&#34;http://www.springframework.org/schema/beans&#34;</span>
+       <span style="color:#a6e22e">xmlns:xsi=</span><span style="color:#e6db74">&#34;http://www.w3.org/2001/XMLSchema-instance&#34;</span>
+       <span style="color:#a6e22e">xmlns:context=</span><span style="color:#e6db74">&#34;http://www.springframework.org/schema/context&#34;</span>
+       <span style="color:#a6e22e">xmlns:aop=</span><span style="color:#e6db74">&#34;http://www.springframework.org/schema/aop&#34;</span>
+       <span style="color:#a6e22e">xmlns:tx=</span><span style="color:#e6db74">&#34;http://www.springframework.org/schema/tx&#34;</span>
+
+       <span style="color:#a6e22e">xsi:schemaLocation=</span><span style="color:#e6db74">&#34;http://www.springframework.org/schema/beans
+</span><span style="color:#e6db74">        https://www.springframework.org/schema/beans/spring-beans.xsd
+</span><span style="color:#e6db74">        http://www.springframework.org/schema/context
+</span><span style="color:#e6db74">        https://www.springframework.org/schema/context/spring-context.xsd
+</span><span style="color:#e6db74">        http://www.springframework.org/schema/aop
+</span><span style="color:#e6db74">        https://www.springframework.org/schema/aop/spring-aop.xsd
+</span><span style="color:#e6db74">        http://www.springframework.org/schema/tx
+</span><span style="color:#e6db74">        https://www.springframework.org/schema/tx/spring-tx.xsd
+</span><span style="color:#e6db74">&#34;</span><span style="color:#f92672">&gt;</span>
+
+        <span style="color:#75715e">&lt;!--1.扫描service下的包--&gt;</span>
+        <span style="color:#f92672">&lt;context:component-scan</span> <span style="color:#a6e22e">base-package=</span><span style="color:#e6db74">&#34;wiki.mrx.service&#34;</span><span style="color:#f92672">/&gt;</span>
+
+        <span style="color:#75715e">&lt;!--2.将所有业务类注入spring，可以通过配置或注解实现--&gt;</span>
+        <span style="color:#f92672">&lt;bean</span> <span style="color:#a6e22e">id=</span><span style="color:#e6db74">&#34;BookServiceImpl&#34;</span> <span style="color:#a6e22e">class=</span><span style="color:#e6db74">&#34;wiki.mrx.service.BookServiceImpl&#34;</span><span style="color:#f92672">&gt;</span>
+            <span style="color:#f92672">&lt;property</span> <span style="color:#a6e22e">name=</span><span style="color:#e6db74">&#34;bookMapper&#34;</span> <span style="color:#a6e22e">ref=</span><span style="color:#e6db74">&#34;bookMapper&#34;</span><span style="color:#f92672">/&gt;</span>
+        <span style="color:#f92672">&lt;/bean&gt;</span>
+
+        <span style="color:#75715e">&lt;!--3.配置事务--&gt;</span>
+        <span style="color:#f92672">&lt;bean</span> <span style="color:#a6e22e">id=</span><span style="color:#e6db74">&#34;transactionManager&#34;</span> <span style="color:#a6e22e">class=</span><span style="color:#e6db74">&#34;org.springframework.jdbc.datasource.DataSourceTransactionManager&#34;</span><span style="color:#f92672">&gt;</span>
+            <span style="color:#75715e">&lt;!--注入数据源--&gt;</span>
+            <span style="color:#f92672">&lt;property</span> <span style="color:#a6e22e">name=</span><span style="color:#e6db74">&#34;dataSource&#34;</span> <span style="color:#a6e22e">ref=</span><span style="color:#e6db74">&#34;dataSource&#34;</span><span style="color:#f92672">/&gt;</span>
+        <span style="color:#f92672">&lt;/bean&gt;</span>
+
+        <span style="color:#75715e">&lt;!--4.aop事务支持--&gt;</span>
+        <span style="color:#f92672">&lt;tx:advice</span> <span style="color:#a6e22e">id=</span><span style="color:#e6db74">&#34;txAdvice&#34;</span> <span style="color:#a6e22e">transaction-manager=</span><span style="color:#e6db74">&#34;transactionManager&#34;</span><span style="color:#f92672">&gt;</span>
+            <span style="color:#f92672">&lt;tx:attributes&gt;</span>
+                <span style="color:#f92672">&lt;tx:method</span> <span style="color:#a6e22e">name=</span><span style="color:#e6db74">&#34;*&#34;</span> <span style="color:#a6e22e">propagation=</span><span style="color:#e6db74">&#34;REQUIRED&#34;</span><span style="color:#f92672">/&gt;</span>
+            <span style="color:#f92672">&lt;/tx:attributes&gt;</span>
+        <span style="color:#f92672">&lt;/tx:advice&gt;</span>
+
+        <span style="color:#f92672">&lt;aop:config&gt;</span>
+            <span style="color:#f92672">&lt;aop:pointcut</span> <span style="color:#a6e22e">id=</span><span style="color:#e6db74">&#34;txPointCut&#34;</span> <span style="color:#a6e22e">expression=</span><span style="color:#e6db74">&#34;execution(* wiki.mrx.dao.*.*(..))&#34;</span><span style="color:#f92672">/&gt;</span>
+            <span style="color:#f92672">&lt;aop:advisor</span> <span style="color:#a6e22e">advice-ref=</span><span style="color:#e6db74">&#34;txAdvice&#34;</span> <span style="color:#a6e22e">pointcut-ref=</span><span style="color:#e6db74">&#34;txPointCut&#34;</span><span style="color:#f92672">/&gt;</span>
+        <span style="color:#f92672">&lt;/aop:config&gt;</span>
+<span style="color:#f92672">&lt;/beans&gt;</span>
+</code></pre></div><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-xml" data-lang="xml">applicationContext.xml
+<span style="color:#75715e">&lt;?xml version=&#34;1.0&#34; encoding=&#34;UTF-8&#34;?&gt;</span>
+<span style="color:#f92672">&lt;beans</span> <span style="color:#a6e22e">xmlns=</span><span style="color:#e6db74">&#34;http://www.springframework.org/schema/beans&#34;</span>
+       <span style="color:#a6e22e">xmlns:xsi=</span><span style="color:#e6db74">&#34;http://www.w3.org/2001/XMLSchema-instance&#34;</span>
+       <span style="color:#a6e22e">xsi:schemaLocation=</span><span style="color:#e6db74">&#34;http://www.springframework.org/schema/beans
+</span><span style="color:#e6db74">        https://www.springframework.org/schema/beans/spring-beans.xsd&#34;</span><span style="color:#f92672">&gt;</span>
+
+    <span style="color:#f92672">&lt;import</span> <span style="color:#a6e22e">resource=</span><span style="color:#e6db74">&#34;classpath:spring-dao.xml&#34;</span><span style="color:#f92672">/&gt;</span>
+    <span style="color:#f92672">&lt;import</span> <span style="color:#a6e22e">resource=</span><span style="color:#e6db74">&#34;classpath:spring-service.xml&#34;</span><span style="color:#f92672">/&gt;</span>
+
+<span style="color:#f92672">&lt;/beans&gt;</span>
+</code></pre></div><p>== 整合springmvc == ｜ == 整合springmvc == ｜ == 整合springmvc == ｜</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-xml" data-lang="xml">web.xml
+<span style="color:#75715e">&lt;?xml version=&#34;1.0&#34; encoding=&#34;UTF-8&#34;?&gt;</span>
+<span style="color:#f92672">&lt;web-app</span> <span style="color:#a6e22e">xmlns=</span><span style="color:#e6db74">&#34;http://xmlns.jcp.org/xml/ns/javaee&#34;</span>
+         <span style="color:#a6e22e">xmlns:xsi=</span><span style="color:#e6db74">&#34;http://www.w3.org/2001/XMLSchema-instance&#34;</span>
+         <span style="color:#a6e22e">xsi:schemaLocation=</span><span style="color:#e6db74">&#34;http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_4_0.xsd&#34;</span>
+         <span style="color:#a6e22e">version=</span><span style="color:#e6db74">&#34;4.0&#34;</span><span style="color:#f92672">&gt;</span>
+    
+        <span style="color:#75715e">&lt;!--1.dispatcherservlet--&gt;</span>
+        <span style="color:#f92672">&lt;servlet&gt;</span>
+            <span style="color:#f92672">&lt;servlet-name&gt;</span>springmvc<span style="color:#f92672">&lt;/servlet-name&gt;</span>
+            <span style="color:#f92672">&lt;servlet-class&gt;</span>org.springframework.web.servlet.DispatcherServlet<span style="color:#f92672">&lt;/servlet-class&gt;</span>
+            <span style="color:#f92672">&lt;init-param&gt;</span>
+                <span style="color:#f92672">&lt;param-name&gt;</span>contextConfigLocation<span style="color:#f92672">&lt;/param-name&gt;</span>
+                <span style="color:#f92672">&lt;param-value&gt;</span>classpath:spring-mvc.xml<span style="color:#f92672">&lt;/param-value&gt;</span>
+            <span style="color:#f92672">&lt;/init-param&gt;</span>
+            <span style="color:#f92672">&lt;load-on-startup&gt;</span>1<span style="color:#f92672">&lt;/load-on-startup&gt;</span>
+        <span style="color:#f92672">&lt;/servlet&gt;</span>
+        <span style="color:#f92672">&lt;servlet-mapping&gt;</span>
+            <span style="color:#f92672">&lt;servlet-name&gt;</span>springmvc<span style="color:#f92672">&lt;/servlet-name&gt;</span>
+            <span style="color:#f92672">&lt;url-pattern&gt;</span>/<span style="color:#f92672">&lt;/url-pattern&gt;</span>
+        <span style="color:#f92672">&lt;/servlet-mapping&gt;</span>
+        
+        <span style="color:#75715e">&lt;!--2.乱码过滤--&gt;</span>
+        <span style="color:#f92672">&lt;filter&gt;</span>
+            <span style="color:#f92672">&lt;filter-name&gt;</span>encodingFilter<span style="color:#f92672">&lt;/filter-name&gt;</span>
+            <span style="color:#f92672">&lt;filter-class&gt;</span>org.springframework.web.filter.CharacterEncodingFilter<span style="color:#f92672">&lt;/filter-class&gt;</span>
+            <span style="color:#f92672">&lt;init-param&gt;</span>
+                <span style="color:#f92672">&lt;param-name&gt;</span>encoding<span style="color:#f92672">&lt;/param-name&gt;</span>
+                <span style="color:#f92672">&lt;param-value&gt;</span>utf-8<span style="color:#f92672">&lt;/param-value&gt;</span>
+            <span style="color:#f92672">&lt;/init-param&gt;</span>
+        <span style="color:#f92672">&lt;/filter&gt;</span>
+        <span style="color:#f92672">&lt;filter-mapping&gt;</span>
+            <span style="color:#f92672">&lt;filter-name&gt;</span>encodingFilter<span style="color:#f92672">&lt;/filter-name&gt;</span>
+            <span style="color:#f92672">&lt;url-pattern&gt;</span>/*<span style="color:#f92672">&lt;/url-pattern&gt;</span>
+        <span style="color:#f92672">&lt;/filter-mapping&gt;</span>
+        
+        <span style="color:#75715e">&lt;!--3.session--&gt;</span>
+        <span style="color:#f92672">&lt;session-config&gt;</span>
+            <span style="color:#f92672">&lt;session-timeout&gt;</span>15<span style="color:#f92672">&lt;/session-timeout&gt;</span>
+        <span style="color:#f92672">&lt;/session-config&gt;</span>
+<span style="color:#f92672">&lt;/web-app&gt;</span>
+</code></pre></div><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-xml" data-lang="xml">spring-mvc.xml
+<span style="color:#75715e">&lt;?xml version=&#34;1.0&#34; encoding=&#34;UTF-8&#34;?&gt;</span>
+<span style="color:#f92672">&lt;beans</span> <span style="color:#a6e22e">xmlns=</span><span style="color:#e6db74">&#34;http://www.springframework.org/schema/beans&#34;</span>
+       <span style="color:#a6e22e">xmlns:xsi=</span><span style="color:#e6db74">&#34;http://www.w3.org/2001/XMLSchema-instance&#34;</span>
+       <span style="color:#a6e22e">xmlns:mvc=</span><span style="color:#e6db74">&#34;http://www.springframework.org/schema/mvc&#34;</span>
+       <span style="color:#a6e22e">xmlns:context=</span><span style="color:#e6db74">&#34;http://www.springframework.org/schema/context&#34;</span>
+       <span style="color:#a6e22e">xsi:schemaLocation=</span><span style="color:#e6db74">&#34;http://www.springframework.org/schema/beans
+</span><span style="color:#e6db74">        https://www.springframework.org/schema/beans/spring-beans.xsd
+</span><span style="color:#e6db74">        http://www.springframework.org/schema/mvc
+</span><span style="color:#e6db74">        http://www.springframework.org/schema/cache/spring-mvc.xsd http://www.springframework.org/schema/context https://www.springframework.org/schema/context/spring-context.xsd&#34;</span><span style="color:#f92672">&gt;</span>
+    <span style="color:#75715e">&lt;!--1.注解驱动--&gt;</span>
+    <span style="color:#f92672">&lt;mvc:annotation-driven/&gt;</span>
+
+    <span style="color:#75715e">&lt;!--2.静态资源过滤--&gt;</span>
+    <span style="color:#f92672">&lt;mvc:default-servlet-handler/&gt;</span>
+
+    <span style="color:#75715e">&lt;!--3.扫描controller包--&gt;</span>
+    <span style="color:#f92672">&lt;context:component-scan</span> <span style="color:#a6e22e">base-package=</span><span style="color:#e6db74">&#34;wiki.mrx.controller&#34;</span><span style="color:#f92672">/&gt;</span>
+
+    <span style="color:#75715e">&lt;!--4.视图解析器--&gt;</span>
+    <span style="color:#f92672">&lt;bean</span> <span style="color:#a6e22e">class=</span><span style="color:#e6db74">&#34;org.springframework.web.servlet.view.InternalResourceViewResolver&#34;</span><span style="color:#f92672">&gt;</span>
+        <span style="color:#f92672">&lt;property</span> <span style="color:#a6e22e">name=</span><span style="color:#e6db74">&#34;prefix&#34;</span> <span style="color:#a6e22e">value=</span><span style="color:#e6db74">&#34;/WEB-INF/jsp/&#34;</span><span style="color:#f92672">/&gt;</span>
+        <span style="color:#f92672">&lt;property</span> <span style="color:#a6e22e">name=</span><span style="color:#e6db74">&#34;suffix&#34;</span> <span style="color:#a6e22e">value=</span><span style="color:#e6db74">&#34;.jsp&#34;</span><span style="color:#f92672">/&gt;</span>
+    <span style="color:#f92672">&lt;/bean&gt;</span>
+<span style="color:#f92672">&lt;/beans&gt;</span>
+</code></pre></div><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-xml" data-lang="xml">applicationContext.xml
+<span style="color:#75715e">&lt;?xml version=&#34;1.0&#34; encoding=&#34;UTF-8&#34;?&gt;</span>
+<span style="color:#f92672">&lt;beans</span> <span style="color:#a6e22e">xmlns=</span><span style="color:#e6db74">&#34;http://www.springframework.org/schema/beans&#34;</span>
+       <span style="color:#a6e22e">xmlns:xsi=</span><span style="color:#e6db74">&#34;http://www.w3.org/2001/XMLSchema-instance&#34;</span>
+       <span style="color:#a6e22e">xsi:schemaLocation=</span><span style="color:#e6db74">&#34;http://www.springframework.org/schema/beans
+</span><span style="color:#e6db74">        https://www.springframework.org/schema/beans/spring-beans.xsd&#34;</span><span style="color:#f92672">&gt;</span>
+
+    <span style="color:#f92672">&lt;import</span> <span style="color:#a6e22e">resource=</span><span style="color:#e6db74">&#34;classpath:spring-dao.xml&#34;</span><span style="color:#f92672">/&gt;</span>
+    <span style="color:#f92672">&lt;import</span> <span style="color:#a6e22e">resource=</span><span style="color:#e6db74">&#34;classpath:spring-service.xml&#34;</span><span style="color:#f92672">/&gt;</span>
+    <span style="color:#f92672">&lt;import</span> <span style="color:#a6e22e">resource=</span><span style="color:#e6db74">&#34;classpath:spring-mvc.xml&#34;</span><span style="color:#f92672">/&gt;</span>
+<span style="color:#f92672">&lt;/beans&gt;</span>
+</code></pre></div><p>== 业务实现 == ｜ == 业务实现 == ｜ == 业务实现 == ｜
+第一步：查询书籍</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#f92672">package</span> wiki.mrx.controller<span style="color:#f92672">;</span>
+
+
+<span style="color:#f92672">import</span> org.springframework.beans.factory.annotation.Autowired<span style="color:#f92672">;</span>
+<span style="color:#f92672">import</span> org.springframework.beans.factory.annotation.Qualifier<span style="color:#f92672">;</span>
+<span style="color:#f92672">import</span> org.springframework.stereotype.Controller<span style="color:#f92672">;</span>
+<span style="color:#f92672">import</span> org.springframework.ui.Model<span style="color:#f92672">;</span>
+<span style="color:#f92672">import</span> org.springframework.web.bind.annotation.PathVariable<span style="color:#f92672">;</span>
+<span style="color:#f92672">import</span> org.springframework.web.bind.annotation.RequestMapping<span style="color:#f92672">;</span>
+<span style="color:#f92672">import</span> wiki.mrx.pojo.Books<span style="color:#f92672">;</span>
+<span style="color:#f92672">import</span> wiki.mrx.service.BookService<span style="color:#f92672">;</span>
+
+<span style="color:#f92672">import</span> java.util.List<span style="color:#f92672">;</span>
+
+<span style="color:#a6e22e">@Controller</span>
+<span style="color:#a6e22e">@RequestMapping</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#34;/book&#34;</span><span style="color:#f92672">)</span>
+<span style="color:#66d9ef">public</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">BookController</span> <span style="color:#f92672">{</span>
+    <span style="color:#75715e">//controller调service层
+</span><span style="color:#75715e"></span>    <span style="color:#a6e22e">@Autowired</span>
+    <span style="color:#a6e22e">@Qualifier</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#34;BookServiceImpl&#34;</span><span style="color:#f92672">)</span>
+    <span style="color:#66d9ef">private</span> BookService bookService<span style="color:#f92672">;</span>
+
+    <span style="color:#75715e">//查询全部书籍展示到书籍展示页面
+</span><span style="color:#75715e"></span>    <span style="color:#a6e22e">@RequestMapping</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#34;/allBook&#34;</span><span style="color:#f92672">)</span>
+    <span style="color:#66d9ef">public</span> String <span style="color:#a6e22e">list</span><span style="color:#f92672">(</span>Model model<span style="color:#f92672">){</span>
+        List<span style="color:#f92672">&lt;</span>Books<span style="color:#f92672">&gt;</span> list <span style="color:#f92672">=</span> bookService<span style="color:#f92672">.</span><span style="color:#a6e22e">queryAllBooks</span><span style="color:#f92672">();</span>
+        model<span style="color:#f92672">.</span><span style="color:#a6e22e">addAttribute</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#34;list&#34;</span><span style="color:#f92672">,</span>list<span style="color:#f92672">);</span>
+        <span style="color:#66d9ef">return</span> <span style="color:#e6db74">&#34;allBook&#34;</span><span style="color:#f92672">;</span>
+    <span style="color:#f92672">}</span>
+
+    <span style="color:#75715e">//跳到增加书籍页面
+</span><span style="color:#75715e"></span>    <span style="color:#a6e22e">@RequestMapping</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#34;/toAddBook&#34;</span><span style="color:#f92672">)</span>
+    <span style="color:#66d9ef">public</span> String <span style="color:#a6e22e">toAddBook</span><span style="color:#f92672">(){</span>
+        <span style="color:#66d9ef">return</span> <span style="color:#e6db74">&#34;addBook&#34;</span><span style="color:#f92672">;</span>
+    <span style="color:#f92672">}</span>
+
+    <span style="color:#75715e">//添加书籍的请求
+</span><span style="color:#75715e"></span>    <span style="color:#a6e22e">@RequestMapping</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#34;/addBook&#34;</span><span style="color:#f92672">)</span>
+    <span style="color:#66d9ef">public</span> String <span style="color:#a6e22e">addBook</span><span style="color:#f92672">(</span>Books books<span style="color:#f92672">){</span>
+        System<span style="color:#f92672">.</span><span style="color:#a6e22e">out</span><span style="color:#f92672">.</span><span style="color:#a6e22e">println</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#34;addBook=&gt;&#34;</span><span style="color:#f92672">+</span>books<span style="color:#f92672">);</span>
+        bookService<span style="color:#f92672">.</span><span style="color:#a6e22e">addBook</span><span style="color:#f92672">(</span>books<span style="color:#f92672">);</span>
+        <span style="color:#66d9ef">return</span> <span style="color:#e6db74">&#34;redirect:/book/allBook&#34;</span><span style="color:#f92672">;</span>
+    <span style="color:#f92672">}</span>
+
+
+    <span style="color:#75715e">//跳到修改书籍页面
+</span><span style="color:#75715e"></span>    <span style="color:#a6e22e">@RequestMapping</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#34;/toUpdateBook&#34;</span><span style="color:#f92672">)</span>
+    <span style="color:#66d9ef">public</span> String <span style="color:#a6e22e">toUpdateBook</span><span style="color:#f92672">(</span><span style="color:#66d9ef">int</span> id<span style="color:#f92672">,</span>Model model<span style="color:#f92672">){</span>
+        Books books <span style="color:#f92672">=</span> bookService<span style="color:#f92672">.</span><span style="color:#a6e22e">queryBookById</span><span style="color:#f92672">(</span>id<span style="color:#f92672">);</span>
+        model<span style="color:#f92672">.</span><span style="color:#a6e22e">addAttribute</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#34;QBooks&#34;</span><span style="color:#f92672">,</span>books<span style="color:#f92672">);</span>
+        <span style="color:#66d9ef">return</span> <span style="color:#e6db74">&#34;updateBook&#34;</span><span style="color:#f92672">;</span>
+    <span style="color:#f92672">}</span>
+
+    <span style="color:#75715e">//修改书籍
+</span><span style="color:#75715e"></span>    <span style="color:#a6e22e">@RequestMapping</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#34;/updateBook&#34;</span><span style="color:#f92672">)</span>
+    <span style="color:#66d9ef">public</span> String <span style="color:#a6e22e">updateBook</span><span style="color:#f92672">(</span>Books books<span style="color:#f92672">){</span>
+        System<span style="color:#f92672">.</span><span style="color:#a6e22e">out</span><span style="color:#f92672">.</span><span style="color:#a6e22e">println</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#34;updateBook=&gt;&#34;</span><span style="color:#f92672">+</span>books<span style="color:#f92672">);</span>
+        bookService<span style="color:#f92672">.</span><span style="color:#a6e22e">updateBook</span><span style="color:#f92672">(</span>books<span style="color:#f92672">);</span>
+        <span style="color:#66d9ef">return</span> <span style="color:#e6db74">&#34;redirect:/book/allBook&#34;</span><span style="color:#f92672">;</span>
+    <span style="color:#f92672">}</span>
+
+    <span style="color:#75715e">//删除书籍
+</span><span style="color:#75715e"></span>    <span style="color:#a6e22e">@RequestMapping</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#34;/deleteBook/{bookId}&#34;</span><span style="color:#f92672">)</span>
+    <span style="color:#66d9ef">public</span> String <span style="color:#a6e22e">deleteBook</span><span style="color:#f92672">(</span><span style="color:#a6e22e">@PathVariable</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#34;bookId&#34;</span><span style="color:#f92672">)</span> <span style="color:#66d9ef">int</span> id<span style="color:#f92672">){</span>
+        bookService<span style="color:#f92672">.</span><span style="color:#a6e22e">deleteBook</span><span style="color:#f92672">(</span>id<span style="color:#f92672">);</span>
+        <span style="color:#66d9ef">return</span> <span style="color:#e6db74">&#34;redirect:/book/allBook&#34;</span><span style="color:#f92672">;</span>
+    <span style="color:#f92672">}</span>
+
+<span style="color:#f92672">}</span>
+
+
+</code></pre></div><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-html" data-lang="html">index.jsp
+<span style="color:#960050;background-color:#1e0010">&lt;</span>%@ page contentType=&#34;text/html;charset=UTF-8&#34; language=&#34;java&#34; %&gt;
+&lt;<span style="color:#f92672">html</span>&gt;
+  &lt;<span style="color:#f92672">head</span>&gt;
+    &lt;<span style="color:#f92672">title</span>&gt;首页&lt;/<span style="color:#f92672">title</span>&gt;
+    &lt;<span style="color:#f92672">style</span>&gt;
+      <span style="color:#f92672">a</span>{
+        <span style="color:#66d9ef">text-decoration</span>: <span style="color:#66d9ef">none</span>;
+        <span style="color:#66d9ef">color</span>: <span style="color:#66d9ef">black</span>;
+        <span style="color:#66d9ef">font-size</span>: <span style="color:#ae81ff">18</span><span style="color:#66d9ef">px</span>;
+      }
+      <span style="color:#f92672">h3</span>{
+        <span style="color:#66d9ef">width</span>: <span style="color:#ae81ff">180</span><span style="color:#66d9ef">px</span>;
+        <span style="color:#66d9ef">height</span>: <span style="color:#ae81ff">38</span><span style="color:#66d9ef">px</span>;
+        <span style="color:#66d9ef">margin</span>: <span style="color:#ae81ff">100</span><span style="color:#66d9ef">px</span> <span style="color:#66d9ef">auto</span>;
+        <span style="color:#66d9ef">text-align</span>: <span style="color:#66d9ef">center</span>;
+        <span style="color:#66d9ef">line-height</span>: <span style="color:#ae81ff">38</span><span style="color:#66d9ef">px</span>;
+        <span style="color:#66d9ef">background</span>: <span style="color:#66d9ef">deepskyblue</span>;
+        <span style="color:#66d9ef">border-radius</span>: <span style="color:#ae81ff">5</span><span style="color:#66d9ef">px</span>;
+      }
+    &lt;/<span style="color:#f92672">style</span>&gt;
+  &lt;/<span style="color:#f92672">head</span>&gt;
+  &lt;<span style="color:#f92672">body</span>&gt;
+    &lt;<span style="color:#f92672">h3</span>&gt;
+      &lt;<span style="color:#f92672">a</span> <span style="color:#a6e22e">href</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;${pageContext.request.contextPath}/book/allBook&#34;</span>&gt;进入书籍页面&lt;/<span style="color:#f92672">a</span>&gt;
+    &lt;/<span style="color:#f92672">h3</span>&gt;
+  &lt;/<span style="color:#f92672">body</span>&gt;
+&lt;/<span style="color:#f92672">html</span>&gt;
+
+
+</code></pre></div><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-html" data-lang="html">allBook.jsp
+<span style="color:#960050;background-color:#1e0010">&lt;</span>%@ taglib prefix=&#34;c&#34; uri=&#34;http://java.sun.com/jsp/jstl/core&#34; %&gt;
+
+<span style="color:#960050;background-color:#1e0010">&lt;</span>%@ page contentType=&#34;text/html;charset=UTF-8&#34; language=&#34;java&#34; %&gt;
+
+&lt;<span style="color:#f92672">html</span>&gt;
+&lt;<span style="color:#f92672">head</span>&gt;
+    &lt;<span style="color:#f92672">title</span>&gt;查询全部书籍&lt;/<span style="color:#f92672">title</span>&gt;
+
+    &lt;<span style="color:#f92672">link</span> <span style="color:#a6e22e">href</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;https://cdn.staticfile.org/twitter-bootstrap/3.3.7/css/bootstrap.min.css&#34;</span> <span style="color:#a6e22e">rel</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;stylesheet&#34;</span>&gt;
+
+&lt;/<span style="color:#f92672">head</span>&gt;
+&lt;<span style="color:#f92672">body</span>&gt;
+    &lt;<span style="color:#f92672">div</span> <span style="color:#a6e22e">class</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;container&#34;</span>&gt;
+        &lt;<span style="color:#f92672">div</span> <span style="color:#a6e22e">class</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;row clearfix&#34;</span>&gt;
+            &lt;<span style="color:#f92672">div</span> <span style="color:#a6e22e">class</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;col-md-12 column&#34;</span>&gt;
+                &lt;<span style="color:#f92672">div</span> <span style="color:#a6e22e">class</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;page-header&#34;</span>&gt;
+                    &lt;<span style="color:#f92672">h1</span>&gt;
+                        &lt;<span style="color:#f92672">small</span>&gt;书籍列表-------------显示所有书籍&lt;/<span style="color:#f92672">small</span>&gt;
+                    &lt;/<span style="color:#f92672">h1</span>&gt;
+                &lt;/<span style="color:#f92672">div</span>&gt;
+            &lt;/<span style="color:#f92672">div</span>&gt;
+            &lt;<span style="color:#f92672">div</span> <span style="color:#a6e22e">class</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;row&#34;</span>&gt;
+                &lt;<span style="color:#f92672">div</span> <span style="color:#a6e22e">class</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;col-md-4 column&#34;</span>&gt;
+                    &lt;<span style="color:#f92672">a</span> <span style="color:#a6e22e">class</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;btn btn-primary&#34;</span> <span style="color:#a6e22e">href</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;${pageContext.request.contextPath}/book/toAddBook&#34;</span>&gt;新增书籍&lt;/<span style="color:#f92672">a</span>&gt;
+                &lt;/<span style="color:#f92672">div</span>&gt;
+            &lt;/<span style="color:#f92672">div</span>&gt;
+        &lt;/<span style="color:#f92672">div</span>&gt;
+
+        &lt;<span style="color:#f92672">div</span> <span style="color:#a6e22e">class</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;row clearfix&#34;</span>&gt;
+            &lt;<span style="color:#f92672">div</span> <span style="color:#a6e22e">class</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;col-md-12 column&#34;</span>&gt;
+                &lt;<span style="color:#f92672">table</span> <span style="color:#a6e22e">class</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;table table-hover table-striped&#34;</span>&gt;
+                    &lt;<span style="color:#f92672">thead</span>&gt;
+                        &lt;<span style="color:#f92672">tr</span>&gt;
+                            &lt;<span style="color:#f92672">th</span>&gt;书籍编号&lt;/<span style="color:#f92672">th</span>&gt;
+                            &lt;<span style="color:#f92672">th</span>&gt;书籍名称&lt;/<span style="color:#f92672">th</span>&gt;
+                            &lt;<span style="color:#f92672">th</span>&gt;书籍数量&lt;/<span style="color:#f92672">th</span>&gt;
+                            &lt;<span style="color:#f92672">th</span>&gt;书籍详情&lt;/<span style="color:#f92672">th</span>&gt;
+                            &lt;<span style="color:#f92672">th</span>&gt;操作&lt;/<span style="color:#f92672">th</span>&gt;
+                        &lt;/<span style="color:#f92672">tr</span>&gt;
+                    &lt;/<span style="color:#f92672">thead</span>&gt;
+                    &lt;<span style="color:#f92672">tbody</span>&gt;
+                        &lt;<span style="color:#f92672">c:forEach</span> <span style="color:#a6e22e">var</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;book&#34;</span> <span style="color:#a6e22e">items</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;${list}&#34;</span>&gt;
+                            &lt;<span style="color:#f92672">tr</span>&gt;
+                                &lt;<span style="color:#f92672">td</span>&gt;${book.bookID}&lt;/<span style="color:#f92672">td</span>&gt;
+                                &lt;<span style="color:#f92672">td</span>&gt;${book.bookName}&lt;/<span style="color:#f92672">td</span>&gt;
+                                &lt;<span style="color:#f92672">td</span>&gt;${book.bookCounts}&lt;/<span style="color:#f92672">td</span>&gt;
+                                &lt;<span style="color:#f92672">td</span>&gt;${book.details}&lt;/<span style="color:#f92672">td</span>&gt;
+                                &lt;<span style="color:#f92672">td</span>&gt;
+                                    &lt;<span style="color:#f92672">a</span> <span style="color:#a6e22e">href</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;${pageContext.request.contextPath}/book/toUpdateBook?id=${book.bookID}&#34;</span>&gt;修改&lt;/<span style="color:#f92672">a</span>&gt;
+                                    &amp;nbsp; | &amp;nbsp;
+                                    &lt;<span style="color:#f92672">a</span> <span style="color:#a6e22e">href</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;${pageContext.request.contextPath}/book/deleteBook/${book.bookID}&#34;</span>&gt;删除&lt;/<span style="color:#f92672">a</span>&gt;
+                                &lt;/<span style="color:#f92672">td</span>&gt;
+                            &lt;/<span style="color:#f92672">tr</span>&gt;
+                        &lt;/<span style="color:#f92672">c:forEach</span>&gt;
+                    &lt;/<span style="color:#f92672">tbody</span>&gt;
+                &lt;/<span style="color:#f92672">table</span>&gt;
+            &lt;/<span style="color:#f92672">div</span>&gt;
+        &lt;/<span style="color:#f92672">div</span>&gt;
+    &lt;/<span style="color:#f92672">div</span>&gt;
+&lt;/<span style="color:#f92672">body</span>&gt;
+&lt;/<span style="color:#f92672">html</span>&gt;
+
+
+
+</code></pre></div><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-html" data-lang="html"><span style="color:#960050;background-color:#1e0010">&lt;</span>%--
+  Created by IntelliJ IDEA.
+  User: gyk
+  Date: 2022/2/28
+  Time: 8:49 下午
+  To change this template use File | Settings | File Templates.
+--%&gt;
+<span style="color:#960050;background-color:#1e0010">&lt;</span>%@ page contentType=&#34;text/html;charset=UTF-8&#34; language=&#34;java&#34; %&gt;
+&lt;<span style="color:#f92672">html</span>&gt;
+&lt;<span style="color:#f92672">head</span>&gt;
+    &lt;<span style="color:#f92672">title</span>&gt;新增书籍&lt;/<span style="color:#f92672">title</span>&gt;
+    &lt;<span style="color:#f92672">link</span> <span style="color:#a6e22e">href</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;https://cdn.staticfile.org/twitter-bootstrap/3.3.7/css/bootstrap.min.css&#34;</span> <span style="color:#a6e22e">rel</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;stylesheet&#34;</span>&gt;
+    &lt;<span style="color:#f92672">style</span>&gt;
+
+    &lt;/<span style="color:#f92672">style</span>&gt;
+&lt;/<span style="color:#f92672">head</span>&gt;
+&lt;<span style="color:#f92672">body</span>&gt;
+    &lt;<span style="color:#f92672">div</span> <span style="color:#a6e22e">class</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;container&#34;</span>&gt;
+    &lt;<span style="color:#f92672">div</span> <span style="color:#a6e22e">class</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;row clearfix&#34;</span>&gt;
+        &lt;<span style="color:#f92672">div</span> <span style="color:#a6e22e">class</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;col-md-12 column&#34;</span>&gt;
+            &lt;<span style="color:#f92672">div</span> <span style="color:#a6e22e">class</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;page-header&#34;</span>&gt;
+                &lt;<span style="color:#f92672">h1</span>&gt;
+                    &lt;<span style="color:#f92672">small</span>&gt;新增书籍&lt;/<span style="color:#f92672">small</span>&gt;
+                &lt;/<span style="color:#f92672">h1</span>&gt;
+            &lt;/<span style="color:#f92672">div</span>&gt;
+        &lt;/<span style="color:#f92672">div</span>&gt;
+    &lt;/<span style="color:#f92672">div</span>&gt;
+
+        &lt;<span style="color:#f92672">form</span> <span style="color:#a6e22e">action</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;${pageContext.request.contextPath}/book/addBook&#34;</span> <span style="color:#a6e22e">method</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;post&#34;</span>&gt;
+            &lt;<span style="color:#f92672">div</span> <span style="color:#a6e22e">class</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;form-group&#34;</span>&gt;
+                &lt;<span style="color:#f92672">label</span>&gt;书籍名称&lt;/<span style="color:#f92672">label</span>&gt;
+                &lt;<span style="color:#f92672">input</span> <span style="color:#a6e22e">type</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;text&#34;</span> <span style="color:#a6e22e">name</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;bookName&#34;</span> <span style="color:#a6e22e">class</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;form-control&#34;</span> <span style="color:#a6e22e">required</span>&gt;
+            &lt;/<span style="color:#f92672">div</span>&gt;
+
+            &lt;<span style="color:#f92672">div</span> <span style="color:#a6e22e">class</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;form-group&#34;</span>&gt;
+                &lt;<span style="color:#f92672">label</span>&gt;书籍数量&lt;/<span style="color:#f92672">label</span>&gt;
+                &lt;<span style="color:#f92672">input</span> <span style="color:#a6e22e">type</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;text&#34;</span> <span style="color:#a6e22e">name</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;bookCounts&#34;</span> <span style="color:#a6e22e">class</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;form-control&#34;</span> <span style="color:#a6e22e">required</span>&gt;
+            &lt;/<span style="color:#f92672">div</span>&gt;
+
+            &lt;<span style="color:#f92672">div</span> <span style="color:#a6e22e">class</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;form-group&#34;</span>&gt;
+                &lt;<span style="color:#f92672">label</span>&gt;书籍描述&lt;/<span style="color:#f92672">label</span>&gt;
+                &lt;<span style="color:#f92672">input</span> <span style="color:#a6e22e">type</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;text&#34;</span> <span style="color:#a6e22e">name</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;detail&#34;</span> <span style="color:#a6e22e">class</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;form-control&#34;</span> <span style="color:#a6e22e">required</span>&gt;
+            &lt;/<span style="color:#f92672">div</span>&gt;
+
+            &lt;<span style="color:#f92672">div</span> <span style="color:#a6e22e">class</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;form-group&#34;</span>&gt;
+                &lt;<span style="color:#f92672">input</span> <span style="color:#a6e22e">type</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;submit&#34;</span> <span style="color:#a6e22e">class</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;form-control&#34;</span> <span style="color:#a6e22e">value</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;添加&#34;</span>&gt;
+            &lt;/<span style="color:#f92672">div</span>&gt;
+        &lt;/<span style="color:#f92672">form</span>&gt;
+&lt;/<span style="color:#f92672">div</span>&gt;
+&lt;/<span style="color:#f92672">body</span>&gt;
+&lt;/<span style="color:#f92672">html</span>&gt;
+
+</code></pre></div><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-html" data-lang="html"><span style="color:#960050;background-color:#1e0010">&lt;</span>%--
+  Created by IntelliJ IDEA.
+  User: gyk
+  Date: 2022/2/28
+  Time: 9:24 下午
+  To change this template use File | Settings | File Templates.
+--%&gt;
+<span style="color:#960050;background-color:#1e0010">&lt;</span>%@ page contentType=&#34;text/html;charset=UTF-8&#34; language=&#34;java&#34; %&gt;
+&lt;<span style="color:#f92672">html</span>&gt;
+&lt;<span style="color:#f92672">head</span>&gt;
+    &lt;<span style="color:#f92672">title</span>&gt;修改书籍页面&lt;/<span style="color:#f92672">title</span>&gt;
+    &lt;<span style="color:#f92672">link</span> <span style="color:#a6e22e">href</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;https://cdn.staticfile.org/twitter-bootstrap/3.3.7/css/bootstrap.min.css&#34;</span> <span style="color:#a6e22e">rel</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;stylesheet&#34;</span>&gt;
+    &lt;<span style="color:#f92672">style</span>&gt;
+
+    &lt;/<span style="color:#f92672">style</span>&gt;
+&lt;/<span style="color:#f92672">head</span>&gt;
+&lt;<span style="color:#f92672">body</span>&gt;
+&lt;<span style="color:#f92672">div</span> <span style="color:#a6e22e">class</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;container&#34;</span>&gt;
+    &lt;<span style="color:#f92672">div</span> <span style="color:#a6e22e">class</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;row clearfix&#34;</span>&gt;
+        &lt;<span style="color:#f92672">div</span> <span style="color:#a6e22e">class</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;col-md-12 column&#34;</span>&gt;
+            &lt;<span style="color:#f92672">div</span> <span style="color:#a6e22e">class</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;page-header&#34;</span>&gt;
+                &lt;<span style="color:#f92672">h1</span>&gt;
+                    &lt;<span style="color:#f92672">small</span>&gt;修改书籍&lt;/<span style="color:#f92672">small</span>&gt;
+                &lt;/<span style="color:#f92672">h1</span>&gt;
+            &lt;/<span style="color:#f92672">div</span>&gt;
+        &lt;/<span style="color:#f92672">div</span>&gt;
+    &lt;/<span style="color:#f92672">div</span>&gt;
+
+    &lt;<span style="color:#f92672">form</span> <span style="color:#a6e22e">action</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;${pageContext.request.contextPath}/book/updateBook&#34;</span> <span style="color:#a6e22e">method</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;post&#34;</span>&gt;
+        &lt;<span style="color:#f92672">input</span> <span style="color:#a6e22e">type</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;hidden&#34;</span> <span style="color:#a6e22e">name</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;bookID&#34;</span> <span style="color:#a6e22e">value</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;${QBooks.bookID}&#34;</span>&gt;
+        &lt;<span style="color:#f92672">div</span> <span style="color:#a6e22e">class</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;form-group&#34;</span>&gt;
+            &lt;<span style="color:#f92672">label</span>&gt;书籍名称&lt;/<span style="color:#f92672">label</span>&gt;
+            &lt;<span style="color:#f92672">input</span> <span style="color:#a6e22e">type</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;text&#34;</span> <span style="color:#a6e22e">name</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;bookName&#34;</span> <span style="color:#a6e22e">class</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;form-control&#34;</span> <span style="color:#a6e22e">value</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;${QBooks.bookName}&#34;</span> <span style="color:#a6e22e">required</span>&gt;
+        &lt;/<span style="color:#f92672">div</span>&gt;
+
+        &lt;<span style="color:#f92672">div</span> <span style="color:#a6e22e">class</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;form-group&#34;</span>&gt;
+            &lt;<span style="color:#f92672">label</span>&gt;书籍数量&lt;/<span style="color:#f92672">label</span>&gt;
+            &lt;<span style="color:#f92672">input</span> <span style="color:#a6e22e">type</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;text&#34;</span> <span style="color:#a6e22e">name</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;bookCounts&#34;</span> <span style="color:#a6e22e">class</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;form-control&#34;</span> <span style="color:#a6e22e">value</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;${QBooks.bookCounts}&#34;</span> <span style="color:#a6e22e">required</span>&gt;
+        &lt;/<span style="color:#f92672">div</span>&gt;
+
+        &lt;<span style="color:#f92672">div</span> <span style="color:#a6e22e">class</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;form-group&#34;</span>&gt;
+            &lt;<span style="color:#f92672">label</span>&gt;书籍描述&lt;/<span style="color:#f92672">label</span>&gt;
+            &lt;<span style="color:#f92672">input</span> <span style="color:#a6e22e">type</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;text&#34;</span> <span style="color:#a6e22e">name</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;detail&#34;</span> <span style="color:#a6e22e">class</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;form-control&#34;</span> <span style="color:#a6e22e">value</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;${QBooks.detail}&#34;</span> <span style="color:#a6e22e">required</span>&gt;
+        &lt;/<span style="color:#f92672">div</span>&gt;
+
+        &lt;<span style="color:#f92672">div</span> <span style="color:#a6e22e">class</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;form-group&#34;</span>&gt;
+            &lt;<span style="color:#f92672">input</span> <span style="color:#a6e22e">type</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;submit&#34;</span> <span style="color:#a6e22e">class</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;form-control&#34;</span> <span style="color:#a6e22e">value</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;修改&#34;</span>&gt;
+        &lt;/<span style="color:#f92672">div</span>&gt;
+    &lt;/<span style="color:#f92672">form</span>&gt;
+&lt;/<span style="color:#f92672">div</span>&gt;
+&lt;/<span style="color:#f92672">body</span>&gt;
+&lt;/<span style="color:#f92672">html</span>&gt;
+
+
+
+</code></pre></div>
+    </div>
+    <video id="my_video" style="height: 300px;width:100%" controls="controls"></video>
+
+</article>
+<div class="pagination">
+    
+    <div class="prev"><a href="https://Apollo2light.github.io/Apollo2light/backend/11.spring-mvc/">Previous Post</a></div>
+    
+    
+    <div class="next"><a href="https://Apollo2light.github.io/Apollo2light/backend/13.springboot%E5%9F%BA%E7%A1%80/">Next Post</a></div>
+    
+</div>
+
+
+<script>
+    try {
+        
+        let src = document.getElementsByTagName('code')[0].innerText;
+        
+        if (src.indexOf("mp4") != -1) {
+            document.getElementById('my_video').setAttribute("src", src)
+        } else {
+            
+            let video = document.getElementById('my_video');
+            if (video != null) {
+                video.parentNode.removeChild(video);
+            }
+        }
+    } catch (e) {
+        
+        let video = document.getElementById('my_video');
+        if (video != null) {
+            video.parentNode.removeChild(video);
+        }
+    }
+</script>
+
+</main><footer class="site-footer">
+	<span class="right">
+		<em>Apollo&#39;s blog</em>
+	</span>
+</footer>
+</body>
+<script>
+
+</script>
+</html>

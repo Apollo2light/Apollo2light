@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Cs on Apollo&#39;s blog</title>
+    <link>https://Apollo2light.github.io/Apollo2light/cs/</link>
+    <description>Recent content in Cs on Apollo&#39;s blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Thu, 12 May 2022 00:24:53 +0800</lastBuildDate>
+    
+	<atom:link href="https://Apollo2light.github.io/Apollo2light/cs/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>5</title>
+      <link>https://Apollo2light.github.io/Apollo2light/cs/5.%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95/</link>
+      <pubDate>Thu, 12 May 2022 00:24:53 +0800</pubDate>
+      
+      <guid>https://Apollo2light.github.io/Apollo2light/cs/5.%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>4.计算机网络</title>
+      <link>https://Apollo2light.github.io/Apollo2light/cs/4.%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/</link>
+      <pubDate>Thu, 12 May 2022 00:24:35 +0800</pubDate>
+      
+      <guid>https://Apollo2light.github.io/Apollo2light/cs/4.%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/</guid>
+      <description>计算机网络 1.疑惑 网络连接是怎么建立的，如何观察到它们？
+2.四层模型 网络四层模型
+ 应用层：http 传输层：tcp报文/3握4挥 网络层：ip 链路层：线缆  3.应用层 计算机内人可识别的最小单元是字符 HTTP的请求报文由四部分组成：
+ 请求行(request line) 请求头部(header) 空行 请求数据(request data)  3.1 请求行 请求行由请求方法字段、URL字段和HTTP协议版本字段3个字段组成，它们用空格分隔
+ 请求方法有GET、POST、HEAD、PUT、DELETE、OPTIONS、TRACE、CONNECT； URL 统一资源定位符，是一种资源位置的抽象唯一识别方法； HTTP协议版本，常用的有HTTP/1.0和HTTP/1.1  3.2 请求头部 它为请求报文添加了一些附加信息，由“名/值”对组成，每行一对，名和值之间使用冒号分隔
+3.3 空行 请求头部的最后会有一个空行，表示请求头部结束，接下来为请求数据
+3.4 请求数据 请求数据不在GET方法中使用，而在POST方法中使用。POST方法适用于需要客户填写表单的场合。与请求数据相关的最长使用的请求头部是Cntent-Type和Content-Length
+4.传输层 传输层将应用层字节数据封装成报文，该报文包括：
+ 源端口SourcePort目的端口DestinationPort 序列号Sequence Number，它表示本报文段所发送数据的第一个字节的编号 确认号Acknowledgment Number，它表示接收方期望收到发送方下一个报文段的第一个字节数据的编号 首部长度Header Length，它表示数据段中的“数据”部分起始处距离 TCP 数据段起始处的字节偏移量 保留Reserved，它表示为 TCP 将来的发展预留空间 标志位：CWR/ECE/URG/ACK/PSH/PST/SYN/FIN 窗口大小Window Size，它表示从 Ack Number 开始还可以接收多少字节的数据量 校验位TCP Checksum，它用于确认传输的数据是否有损坏 紧急指针Urgent Pointer，它指出本数据段中为紧急数据的字节数 选项Option，长度不定，但长度必须是 32bits 的整数倍  5.网络层 网络层将报文数据封装成IP数据报格式传输 每个IP数据报包含两部分：</description>
+    </item>
+    
+    <item>
+      <title>3</title>
+      <link>https://Apollo2light.github.io/Apollo2light/cs/3.%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86/</link>
+      <pubDate>Thu, 12 May 2022 00:24:25 +0800</pubDate>
+      
+      <guid>https://Apollo2light.github.io/Apollo2light/cs/3.%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>2</title>
+      <link>https://Apollo2light.github.io/Apollo2light/cs/2.%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/</link>
+      <pubDate>Thu, 12 May 2022 00:24:15 +0800</pubDate>
+      
+      <guid>https://Apollo2light.github.io/Apollo2light/cs/2.%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>1.计组</title>
+      <link>https://Apollo2light.github.io/Apollo2light/cs/1.%E8%AE%A1%E7%BB%84/</link>
+      <pubDate>Thu, 12 May 2022 00:23:51 +0800</pubDate>
+      
+      <guid>https://Apollo2light.github.io/Apollo2light/cs/1.%E8%AE%A1%E7%BB%84/</guid>
+      <description>1.什么是电路？ 物质由原子组成，原子由电子核与核外电子组成，在电场力的作用下核外电子绕原子核做圆周运动，当施加外部电场力时，导体的核外电子脱离原子核的束缚沿着电场力的方向运动：
+ 电子的定向移动就形成了电流 原子核同时也会阻止核外电子的力形成了电阻 核外电子移动后造成正负电子间的势能差形成了电压 在宏观世界，电流，电阻和电压会被转化为其他形式的能量，为了描述这些能量，提出了焦耳定律 q=i^2rt,焦耳反应了电流的做功大小 p=ui,功率反应了做功快慢  2.什么是电子管？ 通电的灯丝处产生大量活跃的电子，在电子管中加入外加正电压的金属板，活跃的电子在电场力的作用下朝着金属板移动产生电流，改变外加电压的正负即可控制通断，在外加正电压金属板与活跃电子之间再加入金属板，可用于加强电场。这样通过电压的正负极转换就能控制电子管的通断，但电子管的体积大，功耗高，难以适应急剧增长的需求 
+3.什么是晶体管？ 纯净的硅原子最外层有4个电子，它既不容易得到电子也不容易失去电子，被叫做本征半导体，
+ 在纯净的硅原子中加入带有5电子的磷原子，整体带负电，叫做N型半导体 在纯净的硅原子中加入带有3电子的硼原子，整体带正电，叫做P型半导体  晶体二极管：将N型半导体和P型半导体结合，前者电子浓度高，后者空穴浓度高，产生扩散运动，随之建立电场，电场力又会驱使电子产生漂移运动，扩散与漂移运动最终达到平衡，当外加电压与内电场方向一致时，漂移运动占据主导，电路导通，当外加电压与内电场方向相反时，扩散运动占据主导，电路中断，这样通过控制电场方向就可以来控制晶体管的通断
+晶体三极管：将三个p型与n型的半导体组合，就会造出类似电子管的装置，
+ 发射极类似通电的灯丝处产生大量活跃的电子 集电极类似在电子管中加入外加正电压的金属板 基极类似在外加正电压金属板与活跃电子之间的增强金属板  以NPN型三极管为例，它包括基极，集电极和发射极，基极负责调控通断
+ 1.b处电流极小时be/bc都不导通，整体出电量几乎为0，处于截止状态 2.b处电流逐渐增大，be/bc慢慢导通，整体出电量慢慢增大，处于放大状态 3.b处电流增大到将bc完全导通时，be/bc全部导通，整体出电量保持最大不变，处于饱和状态  通过调节基极电压就可以控制 集电极 与 发射极 的通断
+放大电路 基极上控制着集电极电流，集电极电阻处的电压就大致等于放大后的基极处电压，外接电容避免回路向发射极灌入电流同时接受信号输入
+4.什么是数字电路？ 将模拟信号进行采样后数字化，用二进制的补码形式来表示这些数字化的信号，然后将这些信号通过以逻辑代数为原理，晶体管制成的逻辑元件 为载体的电路
+模拟信号是指随时间连续变化的信号，但现实中是无法存储无限的模拟信号，所以根据奎斯特原理对模拟信号取样后得到离散信号，这样取样能保证信息不丢失，取样得到的离散信号数值使用数字表示，得到数字信号，这样对模拟量的计算就会转化为对数字量的计算，在计算时为了尽可能的简化，采用了二进制表示，它的基数只有01，易于用晶体管制成的逻辑元件实现。
+二进制数在计算时会对应真实世界的符号位，为了将符号位也引进计算，提出了原码/反码/补码等各种二进制的不同表示形式，真实模拟量被二进制数字化表示后，要想弄清楚它们之间的关系，需要对其进行计算，真实的计算包括逻辑计算和算术计算，由计算机中的cpu部件进行实现，计算过程中可能会产生各种中间量和最终结果，这些数据由计算机中的存储器进行实现。
+在逻辑代数的应用中如何找到最简计算方法，就要明白功能-函数/函数-功能的转化,在设计对应的复杂器件时，通常经过以下步骤：
+ 1.明确输入输出关系 2.画出真值表 3.得到真值表的逻辑函数 4.化简逻辑函数  5.基本门电路 计算机除了包含cpu，存储器，还有大量的输入输出设备，这种体系即为冯诺伊曼体系
+利用晶体管可以搭建出复杂的部件，这些部件可以完成逻辑与算数运算，数据存储等功能
+常见的简单门电路有：与门，或门，非门，与非门，或非门，同或门，异或门
+异或门搭建：
+6.基本部件 进行逻辑运算时需要涉及到加减乘除，对应的器件设计如下：
+6.1 多位并行加减法器 全加器：输入是2个一位加数和1个一位进位，输出是1个一位结果和1个一位进位
+一个全加器计算的只是2个一位数，要想同时进行多个一位数的计算，就需要将其串联起来，得到串行四位补码全加器
+串行多位补码全加器只能计算加法，可以通过改造加入p输入控制第二位的正负，得到串行四位补码加减法器
+串行四位补码加减法器在计算时会产生溢出，需要对溢出做处理
+串行四位补码加减法器在计算时下一位的计算需要上一步算好的进位，速度较慢，所以需要将串行打破，改造成并行，得到并行四位补码加减法器
+并行四位补码加减法器要想再次扩充，同样需要按照上面的步骤将串行链改造为并行链，抽象出并行部件6.2 多位并行乘除法器 在进行乘法运算时，实际可以转化成加法运算，2位数相乘时的中间量进行累加，每次累加结果右移一位，将右移部分移到乘数寄存器当中
+6.3 存储器 </description>
+    </item>
+    
+  </channel>
+</rss>

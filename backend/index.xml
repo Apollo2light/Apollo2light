@@ -1,0 +1,215 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Backends on Apollo&#39;s blog</title>
+    <link>https://Apollo2light.github.io/Apollo2light/backend/</link>
+    <description>Recent content in Backends on Apollo&#39;s blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Thu, 12 May 2022 01:10:37 +0800</lastBuildDate>
+    
+	<atom:link href="https://Apollo2light.github.io/Apollo2light/backend/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>0.java路线</title>
+      <link>https://Apollo2light.github.io/Apollo2light/backend/0.java%E8%B7%AF%E7%BA%BF/</link>
+      <pubDate>Thu, 12 May 2022 01:10:37 +0800</pubDate>
+      
+      <guid>https://Apollo2light.github.io/Apollo2light/backend/0.java%E8%B7%AF%E7%BA%BF/</guid>
+      <description>1.java基础 java基础知识包括：
+ 基础语法：关键词/运算符/数据结构 + 流程 面向对象：三大特性/接口 应用程序：集合反射多线程/网络异常数据库/nio加类库 新特性：泛型注解和枚举/流式拆装lambda  2.javaWeb 3.ssm 4.springboot 5.springcloud </description>
+    </item>
+    
+    <item>
+      <title>13.springboot教程</title>
+      <link>https://Apollo2light.github.io/Apollo2light/backend/13.springboot%E5%9F%BA%E7%A1%80/</link>
+      <pubDate>Thu, 10 Mar 2022 00:50:47 +0800</pubDate>
+      
+      <guid>https://Apollo2light.github.io/Apollo2light/backend/13.springboot%E5%9F%BA%E7%A1%80/</guid>
+      <description>== springboot原理 == | == springboot原理 == | == springboot原理 == |
+1.springboot将spring中各种繁琐的配置进行简化
+以前写的ssm项目属于单体结构，springboot写的项目是微服务项目
+  @springbootApplication扫描spring.factories的全部自动配置
+  @condition并不会使它们全部生效，需要添加对应starter来启动
+  @xxxautoConfiguration/xxProperties扫描时会存在与yml配置文件绑定实现手动改配置
+  @Configuration在config/xxConfig.java自定义starter
+  == 配置文件 == | == 配置文件 == | == 配置文件 == | == 配置文件 == |
+1.springboot可以通过yml文件进行手动配置,常见的如下
+# 端口配置 server: port: 8081 # 多环境配置 spring: profiles: active: dev --- server: port: 8082 spring: profiles: active: test 2.springboot可以通过yml文件为实体类赋值
+package wiki.mrx.pojo; import lombok.AllArgsConstructor; import lombok.</description>
+    </item>
+    
+    <item>
+      <title>12.ssm整合</title>
+      <link>https://Apollo2light.github.io/Apollo2light/backend/12.ssm%E6%95%B4%E5%90%88/</link>
+      <pubDate>Mon, 28 Feb 2022 17:22:55 +0800</pubDate>
+      
+      <guid>https://Apollo2light.github.io/Apollo2light/backend/12.ssm%E6%95%B4%E5%90%88/</guid>
+      <description>== 建数据库 == ｜ == 建数据库 == ｜ == 建数据库 == ｜
+CREATE DATABASE `ssmbuild`; USE `ssmbuild`; DROP TABLE IF EXISTS `books`; CREATE TABLE `books` ( `bookID` INT(10) NOT NULL AUTO_INCREMENT COMMENT &amp;#39;书id&amp;#39;, `bookName` VARCHAR(100) NOT NULL COMMENT &amp;#39;书名&amp;#39;, `bookCounts` INT(11) NOT NULL COMMENT &amp;#39;数量&amp;#39;, `detail` VARCHAR(200) NOT NULL COMMENT &amp;#39;描述&amp;#39;, KEY `bookID` (`bookID`) )ENGINE=INNODB DEFAULT CHARSET=utf8 INSERT INTO `BOOKS`(`bookID`,`bookName`,`bookCounts`,`detail`)VALUES (1,&amp;#39;java&amp;#39;,1,&amp;#39; 从入门到精通&amp;#39;), (2,&amp;#39;mysql&amp;#39;,10,&amp;#39;从删库到跑路&amp;#39;), (3,&amp;#39;linux&amp;#39;,5,&amp;#39;从入门到入狱&amp;#39;); == 整合mybatis == | == 整合mybatis == | == 整合mybatis == |</description>
+    </item>
+    
+    <item>
+      <title>11.spring-mvc</title>
+      <link>https://Apollo2light.github.io/Apollo2light/backend/11.spring-mvc/</link>
+      <pubDate>Sat, 26 Feb 2022 02:06:12 +0800</pubDate>
+      
+      <guid>https://Apollo2light.github.io/Apollo2light/backend/11.spring-mvc/</guid>
+      <description>== 原始api == | == 原始api == |== 原始api == |
+第一步：导包
+&amp;lt;?xml version=&amp;#34;1.0&amp;#34; encoding=&amp;#34;UTF-8&amp;#34;?&amp;gt; &amp;lt;project xmlns=&amp;#34;http://maven.apache.org/POM/4.0.0&amp;#34; xmlns:xsi=&amp;#34;http://www.w3.org/2001/XMLSchema-instance&amp;#34; xsi:schemaLocation=&amp;#34;http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd&amp;#34;&amp;gt; &amp;lt;modelVersion&amp;gt;4.0.0&amp;lt;/modelVersion&amp;gt; &amp;lt;groupId&amp;gt;org.example&amp;lt;/groupId&amp;gt; &amp;lt;artifactId&amp;gt;springmvc-study&amp;lt;/artifactId&amp;gt; &amp;lt;packaging&amp;gt;pom&amp;lt;/packaging&amp;gt; &amp;lt;version&amp;gt;1.0-SNAPSHOT&amp;lt;/version&amp;gt; &amp;lt;modules&amp;gt; &amp;lt;module&amp;gt;springmvc-01&amp;lt;/module&amp;gt; &amp;lt;module&amp;gt;springmvc-02&amp;lt;/module&amp;gt; &amp;lt;/modules&amp;gt; &amp;lt;dependencies&amp;gt; &amp;lt;dependency&amp;gt; &amp;lt;groupId&amp;gt;junit&amp;lt;/groupId&amp;gt; &amp;lt;artifactId&amp;gt;junit&amp;lt;/artifactId&amp;gt; &amp;lt;version&amp;gt;4.12&amp;lt;/version&amp;gt; &amp;lt;scope&amp;gt;test&amp;lt;/scope&amp;gt; &amp;lt;/dependency&amp;gt; &amp;lt;dependency&amp;gt; &amp;lt;groupId&amp;gt;org.springframework&amp;lt;/groupId&amp;gt; &amp;lt;artifactId&amp;gt;spring-webmvc&amp;lt;/artifactId&amp;gt; &amp;lt;version&amp;gt;5.3.16&amp;lt;/version&amp;gt; &amp;lt;/dependency&amp;gt; &amp;lt;dependency&amp;gt; &amp;lt;groupId&amp;gt;javax.servlet&amp;lt;/groupId&amp;gt; &amp;lt;artifactId&amp;gt;servlet-api&amp;lt;/artifactId&amp;gt; &amp;lt;version&amp;gt;2.5&amp;lt;/version&amp;gt; &amp;lt;/dependency&amp;gt; &amp;lt;dependency&amp;gt; &amp;lt;groupId&amp;gt;javax.servlet.jsp&amp;lt;/groupId&amp;gt; &amp;lt;artifactId&amp;gt;jsp-api&amp;lt;/artifactId&amp;gt; &amp;lt;version&amp;gt;2.1&amp;lt;/version&amp;gt; &amp;lt;/dependency&amp;gt; &amp;lt;dependency&amp;gt; &amp;lt;groupId&amp;gt;javax.servlet.jsp.jstl&amp;lt;/groupId&amp;gt; &amp;lt;artifactId&amp;gt;jstl&amp;lt;/artifactId&amp;gt; &amp;lt;version&amp;gt;1.2&amp;lt;/version&amp;gt; &amp;lt;/dependency&amp;gt; &amp;lt;/dependencies&amp;gt; &amp;lt;/project&amp;gt; 第二步：编写servlet和jsp
+package wiki.mrx.controller; import org.springframework.web.servlet.ModelAndView; import org.springframework.web.servlet.mvc.Controller; import javax.servlet.http.HttpServletRequest; import javax.servlet.http.HttpServletResponse; public class HelloController implements Controller { public ModelAndView handleRequest(HttpServletRequest request, HttpServletResponse response) throws Exception { //模型与视图  ModelAndView mv = new ModelAndView(); mv.</description>
+    </item>
+    
+    <item>
+      <title>10.spring</title>
+      <link>https://Apollo2light.github.io/Apollo2light/backend/10.spring/</link>
+      <pubDate>Thu, 17 Feb 2022 01:53:32 +0800</pubDate>
+      
+      <guid>https://Apollo2light.github.io/Apollo2light/backend/10.spring/</guid>
+      <description>===spring简介===｜===spring简介===｜===spring简介===
+https://docs.spring.io/spring-framework/docs/5.2.0.RELEASE/spring-framework-reference/
+  spring是容器，支持IOC(控制反转)和AOP(面向切面编程)
+  控制反转：对象的创建和依赖关系被解耦交给第三方控制(程序由spring容器创建管理装配)而非程序本身控制(程序由程序员创建管理装配)
+  依赖注入(DI):它是实现IOC的方式，所有bean对象的创建都依赖容器，其属性注入赋值也都由容器实现，具体有构造器注入(constructor-arg)，set注入(基本/引用)和第三方注入(p/c) 等形式
+  spring使用｜spring使用｜spring使用｜spring使用
+1.引入spring包
+&amp;lt;?xml version=&amp;#34;1.0&amp;#34; encoding=&amp;#34;UTF-8&amp;#34;?&amp;gt; &amp;lt;project xmlns=&amp;#34;http://maven.apache.org/POM/4.0.0&amp;#34; xmlns:xsi=&amp;#34;http://www.w3.org/2001/XMLSchema-instance&amp;#34; xsi:schemaLocation=&amp;#34;http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd&amp;#34;&amp;gt; &amp;lt;modelVersion&amp;gt;4.0.0&amp;lt;/modelVersion&amp;gt; &amp;lt;groupId&amp;gt;org.example&amp;lt;/groupId&amp;gt; &amp;lt;artifactId&amp;gt;spring-study&amp;lt;/artifactId&amp;gt; &amp;lt;packaging&amp;gt;pom&amp;lt;/packaging&amp;gt; &amp;lt;version&amp;gt;1.0-SNAPSHOT&amp;lt;/version&amp;gt; &amp;lt;modules&amp;gt; &amp;lt;module&amp;gt;spring-01&amp;lt;/module&amp;gt; &amp;lt;/modules&amp;gt; &amp;lt;dependencies&amp;gt; &amp;lt;!-- https://mvnrepository.com/artifact/org.springframework/spring-webmvc --&amp;gt; &amp;lt;dependency&amp;gt; &amp;lt;groupId&amp;gt;org.springframework&amp;lt;/groupId&amp;gt; &amp;lt;artifactId&amp;gt;spring-webmvc&amp;lt;/artifactId&amp;gt; &amp;lt;version&amp;gt;5.3.15&amp;lt;/version&amp;gt; &amp;lt;/dependency&amp;gt; &amp;lt;/dependencies&amp;gt; &amp;lt;/project&amp;gt; 2.编写pojo实体类
+package wiki.mrx.pojo; public class Hello { private String str; public String getStr() { return str; } public void setStr(String str) { this.str = str; } @Override public String toString() { return &amp;#34;Hello{&amp;#34; + &amp;#34;str=&amp;#39;&amp;#34; + str + &amp;#39;\&amp;#39;&amp;#39; + &amp;#39;}&amp;#39;; } } 3.</description>
+    </item>
+    
+    <item>
+      <title>mybatis</title>
+      <link>https://Apollo2light.github.io/Apollo2light/backend/9.mybatis/</link>
+      <pubDate>Wed, 16 Feb 2022 19:58:49 +0800</pubDate>
+      
+      <guid>https://Apollo2light.github.io/Apollo2light/backend/9.mybatis/</guid>
+      <description>mybatis简介|mybatis简介|mybatis简介|mybatis简介|mybatis简介|
+mybatis是持久层框架，免除了 JDBC 代码以及设置参数和获取结果集的工作，通过XML 或注解来映射为数据库中的记录，MyBatis有个 Resources的工具类帮助获取配置文件内容，获取顺序为：
+ 1.mybatis-config.xml中的configuration &amp;mdash;&amp;ndash;&amp;gt; 配置文件 2.SqlSessionFactoryBuilder &amp;mdash;&amp;ndash;&amp;gt; 读取配置的类 3.SqlSessionFactory&amp;mdash;&amp;ndash;&amp;gt; 创建SqlSession的工厂类 4.SqlSession&amp;mdash;&amp;ndash;&amp;gt; 包含了执行sql的所有方法  ===增删改查===| ===增删改查===| ===增删改查===| ===增删改查===|
+CREATE DATABASE `mybatis`; USE `mybatis`; CREATE TABLE `user`( `id` INT(20) NOT NULL PRIMARY KEY, `name` VARCHAR(30) DEFAULT NULL, `pwd` VARCHAR(30) DEFAULT NULL )ENGINE = INNODB DEFAULT CHARSET=utf8; INSERT INTO `user`(`id`,`name`,`pwd`) VALUES (1,&amp;#34;sss&amp;#34;,&amp;#34;111111&amp;#34;), (2,&amp;#34;qq&amp;#34;,&amp;#34;134111&amp;#34;), (3,&amp;#34;rrrr&amp;#34;,&amp;#34;11111441&amp;#34;), (4,&amp;#34;ddd&amp;#34;,&amp;#34;11321111&amp;#34;); SELECT * from `user`; 新建无模版的maven项目，删除src将其作为主工程，导入jar包
+&amp;lt;?xml version=&amp;#34;1.0&amp;#34; encoding=&amp;#34;UTF-8&amp;#34;?&amp;gt; &amp;lt;project xmlns=&amp;#34;http://maven.apache.org/POM/4.0.0&amp;#34; xmlns:xsi=&amp;#34;http://www.w3.org/2001/XMLSchema-instance&amp;#34; xsi:schemaLocation=&amp;#34;http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd&amp;#34;&amp;gt; &amp;lt;modelVersion&amp;gt;4.</description>
+    </item>
+    
+    <item>
+      <title>8.javaweb</title>
+      <link>https://Apollo2light.github.io/Apollo2light/backend/8.javaweb/</link>
+      <pubDate>Fri, 21 Jan 2022 01:17:00 +0800</pubDate>
+      
+      <guid>https://Apollo2light.github.io/Apollo2light/backend/8.javaweb/</guid>
+      <description>1.下载完全版idea 1.1 下载软件 idea软件：
+链接: https://pan.baidu.com/s/1OH0ybMuGvhkXie5EJ10uEg 密码: vjli
+破解包：
+链接: https://pan.baidu.com/s/1cR7eZSyx7dKz3R_Ei29_mg 密码: mj88
+1.2 使用方法 1.安装运行 idea，在弹出的注册界面，选择 Evaluate for free，点击 Evaluate 试用软件
+2.破解文件夹中的 jetbrains-agent.jar 文件拖动到软件内，然后点击 Restart 重启软件
+3.重启后，弹出激活方式，选择 Activation code，复制破解文件 Activation code，激活重启
+4.重启软件，在 Get Help 中点击 About
+2.新建maven项目 2.1 有模版 2.2 无模版 3.tomcat服务器 3.1环境变量 3.2 idea中配置 4.servlet项目 4.1 步骤   1.新建无模版maven项目
+  2.删除src目录，在pom.xml引入javax.servlet和javax.servlet.jsp依赖
+  &amp;lt;dependencies&amp;gt; &amp;lt;!-- https://mvnrepository.com/artifact/javax.servlet/javax.servlet-api --&amp;gt; &amp;lt;dependency&amp;gt; &amp;lt;groupId&amp;gt;javax.servlet&amp;lt;/groupId&amp;gt; &amp;lt;artifactId&amp;gt;javax.servlet-api&amp;lt;/artifactId&amp;gt; &amp;lt;version&amp;gt;4.0.1&amp;lt;/version&amp;gt; &amp;lt;scope&amp;gt;provided&amp;lt;/scope&amp;gt; &amp;lt;/dependency&amp;gt; &amp;lt;!-- https://mvnrepository.com/artifact/javax.servlet.jsp/javax.servlet.jsp-api --&amp;gt; &amp;lt;dependency&amp;gt; &amp;lt;groupId&amp;gt;javax.</description>
+    </item>
+    
+    <item>
+      <title>7.数据库</title>
+      <link>https://Apollo2light.github.io/Apollo2light/backend/7.%E6%95%B0%E6%8D%AE%E5%BA%93/</link>
+      <pubDate>Thu, 10 Jun 2021 20:03:59 +0800</pubDate>
+      
+      <guid>https://Apollo2light.github.io/Apollo2light/backend/7.%E6%95%B0%E6%8D%AE%E5%BA%93/</guid>
+      <description>==数据库分类==|====数据库分类==|====数据库分类==|====数据库分类==|
+ 关系数据库：oracle，mysql 非关系数据库：mongodb，redis  基本概念|基本概念|基本概念|基本概念|基本概念|基本概念|基本概念|
+ 1.DQL数据查询语句，DDL数据定义语言，DCL数据控制语言，TCL事务控制语言。 2.主键：可查询到唯一对应的数据，是非空且唯一的,如果是整数类型则需要自增。 3.非外键约束：对单表字段的限定条件 4.外键约束：多表间有联系的字段添加限制条件,student表某字段可以是class表外键 5.级联操作：操作主表时影响从表的外键信息 6.事务：多条sql命令完成一件事，具有原子性，一致性，隔离性，持久性 7.脏读：一个事务读取了另一个没提交的事务 8.幻读：同一事务中，读取了其他插入的数据，导致前后结果不一致  ===常用sql命令=== | ===常用sql命令=== | ===常用sql命令=== |===常用sql命令=== |
+数据库：登陆，查看，增删改查，事务； //1.登陆数据库 mysql -h localhost -u root -p //2.查看信息 show databases;//显示所有数据库 use 数据库名字;//进入该数据库 show tables;//显示该数据库下的锁哟表 desc t_student;//列出该表的所有字段 select * from t_student;//列出该表的所有数据 show create table t_student;//显示创建该字段的sql语句 exit;或者\q;//退出数据库 //3.操作数据 ## 创建表格 create table t_student( sno int(6) primary key auto_increment, sname varchar(5) not null, sex char(1) default &amp;#39;男&amp;#39; check(sex=&amp;#39;男&amp;#39;|| sex=&amp;#39;女&amp;#39;), sage int(3) check(sage&amp;gt;=18 and sage&amp;lt;=50), enterdate date, classname varchar(10), email varchar(15) unique ); ## 插入数据 insert into t_student values(); alter table t_student add score double(5,2) first/after; alter table t_student drop score; ## 修改数据 update t_student set sex = &amp;#39;女&amp;#39; where sno = 1; ## 删除数据 delete from t_student where sno=1; drop table t_student; ## 外键 ## 班级表 create table t_class( cno int(6) primary key auto_increment, cname varchar(10) not null, room char(4) ); insert into t_class values(null,&amp;#39;java001&amp;#39;,&amp;#39;r803&amp;#39;); insert into t_class values(null,&amp;#39;java002&amp;#39;,&amp;#39;r416&amp;#39;); insert into t_class values(null,&amp;#39;java002&amp;#39;,&amp;#39;r103&amp;#39;); ## 学生表 create table t_student( sno int(6) primary key auto_increment, sname varchar(5) not null, cno int(4), constraint fk_stu_cno foreign key(cno) references t_class(cno) ); insert into t_student values(null,&amp;#39;章三&amp;#39;,1),(null,&amp;#39;里斯&amp;#39;,1),(null,&amp;#39;王武&amp;#39;,2); ## 事务 commit ===JDBC=== | ===JDBC=== | ===JDBC=== | ===JDBC=== | ===JDBC=== |</description>
+    </item>
+    
+    <item>
+      <title>6.java杂项</title>
+      <link>https://Apollo2light.github.io/Apollo2light/backend/6.java%E6%9D%82%E9%A1%B9/</link>
+      <pubDate>Tue, 01 Jun 2021 17:40:00 +0800</pubDate>
+      
+      <guid>https://Apollo2light.github.io/Apollo2light/backend/6.java%E6%9D%82%E9%A1%B9/</guid>
+      <description>1.泛型 泛型：检测或设置引用数据类型
+ 在集合中加泛型可以规定存入集合的数据类型，便于后续遍历 在类中加泛型可以后期传入具体的数据类型，而不必提前规定  package wiki.mrx.www; class Testa&amp;lt;E&amp;gt; { public void test(E m){ } } public class Test { public static void main(String[] args) { Testa&amp;lt;String&amp;gt; t = new Testa&amp;lt;&amp;gt;(); t.test(&amp;#34;test&amp;#34;); } } 2.异常 异常都继承于Throwable类，具体分类如下：
+ Error Exception  检查异常 运行时异常 可以使用如下结构处理异常：    try{ }catch (Exception e){ e.printStackTrace(); }finally { } 3.注解 注解Annotation：代码编译时会被读取并自动操作标记好的内容
+JDK内置了3个注解：@Override重写，@Deprecated过时标记 @SuppressWarnings抑制警告
+jdk5.0提供了4个源注解：Retention生命周期 Target作用目标 Documented文档 Inherited继承
+4.枚举 枚举类enum：可创建的对象个数是有限的，确定的
+package wiki.mrx; public class Season { private final String seasonName; private final String seasonDesc; private Season(String seasonName, String seasonDesc) { this.</description>
+    </item>
+    
+    <item>
+      <title>5。java集合容器</title>
+      <link>https://Apollo2light.github.io/Apollo2light/backend/5.java%E9%9B%86%E5%90%88%E6%A1%86%E6%9E%B6/</link>
+      <pubDate>Tue, 01 Jun 2021 17:39:34 +0800</pubDate>
+      
+      <guid>https://Apollo2light.github.io/Apollo2light/backend/5.java%E9%9B%86%E5%90%88%E6%A1%86%E6%9E%B6/</guid>
+      <description>1.基础知识 算法：解决问题的方法，可用时间复杂度，空间复杂度来评判效率
+数据结构：组织管理数据
+逻辑上表现为：线性表，图，树，堆，栈
+物理上表现为：紧密顺序结构，跳转链式结构
+集合用于存储引用类型数据，具体分为：
+ Collection接口  List子接口  ArrayList实现类 Vector实现类 LinkedList实现类   Set子接口  HashSet实现类  LinkedHashSet实现类   TreeSet实现类     Map接口  HashMap TreeMap    2.Collection接口 package wiki.mrx.www; import java.util.ArrayList; import java.util.Collection; import java.util.Iterator; public class TestCollection { public static void main(String[] args) { //创建对象  Collection col = new ArrayList(); //增  col.add(18); col.add(18); col.add(18); col.add(18); //增强型for循环遍历  for (Object o: col) { System.</description>
+    </item>
+    
+    <item>
+      <title>4.java网络编程</title>
+      <link>https://Apollo2light.github.io/Apollo2light/backend/4.java%E7%BD%91%E7%BB%9C%E7%BC%96%E7%A8%8B/</link>
+      <pubDate>Tue, 01 Jun 2021 17:37:49 +0800</pubDate>
+      
+      <guid>https://Apollo2light.github.io/Apollo2light/backend/4.java%E7%BD%91%E7%BB%9C%E7%BC%96%E7%A8%8B/</guid>
+      <description>1.基础知识 网络互联需要ip和端口，传输时需要遵守一定的规则，这个规则就是网络传输协议，即四层传输协议：
+ 应用层http 传输层udp,tcp 网络层ip 链路层  2.tcp协议 三次握手：客户端与服务器建立连接
+四次挥手：客户端与服务器断开连接
+//客户端 package wiki.mrx.www; import java.io.*; import java.net.Socket; import java.util.Scanner; public class TestClient { public static void main(String[] args){ System.out.println(&amp;#34;客户端启动了&amp;#34;); //1.创建套接字，指定ip和端口  Socket s = null; OutputStream os = null; ObjectOutputStream oos = null; InputStream is = null; DataInputStream dis = null; try { s = new Socket(&amp;#34;192.168.18.5&amp;#34;,8888); //录入账号密码  Scanner sc = new Scanner(System.in); System.out.println(&amp;#34;请录入账号：&amp;#34;); String name = sc.next(); System.</description>
+    </item>
+    
+    <item>
+      <title>3.javaio流</title>
+      <link>https://Apollo2light.github.io/Apollo2light/backend/3.javaio%E6%B5%81/</link>
+      <pubDate>Tue, 01 Jun 2021 17:37:33 +0800</pubDate>
+      
+      <guid>https://Apollo2light.github.io/Apollo2light/backend/3.javaio%E6%B5%81/</guid>
+      <description>1.文件外 java将文件抽象为file类可以操作盘符上的文件
+package wiki.mrx.www; import java.io.File; public class FileTest { public static void main(String[] args) { File f = new File(&amp;#34;/Users/gyk/desktop/test.txt&amp;#34;); System.out.println(f.canExecute() ); System.out.println(f.canRead()); System.out.println(f.getName()); System.out.println(f.canWrite()); System.out.println(f.exists()); System.out.println(f.getAbsoluteFile()); System.out.println(f.getAbsolutePath()); System.out.println(f.getParentFile()); System.out.println(f.getPath()); System.out.println(f.isDirectory()); System.out.println(f.isHidden()); System.out.println(f.lastModified()); System.out.println(f.length()); System.out.println(f.list()); } } 2.文件内 文件的本质是二进制的数据，可以把他们想像成水源和管道，他们都有进有出，根据传输的用途分为：
+  处理文本文件的字符流
+  处理非文本文件的字节流
+  减少硬盘操作次数的处理流
+  转换流
+  数据流操作基本数据类型和string
+  对象流操作引用类型数据
+  ===========================================
+处理文本文件的字符流
+用FileReader和FileWriter完成文本文件复制,缓冲数组 ===========================================
+//用FileReader和FileWriter完成文本文件复制 package wiki.mrx.www; import java.io.*; public class FileTest { public static void main(String[] args) throws IOException { //1.</description>
+    </item>
+    
+    <item>
+      <title>Java多线程</title>
+      <link>https://Apollo2light.github.io/Apollo2light/backend/2.java%E5%A4%9A%E7%BA%BF%E7%A8%8B/</link>
+      <pubDate>Tue, 01 Jun 2021 17:22:28 +0800</pubDate>
+      
+      <guid>https://Apollo2light.github.io/Apollo2light/backend/2.java%E5%A4%9A%E7%BA%BF%E7%A8%8B/</guid>
+      <description>1.多线程 多线程就是指多核CPU同时干多件事 在java中开启多线程有三种方法： 继承Thread类， 实现Runnable接口 实现Callable接口 但Thread因为是类的继承，所以有单继承的弊端， Runnable是接口实现，可以进行多继承， 使用时implements实现接口重写run方法，但无返回值， Callable是接口实现，可以进行多继承，也有返回值， 根据不同情况，合理选择使用Runnable和Callable接口 开启多线程后，由于多个线程执行顺序是由CPU自行调度， 这种不确定性会引起执行结果的不稳定性，除执行顺序外， 还可能出现多个线程同时操作同一份资源的情况，这会导 致资源不安全，所以需要线程同步，它的本质是一种等待 的机制，在JDK5之前，我们可以通过synchronized方 法或者synchronized同步块来对资源进行隐式加锁，保 证安全，在JDK5之后，我们可以通过lock锁机制来显式加 锁，保证安全，一般少量代码用synchronized，大量代码 用lock锁 👉synchronized方法： 可以通过private关键字来保证数据对象只能被方法访问， 所以只需要对这个方法提出一套机制，这套机制就是 synchronized 关键字，即synchronized方法 👉synchronized同步块： 有时并不需要对数据添加private关键字 ，而是在代码 中直接使用synchronized( Obj ){ }同步块，obj是 类似于上面的私有数据对象 👉lock锁机制： 多线程编程时同步队列会出现很多常见涉及到锁的情形， 在java中将这些多线程常见情形抽象封装成开箱即用的 工具包，叫做JUC，常见的JUC.locks，JUC.automic 等，它包含了很多接口和实现类，可以拿来即用 ===========================================
+2.1创建：thread，runnable，callable
+===========================================
+//创建 //继承Thread类,重写run方法，新建对象后start开启线程 package wiki.mrx.www; public class TestThread extends Thread{ //主线程  public static void main(String[] args) { //创建并开启线程  TestThread t1 = new TestThread(); t1.start(); //主线程代码  for (int i=0;i&amp;lt;20;i++){ System.</description>
+    </item>
+    
+    <item>
+      <title>java面向对象</title>
+      <link>https://Apollo2light.github.io/Apollo2light/backend/1.java%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1/</link>
+      <pubDate>Tue, 01 Jun 2021 17:22:15 +0800</pubDate>
+      
+      <guid>https://Apollo2light.github.io/Apollo2light/backend/1.java%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1/</guid>
+      <description>先有逻辑正确的思路，剩余的是重复的实践与积累
+1.面向对象 ===========================================
+1.1 类是有属性，方法和构造器的模版，对象是实例
+===========================================
+1.2 面向对象的三大特性：
+===========================================
+ 封装：修饰符，get,set方法 继承：extends，super，源头object 多态：同一行为，不同子类有不同表现，继承，子类重写父类方法，父类引用指向子类实例  //父类 package wiki.mrx.www; public class Person { //属性  private String name; static int age; //构造器：用于初始化数据  public Person(String name, int age) { this.name = name; this.age = age; } //get方法  public String getName() { return name; } public static int getAge() { return age; } //set方法  public void setName(String name) { this.name = name; } public static void setAge(int age) { Person.</description>
+    </item>
+    
+  </channel>
+</rss>

@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang=en-us><head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title> 1.计组 - Apollo&#39;s blog</title>
+    <meta name="description" content="1.什么是电路？ 物质由原子组成，原子由电子核与核外电子组成，在电场力的作用下核外电子绕原子核做圆周运动，当施加外部电场力时，导体的核外电子脱离原子核的束缚沿着电场力的方向运动：
+ 电子的定向移动就形成了电流 原子核同时也会阻止核外电子的力形成了电阻 核外电子移动后造成正负电子间的势能差形成了电压 在宏观世界，电流，电阻和电压会被转化为其他形式的能量，为了描述这些能量，提出了焦耳定律 q=i^2rt,焦耳反应了电流的做功大小 p=ui,功率反应了做功快慢  2.什么是电子管？ 通电的灯丝处产生大量活跃的电子，在电子管中加入外加正电压的金属板，活跃的电子在电场力的作用下朝着金属板移动产生电流，改变外加电压的正负即可控制通断，在外加正电压金属板与活跃电子之间再加入金属板，可用于加强电场。这样通过电压的正负极转换就能控制电子管的通断，但电子管的体积大，功耗高，难以适应急剧增长的需求 
+3.什么是晶体管？ 纯净的硅原子最外层有4个电子，它既不容易得到电子也不容易失去电子，被叫做本征半导体，
+ 在纯净的硅原子中加入带有5电子的磷原子，整体带负电，叫做N型半导体 在纯净的硅原子中加入带有3电子的硼原子，整体带正电，叫做P型半导体  晶体二极管：将N型半导体和P型半导体结合，前者电子浓度高，后者空穴浓度高，产生扩散运动，随之建立电场，电场力又会驱使电子产生漂移运动，扩散与漂移运动最终达到平衡，当外加电压与内电场方向一致时，漂移运动占据主导，电路导通，当外加电压与内电场方向相反时，扩散运动占据主导，电路中断，这样通过控制电场方向就可以来控制晶体管的通断
+晶体三极管：将三个p型与n型的半导体组合，就会造出类似电子管的装置，
+ 发射极类似通电的灯丝处产生大量活跃的电子 集电极类似在电子管中加入外加正电压的金属板 基极类似在外加正电压金属板与活跃电子之间的增强金属板  以NPN型三极管为例，它包括基极，集电极和发射极，基极负责调控通断
+ 1.b处电流极小时be/bc都不导通，整体出电量几乎为0，处于截止状态 2.b处电流逐渐增大，be/bc慢慢导通，整体出电量慢慢增大，处于放大状态 3.b处电流增大到将bc完全导通时，be/bc全部导通，整体出电量保持最大不变，处于饱和状态  通过调节基极电压就可以控制 集电极 与 发射极 的通断
+放大电路 基极上控制着集电极电流，集电极电阻处的电压就大致等于放大后的基极处电压，外接电容避免回路向发射极灌入电流同时接受信号输入
+4.什么是数字电路？ 将模拟信号进行采样后数字化，用二进制的补码形式来表示这些数字化的信号，然后将这些信号通过以逻辑代数为原理，晶体管制成的逻辑元件 为载体的电路
+模拟信号是指随时间连续变化的信号，但现实中是无法存储无限的模拟信号，所以根据奎斯特原理对模拟信号取样后得到离散信号，这样取样能保证信息不丢失，取样得到的离散信号数值使用数字表示，得到数字信号，这样对模拟量的计算就会转化为对数字量的计算，在计算时为了尽可能的简化，采用了二进制表示，它的基数只有01，易于用晶体管制成的逻辑元件实现。
+二进制数在计算时会对应真实世界的符号位，为了将符号位也引进计算，提出了原码/反码/补码等各种二进制的不同表示形式，真实模拟量被二进制数字化表示后，要想弄清楚它们之间的关系，需要对其进行计算，真实的计算包括逻辑计算和算术计算，由计算机中的cpu部件进行实现，计算过程中可能会产生各种中间量和最终结果，这些数据由计算机中的存储器进行实现。
+在逻辑代数的应用中如何找到最简计算方法，就要明白功能-函数/函数-功能的转化,在设计对应的复杂器件时，通常经过以下步骤：
+ 1.明确输入输出关系 2.画出真值表 3.得到真值表的逻辑函数 4.化简逻辑函数  5.基本门电路 计算机除了包含cpu，存储器，还有大量的输入输出设备，这种体系即为冯诺伊曼体系
+利用晶体管可以搭建出复杂的部件，这些部件可以完成逻辑与算数运算，数据存储等功能
+常见的简单门电路有：与门，或门，非门，与非门，或非门，同或门，异或门
+异或门搭建：
+6.基本部件 进行逻辑运算时需要涉及到加减乘除，对应的器件设计如下：
+6.1 多位并行加减法器 全加器：输入是2个一位加数和1个一位进位，输出是1个一位结果和1个一位进位
+一个全加器计算的只是2个一位数，要想同时进行多个一位数的计算，就需要将其串联起来，得到串行四位补码全加器
+串行多位补码全加器只能计算加法，可以通过改造加入p输入控制第二位的正负，得到串行四位补码加减法器
+串行四位补码加减法器在计算时会产生溢出，需要对溢出做处理
+串行四位补码加减法器在计算时下一位的计算需要上一步算好的进位，速度较慢，所以需要将串行打破，改造成并行，得到并行四位补码加减法器
+并行四位补码加减法器要想再次扩充，同样需要按照上面的步骤将串行链改造为并行链，抽象出并行部件6.2 多位并行乘除法器 在进行乘法运算时，实际可以转化成加法运算，2位数相乘时的中间量进行累加，每次累加结果右移一位，将右移部分移到乘数寄存器当中
+6.3 存储器 ">
+    <link rel="canonical" href="https://Apollo2light.github.io/Apollo2light/cs/1.%E8%AE%A1%E7%BB%84/">
+    <meta property="og:title" content="1.计组">
+    <meta property="og:type" content="article">
+    <meta property="og:url" content="https://Apollo2light.github.io/Apollo2light/cs/1.%E8%AE%A1%E7%BB%84/">
+    <meta property="og:description" content="1.什么是电路？ 物质由原子组成，原子由电子核与核外电子组成，在电场力的作用下核外电子绕原子核做圆周运动，当施加外部电场力时，导体的核外电子脱离原子核的束缚沿着电场力的方向运动：
+ 电子的定向移动就形成了电流 原子核同时也会阻止核外电子的力形成了电阻 核外电子移动后造成正负电子间的势能差形成了电压 在宏观世界，电流，电阻和电压会被转化为其他形式的能量，为了描述这些能量，提出了焦耳定律 q=i^2rt,焦耳反应了电流的做功大小 p=ui,功率反应了做功快慢  2.什么是电子管？ 通电的灯丝处产生大量活跃的电子，在电子管中加入外加正电压的金属板，活跃的电子在电场力的作用下朝着金属板移动产生电流，改变外加电压的正负即可控制通断，在外加正电压金属板与活跃电子之间再加入金属板，可用于加强电场。这样通过电压的正负极转换就能控制电子管的通断，但电子管的体积大，功耗高，难以适应急剧增长的需求 
+3.什么是晶体管？ 纯净的硅原子最外层有4个电子，它既不容易得到电子也不容易失去电子，被叫做本征半导体，
+ 在纯净的硅原子中加入带有5电子的磷原子，整体带负电，叫做N型半导体 在纯净的硅原子中加入带有3电子的硼原子，整体带正电，叫做P型半导体  晶体二极管：将N型半导体和P型半导体结合，前者电子浓度高，后者空穴浓度高，产生扩散运动，随之建立电场，电场力又会驱使电子产生漂移运动，扩散与漂移运动最终达到平衡，当外加电压与内电场方向一致时，漂移运动占据主导，电路导通，当外加电压与内电场方向相反时，扩散运动占据主导，电路中断，这样通过控制电场方向就可以来控制晶体管的通断
+晶体三极管：将三个p型与n型的半导体组合，就会造出类似电子管的装置，
+ 发射极类似通电的灯丝处产生大量活跃的电子 集电极类似在电子管中加入外加正电压的金属板 基极类似在外加正电压金属板与活跃电子之间的增强金属板  以NPN型三极管为例，它包括基极，集电极和发射极，基极负责调控通断
+ 1.b处电流极小时be/bc都不导通，整体出电量几乎为0，处于截止状态 2.b处电流逐渐增大，be/bc慢慢导通，整体出电量慢慢增大，处于放大状态 3.b处电流增大到将bc完全导通时，be/bc全部导通，整体出电量保持最大不变，处于饱和状态  通过调节基极电压就可以控制 集电极 与 发射极 的通断
+放大电路 基极上控制着集电极电流，集电极电阻处的电压就大致等于放大后的基极处电压，外接电容避免回路向发射极灌入电流同时接受信号输入
+4.什么是数字电路？ 将模拟信号进行采样后数字化，用二进制的补码形式来表示这些数字化的信号，然后将这些信号通过以逻辑代数为原理，晶体管制成的逻辑元件 为载体的电路
+模拟信号是指随时间连续变化的信号，但现实中是无法存储无限的模拟信号，所以根据奎斯特原理对模拟信号取样后得到离散信号，这样取样能保证信息不丢失，取样得到的离散信号数值使用数字表示，得到数字信号，这样对模拟量的计算就会转化为对数字量的计算，在计算时为了尽可能的简化，采用了二进制表示，它的基数只有01，易于用晶体管制成的逻辑元件实现。
+二进制数在计算时会对应真实世界的符号位，为了将符号位也引进计算，提出了原码/反码/补码等各种二进制的不同表示形式，真实模拟量被二进制数字化表示后，要想弄清楚它们之间的关系，需要对其进行计算，真实的计算包括逻辑计算和算术计算，由计算机中的cpu部件进行实现，计算过程中可能会产生各种中间量和最终结果，这些数据由计算机中的存储器进行实现。
+在逻辑代数的应用中如何找到最简计算方法，就要明白功能-函数/函数-功能的转化,在设计对应的复杂器件时，通常经过以下步骤：
+ 1.明确输入输出关系 2.画出真值表 3.得到真值表的逻辑函数 4.化简逻辑函数  5.基本门电路 计算机除了包含cpu，存储器，还有大量的输入输出设备，这种体系即为冯诺伊曼体系
+利用晶体管可以搭建出复杂的部件，这些部件可以完成逻辑与算数运算，数据存储等功能
+常见的简单门电路有：与门，或门，非门，与非门，或非门，同或门，异或门
+异或门搭建：
+6.基本部件 进行逻辑运算时需要涉及到加减乘除，对应的器件设计如下：
+6.1 多位并行加减法器 全加器：输入是2个一位加数和1个一位进位，输出是1个一位结果和1个一位进位
+一个全加器计算的只是2个一位数，要想同时进行多个一位数的计算，就需要将其串联起来，得到串行四位补码全加器
+串行多位补码全加器只能计算加法，可以通过改造加入p输入控制第二位的正负，得到串行四位补码加减法器
+串行四位补码加减法器在计算时会产生溢出，需要对溢出做处理
+串行四位补码加减法器在计算时下一位的计算需要上一步算好的进位，速度较慢，所以需要将串行打破，改造成并行，得到并行四位补码加减法器
+并行四位补码加减法器要想再次扩充，同样需要按照上面的步骤将串行链改造为并行链，抽象出并行部件6.2 多位并行乘除法器 在进行乘法运算时，实际可以转化成加法运算，2位数相乘时的中间量进行累加，每次累加结果右移一位，将右移部分移到乘数寄存器当中
+6.3 存储器 ">
+    <meta property="og:site_name" content="Apollo&#39;s blog">
+    <link rel="stylesheet" href="https://Apollo2light.github.io/Apollo2light/css/main.min.7fdf1d02dafd1a6eb5cfd0d707e17e33515b866f5d305a0ab01a4095577484fe.css" integrity="sha256-f98dAtr9Gm61z9DXB&#43;F&#43;M1Fbhm9dMFoKsBpAlVd0hP4=">
+    <meta name="generator" content="Hugo 0.73.0" />
+    <script type="module" src="https://unpkg.com/ionicons@5.1.2/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule="" src="https://unpkg.com/ionicons@5.1.2/dist/ionicons/ionicons.js"></script>
+    
+</head>
+<body><header class="site-header">
+    <nav class="site-nav" role="navigation" aria-label="breadcrumb">
+        <ol itemscope itemtype="https://schema.org/BreadcrumbList" class="breadcrumb"><li class="breadcrumb-item  " 
+    itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+    <a itemtype="https://schema.org/Thing" itemprop="item" href="https://Apollo2light.github.io/Apollo2light/">
+        <span itemprop="name">Apollo&#39;s blog</span>
+    </a>
+    <meta itemprop="position"
+          content="0"/>
+</li>/<li class="breadcrumb-item  " 
+    itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+    <a itemtype="https://schema.org/Thing" itemprop="item" href="https://Apollo2light.github.io/Apollo2light/cs/">
+        <span itemprop="name">cs</span>
+    </a>
+    <meta itemprop="position"
+          content="0"/>
+</li>/<li class="breadcrumb-item active hidden" aria-current="page"
+    itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+    <a itemtype="https://schema.org/Thing" itemprop="item" href="https://Apollo2light.github.io/Apollo2light/cs/1.%E8%AE%A1%E7%BB%84/">
+        <span itemprop="name">1.%E8%AE%A1%E7%BB%84</span>
+    </a>
+    <meta itemprop="position"
+          content="1"/>
+</li></ol>
+    </nav>
+    <h1 class="site-title hidden">
+        <a href="https://Apollo2light.github.io/Apollo2light/">Apollo&#39;s blog</a>
+    </h1>
+</header><main id="content">
+<article role="article" class="content post h-entry" itemscope="" itemtype="http://schema.org/BlogPosting">
+    <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">1.计组</h2>
+        <span class="post-meta">
+            <time class="date-published" datetime=" 2022-05-12T00:23:51&#43;07:00" itemprop="datePublished">
+                Thu, 12 May 2022
+            </time>
+            
+        </span>
+    </header>
+    <div class="post-content" itemprop="articleBody">
+        <h2 id="1什么是电路">1.什么是电路？</h2>
+<p><code>物质由原子组成，原子由电子核与核外电子组成，在电场力的作用下核外电子绕原子核做圆周运动，当施加外部电场力时，导体的核外电子脱离原子核的束缚沿着电场力的方向运动：</code></p>
+<ul>
+<li>电子的定向移动就形成了电流</li>
+<li>原子核同时也会阻止核外电子的力形成了电阻</li>
+<li>核外电子移动后造成正负电子间的势能差形成了电压
+在宏观世界，电流，电阻和电压会被转化为其他形式的能量，为了描述这些能量，提出了焦耳定律</li>
+<li>q=i^2rt,焦耳反应了电流的做功大小</li>
+<li>p=ui,功率反应了做功快慢</li>
+</ul>
+<p><img src="https://cdn.jsdelivr.net/gh/Apollo2light/apolloblogpicture/img/%E6%88%AA%E5%B1%8F2022-05-12%20%E4%B8%8A%E5%8D%8812.55.18.png" alt="截屏2022-05-12 上午12.55.18"></p>
+<h2 id="2什么是电子管">2.什么是电子管？</h2>
+<p><code>通电的灯丝处产生大量活跃的电子，在电子管中加入外加正电压的金属板，活跃的电子在电场力的作用下朝着金属板移动产生电流，改变外加电压的正负即可控制通断，在外加正电压金属板与活跃电子之间再加入金属板，可用于加强电场。这样通过电压的正负极转换就能控制电子管的通断，但电子管的体积大，功耗高，难以适应急剧增长的需求 </code></p>
+<p><img src="https://cdn.jsdelivr.net/gh/Apollo2light/apolloblogpicture/img/%E6%88%AA%E5%B1%8F2022-05-12%20%E4%B8%8A%E5%8D%8812.55.56.png" alt="截屏2022-05-12 上午12.55.56"></p>
+<h2 id="3什么是晶体管">3.什么是晶体管？</h2>
+<p><code>纯净的硅原子最外层有4个电子，它既不容易得到电子也不容易失去电子，被叫做本征半导体，</code></p>
+<ul>
+<li>在纯净的硅原子中加入带有5电子的磷原子，整体带负电，叫做N型半导体</li>
+<li>在纯净的硅原子中加入带有3电子的硼原子，整体带正电，叫做P型半导体</li>
+</ul>
+<p><code>晶体二极管：将N型半导体和P型半导体结合，前者电子浓度高，后者空穴浓度高，产生扩散运动，随之建立电场，电场力又会驱使电子产生漂移运动，扩散与漂移运动最终达到平衡，当外加电压与内电场方向一致时，漂移运动占据主导，电路导通，当外加电压与内电场方向相反时，扩散运动占据主导，电路中断，这样通过控制电场方向就可以来控制晶体管的通断</code></p>
+<p><img src="https://cdn.jsdelivr.net/gh/Apollo2light/apolloblogpicture/img/%E6%88%AA%E5%B1%8F2022-05-12%20%E4%B8%8A%E5%8D%8812.56.33.png" alt="截屏2022-05-12 上午12.56.33"></p>
+<p><code>晶体三极管：将三个p型与n型的半导体组合，就会造出类似电子管的装置，</code></p>
+<ul>
+<li>发射极类似通电的灯丝处产生大量活跃的电子</li>
+<li>集电极类似在电子管中加入外加正电压的金属板</li>
+<li>基极类似在外加正电压金属板与活跃电子之间的增强金属板</li>
+</ul>
+<p><img src="https://cdn.jsdelivr.net/gh/Apollo2light/apolloblogpicture/img/%E6%88%AA%E5%B1%8F2022-05-12%20%E4%B8%8A%E5%8D%8812.57.26.png" alt="截屏2022-05-12 上午12.57.26"></p>
+<p><code>以NPN型三极管为例，它包括基极，集电极和发射极，基极负责调控通断</code></p>
+<ul>
+<li>1.b处电流极小时be/bc都不导通，整体出电量几乎为0，处于截止状态</li>
+<li>2.b处电流逐渐增大，be/bc慢慢导通，整体出电量慢慢增大，处于放大状态</li>
+<li>3.b处电流增大到将bc完全导通时，be/bc全部导通，整体出电量保持最大不变，处于饱和状态</li>
+</ul>
+<p><code>通过调节基极电压就可以控制 集电极 与 发射极 的通断</code></p>
+<p><code>放大电路</code>
+<code>基极上控制着集电极电流，集电极电阻处的电压就大致等于放大后的基极处电压，外接电容避免回路向发射极灌入电流同时接受信号输入</code></p>
+<p><img src="https://cdn.jsdelivr.net/gh/Apollo2light/apolloblogpicture/img/%E6%88%AA%E5%B1%8F2022-05-12%20%E4%B8%8A%E5%8D%8812.58.30.png" alt="截屏2022-05-12 上午12.58.30"></p>
+<h2 id="4什么是数字电路">4.什么是数字电路？</h2>
+<p><code>将模拟信号进行采样后数字化，用二进制的补码形式来表示这些数字化的信号，然后将这些信号通过以逻辑代数为原理，晶体管制成的逻辑元件 为载体的电路</code></p>
+<p><code>模拟信号是指随时间连续变化的信号，但现实中是无法存储无限的模拟信号，所以根据奎斯特原理对模拟信号取样后得到离散信号，这样取样能保证信息不丢失，取样得到的离散信号数值使用数字表示，得到数字信号，这样对模拟量的计算就会转化为对数字量的计算，在计算时为了尽可能的简化，采用了二进制表示，它的基数只有01，易于用晶体管制成的逻辑元件实现。</code></p>
+<p><code>二进制数在计算时会对应真实世界的符号位，为了将符号位也引进计算，提出了原码/反码/补码等各种二进制的不同表示形式，真实模拟量被二进制数字化表示后，要想弄清楚它们之间的关系，需要对其进行计算，真实的计算包括逻辑计算和算术计算，由计算机中的cpu部件进行实现，计算过程中可能会产生各种中间量和最终结果，这些数据由计算机中的存储器进行实现。</code></p>
+<p><code>在逻辑代数的应用中如何找到最简计算方法，就要明白功能-函数/函数-功能的转化,在设计对应的复杂器件时，通常经过以下步骤：</code></p>
+<ul>
+<li>1.明确输入输出关系</li>
+<li>2.画出真值表</li>
+<li>3.得到真值表的逻辑函数</li>
+<li>4.化简逻辑函数</li>
+</ul>
+<h2 id="5基本门电路">5.基本门电路</h2>
+<p><code>计算机除了包含cpu，存储器，还有大量的输入输出设备，这种体系即为冯诺伊曼体系</code></p>
+<p><code>利用晶体管可以搭建出复杂的部件，这些部件可以完成逻辑与算数运算，数据存储等功能</code></p>
+<p><code>常见的简单门电路有：与门，或门，非门，与非门，或非门，同或门，异或门</code></p>
+<p>异或门搭建：</p>
+<p><img src="https://cdn.jsdelivr.net/gh/Apollo2light/apolloblogpicture/img/2061652288373_.pic.jpg" alt="2061652288373_.pic"></p>
+<h2 id="6基本部件">6.基本部件</h2>
+<p><code>进行逻辑运算时需要涉及到加减乘除，对应的器件设计如下：</code></p>
+<h3 id="61-多位并行加减法器">6.1 多位并行加减法器</h3>
+<p><code>全加器：输入是2个一位加数和1个一位进位，输出是1个一位结果和1个一位进位</code></p>
+<p><img src="https://cdn.jsdelivr.net/gh/Apollo2light/apolloblogpicture/img/%E6%88%AA%E5%B1%8F2022-05-12%20%E4%B8%8A%E5%8D%881.00.39.png" alt="截屏2022-05-12 上午1.00.39"></p>
+<p><code>一个全加器计算的只是2个一位数，要想同时进行多个一位数的计算，就需要将其串联起来，得到串行四位补码全加器</code></p>
+<p><img src="https://cdn.jsdelivr.net/gh/Apollo2light/apolloblogpicture/img/%E6%88%AA%E5%B1%8F2022-05-12%20%E4%B8%8A%E5%8D%881.01.38.png" alt="截屏2022-05-12 上午1.01.38"></p>
+<p><code>串行多位补码全加器只能计算加法，可以通过改造加入p输入控制第二位的正负，得到串行四位补码加减法器</code></p>
+<p><img src="https://cdn.jsdelivr.net/gh/Apollo2light/apolloblogpicture/img/%E6%88%AA%E5%B1%8F2022-05-12%20%E4%B8%8A%E5%8D%881.02.07.png" alt="截屏2022-05-12 上午1.02.07"></p>
+<p><code>串行四位补码加减法器在计算时会产生溢出，需要对溢出做处理</code></p>
+<p><img src="https://cdn.jsdelivr.net/gh/Apollo2light/apolloblogpicture/img/%E6%88%AA%E5%B1%8F2022-05-12%20%E4%B8%8A%E5%8D%881.02.41.png" alt="截屏2022-05-12 上午1.02.41"></p>
+<p><code>串行四位补码加减法器在计算时下一位的计算需要上一步算好的进位，速度较慢，所以需要将串行打破，改造成并行，得到并行四位补码加减法器</code></p>
+<p><img src="https://cdn.jsdelivr.net/gh/Apollo2light/apolloblogpicture/img/%E6%88%AA%E5%B1%8F2022-05-12%20%E4%B8%8A%E5%8D%881.03.23.png" alt="截屏2022-05-12 上午1.03.23"></p>
+<p><code>并行四位补码加减法器要想再次扩充，同样需要按照上面的步骤将串行链改造为并行链，抽象出并行部件</code><img src="https://cdn.jsdelivr.net/gh/Apollo2light/apolloblogpicture/img/%E6%88%AA%E5%B1%8F2022-05-12%20%E4%B8%8A%E5%8D%881.03.46.png" alt="截屏2022-05-12 上午1.03.46"></p>
+<h3 id="62-多位并行乘除法器">6.2 多位并行乘除法器</h3>
+<p><code>在进行乘法运算时，实际可以转化成加法运算，2位数相乘时的中间量进行累加，每次累加结果右移一位，将右移部分移到乘数寄存器当中</code></p>
+<p><img src="https://cdn.jsdelivr.net/gh/Apollo2light/apolloblogpicture/img/%E6%88%AA%E5%B1%8F2022-05-12%20%E4%B8%8A%E5%8D%881.04.13.png" alt="截屏2022-05-12 上午1.04.13"></p>
+<h3 id="63-存储器">6.3 存储器</h3>
+<p><img src="https://cdn.jsdelivr.net/gh/Apollo2light/apolloblogpicture/img/%E6%88%AA%E5%B1%8F2022-05-12%20%E4%B8%8A%E5%8D%881.05.11.png" alt="截屏2022-05-12 上午1.05.11"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/Apollo2light/apolloblogpicture/img/%E6%88%AA%E5%B1%8F2022-05-12%20%E4%B8%8A%E5%8D%881.05.35.png" alt="截屏2022-05-12 上午1.05.35"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/Apollo2light/apolloblogpicture/img/%E6%88%AA%E5%B1%8F2022-05-12%20%E4%B8%8A%E5%8D%881.05.54.png" alt="截屏2022-05-12 上午1.05.54"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/Apollo2light/apolloblogpicture/img/%E6%88%AA%E5%B1%8F2022-05-12%20%E4%B8%8A%E5%8D%881.07.18.png" alt="截屏2022-05-12 上午1.07.18"></p>
+
+    </div>
+    <video id="my_video" style="height: 300px;width:100%" controls="controls"></video>
+
+</article>
+<div class="pagination">
+    
+    
+    <div class="next"><a href="https://Apollo2light.github.io/Apollo2light/cs/2.%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/">Next Post</a></div>
+    
+</div>
+
+
+<script>
+    try {
+        
+        let src = document.getElementsByTagName('code')[0].innerText;
+        
+        if (src.indexOf("mp4") != -1) {
+            document.getElementById('my_video').setAttribute("src", src)
+        } else {
+            
+            let video = document.getElementById('my_video');
+            if (video != null) {
+                video.parentNode.removeChild(video);
+            }
+        }
+    } catch (e) {
+        
+        let video = document.getElementById('my_video');
+        if (video != null) {
+            video.parentNode.removeChild(video);
+        }
+    }
+</script>
+
+</main><footer class="site-footer">
+	<span class="right">
+		<em>Apollo&#39;s blog</em>
+	</span>
+</footer>
+</body>
+<script>
+
+</script>
+</html>

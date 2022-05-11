@@ -1,0 +1,1081 @@
+<!DOCTYPE html>
+<html lang=en-us><head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title> 10.spring - Apollo&#39;s blog</title>
+    <meta name="description" content="===spring简介===｜===spring简介===｜===spring简介===
+https://docs.spring.io/spring-framework/docs/5.2.0.RELEASE/spring-framework-reference/
+  spring是容器，支持IOC(控制反转)和AOP(面向切面编程)
+  控制反转：对象的创建和依赖关系被解耦交给第三方控制(程序由spring容器创建管理装配)而非程序本身控制(程序由程序员创建管理装配)
+  依赖注入(DI):它是实现IOC的方式，所有bean对象的创建都依赖容器，其属性注入赋值也都由容器实现，具体有构造器注入(constructor-arg)，set注入(基本/引用)和第三方注入(p/c) 等形式
+  spring使用｜spring使用｜spring使用｜spring使用
+1.引入spring包
+&lt;?xml version=&#34;1.0&#34; encoding=&#34;UTF-8&#34;?&gt; &lt;project xmlns=&#34;http://maven.apache.org/POM/4.0.0&#34; xmlns:xsi=&#34;http://www.w3.org/2001/XMLSchema-instance&#34; xsi:schemaLocation=&#34;http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd&#34;&gt; &lt;modelVersion&gt;4.0.0&lt;/modelVersion&gt; &lt;groupId&gt;org.example&lt;/groupId&gt; &lt;artifactId&gt;spring-study&lt;/artifactId&gt; &lt;packaging&gt;pom&lt;/packaging&gt; &lt;version&gt;1.0-SNAPSHOT&lt;/version&gt; &lt;modules&gt; &lt;module&gt;spring-01&lt;/module&gt; &lt;/modules&gt; &lt;dependencies&gt; &lt;!-- https://mvnrepository.com/artifact/org.springframework/spring-webmvc --&gt; &lt;dependency&gt; &lt;groupId&gt;org.springframework&lt;/groupId&gt; &lt;artifactId&gt;spring-webmvc&lt;/artifactId&gt; &lt;version&gt;5.3.15&lt;/version&gt; &lt;/dependency&gt; &lt;/dependencies&gt; &lt;/project&gt; 2.编写pojo实体类
+package wiki.mrx.pojo; public class Hello { private String str; public String getStr() { return str; } public void setStr(String str) { this.str = str; } @Override public String toString() { return &#34;Hello{&#34; &#43; &#34;str=&#39;&#34; &#43; str &#43; &#39;\&#39;&#39; &#43; &#39;}&#39;; } } 3.">
+    <link rel="canonical" href="https://Apollo2light.github.io/Apollo2light/backend/10.spring/">
+    <meta property="og:title" content="10.spring">
+    <meta property="og:type" content="article">
+    <meta property="og:url" content="https://Apollo2light.github.io/Apollo2light/backend/10.spring/">
+    <meta property="og:description" content="===spring简介===｜===spring简介===｜===spring简介===
+https://docs.spring.io/spring-framework/docs/5.2.0.RELEASE/spring-framework-reference/
+  spring是容器，支持IOC(控制反转)和AOP(面向切面编程)
+  控制反转：对象的创建和依赖关系被解耦交给第三方控制(程序由spring容器创建管理装配)而非程序本身控制(程序由程序员创建管理装配)
+  依赖注入(DI):它是实现IOC的方式，所有bean对象的创建都依赖容器，其属性注入赋值也都由容器实现，具体有构造器注入(constructor-arg)，set注入(基本/引用)和第三方注入(p/c) 等形式
+  spring使用｜spring使用｜spring使用｜spring使用
+1.引入spring包
+&lt;?xml version=&#34;1.0&#34; encoding=&#34;UTF-8&#34;?&gt; &lt;project xmlns=&#34;http://maven.apache.org/POM/4.0.0&#34; xmlns:xsi=&#34;http://www.w3.org/2001/XMLSchema-instance&#34; xsi:schemaLocation=&#34;http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd&#34;&gt; &lt;modelVersion&gt;4.0.0&lt;/modelVersion&gt; &lt;groupId&gt;org.example&lt;/groupId&gt; &lt;artifactId&gt;spring-study&lt;/artifactId&gt; &lt;packaging&gt;pom&lt;/packaging&gt; &lt;version&gt;1.0-SNAPSHOT&lt;/version&gt; &lt;modules&gt; &lt;module&gt;spring-01&lt;/module&gt; &lt;/modules&gt; &lt;dependencies&gt; &lt;!-- https://mvnrepository.com/artifact/org.springframework/spring-webmvc --&gt; &lt;dependency&gt; &lt;groupId&gt;org.springframework&lt;/groupId&gt; &lt;artifactId&gt;spring-webmvc&lt;/artifactId&gt; &lt;version&gt;5.3.15&lt;/version&gt; &lt;/dependency&gt; &lt;/dependencies&gt; &lt;/project&gt; 2.编写pojo实体类
+package wiki.mrx.pojo; public class Hello { private String str; public String getStr() { return str; } public void setStr(String str) { this.str = str; } @Override public String toString() { return &#34;Hello{&#34; &#43; &#34;str=&#39;&#34; &#43; str &#43; &#39;\&#39;&#39; &#43; &#39;}&#39;; } } 3.">
+    <meta property="og:site_name" content="Apollo&#39;s blog">
+    <link rel="stylesheet" href="https://Apollo2light.github.io/Apollo2light/css/main.min.7fdf1d02dafd1a6eb5cfd0d707e17e33515b866f5d305a0ab01a4095577484fe.css" integrity="sha256-f98dAtr9Gm61z9DXB&#43;F&#43;M1Fbhm9dMFoKsBpAlVd0hP4=">
+    <meta name="generator" content="Hugo 0.73.0" />
+    <script type="module" src="https://unpkg.com/ionicons@5.1.2/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule="" src="https://unpkg.com/ionicons@5.1.2/dist/ionicons/ionicons.js"></script>
+    
+</head>
+<body><header class="site-header">
+    <nav class="site-nav" role="navigation" aria-label="breadcrumb">
+        <ol itemscope itemtype="https://schema.org/BreadcrumbList" class="breadcrumb"><li class="breadcrumb-item  " 
+    itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+    <a itemtype="https://schema.org/Thing" itemprop="item" href="https://Apollo2light.github.io/Apollo2light/">
+        <span itemprop="name">Apollo&#39;s blog</span>
+    </a>
+    <meta itemprop="position"
+          content="0"/>
+</li>/<li class="breadcrumb-item  " 
+    itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+    <a itemtype="https://schema.org/Thing" itemprop="item" href="https://Apollo2light.github.io/Apollo2light/backend/">
+        <span itemprop="name">backend</span>
+    </a>
+    <meta itemprop="position"
+          content="0"/>
+</li>/<li class="breadcrumb-item active hidden" aria-current="page"
+    itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+    <a itemtype="https://schema.org/Thing" itemprop="item" href="https://Apollo2light.github.io/Apollo2light/backend/10.spring/">
+        <span itemprop="name">10.spring</span>
+    </a>
+    <meta itemprop="position"
+          content="1"/>
+</li></ol>
+    </nav>
+    <h1 class="site-title hidden">
+        <a href="https://Apollo2light.github.io/Apollo2light/">Apollo&#39;s blog</a>
+    </h1>
+</header><main id="content">
+<article role="article" class="content post h-entry" itemscope="" itemtype="http://schema.org/BlogPosting">
+    <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">10.spring</h2>
+        <span class="post-meta">
+            <time class="date-published" datetime=" 2022-02-17T01:53:32&#43;07:00" itemprop="datePublished">
+                Thu, 17 Feb 2022
+            </time>
+            
+        </span>
+    </header>
+    <div class="post-content" itemprop="articleBody">
+        <p>===spring简介===｜===spring简介===｜===spring简介===</p>
+<p><a href="https://docs.spring.io/spring-framework/docs/5.2.0.RELEASE/spring-framework-reference/">https://docs.spring.io/spring-framework/docs/5.2.0.RELEASE/spring-framework-reference/</a></p>
+<ul>
+<li>
+<p>spring是容器，支持IOC(控制反转)和AOP(面向切面编程)</p>
+</li>
+<li>
+<p>控制反转：对象的创建和依赖关系被解耦交给第三方控制(程序由spring容器创建管理装配)而非程序本身控制(程序由程序员创建管理装配)</p>
+</li>
+<li>
+<p>依赖注入(DI):它是实现IOC的方式，所有bean对象的创建都依赖容器，其属性注入赋值也都由容器实现，具体有构造器注入(constructor-arg)，set注入(基本/引用)和第三方注入(p/c) 等形式</p>
+</li>
+</ul>
+<p>spring使用｜spring使用｜spring使用｜spring使用</p>
+<p>1.引入spring包</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-xml" data-lang="xml"><span style="color:#75715e">&lt;?xml version=&#34;1.0&#34; encoding=&#34;UTF-8&#34;?&gt;</span>
+<span style="color:#f92672">&lt;project</span> <span style="color:#a6e22e">xmlns=</span><span style="color:#e6db74">&#34;http://maven.apache.org/POM/4.0.0&#34;</span>
+         <span style="color:#a6e22e">xmlns:xsi=</span><span style="color:#e6db74">&#34;http://www.w3.org/2001/XMLSchema-instance&#34;</span>
+         <span style="color:#a6e22e">xsi:schemaLocation=</span><span style="color:#e6db74">&#34;http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd&#34;</span><span style="color:#f92672">&gt;</span>
+    <span style="color:#f92672">&lt;modelVersion&gt;</span>4.0.0<span style="color:#f92672">&lt;/modelVersion&gt;</span>
+
+    <span style="color:#f92672">&lt;groupId&gt;</span>org.example<span style="color:#f92672">&lt;/groupId&gt;</span>
+    <span style="color:#f92672">&lt;artifactId&gt;</span>spring-study<span style="color:#f92672">&lt;/artifactId&gt;</span>
+    <span style="color:#f92672">&lt;packaging&gt;</span>pom<span style="color:#f92672">&lt;/packaging&gt;</span>
+    <span style="color:#f92672">&lt;version&gt;</span>1.0-SNAPSHOT<span style="color:#f92672">&lt;/version&gt;</span>
+    <span style="color:#f92672">&lt;modules&gt;</span>
+        <span style="color:#f92672">&lt;module&gt;</span>spring-01<span style="color:#f92672">&lt;/module&gt;</span>
+    <span style="color:#f92672">&lt;/modules&gt;</span>
+    <span style="color:#f92672">&lt;dependencies&gt;</span>
+        <span style="color:#75715e">&lt;!-- https://mvnrepository.com/artifact/org.springframework/spring-webmvc --&gt;</span>
+        <span style="color:#f92672">&lt;dependency&gt;</span>
+            <span style="color:#f92672">&lt;groupId&gt;</span>org.springframework<span style="color:#f92672">&lt;/groupId&gt;</span>
+            <span style="color:#f92672">&lt;artifactId&gt;</span>spring-webmvc<span style="color:#f92672">&lt;/artifactId&gt;</span>
+            <span style="color:#f92672">&lt;version&gt;</span>5.3.15<span style="color:#f92672">&lt;/version&gt;</span>
+        <span style="color:#f92672">&lt;/dependency&gt;</span>
+    <span style="color:#f92672">&lt;/dependencies&gt;</span>
+<span style="color:#f92672">&lt;/project&gt;</span>
+</code></pre></div><p>2.编写pojo实体类</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#f92672">package</span> wiki.mrx.pojo<span style="color:#f92672">;</span>
+
+<span style="color:#66d9ef">public</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Hello</span> <span style="color:#f92672">{</span>
+    <span style="color:#66d9ef">private</span> String str<span style="color:#f92672">;</span>
+
+    <span style="color:#66d9ef">public</span> String <span style="color:#a6e22e">getStr</span><span style="color:#f92672">()</span> <span style="color:#f92672">{</span>
+        <span style="color:#66d9ef">return</span> str<span style="color:#f92672">;</span>
+    <span style="color:#f92672">}</span>
+
+    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">setStr</span><span style="color:#f92672">(</span>String str<span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+        <span style="color:#66d9ef">this</span><span style="color:#f92672">.</span><span style="color:#a6e22e">str</span> <span style="color:#f92672">=</span> str<span style="color:#f92672">;</span>
+    <span style="color:#f92672">}</span>
+
+    <span style="color:#a6e22e">@Override</span>
+    <span style="color:#66d9ef">public</span> String <span style="color:#a6e22e">toString</span><span style="color:#f92672">()</span> <span style="color:#f92672">{</span>
+        <span style="color:#66d9ef">return</span> <span style="color:#e6db74">&#34;Hello{&#34;</span> <span style="color:#f92672">+</span>
+                <span style="color:#e6db74">&#34;str=&#39;&#34;</span> <span style="color:#f92672">+</span> str <span style="color:#f92672">+</span> <span style="color:#e6db74">&#39;\&#39;&#39;</span> <span style="color:#f92672">+</span>
+                <span style="color:#e6db74">&#39;}&#39;</span><span style="color:#f92672">;</span>
+    <span style="color:#f92672">}</span>
+<span style="color:#f92672">}</span>
+
+</code></pre></div><p>3.spring中注册bean</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-xml" data-lang="xml"><span style="color:#75715e">&lt;?xml version=&#34;1.0&#34; encoding=&#34;UTF-8&#34;?&gt;</span>
+<span style="color:#f92672">&lt;beans</span> <span style="color:#a6e22e">xmlns=</span><span style="color:#e6db74">&#34;http://www.springframework.org/schema/beans&#34;</span>
+       <span style="color:#a6e22e">xmlns:xsi=</span><span style="color:#e6db74">&#34;http://www.w3.org/2001/XMLSchema-instance&#34;</span>
+       <span style="color:#a6e22e">xsi:schemaLocation=</span><span style="color:#e6db74">&#34;http://www.springframework.org/schema/beans
+</span><span style="color:#e6db74">        https://www.springframework.org/schema/beans/spring-beans.xsd&#34;</span><span style="color:#f92672">&gt;</span>
+    
+    <span style="color:#f92672">&lt;bean</span> <span style="color:#a6e22e">id=</span><span style="color:#e6db74">&#34;hello&#34;</span> <span style="color:#a6e22e">class=</span><span style="color:#e6db74">&#34;wiki.mrx.pojo.Hello&#34;</span><span style="color:#f92672">&gt;</span>
+        <span style="color:#f92672">&lt;property</span> <span style="color:#a6e22e">name=</span><span style="color:#e6db74">&#34;str&#34;</span> <span style="color:#a6e22e">value=</span><span style="color:#e6db74">&#34;spring&#34;</span><span style="color:#f92672">/&gt;</span>
+    <span style="color:#f92672">&lt;/bean&gt;</span>
+
+<span style="color:#f92672">&lt;/beans&gt;</span>
+</code></pre></div><p>4.使用spring的bean</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#f92672">import</span> org.springframework.context.ApplicationContext<span style="color:#f92672">;</span>
+<span style="color:#f92672">import</span> org.springframework.context.support.ClassPathXmlApplicationContext<span style="color:#f92672">;</span>
+
+<span style="color:#66d9ef">public</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">MyTest</span> <span style="color:#f92672">{</span>
+
+    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">static</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">main</span><span style="color:#f92672">(</span>String<span style="color:#f92672">[]</span> args<span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+        <span style="color:#75715e">//1.获取spring上下文对象
+</span><span style="color:#75715e"></span>        ApplicationContext context <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> ClassPathXmlApplicationContext<span style="color:#f92672">(</span><span style="color:#e6db74">&#34;beans.xml&#34;</span><span style="color:#f92672">);</span>
+        <span style="color:#75715e">//2.取出spring容器中的对象
+</span><span style="color:#75715e"></span>        Object hello <span style="color:#f92672">=</span> context<span style="color:#f92672">.</span><span style="color:#a6e22e">getBean</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#34;hello&#34;</span><span style="color:#f92672">);</span>
+        System<span style="color:#f92672">.</span><span style="color:#a6e22e">out</span><span style="color:#f92672">.</span><span style="color:#a6e22e">println</span><span style="color:#f92672">(</span>hello<span style="color:#f92672">.</span><span style="color:#a6e22e">toString</span><span style="color:#f92672">());</span>
+    <span style="color:#f92672">}</span>
+<span style="color:#f92672">}</span>
+
+</code></pre></div><p>===IOC创建方式=== ｜ ===IOC创建方式=== ｜ ===</p>
+<ul>
+<li>1.构造器注入:constructor-arg
+<ul>
+<li>1.1默认无参</li>
+<li>1.2有参构造：下标/类型/参数名</li>
+</ul>
+</li>
+<li>2.set注入</li>
+<li>3.cp注入</li>
+</ul>
+<p>===构造器注入=== ｜ ===构造器注入=== ｜===构造器注入=== ｜===构造器注入=== ｜</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#f92672">package</span> wiki.mrx.pojo<span style="color:#f92672">;</span>
+
+<span style="color:#66d9ef">public</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">User</span> <span style="color:#f92672">{</span>
+    <span style="color:#66d9ef">private</span> String name<span style="color:#f92672">;</span>
+
+    <span style="color:#66d9ef">public</span> <span style="color:#a6e22e">User</span><span style="color:#f92672">(</span>String name<span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+        <span style="color:#66d9ef">this</span><span style="color:#f92672">.</span><span style="color:#a6e22e">name</span> <span style="color:#f92672">=</span> name<span style="color:#f92672">;</span>
+    <span style="color:#f92672">}</span>
+
+    <span style="color:#66d9ef">public</span> String <span style="color:#a6e22e">getName</span><span style="color:#f92672">()</span> <span style="color:#f92672">{</span>
+        <span style="color:#66d9ef">return</span> name<span style="color:#f92672">;</span>
+    <span style="color:#f92672">}</span>
+
+    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">setName</span><span style="color:#f92672">(</span>String name<span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+        <span style="color:#66d9ef">this</span><span style="color:#f92672">.</span><span style="color:#a6e22e">name</span> <span style="color:#f92672">=</span> name<span style="color:#f92672">;</span>
+    <span style="color:#f92672">}</span>
+    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">show</span><span style="color:#f92672">(){</span>
+        System<span style="color:#f92672">.</span><span style="color:#a6e22e">out</span><span style="color:#f92672">.</span><span style="color:#a6e22e">println</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#34;name:&#34;</span><span style="color:#f92672">+</span>name<span style="color:#f92672">);</span>
+    <span style="color:#f92672">}</span>
+<span style="color:#f92672">}</span>
+</code></pre></div><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-xml" data-lang="xml"><span style="color:#75715e">&lt;?xml version=&#34;1.0&#34; encoding=&#34;UTF-8&#34;?&gt;</span>
+<span style="color:#f92672">&lt;beans</span> <span style="color:#a6e22e">xmlns=</span><span style="color:#e6db74">&#34;http://www.springframework.org/schema/beans&#34;</span>
+       <span style="color:#a6e22e">xmlns:xsi=</span><span style="color:#e6db74">&#34;http://www.w3.org/2001/XMLSchema-instance&#34;</span>
+       <span style="color:#a6e22e">xsi:schemaLocation=</span><span style="color:#e6db74">&#34;http://www.springframework.org/schema/beans
+</span><span style="color:#e6db74">        https://www.springframework.org/schema/beans/spring-beans.xsd&#34;</span><span style="color:#f92672">&gt;</span>
+
+    <span style="color:#75715e">&lt;!--下标赋值--&gt;</span>
+    <span style="color:#f92672">&lt;bean</span> <span style="color:#a6e22e">id=</span><span style="color:#e6db74">&#34;user&#34;</span> <span style="color:#a6e22e">class=</span><span style="color:#e6db74">&#34;wiki.mrx.pojo.User&#34;</span><span style="color:#f92672">&gt;</span>
+        <span style="color:#f92672">&lt;constructor-arg</span> <span style="color:#a6e22e">index=</span><span style="color:#e6db74">&#34;0&#34;</span> <span style="color:#a6e22e">value=</span><span style="color:#e6db74">&#34;快看看&#34;</span> <span style="color:#f92672">/&gt;</span>
+    <span style="color:#f92672">&lt;/bean&gt;</span>
+    <span style="color:#75715e">&lt;!-- 类型匹配:不推荐 --&gt;</span>
+    <span style="color:#f92672">&lt;bean</span> <span style="color:#a6e22e">id=</span><span style="color:#e6db74">&#34;user&#34;</span> <span style="color:#a6e22e">class=</span><span style="color:#e6db74">&#34;wiki.mrx.pojo.User&#34;</span><span style="color:#f92672">&gt;</span>
+        <span style="color:#f92672">&lt;constructor-arg</span> <span style="color:#a6e22e">type=</span><span style="color:#e6db74">&#34;java.lang.String&#34;</span> <span style="color:#a6e22e">value=</span><span style="color:#e6db74">&#34;快看看&#34;</span> <span style="color:#f92672">/&gt;</span>
+    <span style="color:#f92672">&lt;/bean&gt;</span>
+    <span style="color:#75715e">&lt;!-- 参数名赋值 --&gt;</span>
+    <span style="color:#f92672">&lt;bean</span> <span style="color:#a6e22e">id=</span><span style="color:#e6db74">&#34;user&#34;</span> <span style="color:#a6e22e">class=</span><span style="color:#e6db74">&#34;wiki.mrx.pojo.User&#34;</span><span style="color:#f92672">&gt;</span>
+        <span style="color:#f92672">&lt;constructor-arg</span> <span style="color:#a6e22e">name=</span><span style="color:#e6db74">&#34;name&#34;</span> <span style="color:#a6e22e">value=</span><span style="color:#e6db74">&#34;快看看&#34;</span> <span style="color:#f92672">/&gt;</span>
+    <span style="color:#f92672">&lt;/bean&gt;</span>
+<span style="color:#f92672">&lt;/beans&gt;</span>
+</code></pre></div><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#f92672">import</span> org.springframework.context.ApplicationContext<span style="color:#f92672">;</span>
+<span style="color:#f92672">import</span> org.springframework.context.support.ClassPathXmlApplicationContext<span style="color:#f92672">;</span>
+<span style="color:#f92672">import</span> wiki.mrx.pojo.User<span style="color:#f92672">;</span>
+
+<span style="color:#66d9ef">public</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">MyTest</span> <span style="color:#f92672">{</span>
+
+    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">static</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">main</span><span style="color:#f92672">(</span>String<span style="color:#f92672">[]</span> args<span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+        <span style="color:#75715e">//1.获取spring上下文对象
+</span><span style="color:#75715e"></span>        ApplicationContext context <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> ClassPathXmlApplicationContext<span style="color:#f92672">(</span><span style="color:#e6db74">&#34;beans.xml&#34;</span><span style="color:#f92672">);</span>
+        <span style="color:#75715e">//2.取出spring容器中的对象
+</span><span style="color:#75715e"></span>        User user <span style="color:#f92672">=</span> <span style="color:#f92672">(</span>User<span style="color:#f92672">)</span> context<span style="color:#f92672">.</span><span style="color:#a6e22e">getBean</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#34;user&#34;</span><span style="color:#f92672">);</span>
+        user<span style="color:#f92672">.</span><span style="color:#a6e22e">show</span><span style="color:#f92672">();</span>
+    <span style="color:#f92672">}</span>
+<span style="color:#f92672">}</span>
+
+
+</code></pre></div><p>===set注入=== ｜===set注入=== ｜===set注入=== ｜</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#f92672">package</span> wiki.mrx.pojo<span style="color:#f92672">;</span>
+
+<span style="color:#66d9ef">public</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Address</span> <span style="color:#f92672">{</span>
+    <span style="color:#66d9ef">private</span> String address<span style="color:#f92672">;</span>
+
+    <span style="color:#66d9ef">public</span> String <span style="color:#a6e22e">getAddress</span><span style="color:#f92672">()</span> <span style="color:#f92672">{</span>
+        <span style="color:#66d9ef">return</span> address<span style="color:#f92672">;</span>
+    <span style="color:#f92672">}</span>
+
+    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">setAddress</span><span style="color:#f92672">(</span>String address<span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+        <span style="color:#66d9ef">this</span><span style="color:#f92672">.</span><span style="color:#a6e22e">address</span> <span style="color:#f92672">=</span> address<span style="color:#f92672">;</span>
+    <span style="color:#f92672">}</span>
+
+    <span style="color:#a6e22e">@Override</span>
+    <span style="color:#66d9ef">public</span> String <span style="color:#a6e22e">toString</span><span style="color:#f92672">()</span> <span style="color:#f92672">{</span>
+        <span style="color:#66d9ef">return</span> <span style="color:#e6db74">&#34;Address{&#34;</span> <span style="color:#f92672">+</span>
+                <span style="color:#e6db74">&#34;address=&#39;&#34;</span> <span style="color:#f92672">+</span> address <span style="color:#f92672">+</span> <span style="color:#e6db74">&#39;\&#39;&#39;</span> <span style="color:#f92672">+</span>
+                <span style="color:#e6db74">&#39;}&#39;</span><span style="color:#f92672">;</span>
+    <span style="color:#f92672">}</span>
+<span style="color:#f92672">}</span>
+
+
+</code></pre></div><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#f92672">package</span> wiki.mrx.pojo<span style="color:#f92672">;</span>
+
+<span style="color:#f92672">import</span> java.util.*<span style="color:#f92672">;</span>
+
+<span style="color:#66d9ef">public</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Student</span> <span style="color:#f92672">{</span>
+    <span style="color:#66d9ef">private</span> String name<span style="color:#f92672">;</span>
+    <span style="color:#66d9ef">private</span> Address address<span style="color:#f92672">;</span>
+    <span style="color:#66d9ef">private</span> String<span style="color:#f92672">[]</span> books<span style="color:#f92672">;</span>
+    <span style="color:#66d9ef">private</span> List<span style="color:#f92672">&lt;</span>String<span style="color:#f92672">&gt;</span> hobbys<span style="color:#f92672">;</span>
+    <span style="color:#66d9ef">private</span> Map<span style="color:#f92672">&lt;</span>String<span style="color:#f92672">,</span>String<span style="color:#f92672">&gt;</span> card<span style="color:#f92672">;</span>
+    <span style="color:#66d9ef">private</span> Set<span style="color:#f92672">&lt;</span>String<span style="color:#f92672">&gt;</span> games<span style="color:#f92672">;</span>
+    <span style="color:#66d9ef">private</span> String wife<span style="color:#f92672">;</span>
+    <span style="color:#66d9ef">private</span> Properties info<span style="color:#f92672">;</span>
+
+    <span style="color:#66d9ef">public</span> String <span style="color:#a6e22e">getName</span><span style="color:#f92672">()</span> <span style="color:#f92672">{</span>
+        <span style="color:#66d9ef">return</span> name<span style="color:#f92672">;</span>
+    <span style="color:#f92672">}</span>
+
+    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">setName</span><span style="color:#f92672">(</span>String name<span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+        <span style="color:#66d9ef">this</span><span style="color:#f92672">.</span><span style="color:#a6e22e">name</span> <span style="color:#f92672">=</span> name<span style="color:#f92672">;</span>
+    <span style="color:#f92672">}</span>
+
+    <span style="color:#66d9ef">public</span> Address <span style="color:#a6e22e">getAddress</span><span style="color:#f92672">()</span> <span style="color:#f92672">{</span>
+        <span style="color:#66d9ef">return</span> address<span style="color:#f92672">;</span>
+    <span style="color:#f92672">}</span>
+
+    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">setAddress</span><span style="color:#f92672">(</span>Address address<span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+        <span style="color:#66d9ef">this</span><span style="color:#f92672">.</span><span style="color:#a6e22e">address</span> <span style="color:#f92672">=</span> address<span style="color:#f92672">;</span>
+    <span style="color:#f92672">}</span>
+
+    <span style="color:#66d9ef">public</span> String<span style="color:#f92672">[]</span> <span style="color:#a6e22e">getBooks</span><span style="color:#f92672">()</span> <span style="color:#f92672">{</span>
+        <span style="color:#66d9ef">return</span> books<span style="color:#f92672">;</span>
+    <span style="color:#f92672">}</span>
+
+    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">setBooks</span><span style="color:#f92672">(</span>String<span style="color:#f92672">[]</span> books<span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+        <span style="color:#66d9ef">this</span><span style="color:#f92672">.</span><span style="color:#a6e22e">books</span> <span style="color:#f92672">=</span> books<span style="color:#f92672">;</span>
+    <span style="color:#f92672">}</span>
+
+    <span style="color:#66d9ef">public</span> List<span style="color:#f92672">&lt;</span>String<span style="color:#f92672">&gt;</span> <span style="color:#a6e22e">getHobbys</span><span style="color:#f92672">()</span> <span style="color:#f92672">{</span>
+        <span style="color:#66d9ef">return</span> hobbys<span style="color:#f92672">;</span>
+    <span style="color:#f92672">}</span>
+
+    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">setHobbys</span><span style="color:#f92672">(</span>List<span style="color:#f92672">&lt;</span>String<span style="color:#f92672">&gt;</span> hobbys<span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+        <span style="color:#66d9ef">this</span><span style="color:#f92672">.</span><span style="color:#a6e22e">hobbys</span> <span style="color:#f92672">=</span> hobbys<span style="color:#f92672">;</span>
+    <span style="color:#f92672">}</span>
+
+    <span style="color:#66d9ef">public</span> Map<span style="color:#f92672">&lt;</span>String<span style="color:#f92672">,</span> String<span style="color:#f92672">&gt;</span> <span style="color:#a6e22e">getCard</span><span style="color:#f92672">()</span> <span style="color:#f92672">{</span>
+        <span style="color:#66d9ef">return</span> card<span style="color:#f92672">;</span>
+    <span style="color:#f92672">}</span>
+
+    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">setCard</span><span style="color:#f92672">(</span>Map<span style="color:#f92672">&lt;</span>String<span style="color:#f92672">,</span> String<span style="color:#f92672">&gt;</span> card<span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+        <span style="color:#66d9ef">this</span><span style="color:#f92672">.</span><span style="color:#a6e22e">card</span> <span style="color:#f92672">=</span> card<span style="color:#f92672">;</span>
+    <span style="color:#f92672">}</span>
+
+    <span style="color:#66d9ef">public</span> Set<span style="color:#f92672">&lt;</span>String<span style="color:#f92672">&gt;</span> <span style="color:#a6e22e">getGames</span><span style="color:#f92672">()</span> <span style="color:#f92672">{</span>
+        <span style="color:#66d9ef">return</span> games<span style="color:#f92672">;</span>
+    <span style="color:#f92672">}</span>
+
+    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">setGames</span><span style="color:#f92672">(</span>Set<span style="color:#f92672">&lt;</span>String<span style="color:#f92672">&gt;</span> games<span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+        <span style="color:#66d9ef">this</span><span style="color:#f92672">.</span><span style="color:#a6e22e">games</span> <span style="color:#f92672">=</span> games<span style="color:#f92672">;</span>
+    <span style="color:#f92672">}</span>
+
+    <span style="color:#66d9ef">public</span> String <span style="color:#a6e22e">getWife</span><span style="color:#f92672">()</span> <span style="color:#f92672">{</span>
+        <span style="color:#66d9ef">return</span> wife<span style="color:#f92672">;</span>
+    <span style="color:#f92672">}</span>
+
+    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">setWife</span><span style="color:#f92672">(</span>String wife<span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+        <span style="color:#66d9ef">this</span><span style="color:#f92672">.</span><span style="color:#a6e22e">wife</span> <span style="color:#f92672">=</span> wife<span style="color:#f92672">;</span>
+    <span style="color:#f92672">}</span>
+
+    <span style="color:#66d9ef">public</span> Properties <span style="color:#a6e22e">getInfo</span><span style="color:#f92672">()</span> <span style="color:#f92672">{</span>
+        <span style="color:#66d9ef">return</span> info<span style="color:#f92672">;</span>
+    <span style="color:#f92672">}</span>
+
+    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">setInfo</span><span style="color:#f92672">(</span>Properties info<span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+        <span style="color:#66d9ef">this</span><span style="color:#f92672">.</span><span style="color:#a6e22e">info</span> <span style="color:#f92672">=</span> info<span style="color:#f92672">;</span>
+    <span style="color:#f92672">}</span>
+
+    <span style="color:#a6e22e">@Override</span>
+    <span style="color:#66d9ef">public</span> String <span style="color:#a6e22e">toString</span><span style="color:#f92672">()</span> <span style="color:#f92672">{</span>
+        <span style="color:#66d9ef">return</span> <span style="color:#e6db74">&#34;Student{&#34;</span> <span style="color:#f92672">+</span>
+                <span style="color:#e6db74">&#34;name=&#39;&#34;</span> <span style="color:#f92672">+</span> name <span style="color:#f92672">+</span> <span style="color:#e6db74">&#39;\&#39;&#39;</span> <span style="color:#f92672">+</span>
+                <span style="color:#e6db74">&#34;, address=&#34;</span> <span style="color:#f92672">+</span> address <span style="color:#f92672">+</span>
+                <span style="color:#e6db74">&#34;, books=&#34;</span> <span style="color:#f92672">+</span> Arrays<span style="color:#f92672">.</span><span style="color:#a6e22e">toString</span><span style="color:#f92672">(</span>books<span style="color:#f92672">)</span> <span style="color:#f92672">+</span>
+                <span style="color:#e6db74">&#34;, hobbys=&#34;</span> <span style="color:#f92672">+</span> hobbys <span style="color:#f92672">+</span>
+                <span style="color:#e6db74">&#34;, card=&#34;</span> <span style="color:#f92672">+</span> card <span style="color:#f92672">+</span>
+                <span style="color:#e6db74">&#34;, games=&#34;</span> <span style="color:#f92672">+</span> games <span style="color:#f92672">+</span>
+                <span style="color:#e6db74">&#34;, wife=&#39;&#34;</span> <span style="color:#f92672">+</span> wife <span style="color:#f92672">+</span> <span style="color:#e6db74">&#39;\&#39;&#39;</span> <span style="color:#f92672">+</span>
+                <span style="color:#e6db74">&#34;, info=&#34;</span> <span style="color:#f92672">+</span> info <span style="color:#f92672">+</span>
+                <span style="color:#e6db74">&#39;}&#39;</span><span style="color:#f92672">;</span>
+    <span style="color:#f92672">}</span>
+<span style="color:#f92672">}</span>
+
+</code></pre></div><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-xml" data-lang="xml"><span style="color:#75715e">&lt;?xml version=&#34;1.0&#34; encoding=&#34;UTF-8&#34;?&gt;</span>
+<span style="color:#f92672">&lt;beans</span> <span style="color:#a6e22e">xmlns=</span><span style="color:#e6db74">&#34;http://www.springframework.org/schema/beans&#34;</span>
+       <span style="color:#a6e22e">xmlns:xsi=</span><span style="color:#e6db74">&#34;http://www.w3.org/2001/XMLSchema-instance&#34;</span>
+       <span style="color:#a6e22e">xsi:schemaLocation=</span><span style="color:#e6db74">&#34;http://www.springframework.org/schema/beans
+</span><span style="color:#e6db74">        https://www.springframework.org/schema/beans/spring-beans.xsd&#34;</span><span style="color:#f92672">&gt;</span>
+    <span style="color:#f92672">&lt;bean</span> <span style="color:#a6e22e">id=</span><span style="color:#e6db74">&#34;Address&#34;</span> <span style="color:#a6e22e">class=</span><span style="color:#e6db74">&#34;wiki.mrx.pojo.Address&#34;</span><span style="color:#f92672">&gt;</span>
+        <span style="color:#f92672">&lt;property</span> <span style="color:#a6e22e">name=</span><span style="color:#e6db74">&#34;address&#34;</span> <span style="color:#a6e22e">value=</span><span style="color:#e6db74">&#34;天津&#34;</span><span style="color:#f92672">/&gt;</span>
+    <span style="color:#f92672">&lt;/bean&gt;</span>
+    <span style="color:#f92672">&lt;bean</span> <span style="color:#a6e22e">id=</span><span style="color:#e6db74">&#34;student&#34;</span> <span style="color:#a6e22e">class=</span><span style="color:#e6db74">&#34;wiki.mrx.pojo.Student&#34;</span><span style="color:#f92672">&gt;</span>
+
+        <span style="color:#75715e">&lt;!--普通变量--&gt;</span>
+        <span style="color:#f92672">&lt;property</span> <span style="color:#a6e22e">name=</span><span style="color:#e6db74">&#34;name&#34;</span> <span style="color:#a6e22e">value=</span><span style="color:#e6db74">&#34;ssss&#34;</span><span style="color:#f92672">/&gt;</span>
+
+        <span style="color:#75715e">&lt;!--类--&gt;</span>
+        <span style="color:#f92672">&lt;property</span> <span style="color:#a6e22e">name=</span><span style="color:#e6db74">&#34;address&#34;</span> <span style="color:#a6e22e">ref=</span><span style="color:#e6db74">&#34;Address&#34;</span><span style="color:#f92672">/&gt;</span>
+        <span style="color:#75715e">&lt;!--array--&gt;</span>
+        <span style="color:#f92672">&lt;property</span> <span style="color:#a6e22e">name=</span><span style="color:#e6db74">&#34;books&#34;</span><span style="color:#f92672">&gt;</span>
+            <span style="color:#f92672">&lt;array&gt;</span>
+                <span style="color:#f92672">&lt;value&gt;</span>红楼梦<span style="color:#f92672">&lt;/value&gt;</span>
+                <span style="color:#f92672">&lt;value&gt;</span>水浒传<span style="color:#f92672">&lt;/value&gt;</span>
+                <span style="color:#f92672">&lt;value&gt;</span>三国演义<span style="color:#f92672">&lt;/value&gt;</span>
+                <span style="color:#f92672">&lt;value&gt;</span>西游记<span style="color:#f92672">&lt;/value&gt;</span>
+            <span style="color:#f92672">&lt;/array&gt;</span>
+        <span style="color:#f92672">&lt;/property&gt;</span>
+        <span style="color:#75715e">&lt;!--list--&gt;</span>
+        <span style="color:#f92672">&lt;property</span> <span style="color:#a6e22e">name=</span><span style="color:#e6db74">&#34;hobbys&#34;</span><span style="color:#f92672">&gt;</span>
+            <span style="color:#f92672">&lt;list&gt;</span>
+                <span style="color:#f92672">&lt;value&gt;</span>听歌<span style="color:#f92672">&lt;/value&gt;</span>
+                <span style="color:#f92672">&lt;value&gt;</span>写作<span style="color:#f92672">&lt;/value&gt;</span>
+            <span style="color:#f92672">&lt;/list&gt;</span>
+        <span style="color:#f92672">&lt;/property&gt;</span>
+        <span style="color:#75715e">&lt;!--map--&gt;</span>
+        <span style="color:#f92672">&lt;property</span> <span style="color:#a6e22e">name=</span><span style="color:#e6db74">&#34;card&#34;</span><span style="color:#f92672">&gt;</span>
+            <span style="color:#f92672">&lt;map&gt;</span>
+                <span style="color:#f92672">&lt;entry</span> <span style="color:#a6e22e">key=</span><span style="color:#e6db74">&#34;a&#34;</span> <span style="color:#a6e22e">value=</span><span style="color:#e6db74">&#34;aaa&#34;</span> <span style="color:#f92672">/&gt;</span>
+            <span style="color:#f92672">&lt;/map&gt;</span>
+        <span style="color:#f92672">&lt;/property&gt;</span>
+        <span style="color:#75715e">&lt;!--set--&gt;</span>
+        <span style="color:#f92672">&lt;property</span> <span style="color:#a6e22e">name=</span><span style="color:#e6db74">&#34;games&#34;</span><span style="color:#f92672">&gt;</span>
+            <span style="color:#f92672">&lt;set&gt;</span>
+                <span style="color:#f92672">&lt;value&gt;</span>lol<span style="color:#f92672">&lt;/value&gt;</span>
+            <span style="color:#f92672">&lt;/set&gt;</span>
+        <span style="color:#f92672">&lt;/property&gt;</span>
+        <span style="color:#75715e">&lt;!--null--&gt;</span>
+        <span style="color:#f92672">&lt;property</span> <span style="color:#a6e22e">name=</span><span style="color:#e6db74">&#34;wife&#34;</span><span style="color:#f92672">&gt;</span>
+            <span style="color:#f92672">&lt;null</span> <span style="color:#f92672">/&gt;</span>
+        <span style="color:#f92672">&lt;/property&gt;</span>
+        <span style="color:#75715e">&lt;!--props--&gt;</span>
+        <span style="color:#f92672">&lt;property</span> <span style="color:#a6e22e">name=</span><span style="color:#e6db74">&#34;info&#34;</span><span style="color:#f92672">&gt;</span>
+            <span style="color:#f92672">&lt;props&gt;</span>
+                <span style="color:#f92672">&lt;prop</span> <span style="color:#a6e22e">key=</span><span style="color:#e6db74">&#34;ss&#34;</span><span style="color:#f92672">&gt;</span>ssss<span style="color:#f92672">&lt;/prop&gt;</span>
+            <span style="color:#f92672">&lt;/props&gt;</span>
+        <span style="color:#f92672">&lt;/property&gt;</span>
+    <span style="color:#f92672">&lt;/bean&gt;</span>
+
+<span style="color:#f92672">&lt;/beans&gt;</span>
+
+</code></pre></div><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#f92672">import</span> org.springframework.context.ApplicationContext<span style="color:#f92672">;</span>
+<span style="color:#f92672">import</span> org.springframework.context.support.ClassPathXmlApplicationContext<span style="color:#f92672">;</span>
+<span style="color:#f92672">import</span> wiki.mrx.pojo.Student<span style="color:#f92672">;</span>
+<span style="color:#f92672">import</span> wiki.mrx.pojo.User<span style="color:#f92672">;</span>
+
+<span style="color:#66d9ef">public</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">MyTest</span> <span style="color:#f92672">{</span>
+
+    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">static</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">main</span><span style="color:#f92672">(</span>String<span style="color:#f92672">[]</span> args<span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+        <span style="color:#75715e">//1.获取spring上下文对象
+</span><span style="color:#75715e"></span>        ApplicationContext context <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> ClassPathXmlApplicationContext<span style="color:#f92672">(</span><span style="color:#e6db74">&#34;applicationContext.xml&#34;</span><span style="color:#f92672">);</span>
+        <span style="color:#75715e">//2.取出spring容器中的对象
+</span><span style="color:#75715e"></span>        Student student <span style="color:#f92672">=</span> <span style="color:#f92672">(</span>Student<span style="color:#f92672">)</span> context<span style="color:#f92672">.</span><span style="color:#a6e22e">getBean</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#34;student&#34;</span><span style="color:#f92672">);</span>
+        System<span style="color:#f92672">.</span><span style="color:#a6e22e">out</span><span style="color:#f92672">.</span><span style="color:#a6e22e">println</span><span style="color:#f92672">(</span>student<span style="color:#f92672">);</span>
+    <span style="color:#f92672">}</span>
+<span style="color:#f92672">}</span>
+
+
+</code></pre></div><p>===cp注入=== ｜===cp注入=== ｜===cp注入=== ｜
+本质就是constructor-arg和set注入的简化写法</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java">
+<span style="color:#f92672">package</span> wiki.mrx.pojo<span style="color:#f92672">;</span>
+
+<span style="color:#66d9ef">public</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Hello</span> <span style="color:#f92672">{</span>
+    <span style="color:#66d9ef">private</span> String str<span style="color:#f92672">;</span>
+    <span style="color:#66d9ef">public</span> <span style="color:#a6e22e">Hello</span><span style="color:#f92672">()</span> <span style="color:#f92672">{</span>
+    <span style="color:#f92672">}</span>
+    <span style="color:#66d9ef">public</span> <span style="color:#a6e22e">Hello</span><span style="color:#f92672">(</span>String str<span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+        <span style="color:#66d9ef">this</span><span style="color:#f92672">.</span><span style="color:#a6e22e">str</span> <span style="color:#f92672">=</span> str<span style="color:#f92672">;</span>
+    <span style="color:#f92672">}</span>
+
+    <span style="color:#66d9ef">public</span> String <span style="color:#a6e22e">getStr</span><span style="color:#f92672">()</span> <span style="color:#f92672">{</span>
+        <span style="color:#66d9ef">return</span> str<span style="color:#f92672">;</span>
+    <span style="color:#f92672">}</span>
+
+    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">setStr</span><span style="color:#f92672">(</span>String str<span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+        <span style="color:#66d9ef">this</span><span style="color:#f92672">.</span><span style="color:#a6e22e">str</span> <span style="color:#f92672">=</span> str<span style="color:#f92672">;</span>
+    <span style="color:#f92672">}</span>
+
+    <span style="color:#a6e22e">@Override</span>
+    <span style="color:#66d9ef">public</span> String <span style="color:#a6e22e">toString</span><span style="color:#f92672">()</span> <span style="color:#f92672">{</span>
+        <span style="color:#66d9ef">return</span> <span style="color:#e6db74">&#34;Hello{&#34;</span> <span style="color:#f92672">+</span>
+                <span style="color:#e6db74">&#34;str=&#39;&#34;</span> <span style="color:#f92672">+</span> str <span style="color:#f92672">+</span> <span style="color:#e6db74">&#39;\&#39;&#39;</span> <span style="color:#f92672">+</span>
+                <span style="color:#e6db74">&#39;}&#39;</span><span style="color:#f92672">;</span>
+    <span style="color:#f92672">}</span>
+<span style="color:#f92672">}</span>
+
+</code></pre></div><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-xml" data-lang="xml"><span style="color:#75715e">&lt;?xml version=&#34;1.0&#34; encoding=&#34;UTF-8&#34;?&gt;</span>
+<span style="color:#f92672">&lt;beans</span> <span style="color:#a6e22e">xmlns=</span><span style="color:#e6db74">&#34;http://www.springframework.org/schema/beans&#34;</span>
+       <span style="color:#a6e22e">xmlns:xsi=</span><span style="color:#e6db74">&#34;http://www.w3.org/2001/XMLSchema-instance&#34;</span>
+       <span style="color:#a6e22e">xsi:schemaLocation=</span><span style="color:#e6db74">&#34;http://www.springframework.org/schema/beans
+</span><span style="color:#e6db74">        https://www.springframework.org/schema/beans/spring-beans.xsd&#34;</span>
+       <span style="color:#a6e22e">xmlns:p=</span><span style="color:#e6db74">&#34;http://www.springframework.org/schema/p&#34;</span>
+       <span style="color:#a6e22e">xmlns:c=</span><span style="color:#e6db74">&#34;http://www.springframework.org/schema/c&#34;</span>
+<span style="color:#f92672">&gt;</span>
+    <span style="color:#f92672">&lt;bean</span> <span style="color:#a6e22e">id=</span><span style="color:#e6db74">&#34;hello&#34;</span> <span style="color:#a6e22e">class=</span><span style="color:#e6db74">&#34;wiki.mrx.pojo.Hello&#34;</span> <span style="color:#a6e22e">c:str=</span><span style="color:#e6db74">&#34;c-str&#34;</span> <span style="color:#a6e22e">p:str=</span><span style="color:#e6db74">&#34;p-str&#34;</span><span style="color:#f92672">/&gt;</span>
+<span style="color:#f92672">&lt;/beans&gt;</span>
+</code></pre></div><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#f92672">import</span> org.springframework.context.ApplicationContext<span style="color:#f92672">;</span>
+<span style="color:#f92672">import</span> org.springframework.context.support.ClassPathXmlApplicationContext<span style="color:#f92672">;</span>
+<span style="color:#f92672">import</span> wiki.mrx.pojo.Hello<span style="color:#f92672">;</span>
+<span style="color:#f92672">import</span> wiki.mrx.pojo.Student<span style="color:#f92672">;</span>
+<span style="color:#f92672">import</span> wiki.mrx.pojo.User<span style="color:#f92672">;</span>
+
+<span style="color:#66d9ef">public</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">MyTest</span> <span style="color:#f92672">{</span>
+
+    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">static</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">main</span><span style="color:#f92672">(</span>String<span style="color:#f92672">[]</span> args<span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+        <span style="color:#75715e">//1.获取spring上下文对象
+</span><span style="color:#75715e"></span>        ApplicationContext context <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> ClassPathXmlApplicationContext<span style="color:#f92672">(</span><span style="color:#e6db74">&#34;applicationContext.xml&#34;</span><span style="color:#f92672">);</span>
+        <span style="color:#75715e">//2.取出spring容器中的对象
+</span><span style="color:#75715e"></span>        Hello hello <span style="color:#f92672">=</span> context<span style="color:#f92672">.</span><span style="color:#a6e22e">getBean</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#34;hello&#34;</span><span style="color:#f92672">,</span> Hello<span style="color:#f92672">.</span><span style="color:#a6e22e">class</span><span style="color:#f92672">);</span>
+        System<span style="color:#f92672">.</span><span style="color:#a6e22e">out</span><span style="color:#f92672">.</span><span style="color:#a6e22e">println</span><span style="color:#f92672">(</span>hello<span style="color:#f92672">.</span><span style="color:#a6e22e">toString</span><span style="color:#f92672">());</span>
+        System<span style="color:#f92672">.</span><span style="color:#a6e22e">out</span><span style="color:#f92672">.</span><span style="color:#a6e22e">println</span><span style="color:#f92672">(</span>hello<span style="color:#f92672">.</span><span style="color:#a6e22e">getStr</span><span style="color:#f92672">());</span>
+    <span style="color:#f92672">}</span>
+
+
+<span style="color:#f92672">}</span>
+
+</code></pre></div><p>== AOP == | == AOP == | == AOP == | == AOP == |</p>
+<p>aop:面向切面编程，在业务代码外找到切入点加入辅助类，实现方式：</p>
+<ul>
+<li>1.spring原生api实现</li>
+<li>2.自定义实现</li>
+<li>3.注解开发</li>
+</ul>
+<p>== spring原生api实现 == ｜ == spring原生api实现 == ｜</p>
+<p>第一步：导包</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-xml" data-lang="xml"><span style="color:#75715e">&lt;!-- https://mvnrepository.com/artifact/org.aspectj/aspectjweaver --&gt;</span>
+        <span style="color:#f92672">&lt;dependency&gt;</span>
+            <span style="color:#f92672">&lt;groupId&gt;</span>org.aspectj<span style="color:#f92672">&lt;/groupId&gt;</span>
+            <span style="color:#f92672">&lt;artifactId&gt;</span>aspectjweaver<span style="color:#f92672">&lt;/artifactId&gt;</span>
+            <span style="color:#f92672">&lt;version&gt;</span>1.9.8<span style="color:#f92672">&lt;/version&gt;</span>
+        <span style="color:#f92672">&lt;/dependency&gt;</span>
+</code></pre></div><p>第二步：编写业务层代码</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#f92672">package</span> wiki.mrx.service<span style="color:#f92672">;</span>
+
+<span style="color:#66d9ef">public</span> <span style="color:#66d9ef">interface</span> <span style="color:#a6e22e">UserService</span> <span style="color:#f92672">{</span>
+    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">add</span><span style="color:#f92672">();</span>
+    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">delete</span><span style="color:#f92672">();</span>
+    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">update</span><span style="color:#f92672">();</span>
+    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">search</span><span style="color:#f92672">();</span>
+
+<span style="color:#f92672">}</span>
+</code></pre></div><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#f92672">package</span> wiki.mrx.service<span style="color:#f92672">;</span>
+
+<span style="color:#66d9ef">public</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">UserServiceImpl</span> <span style="color:#66d9ef">implements</span> UserService<span style="color:#f92672">{</span>
+    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">add</span><span style="color:#f92672">()</span> <span style="color:#f92672">{</span>
+        System<span style="color:#f92672">.</span><span style="color:#a6e22e">out</span><span style="color:#f92672">.</span><span style="color:#a6e22e">println</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#34;add&#34;</span><span style="color:#f92672">);</span>
+    <span style="color:#f92672">}</span>
+
+    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">delete</span><span style="color:#f92672">()</span> <span style="color:#f92672">{</span>
+        System<span style="color:#f92672">.</span><span style="color:#a6e22e">out</span><span style="color:#f92672">.</span><span style="color:#a6e22e">println</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#34;delete&#34;</span><span style="color:#f92672">);</span>
+    <span style="color:#f92672">}</span>
+
+    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">update</span><span style="color:#f92672">()</span> <span style="color:#f92672">{</span>
+        System<span style="color:#f92672">.</span><span style="color:#a6e22e">out</span><span style="color:#f92672">.</span><span style="color:#a6e22e">println</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#34;update&#34;</span><span style="color:#f92672">);</span>
+    <span style="color:#f92672">}</span>
+
+    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">search</span><span style="color:#f92672">()</span> <span style="color:#f92672">{</span>
+        System<span style="color:#f92672">.</span><span style="color:#a6e22e">out</span><span style="color:#f92672">.</span><span style="color:#a6e22e">println</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#34;search&#34;</span><span style="color:#f92672">);</span>
+    <span style="color:#f92672">}</span>
+<span style="color:#f92672">}</span>
+</code></pre></div><p>第三步：编写切面类</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#f92672">package</span> wiki.mrx.log<span style="color:#f92672">;</span>
+
+<span style="color:#f92672">import</span> org.springframework.aop.MethodBeforeAdvice<span style="color:#f92672">;</span>
+
+<span style="color:#f92672">import</span> java.lang.reflect.Method<span style="color:#f92672">;</span>
+
+<span style="color:#66d9ef">public</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Log</span> <span style="color:#66d9ef">implements</span> MethodBeforeAdvice <span style="color:#f92672">{</span>
+    <span style="color:#75715e">//method:目标对象的方法
+</span><span style="color:#75715e"></span>    <span style="color:#75715e">//args：参数
+</span><span style="color:#75715e"></span>    <span style="color:#75715e">//target：目标对象
+</span><span style="color:#75715e"></span>    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">before</span><span style="color:#f92672">(</span>Method method<span style="color:#f92672">,</span> Object<span style="color:#f92672">[]</span> args<span style="color:#f92672">,</span> Object target<span style="color:#f92672">)</span> <span style="color:#66d9ef">throws</span> Throwable <span style="color:#f92672">{</span>
+        System<span style="color:#f92672">.</span><span style="color:#a6e22e">out</span><span style="color:#f92672">.</span><span style="color:#a6e22e">println</span><span style="color:#f92672">(</span>target<span style="color:#f92672">.</span><span style="color:#a6e22e">getClass</span><span style="color:#f92672">().</span><span style="color:#a6e22e">getName</span><span style="color:#f92672">()+</span><span style="color:#e6db74">&#34;的&#34;</span><span style="color:#f92672">+</span>method<span style="color:#f92672">.</span><span style="color:#a6e22e">getName</span><span style="color:#f92672">()+</span><span style="color:#e6db74">&#34;被执行了&#34;</span><span style="color:#f92672">);</span>
+    <span style="color:#f92672">}</span>
+<span style="color:#f92672">}</span>
+</code></pre></div><p>第四步：配置切点切面</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-xml" data-lang="xml"><span style="color:#75715e">&lt;?xml version=&#34;1.0&#34; encoding=&#34;UTF-8&#34;?&gt;</span>
+<span style="color:#f92672">&lt;beans</span> <span style="color:#a6e22e">xmlns=</span><span style="color:#e6db74">&#34;http://www.springframework.org/schema/beans&#34;</span>
+       <span style="color:#a6e22e">xmlns:xsi=</span><span style="color:#e6db74">&#34;http://www.w3.org/2001/XMLSchema-instance&#34;</span>
+       <span style="color:#a6e22e">xmlns:aop=</span><span style="color:#e6db74">&#34;http://www.springframework.org/schema/aop&#34;</span>
+       <span style="color:#a6e22e">xsi:schemaLocation=</span><span style="color:#e6db74">&#34;http://www.springframework.org/schema/beans
+</span><span style="color:#e6db74">        https://www.springframework.org/schema/beans/spring-beans.xsd
+</span><span style="color:#e6db74">        http://www.springframework.org/schema/aop
+</span><span style="color:#e6db74">        http://www.springframework.org/schema/aop/spring-aop.xsd&#34;</span><span style="color:#f92672">&gt;</span>
+    
+    <span style="color:#f92672">&lt;bean</span> <span style="color:#a6e22e">id=</span><span style="color:#e6db74">&#34;userService&#34;</span> <span style="color:#a6e22e">class=</span><span style="color:#e6db74">&#34;wiki.mrx.service.UserServiceImpl&#34;</span><span style="color:#f92672">/&gt;</span>
+    <span style="color:#f92672">&lt;bean</span> <span style="color:#a6e22e">id=</span><span style="color:#e6db74">&#34;log&#34;</span> <span style="color:#a6e22e">class=</span><span style="color:#e6db74">&#34;wiki.mrx.log.Log&#34;</span><span style="color:#f92672">/&gt;</span>
+    
+    <span style="color:#f92672">&lt;aop:config&gt;</span>
+        <span style="color:#75715e">&lt;!--切入点--&gt;</span>
+        <span style="color:#75715e">&lt;!--execution(参数类型 需要被切的类的位置(传递的参数)--&gt;</span>
+        <span style="color:#f92672">&lt;aop:pointcut</span> <span style="color:#a6e22e">id=</span><span style="color:#e6db74">&#34;pointcut&#34;</span> <span style="color:#a6e22e">expression=</span><span style="color:#e6db74">&#34;execution(* wiki.mrx.service.UserServiceImpl.*(..))&#34;</span><span style="color:#f92672">/&gt;</span>
+        <span style="color:#75715e">&lt;!--切面--&gt;</span>
+        <span style="color:#f92672">&lt;aop:advisor</span> <span style="color:#a6e22e">advice-ref=</span><span style="color:#e6db74">&#34;log&#34;</span> <span style="color:#a6e22e">pointcut-ref=</span><span style="color:#e6db74">&#34;pointcut&#34;</span><span style="color:#f92672">/&gt;</span>
+    <span style="color:#f92672">&lt;/aop:config&gt;</span>
+<span style="color:#f92672">&lt;/beans&gt;</span>
+
+</code></pre></div><p>第五步：编写测试类</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#f92672">package</span> wiki.mrx<span style="color:#f92672">;</span>
+
+<span style="color:#f92672">import</span> org.springframework.context.ApplicationContext<span style="color:#f92672">;</span>
+<span style="color:#f92672">import</span> org.springframework.context.support.ClassPathXmlApplicationContext<span style="color:#f92672">;</span>
+<span style="color:#f92672">import</span> wiki.mrx.service.UserService<span style="color:#f92672">;</span>
+
+<span style="color:#66d9ef">public</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Myest</span> <span style="color:#f92672">{</span>
+    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">static</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">main</span><span style="color:#f92672">(</span>String<span style="color:#f92672">[]</span> args<span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+        ApplicationContext context <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> ClassPathXmlApplicationContext<span style="color:#f92672">(</span><span style="color:#e6db74">&#34;applicationContext.xml&#34;</span><span style="color:#f92672">);</span>
+        UserService userService <span style="color:#f92672">=</span> <span style="color:#f92672">(</span>UserService<span style="color:#f92672">)</span>context<span style="color:#f92672">.</span><span style="color:#a6e22e">getBean</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#34;userService&#34;</span><span style="color:#f92672">);</span>
+        userService<span style="color:#f92672">.</span><span style="color:#a6e22e">add</span><span style="color:#f92672">();</span>
+    <span style="color:#f92672">}</span>
+<span style="color:#f92672">}</span>
+
+</code></pre></div><p>== 自定义实现 == ｜ == 自定义实现 == ｜
+第一步：导包
+第二步：编写业务层代码
+第三步：编写切面类</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java">
+<span style="color:#f92672">package</span> wiki.mrx.diy<span style="color:#f92672">;</span>
+
+<span style="color:#66d9ef">public</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">DiyPointCut</span> <span style="color:#f92672">{</span>
+    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">before</span><span style="color:#f92672">(){</span>
+        System<span style="color:#f92672">.</span><span style="color:#a6e22e">out</span><span style="color:#f92672">.</span><span style="color:#a6e22e">println</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#34;===========方法执行前===========&#34;</span><span style="color:#f92672">);</span>
+    <span style="color:#f92672">}</span>
+
+    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">after</span><span style="color:#f92672">(){</span>
+        System<span style="color:#f92672">.</span><span style="color:#a6e22e">out</span><span style="color:#f92672">.</span><span style="color:#a6e22e">println</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#34;===========方法执行后===========&#34;</span><span style="color:#f92672">);</span>
+    <span style="color:#f92672">}</span>
+<span style="color:#f92672">}</span>
+
+</code></pre></div><p>第四步：配置切点切面</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-xml" data-lang="xml">
+<span style="color:#75715e">&lt;?xml version=&#34;1.0&#34; encoding=&#34;UTF-8&#34;?&gt;</span>
+<span style="color:#f92672">&lt;beans</span> <span style="color:#a6e22e">xmlns=</span><span style="color:#e6db74">&#34;http://www.springframework.org/schema/beans&#34;</span>
+       <span style="color:#a6e22e">xmlns:xsi=</span><span style="color:#e6db74">&#34;http://www.w3.org/2001/XMLSchema-instance&#34;</span>
+       <span style="color:#a6e22e">xmlns:aop=</span><span style="color:#e6db74">&#34;http://www.springframework.org/schema/aop&#34;</span>
+       <span style="color:#a6e22e">xsi:schemaLocation=</span><span style="color:#e6db74">&#34;http://www.springframework.org/schema/beans
+</span><span style="color:#e6db74">        https://www.springframework.org/schema/beans/spring-beans.xsd
+</span><span style="color:#e6db74">        http://www.springframework.org/schema/aop
+</span><span style="color:#e6db74">        http://www.springframework.org/schema/aop/spring-aop.xsd&#34;</span><span style="color:#f92672">&gt;</span>
+
+    <span style="color:#f92672">&lt;bean</span> <span style="color:#a6e22e">id=</span><span style="color:#e6db74">&#34;userService&#34;</span> <span style="color:#a6e22e">class=</span><span style="color:#e6db74">&#34;wiki.mrx.service.UserServiceImpl&#34;</span><span style="color:#f92672">/&gt;</span>
+    <span style="color:#f92672">&lt;bean</span> <span style="color:#a6e22e">id=</span><span style="color:#e6db74">&#34;log&#34;</span> <span style="color:#a6e22e">class=</span><span style="color:#e6db74">&#34;wiki.mrx.log.Log&#34;</span><span style="color:#f92672">/&gt;</span>
+
+    <span style="color:#f92672">&lt;bean</span> <span style="color:#a6e22e">id=</span><span style="color:#e6db74">&#34;diy&#34;</span> <span style="color:#a6e22e">class=</span><span style="color:#e6db74">&#34;wiki.mrx.diy.DiyPointCut&#34;</span> <span style="color:#f92672">/&gt;</span>
+    <span style="color:#f92672">&lt;aop:config&gt;</span>
+        <span style="color:#f92672">&lt;aop:aspect</span> <span style="color:#a6e22e">ref=</span><span style="color:#e6db74">&#34;diy&#34;</span><span style="color:#f92672">&gt;</span>
+            <span style="color:#f92672">&lt;aop:pointcut</span> <span style="color:#a6e22e">id=</span><span style="color:#e6db74">&#34;point&#34;</span> <span style="color:#a6e22e">expression=</span><span style="color:#e6db74">&#34;execution(* wiki.mrx.service.UserServiceImpl.*(..))&#34;</span><span style="color:#f92672">/&gt;</span>
+            <span style="color:#f92672">&lt;aop:before</span> <span style="color:#a6e22e">method=</span><span style="color:#e6db74">&#34;before&#34;</span> <span style="color:#a6e22e">pointcut-ref=</span><span style="color:#e6db74">&#34;point&#34;</span><span style="color:#f92672">/&gt;</span>
+            <span style="color:#f92672">&lt;aop:after</span> <span style="color:#a6e22e">method=</span><span style="color:#e6db74">&#34;after&#34;</span> <span style="color:#a6e22e">pointcut-ref=</span><span style="color:#e6db74">&#34;point&#34;</span><span style="color:#f92672">/&gt;</span>
+        <span style="color:#f92672">&lt;/aop:aspect&gt;</span>
+    <span style="color:#f92672">&lt;/aop:config&gt;</span>
+<span style="color:#f92672">&lt;/beans&gt;</span>
+</code></pre></div><p>第五步：编写测试类</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#f92672">package</span> wiki.mrx<span style="color:#f92672">;</span>
+
+<span style="color:#f92672">import</span> org.springframework.context.ApplicationContext<span style="color:#f92672">;</span>
+<span style="color:#f92672">import</span> org.springframework.context.support.ClassPathXmlApplicationContext<span style="color:#f92672">;</span>
+<span style="color:#f92672">import</span> wiki.mrx.service.UserService<span style="color:#f92672">;</span>
+
+<span style="color:#66d9ef">public</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Myest</span> <span style="color:#f92672">{</span>
+    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">static</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">main</span><span style="color:#f92672">(</span>String<span style="color:#f92672">[]</span> args<span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+        ApplicationContext context <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> ClassPathXmlApplicationContext<span style="color:#f92672">(</span><span style="color:#e6db74">&#34;applicationContext.xml&#34;</span><span style="color:#f92672">);</span>
+        UserService userService <span style="color:#f92672">=</span> <span style="color:#f92672">(</span>UserService<span style="color:#f92672">)</span>context<span style="color:#f92672">.</span><span style="color:#a6e22e">getBean</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#34;userService&#34;</span><span style="color:#f92672">);</span>
+        userService<span style="color:#f92672">.</span><span style="color:#a6e22e">add</span><span style="color:#f92672">();</span>
+    <span style="color:#f92672">}</span>
+<span style="color:#f92672">}</span>
+
+</code></pre></div><p>== 注解实现 == ｜ == 注解实现 == ｜
+第一步：导包
+第二步：编写业务层代码
+第三步：编写切面类</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#f92672">package</span> wiki.mrx.diy<span style="color:#f92672">;</span>
+
+<span style="color:#f92672">import</span> org.aspectj.lang.annotation.Aspect<span style="color:#f92672">;</span>
+<span style="color:#f92672">import</span> org.aspectj.lang.annotation.Before<span style="color:#f92672">;</span>
+
+<span style="color:#a6e22e">@Aspect</span>
+<span style="color:#66d9ef">public</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">AnnotationPointCut</span> <span style="color:#f92672">{</span>
+    <span style="color:#a6e22e">@Before</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#34;execution(* wiki.mrx.service.UserServiceImpl.*(..))&#34;</span><span style="color:#f92672">)</span>
+    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">before</span><span style="color:#f92672">(){</span>
+        System<span style="color:#f92672">.</span><span style="color:#a6e22e">out</span><span style="color:#f92672">.</span><span style="color:#a6e22e">println</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#34;--------方法前执行--------&#34;</span><span style="color:#f92672">);</span>
+    <span style="color:#f92672">}</span>
+<span style="color:#f92672">}</span>
+
+</code></pre></div><p>第四步：配置切点切面</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-xml" data-lang="xml">
+<span style="color:#75715e">&lt;?xml version=&#34;1.0&#34; encoding=&#34;UTF-8&#34;?&gt;</span>
+<span style="color:#f92672">&lt;beans</span> <span style="color:#a6e22e">xmlns=</span><span style="color:#e6db74">&#34;http://www.springframework.org/schema/beans&#34;</span>
+       <span style="color:#a6e22e">xmlns:xsi=</span><span style="color:#e6db74">&#34;http://www.w3.org/2001/XMLSchema-instance&#34;</span>
+       <span style="color:#a6e22e">xmlns:aop=</span><span style="color:#e6db74">&#34;http://www.springframework.org/schema/aop&#34;</span>
+       <span style="color:#a6e22e">xsi:schemaLocation=</span><span style="color:#e6db74">&#34;http://www.springframework.org/schema/beans
+</span><span style="color:#e6db74">        https://www.springframework.org/schema/beans/spring-beans.xsd
+</span><span style="color:#e6db74">        http://www.springframework.org/schema/aop
+</span><span style="color:#e6db74">        http://www.springframework.org/schema/aop/spring-aop.xsd&#34;</span><span style="color:#f92672">&gt;</span>
+
+    <span style="color:#f92672">&lt;bean</span> <span style="color:#a6e22e">id=</span><span style="color:#e6db74">&#34;userService&#34;</span> <span style="color:#a6e22e">class=</span><span style="color:#e6db74">&#34;wiki.mrx.service.UserServiceImpl&#34;</span><span style="color:#f92672">/&gt;</span>
+    <span style="color:#f92672">&lt;bean</span> <span style="color:#a6e22e">id=</span><span style="color:#e6db74">&#34;log&#34;</span> <span style="color:#a6e22e">class=</span><span style="color:#e6db74">&#34;wiki.mrx.log.Log&#34;</span><span style="color:#f92672">/&gt;</span>
+
+    <span style="color:#f92672">&lt;bean</span> <span style="color:#a6e22e">id=</span><span style="color:#e6db74">&#34;annotationPointCut&#34;</span> <span style="color:#a6e22e">class=</span><span style="color:#e6db74">&#34;wiki.mrx.diy.AnnotationPointCut&#34;</span><span style="color:#f92672">/&gt;</span>
+    <span style="color:#f92672">&lt;aop:aspectj-autoproxy/&gt;</span>
+<span style="color:#f92672">&lt;/beans&gt;</span>
+</code></pre></div><p>第五步：编写测试类</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#f92672">package</span> wiki.mrx<span style="color:#f92672">;</span>
+
+<span style="color:#f92672">import</span> org.springframework.context.ApplicationContext<span style="color:#f92672">;</span>
+<span style="color:#f92672">import</span> org.springframework.context.support.ClassPathXmlApplicationContext<span style="color:#f92672">;</span>
+<span style="color:#f92672">import</span> wiki.mrx.service.UserService<span style="color:#f92672">;</span>
+
+<span style="color:#66d9ef">public</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Myest</span> <span style="color:#f92672">{</span>
+    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">static</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">main</span><span style="color:#f92672">(</span>String<span style="color:#f92672">[]</span> args<span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+        ApplicationContext context <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> ClassPathXmlApplicationContext<span style="color:#f92672">(</span><span style="color:#e6db74">&#34;applicationContext.xml&#34;</span><span style="color:#f92672">);</span>
+        UserService userService <span style="color:#f92672">=</span> <span style="color:#f92672">(</span>UserService<span style="color:#f92672">)</span>context<span style="color:#f92672">.</span><span style="color:#a6e22e">getBean</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#34;userService&#34;</span><span style="color:#f92672">);</span>
+        userService<span style="color:#f92672">.</span><span style="color:#a6e22e">add</span><span style="color:#f92672">();</span>
+    <span style="color:#f92672">}</span>
+<span style="color:#f92672">}</span>
+
+</code></pre></div><p>== spring整合mybatis == ｜ == spring整合mybatis == ｜</p>
+<p>第一步：导包</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-xml" data-lang="xml">
+<span style="color:#75715e">&lt;?xml version=&#34;1.0&#34; encoding=&#34;UTF-8&#34;?&gt;</span>
+<span style="color:#f92672">&lt;project</span> <span style="color:#a6e22e">xmlns=</span><span style="color:#e6db74">&#34;http://maven.apache.org/POM/4.0.0&#34;</span>
+         <span style="color:#a6e22e">xmlns:xsi=</span><span style="color:#e6db74">&#34;http://www.w3.org/2001/XMLSchema-instance&#34;</span>
+         <span style="color:#a6e22e">xsi:schemaLocation=</span><span style="color:#e6db74">&#34;http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd&#34;</span><span style="color:#f92672">&gt;</span>
+    <span style="color:#f92672">&lt;parent&gt;</span>
+        <span style="color:#f92672">&lt;artifactId&gt;</span>spring-study<span style="color:#f92672">&lt;/artifactId&gt;</span>
+        <span style="color:#f92672">&lt;groupId&gt;</span>org.example<span style="color:#f92672">&lt;/groupId&gt;</span>
+        <span style="color:#f92672">&lt;version&gt;</span>1.0-SNAPSHOT<span style="color:#f92672">&lt;/version&gt;</span>
+    <span style="color:#f92672">&lt;/parent&gt;</span>
+    <span style="color:#f92672">&lt;modelVersion&gt;</span>4.0.0<span style="color:#f92672">&lt;/modelVersion&gt;</span>
+
+    <span style="color:#f92672">&lt;artifactId&gt;</span>spring-mybatis<span style="color:#f92672">&lt;/artifactId&gt;</span>
+    <span style="color:#f92672">&lt;dependencies&gt;</span>
+        <span style="color:#f92672">&lt;dependency&gt;</span>
+            <span style="color:#f92672">&lt;groupId&gt;</span>junit<span style="color:#f92672">&lt;/groupId&gt;</span>
+            <span style="color:#f92672">&lt;artifactId&gt;</span>junit<span style="color:#f92672">&lt;/artifactId&gt;</span>
+            <span style="color:#f92672">&lt;version&gt;</span>4.12<span style="color:#f92672">&lt;/version&gt;</span>
+            <span style="color:#f92672">&lt;scope&gt;</span>test<span style="color:#f92672">&lt;/scope&gt;</span>
+        <span style="color:#f92672">&lt;/dependency&gt;</span>
+        <span style="color:#f92672">&lt;dependency&gt;</span>
+            <span style="color:#f92672">&lt;groupId&gt;</span>mysql<span style="color:#f92672">&lt;/groupId&gt;</span>
+            <span style="color:#f92672">&lt;artifactId&gt;</span>mysql-connector-java<span style="color:#f92672">&lt;/artifactId&gt;</span>
+            <span style="color:#f92672">&lt;version&gt;</span>5.1.47<span style="color:#f92672">&lt;/version&gt;</span>
+        <span style="color:#f92672">&lt;/dependency&gt;</span>
+        <span style="color:#f92672">&lt;dependency&gt;</span>
+            <span style="color:#f92672">&lt;groupId&gt;</span>org.mybatis<span style="color:#f92672">&lt;/groupId&gt;</span>
+            <span style="color:#f92672">&lt;artifactId&gt;</span>mybatis<span style="color:#f92672">&lt;/artifactId&gt;</span>
+            <span style="color:#f92672">&lt;version&gt;</span>3.5.9<span style="color:#f92672">&lt;/version&gt;</span>
+        <span style="color:#f92672">&lt;/dependency&gt;</span>
+
+        <span style="color:#f92672">&lt;dependency&gt;</span>
+            <span style="color:#f92672">&lt;groupId&gt;</span>org.springframework<span style="color:#f92672">&lt;/groupId&gt;</span>
+            <span style="color:#f92672">&lt;artifactId&gt;</span>spring-webmvc<span style="color:#f92672">&lt;/artifactId&gt;</span>
+            <span style="color:#f92672">&lt;version&gt;</span>5.3.15<span style="color:#f92672">&lt;/version&gt;</span>
+        <span style="color:#f92672">&lt;/dependency&gt;</span>
+
+        <span style="color:#75715e">&lt;!-- https://mvnrepository.com/artifact/org.springframework/spring-jdbc --&gt;</span>
+        <span style="color:#f92672">&lt;dependency&gt;</span>
+            <span style="color:#f92672">&lt;groupId&gt;</span>org.springframework<span style="color:#f92672">&lt;/groupId&gt;</span>
+            <span style="color:#f92672">&lt;artifactId&gt;</span>spring-jdbc<span style="color:#f92672">&lt;/artifactId&gt;</span>
+            <span style="color:#f92672">&lt;version&gt;</span>5.3.16<span style="color:#f92672">&lt;/version&gt;</span>
+        <span style="color:#f92672">&lt;/dependency&gt;</span>
+
+
+        <span style="color:#f92672">&lt;dependency&gt;</span>
+            <span style="color:#f92672">&lt;groupId&gt;</span>org.aspectj<span style="color:#f92672">&lt;/groupId&gt;</span>
+            <span style="color:#f92672">&lt;artifactId&gt;</span>aspectjweaver<span style="color:#f92672">&lt;/artifactId&gt;</span>
+            <span style="color:#f92672">&lt;version&gt;</span>1.9.8<span style="color:#f92672">&lt;/version&gt;</span>
+        <span style="color:#f92672">&lt;/dependency&gt;</span>
+
+        <span style="color:#f92672">&lt;dependency&gt;</span>
+            <span style="color:#f92672">&lt;groupId&gt;</span>org.mybatis<span style="color:#f92672">&lt;/groupId&gt;</span>
+            <span style="color:#f92672">&lt;artifactId&gt;</span>mybatis-spring<span style="color:#f92672">&lt;/artifactId&gt;</span>
+            <span style="color:#f92672">&lt;version&gt;</span>2.0.2<span style="color:#f92672">&lt;/version&gt;</span>
+        <span style="color:#f92672">&lt;/dependency&gt;</span>
+
+        <span style="color:#f92672">&lt;dependency&gt;</span>
+            <span style="color:#f92672">&lt;groupId&gt;</span>org.projectlombok<span style="color:#f92672">&lt;/groupId&gt;</span>
+            <span style="color:#f92672">&lt;artifactId&gt;</span>lombok<span style="color:#f92672">&lt;/artifactId&gt;</span>
+            <span style="color:#f92672">&lt;version&gt;</span>1.18.22<span style="color:#f92672">&lt;/version&gt;</span>
+        <span style="color:#f92672">&lt;/dependency&gt;</span>
+
+        <span style="color:#f92672">&lt;dependency&gt;</span>
+            <span style="color:#f92672">&lt;groupId&gt;</span>log4j<span style="color:#f92672">&lt;/groupId&gt;</span>
+            <span style="color:#f92672">&lt;artifactId&gt;</span>log4j<span style="color:#f92672">&lt;/artifactId&gt;</span>
+            <span style="color:#f92672">&lt;version&gt;</span>1.2.17<span style="color:#f92672">&lt;/version&gt;</span>
+        <span style="color:#f92672">&lt;/dependency&gt;</span>
+    <span style="color:#f92672">&lt;/dependencies&gt;</span>
+    <span style="color:#f92672">&lt;build&gt;</span>
+        <span style="color:#f92672">&lt;resources&gt;</span>
+            <span style="color:#f92672">&lt;resource&gt;</span>
+                <span style="color:#f92672">&lt;directory&gt;</span>src/main/java/<span style="color:#f92672">&lt;/directory&gt;</span>
+                <span style="color:#f92672">&lt;includes&gt;</span>
+                    <span style="color:#f92672">&lt;include&gt;</span>**/*.xml<span style="color:#f92672">&lt;/include&gt;</span>
+                <span style="color:#f92672">&lt;/includes&gt;</span>
+                <span style="color:#f92672">&lt;filtering&gt;</span>true<span style="color:#f92672">&lt;/filtering&gt;</span>
+            <span style="color:#f92672">&lt;/resource&gt;</span>
+        <span style="color:#f92672">&lt;/resources&gt;</span>
+    <span style="color:#f92672">&lt;/build&gt;</span>
+<span style="color:#f92672">&lt;/project&gt;</span>
+</code></pre></div><p>第二步：编写实体类,接口和mapper.xml</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#f92672">package</span> wiki.mrx.pojo<span style="color:#f92672">;</span>
+
+
+<span style="color:#f92672">import</span> lombok.Data<span style="color:#f92672">;</span>
+
+<span style="color:#a6e22e">@Data</span>
+<span style="color:#66d9ef">public</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">User</span> <span style="color:#f92672">{</span>
+    <span style="color:#66d9ef">private</span> <span style="color:#66d9ef">int</span> id<span style="color:#f92672">;</span>
+    <span style="color:#66d9ef">private</span> String name<span style="color:#f92672">;</span>
+    <span style="color:#66d9ef">private</span> String pwd<span style="color:#f92672">;</span>
+<span style="color:#f92672">}</span>
+
+</code></pre></div><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java">
+<span style="color:#f92672">package</span> wiki.mrx.mapper<span style="color:#f92672">;</span>
+
+<span style="color:#f92672">import</span> wiki.mrx.pojo.User<span style="color:#f92672">;</span>
+
+<span style="color:#f92672">import</span> java.util.List<span style="color:#f92672">;</span>
+
+<span style="color:#66d9ef">public</span> <span style="color:#66d9ef">interface</span> <span style="color:#a6e22e">UserMapper</span> <span style="color:#f92672">{</span>
+    <span style="color:#66d9ef">public</span> List<span style="color:#f92672">&lt;</span>User<span style="color:#f92672">&gt;</span> <span style="color:#a6e22e">selectUser</span><span style="color:#f92672">();</span>
+<span style="color:#f92672">}</span>
+
+</code></pre></div><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-xml" data-lang="xml"><span style="color:#75715e">&lt;?xml version=&#34;1.0&#34; encoding=&#34;UTF-8&#34; ?&gt;</span>
+<span style="color:#75715e">&lt;!DOCTYPE mapper
+</span><span style="color:#75715e">        PUBLIC &#34;-//mybatis.org//DTD Config 3.0//EN&#34;
+</span><span style="color:#75715e">        &#34;http://mybatis.org/dtd/mybatis-3-mapper.dtd&#34;&gt;</span>
+<span style="color:#f92672">&lt;mapper</span> <span style="color:#a6e22e">namespace=</span><span style="color:#e6db74">&#34;wiki.mrx.mapper.UserMapper&#34;</span><span style="color:#f92672">&gt;</span>
+    <span style="color:#f92672">&lt;select</span> <span style="color:#a6e22e">id=</span><span style="color:#e6db74">&#34;selectUser&#34;</span> <span style="color:#a6e22e">resultType=</span><span style="color:#e6db74">&#34;user&#34;</span><span style="color:#f92672">&gt;</span>
+        select * from mybatis.user;
+    <span style="color:#f92672">&lt;/select&gt;</span>
+<span style="color:#f92672">&lt;/mapper&gt;</span>
+
+</code></pre></div><p>第三步：配置数据源，注册mapper
+这部分类似mybatis中的工具类编写
+【applicationContext】包含了：</p>
+<ul>
+<li>spring配置文件【spring-dao.xml】</li>
+<li>mybatis配置文件【mybatis-config.xml】</li>
+</ul>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-xml" data-lang="xml">applicationContext
+<span style="color:#75715e">&lt;?xml version=&#34;1.0&#34; encoding=&#34;UTF-8&#34;?&gt;</span>
+<span style="color:#f92672">&lt;beans</span> <span style="color:#a6e22e">xmlns=</span><span style="color:#e6db74">&#34;http://www.springframework.org/schema/beans&#34;</span>
+       <span style="color:#a6e22e">xmlns:xsi=</span><span style="color:#e6db74">&#34;http://www.w3.org/2001/XMLSchema-instance&#34;</span>
+       <span style="color:#a6e22e">xmlns:aop=</span><span style="color:#e6db74">&#34;http://www.springframework.org/schema/aop&#34;</span>
+       <span style="color:#a6e22e">xsi:schemaLocation=</span><span style="color:#e6db74">&#34;http://www.springframework.org/schema/beans
+</span><span style="color:#e6db74">        https://www.springframework.org/schema/beans/spring-beans.xsd
+</span><span style="color:#e6db74">        http://www.springframework.org/schema/aop
+</span><span style="color:#e6db74">        http://www.springframework.org/schema/aop/spring-aop.xsd&#34;</span><span style="color:#f92672">&gt;</span>
+    <span style="color:#f92672">&lt;import</span> <span style="color:#a6e22e">resource=</span><span style="color:#e6db74">&#34;spring-dao.xml&#34;</span><span style="color:#f92672">/&gt;</span>
+    <span style="color:#75715e">&lt;!--注册mapper--&gt;</span>
+    <span style="color:#f92672">&lt;bean</span> <span style="color:#a6e22e">id=</span><span style="color:#e6db74">&#34;userMapper&#34;</span> <span style="color:#a6e22e">class=</span><span style="color:#e6db74">&#34;wiki.mrx.mapper.UserMapperImpl&#34;</span><span style="color:#f92672">&gt;</span>
+        <span style="color:#f92672">&lt;property</span> <span style="color:#a6e22e">name=</span><span style="color:#e6db74">&#34;sqlSession&#34;</span> <span style="color:#a6e22e">ref=</span><span style="color:#e6db74">&#34;sqlSession&#34;</span><span style="color:#f92672">/&gt;</span>
+    <span style="color:#f92672">&lt;/bean&gt;</span>
+<span style="color:#f92672">&lt;/beans&gt;</span>
+</code></pre></div><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-xml" data-lang="xml">spring-dao.xml
+<span style="color:#75715e">&lt;?xml version=&#34;1.0&#34; encoding=&#34;UTF-8&#34;?&gt;</span>
+<span style="color:#f92672">&lt;beans</span> <span style="color:#a6e22e">xmlns=</span><span style="color:#e6db74">&#34;http://www.springframework.org/schema/beans&#34;</span>
+       <span style="color:#a6e22e">xmlns:xsi=</span><span style="color:#e6db74">&#34;http://www.w3.org/2001/XMLSchema-instance&#34;</span>
+       <span style="color:#a6e22e">xmlns:aop=</span><span style="color:#e6db74">&#34;http://www.springframework.org/schema/aop&#34;</span>
+       <span style="color:#a6e22e">xsi:schemaLocation=</span><span style="color:#e6db74">&#34;http://www.springframework.org/schema/beans
+</span><span style="color:#e6db74">        https://www.springframework.org/schema/beans/spring-beans.xsd
+</span><span style="color:#e6db74">        http://www.springframework.org/schema/aop
+</span><span style="color:#e6db74">        http://www.springframework.org/schema/aop/spring-aop.xsd&#34;</span><span style="color:#f92672">&gt;</span>
+
+    <span style="color:#75715e">&lt;!--spring数据源替换mybatis数据源--&gt;</span>
+    <span style="color:#f92672">&lt;bean</span> <span style="color:#a6e22e">id=</span><span style="color:#e6db74">&#34;dataSource&#34;</span> <span style="color:#a6e22e">class=</span><span style="color:#e6db74">&#34;org.springframework.jdbc.datasource.DriverManagerDataSource&#34;</span><span style="color:#f92672">&gt;</span>
+        <span style="color:#f92672">&lt;property</span> <span style="color:#a6e22e">name=</span><span style="color:#e6db74">&#34;driverClassName&#34;</span> <span style="color:#a6e22e">value=</span><span style="color:#e6db74">&#34;com.mysql.jdbc.Driver&#34;</span><span style="color:#f92672">/&gt;</span>
+        <span style="color:#f92672">&lt;property</span> <span style="color:#a6e22e">name=</span><span style="color:#e6db74">&#34;url&#34;</span> <span style="color:#a6e22e">value=</span><span style="color:#e6db74">&#34;jdbc:mysql://localhost:3306/mybatis?useSSL=false&amp;amp;useUnicode=true&amp;amp;characterEncoding=UTF8&#34;</span><span style="color:#f92672">/&gt;</span>
+        <span style="color:#f92672">&lt;property</span> <span style="color:#a6e22e">name=</span><span style="color:#e6db74">&#34;username&#34;</span> <span style="color:#a6e22e">value=</span><span style="color:#e6db74">&#34;root&#34;</span><span style="color:#f92672">/&gt;</span>
+        <span style="color:#f92672">&lt;property</span> <span style="color:#a6e22e">name=</span><span style="color:#e6db74">&#34;password&#34;</span> <span style="color:#a6e22e">value=</span><span style="color:#e6db74">&#34;rootroot&#34;</span><span style="color:#f92672">/&gt;</span>
+    <span style="color:#f92672">&lt;/bean&gt;</span>
+
+    <span style="color:#75715e">&lt;!--获取sqlSessionFactory--&gt;</span>
+    <span style="color:#f92672">&lt;bean</span> <span style="color:#a6e22e">id=</span><span style="color:#e6db74">&#34;sqlSessionFactory&#34;</span> <span style="color:#a6e22e">class=</span><span style="color:#e6db74">&#34;org.mybatis.spring.SqlSessionFactoryBean&#34;</span><span style="color:#f92672">&gt;</span>
+        <span style="color:#f92672">&lt;property</span> <span style="color:#a6e22e">name=</span><span style="color:#e6db74">&#34;dataSource&#34;</span> <span style="color:#a6e22e">ref=</span><span style="color:#e6db74">&#34;dataSource&#34;</span><span style="color:#f92672">/&gt;</span>
+        <span style="color:#f92672">&lt;property</span> <span style="color:#a6e22e">name=</span><span style="color:#e6db74">&#34;configLocation&#34;</span> <span style="color:#a6e22e">value=</span><span style="color:#e6db74">&#34;classpath:mybatis-config.xml&#34;</span><span style="color:#f92672">/&gt;</span>
+        <span style="color:#f92672">&lt;property</span> <span style="color:#a6e22e">name=</span><span style="color:#e6db74">&#34;mapperLocations&#34;</span> <span style="color:#a6e22e">value=</span><span style="color:#e6db74">&#34;classpath:wiki/mrx/mapper/*.xml&#34;</span><span style="color:#f92672">/&gt;</span>
+    <span style="color:#f92672">&lt;/bean&gt;</span>
+    <span style="color:#75715e">&lt;!--获取sqlSession--&gt;</span>
+   <span style="color:#f92672">&lt;bean</span> <span style="color:#a6e22e">id=</span><span style="color:#e6db74">&#34;sqlSession&#34;</span> <span style="color:#a6e22e">class=</span><span style="color:#e6db74">&#34;org.mybatis.spring.SqlSessionTemplate&#34;</span><span style="color:#f92672">&gt;</span>
+       <span style="color:#f92672">&lt;constructor-arg</span> <span style="color:#a6e22e">index=</span><span style="color:#e6db74">&#34;0&#34;</span> <span style="color:#a6e22e">ref=</span><span style="color:#e6db74">&#34;sqlSessionFactory&#34;</span><span style="color:#f92672">/&gt;</span>
+   <span style="color:#f92672">&lt;/bean&gt;</span>
+
+    <span style="color:#75715e">&lt;!--注册mapper--&gt;</span>
+    <span style="color:#f92672">&lt;bean</span> <span style="color:#a6e22e">id=</span><span style="color:#e6db74">&#34;userMapper&#34;</span> <span style="color:#a6e22e">class=</span><span style="color:#e6db74">&#34;wiki.mrx.mapper.UserMapperImpl&#34;</span><span style="color:#f92672">&gt;</span>
+        <span style="color:#f92672">&lt;property</span> <span style="color:#a6e22e">name=</span><span style="color:#e6db74">&#34;sqlSession&#34;</span> <span style="color:#a6e22e">ref=</span><span style="color:#e6db74">&#34;sqlSession&#34;</span><span style="color:#f92672">/&gt;</span>
+    <span style="color:#f92672">&lt;/bean&gt;</span>
+<span style="color:#f92672">&lt;/beans&gt;</span>
+</code></pre></div><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-xml" data-lang="xml">mybatis-config.xml
+<span style="color:#75715e">&lt;?xml version=&#34;1.0&#34; encoding=&#34;UTF-8&#34; ?&gt;</span>
+<span style="color:#75715e">&lt;!DOCTYPE configuration
+</span><span style="color:#75715e">        PUBLIC &#34;-//mybatis.org//DTD Config 3.0//EN&#34;
+</span><span style="color:#75715e">        &#34;http://mybatis.org/dtd/mybatis-3-config.dtd&#34;&gt;</span>
+<span style="color:#f92672">&lt;configuration&gt;</span>
+    <span style="color:#75715e">&lt;!--配置别名--&gt;</span>
+    <span style="color:#f92672">&lt;typeAliases&gt;</span>
+        <span style="color:#f92672">&lt;package</span> <span style="color:#a6e22e">name=</span><span style="color:#e6db74">&#34;wiki.mrx.pojo&#34;</span><span style="color:#f92672">/&gt;</span>
+    <span style="color:#f92672">&lt;/typeAliases&gt;</span>
+<span style="color:#f92672">&lt;/configuration&gt;</span>
+</code></pre></div><p>第四步：编写UserMapperImpl实现类</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#f92672">package</span> wiki.mrx.mapper<span style="color:#f92672">;</span>
+
+<span style="color:#f92672">import</span> org.mybatis.spring.SqlSessionTemplate<span style="color:#f92672">;</span>
+<span style="color:#f92672">import</span> wiki.mrx.pojo.User<span style="color:#f92672">;</span>
+
+<span style="color:#f92672">import</span> java.util.List<span style="color:#f92672">;</span>
+
+<span style="color:#66d9ef">public</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">UserMapperImpl</span> <span style="color:#66d9ef">implements</span> UserMapper <span style="color:#f92672">{</span>
+    <span style="color:#75715e">//以前通过sqlSession执行方法，现在通过SqlSessionTemplate
+</span><span style="color:#75715e"></span>    <span style="color:#66d9ef">private</span> SqlSessionTemplate sqlSession<span style="color:#f92672">;</span>
+
+    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">setSqlSession</span><span style="color:#f92672">(</span>SqlSessionTemplate sqlSession<span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+        <span style="color:#66d9ef">this</span><span style="color:#f92672">.</span><span style="color:#a6e22e">sqlSession</span> <span style="color:#f92672">=</span> sqlSession<span style="color:#f92672">;</span>
+    <span style="color:#f92672">}</span>
+
+    <span style="color:#66d9ef">public</span> List<span style="color:#f92672">&lt;</span>User<span style="color:#f92672">&gt;</span> <span style="color:#a6e22e">selectUser</span><span style="color:#f92672">()</span> <span style="color:#f92672">{</span>
+        UserMapper mapper <span style="color:#f92672">=</span> sqlSession<span style="color:#f92672">.</span><span style="color:#a6e22e">getMapper</span><span style="color:#f92672">(</span>UserMapper<span style="color:#f92672">.</span><span style="color:#a6e22e">class</span><span style="color:#f92672">);</span>
+        List<span style="color:#f92672">&lt;</span>User<span style="color:#f92672">&gt;</span> users <span style="color:#f92672">=</span> mapper<span style="color:#f92672">.</span><span style="color:#a6e22e">selectUser</span><span style="color:#f92672">();</span>
+        <span style="color:#66d9ef">return</span> users<span style="color:#f92672">;</span>
+    <span style="color:#f92672">}</span>
+<span style="color:#f92672">}</span>
+
+</code></pre></div><p>第五步：测试</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#f92672">package</span> wiki.mrx.mapper<span style="color:#f92672">;</span>
+
+<span style="color:#f92672">import</span> org.mybatis.spring.SqlSessionTemplate<span style="color:#f92672">;</span>
+<span style="color:#f92672">import</span> wiki.mrx.pojo.User<span style="color:#f92672">;</span>
+
+<span style="color:#f92672">import</span> java.util.List<span style="color:#f92672">;</span>
+
+<span style="color:#66d9ef">public</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">UserMapperImpl</span> <span style="color:#66d9ef">implements</span> UserMapper <span style="color:#f92672">{</span>
+    <span style="color:#75715e">//以前通过sqlSession执行方法，现在通过SqlSessionTemplate
+</span><span style="color:#75715e"></span>    <span style="color:#66d9ef">private</span> SqlSessionTemplate sqlSession<span style="color:#f92672">;</span>
+
+    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">setSqlSession</span><span style="color:#f92672">(</span>SqlSessionTemplate sqlSession<span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+        <span style="color:#66d9ef">this</span><span style="color:#f92672">.</span><span style="color:#a6e22e">sqlSession</span> <span style="color:#f92672">=</span> sqlSession<span style="color:#f92672">;</span>
+    <span style="color:#f92672">}</span>
+
+    <span style="color:#66d9ef">public</span> List<span style="color:#f92672">&lt;</span>User<span style="color:#f92672">&gt;</span> <span style="color:#a6e22e">selectUser</span><span style="color:#f92672">()</span> <span style="color:#f92672">{</span>
+        UserMapper mapper <span style="color:#f92672">=</span> sqlSession<span style="color:#f92672">.</span><span style="color:#a6e22e">getMapper</span><span style="color:#f92672">(</span>UserMapper<span style="color:#f92672">.</span><span style="color:#a6e22e">class</span><span style="color:#f92672">);</span>
+        List<span style="color:#f92672">&lt;</span>User<span style="color:#f92672">&gt;</span> users <span style="color:#f92672">=</span> mapper<span style="color:#f92672">.</span><span style="color:#a6e22e">selectUser</span><span style="color:#f92672">();</span>
+        <span style="color:#66d9ef">return</span> users<span style="color:#f92672">;</span>
+    <span style="color:#f92672">}</span>
+<span style="color:#f92672">}</span>
+
+
+
+</code></pre></div><p>== spring事务 == ｜ == spring事务 == ｜</p>
+<p>第一步：定义接口</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#f92672">package</span> wiki.mrx.mapper<span style="color:#f92672">;</span>
+
+<span style="color:#f92672">import</span> wiki.mrx.pojo.User<span style="color:#f92672">;</span>
+
+<span style="color:#f92672">import</span> java.util.List<span style="color:#f92672">;</span>
+
+<span style="color:#66d9ef">public</span> <span style="color:#66d9ef">interface</span> <span style="color:#a6e22e">UserMapper</span> <span style="color:#f92672">{</span>
+    <span style="color:#66d9ef">public</span> List<span style="color:#f92672">&lt;</span>User<span style="color:#f92672">&gt;</span> <span style="color:#a6e22e">selectUser</span><span style="color:#f92672">();</span>
+
+    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">int</span> <span style="color:#a6e22e">addUser</span><span style="color:#f92672">(</span>User user<span style="color:#f92672">);</span>
+    
+    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">int</span> <span style="color:#a6e22e">deleteUser</span><span style="color:#f92672">(</span><span style="color:#66d9ef">int</span> id<span style="color:#f92672">);</span>
+<span style="color:#f92672">}</span>
+
+</code></pre></div><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-xml" data-lang="xml"><span style="color:#75715e">&lt;?xml version=&#34;1.0&#34; encoding=&#34;UTF-8&#34; ?&gt;</span>
+<span style="color:#75715e">&lt;!DOCTYPE mapper
+</span><span style="color:#75715e">        PUBLIC &#34;-//mybatis.org//DTD Config 3.0//EN&#34;
+</span><span style="color:#75715e">        &#34;http://mybatis.org/dtd/mybatis-3-mapper.dtd&#34;&gt;</span>
+<span style="color:#f92672">&lt;mapper</span> <span style="color:#a6e22e">namespace=</span><span style="color:#e6db74">&#34;wiki.mrx.mapper.UserMapper&#34;</span><span style="color:#f92672">&gt;</span>
+    <span style="color:#f92672">&lt;select</span> <span style="color:#a6e22e">id=</span><span style="color:#e6db74">&#34;selectUser&#34;</span> <span style="color:#a6e22e">resultType=</span><span style="color:#e6db74">&#34;user&#34;</span><span style="color:#f92672">&gt;</span>
+        select * from mybatis.user;
+    <span style="color:#f92672">&lt;/select&gt;</span>
+    <span style="color:#f92672">&lt;insert</span> <span style="color:#a6e22e">id=</span><span style="color:#e6db74">&#34;addUser&#34;</span> <span style="color:#a6e22e">parameterType=</span><span style="color:#e6db74">&#34;user&#34;</span><span style="color:#f92672">&gt;</span>
+        insert into mybatis.user (id,name,pwd) values(#{id},#{name},#{pwd});
+    <span style="color:#f92672">&lt;/insert&gt;</span>
+    <span style="color:#f92672">&lt;delete</span> <span style="color:#a6e22e">id=</span><span style="color:#e6db74">&#34;deleteUser&#34;</span> <span style="color:#a6e22e">parameterType=</span><span style="color:#e6db74">&#34;int&#34;</span><span style="color:#f92672">&gt;</span>
+        deletes from mybatis.user where id=#{id};
+    <span style="color:#f92672">&lt;/delete&gt;</span>
+<span style="color:#f92672">&lt;/mapper&gt;</span>
+</code></pre></div><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#f92672">package</span> wiki.mrx.mapper<span style="color:#f92672">;</span>
+
+<span style="color:#f92672">import</span> org.mybatis.spring.SqlSessionTemplate<span style="color:#f92672">;</span>
+<span style="color:#f92672">import</span> wiki.mrx.pojo.User<span style="color:#f92672">;</span>
+
+<span style="color:#f92672">import</span> java.util.List<span style="color:#f92672">;</span>
+
+<span style="color:#66d9ef">public</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">UserMapperImpl</span> <span style="color:#66d9ef">implements</span> UserMapper <span style="color:#f92672">{</span>
+    <span style="color:#75715e">//以前通过sqlSession执行方法，现在通过SqlSessionTemplate
+</span><span style="color:#75715e"></span>    <span style="color:#66d9ef">private</span> SqlSessionTemplate sqlSession<span style="color:#f92672">;</span>
+
+    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">setSqlSession</span><span style="color:#f92672">(</span>SqlSessionTemplate sqlSession<span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+        <span style="color:#66d9ef">this</span><span style="color:#f92672">.</span><span style="color:#a6e22e">sqlSession</span> <span style="color:#f92672">=</span> sqlSession<span style="color:#f92672">;</span>
+    <span style="color:#f92672">}</span>
+
+    <span style="color:#66d9ef">public</span> List<span style="color:#f92672">&lt;</span>User<span style="color:#f92672">&gt;</span> <span style="color:#a6e22e">selectUser</span><span style="color:#f92672">()</span> <span style="color:#f92672">{</span>
+
+        User user <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> User<span style="color:#f92672">(</span>10<span style="color:#f92672">,</span> <span style="color:#e6db74">&#34;王&#34;</span> <span style="color:#f92672">,</span><span style="color:#e6db74">&#34;ssssssss&#34;</span><span style="color:#f92672">);</span>
+        UserMapper mapper <span style="color:#f92672">=</span> sqlSession<span style="color:#f92672">.</span><span style="color:#a6e22e">getMapper</span><span style="color:#f92672">(</span>UserMapper<span style="color:#f92672">.</span><span style="color:#a6e22e">class</span><span style="color:#f92672">);</span>
+        mapper<span style="color:#f92672">.</span><span style="color:#a6e22e">addUser</span><span style="color:#f92672">(</span>user<span style="color:#f92672">);</span>
+        mapper<span style="color:#f92672">.</span><span style="color:#a6e22e">deleteUser</span><span style="color:#f92672">(</span>10<span style="color:#f92672">);</span>
+        List<span style="color:#f92672">&lt;</span>User<span style="color:#f92672">&gt;</span> users <span style="color:#f92672">=</span> mapper<span style="color:#f92672">.</span><span style="color:#a6e22e">selectUser</span><span style="color:#f92672">();</span>
+        <span style="color:#66d9ef">return</span> users<span style="color:#f92672">;</span>
+    <span style="color:#f92672">}</span>
+
+    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">int</span> <span style="color:#a6e22e">addUser</span><span style="color:#f92672">(</span>User user<span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+        UserMapper mapper <span style="color:#f92672">=</span> sqlSession<span style="color:#f92672">.</span><span style="color:#a6e22e">getMapper</span><span style="color:#f92672">(</span>UserMapper<span style="color:#f92672">.</span><span style="color:#a6e22e">class</span><span style="color:#f92672">);</span>
+        <span style="color:#66d9ef">return</span> mapper<span style="color:#f92672">.</span><span style="color:#a6e22e">addUser</span><span style="color:#f92672">(</span>user<span style="color:#f92672">);</span>
+    <span style="color:#f92672">}</span>
+
+    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">int</span> <span style="color:#a6e22e">deleteUser</span><span style="color:#f92672">(</span><span style="color:#66d9ef">int</span> id<span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+        UserMapper mapper <span style="color:#f92672">=</span> sqlSession<span style="color:#f92672">.</span><span style="color:#a6e22e">getMapper</span><span style="color:#f92672">(</span>UserMapper<span style="color:#f92672">.</span><span style="color:#a6e22e">class</span><span style="color:#f92672">);</span>
+        <span style="color:#66d9ef">return</span> mapper<span style="color:#f92672">.</span><span style="color:#a6e22e">deleteUser</span><span style="color:#f92672">(</span>id<span style="color:#f92672">);</span>
+    <span style="color:#f92672">}</span>
+<span style="color:#f92672">}</span>
+
+</code></pre></div><p>deletes from 出错原本数据不会被插入但却插入成功，这里需要使用事务提交</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-xml" data-lang="xml"><span style="color:#75715e">&lt;?xml version=&#34;1.0&#34; encoding=&#34;UTF-8&#34;?&gt;</span>
+<span style="color:#f92672">&lt;beans</span> <span style="color:#a6e22e">xmlns=</span><span style="color:#e6db74">&#34;http://www.springframework.org/schema/beans&#34;</span>
+       <span style="color:#a6e22e">xmlns:xsi=</span><span style="color:#e6db74">&#34;http://www.w3.org/2001/XMLSchema-instance&#34;</span>
+       <span style="color:#a6e22e">xmlns:aop=</span><span style="color:#e6db74">&#34;http://www.springframework.org/schema/aop&#34;</span>
+       <span style="color:#a6e22e">xmlns:tx=</span><span style="color:#e6db74">&#34;http://www.springframework.org/schema/tx&#34;</span>
+       <span style="color:#a6e22e">xsi:schemaLocation=</span><span style="color:#e6db74">&#34;http://www.springframework.org/schema/beans
+</span><span style="color:#e6db74">        https://www.springframework.org/schema/beans/spring-beans.xsd
+</span><span style="color:#e6db74">        http://www.springframework.org/schema/aop
+</span><span style="color:#e6db74">        http://www.springframework.org/schema/aop/spring-aop.xsd
+</span><span style="color:#e6db74">        http://www.springframework.org/schema/tx
+</span><span style="color:#e6db74">        http://www.springframework.org/schema/tx/spring-tx.xsd&#34;</span><span style="color:#f92672">&gt;</span>
+
+    <span style="color:#75715e">&lt;!--spring数据源替换mybatis数据源--&gt;</span>
+    <span style="color:#f92672">&lt;bean</span> <span style="color:#a6e22e">id=</span><span style="color:#e6db74">&#34;dataSource&#34;</span> <span style="color:#a6e22e">class=</span><span style="color:#e6db74">&#34;org.springframework.jdbc.datasource.DriverManagerDataSource&#34;</span><span style="color:#f92672">&gt;</span>
+        <span style="color:#f92672">&lt;property</span> <span style="color:#a6e22e">name=</span><span style="color:#e6db74">&#34;driverClassName&#34;</span> <span style="color:#a6e22e">value=</span><span style="color:#e6db74">&#34;com.mysql.jdbc.Driver&#34;</span><span style="color:#f92672">/&gt;</span>
+        <span style="color:#f92672">&lt;property</span> <span style="color:#a6e22e">name=</span><span style="color:#e6db74">&#34;url&#34;</span> <span style="color:#a6e22e">value=</span><span style="color:#e6db74">&#34;jdbc:mysql://localhost:3306/mybatis?useSSL=false&amp;amp;useUnicode=true&amp;amp;characterEncoding=UTF8&#34;</span><span style="color:#f92672">/&gt;</span>
+        <span style="color:#f92672">&lt;property</span> <span style="color:#a6e22e">name=</span><span style="color:#e6db74">&#34;username&#34;</span> <span style="color:#a6e22e">value=</span><span style="color:#e6db74">&#34;root&#34;</span><span style="color:#f92672">/&gt;</span>
+        <span style="color:#f92672">&lt;property</span> <span style="color:#a6e22e">name=</span><span style="color:#e6db74">&#34;password&#34;</span> <span style="color:#a6e22e">value=</span><span style="color:#e6db74">&#34;rootroot&#34;</span><span style="color:#f92672">/&gt;</span>
+    <span style="color:#f92672">&lt;/bean&gt;</span>
+    <span style="color:#75715e">&lt;!--获取sqlSessionFactory--&gt;</span>
+    <span style="color:#f92672">&lt;bean</span> <span style="color:#a6e22e">id=</span><span style="color:#e6db74">&#34;sqlSessionFactory&#34;</span> <span style="color:#a6e22e">class=</span><span style="color:#e6db74">&#34;org.mybatis.spring.SqlSessionFactoryBean&#34;</span><span style="color:#f92672">&gt;</span>
+        <span style="color:#f92672">&lt;property</span> <span style="color:#a6e22e">name=</span><span style="color:#e6db74">&#34;dataSource&#34;</span> <span style="color:#a6e22e">ref=</span><span style="color:#e6db74">&#34;dataSource&#34;</span><span style="color:#f92672">/&gt;</span>
+        <span style="color:#f92672">&lt;property</span> <span style="color:#a6e22e">name=</span><span style="color:#e6db74">&#34;configLocation&#34;</span> <span style="color:#a6e22e">value=</span><span style="color:#e6db74">&#34;classpath:mybatis-config.xml&#34;</span><span style="color:#f92672">/&gt;</span>
+        <span style="color:#f92672">&lt;property</span> <span style="color:#a6e22e">name=</span><span style="color:#e6db74">&#34;mapperLocations&#34;</span> <span style="color:#a6e22e">value=</span><span style="color:#e6db74">&#34;classpath:wiki/mrx/mapper/*.xml&#34;</span><span style="color:#f92672">/&gt;</span>
+    <span style="color:#f92672">&lt;/bean&gt;</span>
+    <span style="color:#75715e">&lt;!--获取sqlSession--&gt;</span>
+   <span style="color:#f92672">&lt;bean</span> <span style="color:#a6e22e">id=</span><span style="color:#e6db74">&#34;sqlSession&#34;</span> <span style="color:#a6e22e">class=</span><span style="color:#e6db74">&#34;org.mybatis.spring.SqlSessionTemplate&#34;</span><span style="color:#f92672">&gt;</span>
+       <span style="color:#f92672">&lt;constructor-arg</span> <span style="color:#a6e22e">index=</span><span style="color:#e6db74">&#34;0&#34;</span> <span style="color:#a6e22e">ref=</span><span style="color:#e6db74">&#34;sqlSessionFactory&#34;</span><span style="color:#f92672">/&gt;</span>
+   <span style="color:#f92672">&lt;/bean&gt;</span>
+
+    <span style="color:#75715e">&lt;!--注册mapper--&gt;</span>
+    <span style="color:#f92672">&lt;bean</span> <span style="color:#a6e22e">id=</span><span style="color:#e6db74">&#34;userMapper&#34;</span> <span style="color:#a6e22e">class=</span><span style="color:#e6db74">&#34;wiki.mrx.mapper.UserMapperImpl&#34;</span><span style="color:#f92672">&gt;</span>
+        <span style="color:#f92672">&lt;property</span> <span style="color:#a6e22e">name=</span><span style="color:#e6db74">&#34;sqlSession&#34;</span> <span style="color:#a6e22e">ref=</span><span style="color:#e6db74">&#34;sqlSession&#34;</span><span style="color:#f92672">/&gt;</span>
+    <span style="color:#f92672">&lt;/bean&gt;</span>
+
+    <span style="color:#75715e">&lt;!--配置声明式事务--&gt;</span>
+    <span style="color:#f92672">&lt;bean</span> <span style="color:#a6e22e">id=</span><span style="color:#e6db74">&#34;transactionManager&#34;</span> <span style="color:#a6e22e">class=</span><span style="color:#e6db74">&#34;org.springframework.jdbc.datasource.DataSourceTransactionManager&#34;</span><span style="color:#f92672">&gt;</span>
+        <span style="color:#f92672">&lt;property</span> <span style="color:#a6e22e">name=</span><span style="color:#e6db74">&#34;dataSource&#34;</span> <span style="color:#a6e22e">ref=</span><span style="color:#e6db74">&#34;dataSource&#34;</span><span style="color:#f92672">/&gt;</span>
+    <span style="color:#f92672">&lt;/bean&gt;</span>
+    <span style="color:#75715e">&lt;!--结合aop实现事务--&gt;</span>
+    <span style="color:#75715e">&lt;!--事务通知--&gt;</span>
+    <span style="color:#f92672">&lt;tx:advice</span> <span style="color:#a6e22e">id=</span><span style="color:#e6db74">&#34;txAdvice&#34;</span> <span style="color:#a6e22e">transaction-manager=</span><span style="color:#e6db74">&#34;transactionManager&#34;</span><span style="color:#f92672">&gt;</span>
+        <span style="color:#f92672">&lt;tx:attributes&gt;</span>
+            <span style="color:#f92672">&lt;tx:method</span> <span style="color:#a6e22e">name=</span><span style="color:#e6db74">&#34;add&#34;</span> <span style="color:#a6e22e">propagation=</span><span style="color:#e6db74">&#34;REQUIRED&#34;</span><span style="color:#f92672">/&gt;</span>
+            <span style="color:#f92672">&lt;tx:method</span> <span style="color:#a6e22e">name=</span><span style="color:#e6db74">&#34;delete&#34;</span> <span style="color:#a6e22e">propagation=</span><span style="color:#e6db74">&#34;REQUIRED&#34;</span><span style="color:#f92672">/&gt;</span>
+            <span style="color:#f92672">&lt;tx:method</span> <span style="color:#a6e22e">name=</span><span style="color:#e6db74">&#34;update&#34;</span> <span style="color:#a6e22e">propagation=</span><span style="color:#e6db74">&#34;REQUIRED&#34;</span><span style="color:#f92672">/&gt;</span>
+            <span style="color:#f92672">&lt;tx:method</span> <span style="color:#a6e22e">name=</span><span style="color:#e6db74">&#34;query&#34;</span> <span style="color:#a6e22e">read-only=</span><span style="color:#e6db74">&#34;true&#34;</span><span style="color:#f92672">/&gt;</span>
+            <span style="color:#f92672">&lt;tx:method</span> <span style="color:#a6e22e">name=</span><span style="color:#e6db74">&#34;*&#34;</span> <span style="color:#a6e22e">propagation=</span><span style="color:#e6db74">&#34;REQUIRED&#34;</span><span style="color:#f92672">/&gt;</span>
+        <span style="color:#f92672">&lt;/tx:attributes&gt;</span>
+    <span style="color:#f92672">&lt;/tx:advice&gt;</span>
+    <span style="color:#75715e">&lt;!--aop事务切入--&gt;</span>
+    <span style="color:#f92672">&lt;aop:config&gt;</span>
+        <span style="color:#f92672">&lt;aop:pointcut</span> <span style="color:#a6e22e">id=</span><span style="color:#e6db74">&#34;txPointCut&#34;</span> <span style="color:#a6e22e">expression=</span><span style="color:#e6db74">&#34;execution(* wiki.mrx.mapper.*.*(..))&#34;</span><span style="color:#f92672">/&gt;</span>
+        <span style="color:#f92672">&lt;aop:advisor</span> <span style="color:#a6e22e">advice-ref=</span><span style="color:#e6db74">&#34;txAdvice&#34;</span> <span style="color:#a6e22e">pointcut-ref=</span><span style="color:#e6db74">&#34;txPointCut&#34;</span><span style="color:#f92672">/&gt;</span>
+    <span style="color:#f92672">&lt;/aop:config&gt;</span>
+<span style="color:#f92672">&lt;/beans&gt;</span>
+</code></pre></div>
+    </div>
+    <video id="my_video" style="height: 300px;width:100%" controls="controls"></video>
+
+</article>
+<div class="pagination">
+    
+    <div class="prev"><a href="https://Apollo2light.github.io/Apollo2light/backend/9.mybatis/">Previous Post</a></div>
+    
+    
+    <div class="next"><a href="https://Apollo2light.github.io/Apollo2light/backend/11.spring-mvc/">Next Post</a></div>
+    
+</div>
+
+
+<script>
+    try {
+        
+        let src = document.getElementsByTagName('code')[0].innerText;
+        
+        if (src.indexOf("mp4") != -1) {
+            document.getElementById('my_video').setAttribute("src", src)
+        } else {
+            
+            let video = document.getElementById('my_video');
+            if (video != null) {
+                video.parentNode.removeChild(video);
+            }
+        }
+    } catch (e) {
+        
+        let video = document.getElementById('my_video');
+        if (video != null) {
+            video.parentNode.removeChild(video);
+        }
+    }
+</script>
+
+</main><footer class="site-footer">
+	<span class="right">
+		<em>Apollo&#39;s blog</em>
+	</span>
+</footer>
+</body>
+<script>
+
+</script>
+</html>

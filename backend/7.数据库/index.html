@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang=en-us><head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title> 7.数据库 - Apollo&#39;s blog</title>
+    <meta name="description" content="==数据库分类==|====数据库分类==|====数据库分类==|====数据库分类==|
+ 关系数据库：oracle，mysql 非关系数据库：mongodb，redis  基本概念|基本概念|基本概念|基本概念|基本概念|基本概念|基本概念|
+ 1.DQL数据查询语句，DDL数据定义语言，DCL数据控制语言，TCL事务控制语言。 2.主键：可查询到唯一对应的数据，是非空且唯一的,如果是整数类型则需要自增。 3.非外键约束：对单表字段的限定条件 4.外键约束：多表间有联系的字段添加限制条件,student表某字段可以是class表外键 5.级联操作：操作主表时影响从表的外键信息 6.事务：多条sql命令完成一件事，具有原子性，一致性，隔离性，持久性 7.脏读：一个事务读取了另一个没提交的事务 8.幻读：同一事务中，读取了其他插入的数据，导致前后结果不一致  ===常用sql命令=== | ===常用sql命令=== | ===常用sql命令=== |===常用sql命令=== |
+数据库：登陆，查看，增删改查，事务； //1.登陆数据库 mysql -h localhost -u root -p //2.查看信息 show databases;//显示所有数据库 use 数据库名字;//进入该数据库 show tables;//显示该数据库下的锁哟表 desc t_student;//列出该表的所有字段 select * from t_student;//列出该表的所有数据 show create table t_student;//显示创建该字段的sql语句 exit;或者\q;//退出数据库 //3.操作数据 ## 创建表格 create table t_student( sno int(6) primary key auto_increment, sname varchar(5) not null, sex char(1) default &#39;男&#39; check(sex=&#39;男&#39;|| sex=&#39;女&#39;), sage int(3) check(sage&gt;=18 and sage&lt;=50), enterdate date, classname varchar(10), email varchar(15) unique ); ## 插入数据 insert into t_student values(); alter table t_student add score double(5,2) first/after; alter table t_student drop score; ## 修改数据 update t_student set sex = &#39;女&#39; where sno = 1; ## 删除数据 delete from t_student where sno=1; drop table t_student; ## 外键 ## 班级表 create table t_class( cno int(6) primary key auto_increment, cname varchar(10) not null, room char(4) ); insert into t_class values(null,&#39;java001&#39;,&#39;r803&#39;); insert into t_class values(null,&#39;java002&#39;,&#39;r416&#39;); insert into t_class values(null,&#39;java002&#39;,&#39;r103&#39;); ## 学生表 create table t_student( sno int(6) primary key auto_increment, sname varchar(5) not null, cno int(4), constraint fk_stu_cno foreign key(cno) references t_class(cno) ); insert into t_student values(null,&#39;章三&#39;,1),(null,&#39;里斯&#39;,1),(null,&#39;王武&#39;,2); ## 事务 commit ===JDBC=== | ===JDBC=== | ===JDBC=== | ===JDBC=== | ===JDBC=== |">
+    <link rel="canonical" href="https://Apollo2light.github.io/Apollo2light/backend/7.%E6%95%B0%E6%8D%AE%E5%BA%93/">
+    <meta property="og:title" content="7.数据库">
+    <meta property="og:type" content="article">
+    <meta property="og:url" content="https://Apollo2light.github.io/Apollo2light/backend/7.%E6%95%B0%E6%8D%AE%E5%BA%93/">
+    <meta property="og:description" content="==数据库分类==|====数据库分类==|====数据库分类==|====数据库分类==|
+ 关系数据库：oracle，mysql 非关系数据库：mongodb，redis  基本概念|基本概念|基本概念|基本概念|基本概念|基本概念|基本概念|
+ 1.DQL数据查询语句，DDL数据定义语言，DCL数据控制语言，TCL事务控制语言。 2.主键：可查询到唯一对应的数据，是非空且唯一的,如果是整数类型则需要自增。 3.非外键约束：对单表字段的限定条件 4.外键约束：多表间有联系的字段添加限制条件,student表某字段可以是class表外键 5.级联操作：操作主表时影响从表的外键信息 6.事务：多条sql命令完成一件事，具有原子性，一致性，隔离性，持久性 7.脏读：一个事务读取了另一个没提交的事务 8.幻读：同一事务中，读取了其他插入的数据，导致前后结果不一致  ===常用sql命令=== | ===常用sql命令=== | ===常用sql命令=== |===常用sql命令=== |
+数据库：登陆，查看，增删改查，事务； //1.登陆数据库 mysql -h localhost -u root -p //2.查看信息 show databases;//显示所有数据库 use 数据库名字;//进入该数据库 show tables;//显示该数据库下的锁哟表 desc t_student;//列出该表的所有字段 select * from t_student;//列出该表的所有数据 show create table t_student;//显示创建该字段的sql语句 exit;或者\q;//退出数据库 //3.操作数据 ## 创建表格 create table t_student( sno int(6) primary key auto_increment, sname varchar(5) not null, sex char(1) default &#39;男&#39; check(sex=&#39;男&#39;|| sex=&#39;女&#39;), sage int(3) check(sage&gt;=18 and sage&lt;=50), enterdate date, classname varchar(10), email varchar(15) unique ); ## 插入数据 insert into t_student values(); alter table t_student add score double(5,2) first/after; alter table t_student drop score; ## 修改数据 update t_student set sex = &#39;女&#39; where sno = 1; ## 删除数据 delete from t_student where sno=1; drop table t_student; ## 外键 ## 班级表 create table t_class( cno int(6) primary key auto_increment, cname varchar(10) not null, room char(4) ); insert into t_class values(null,&#39;java001&#39;,&#39;r803&#39;); insert into t_class values(null,&#39;java002&#39;,&#39;r416&#39;); insert into t_class values(null,&#39;java002&#39;,&#39;r103&#39;); ## 学生表 create table t_student( sno int(6) primary key auto_increment, sname varchar(5) not null, cno int(4), constraint fk_stu_cno foreign key(cno) references t_class(cno) ); insert into t_student values(null,&#39;章三&#39;,1),(null,&#39;里斯&#39;,1),(null,&#39;王武&#39;,2); ## 事务 commit ===JDBC=== | ===JDBC=== | ===JDBC=== | ===JDBC=== | ===JDBC=== |">
+    <meta property="og:site_name" content="Apollo&#39;s blog">
+    <link rel="stylesheet" href="https://Apollo2light.github.io/Apollo2light/css/main.min.7fdf1d02dafd1a6eb5cfd0d707e17e33515b866f5d305a0ab01a4095577484fe.css" integrity="sha256-f98dAtr9Gm61z9DXB&#43;F&#43;M1Fbhm9dMFoKsBpAlVd0hP4=">
+    <meta name="generator" content="Hugo 0.73.0" />
+    <script type="module" src="https://unpkg.com/ionicons@5.1.2/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule="" src="https://unpkg.com/ionicons@5.1.2/dist/ionicons/ionicons.js"></script>
+    
+</head>
+<body><header class="site-header">
+    <nav class="site-nav" role="navigation" aria-label="breadcrumb">
+        <ol itemscope itemtype="https://schema.org/BreadcrumbList" class="breadcrumb"><li class="breadcrumb-item  " 
+    itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+    <a itemtype="https://schema.org/Thing" itemprop="item" href="https://Apollo2light.github.io/Apollo2light/">
+        <span itemprop="name">Apollo&#39;s blog</span>
+    </a>
+    <meta itemprop="position"
+          content="0"/>
+</li>/<li class="breadcrumb-item  " 
+    itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+    <a itemtype="https://schema.org/Thing" itemprop="item" href="https://Apollo2light.github.io/Apollo2light/backend/">
+        <span itemprop="name">backend</span>
+    </a>
+    <meta itemprop="position"
+          content="0"/>
+</li>/<li class="breadcrumb-item active hidden" aria-current="page"
+    itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+    <a itemtype="https://schema.org/Thing" itemprop="item" href="https://Apollo2light.github.io/Apollo2light/backend/7.%E6%95%B0%E6%8D%AE%E5%BA%93/">
+        <span itemprop="name">7.%E6%95%B0%E6%8D%AE%E5%BA%93</span>
+    </a>
+    <meta itemprop="position"
+          content="1"/>
+</li></ol>
+    </nav>
+    <h1 class="site-title hidden">
+        <a href="https://Apollo2light.github.io/Apollo2light/">Apollo&#39;s blog</a>
+    </h1>
+</header><main id="content">
+<article role="article" class="content post h-entry" itemscope="" itemtype="http://schema.org/BlogPosting">
+    <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">7.数据库</h2>
+        <span class="post-meta">
+            <time class="date-published" datetime=" 2021-06-10T20:03:59&#43;07:00" itemprop="datePublished">
+                Thu, 10 Jun 2021
+            </time>
+            
+        </span>
+    </header>
+    <div class="post-content" itemprop="articleBody">
+        <p>==数据库分类==|====数据库分类==|====数据库分类==|====数据库分类==|</p>
+<ul>
+<li>关系数据库：oracle，mysql</li>
+<li>非关系数据库：mongodb，redis</li>
+</ul>
+<p>基本概念|基本概念|基本概念|基本概念|基本概念|基本概念|基本概念|</p>
+<ul>
+<li>1.DQL数据查询语句，DDL数据定义语言，DCL数据控制语言，TCL事务控制语言。</li>
+<li>2.主键：可查询到唯一对应的数据，是非空且唯一的,如果是整数类型则需要自增。</li>
+<li>3.非外键约束：对单表字段的限定条件</li>
+<li>4.外键约束：多表间有联系的字段添加限制条件,student表某字段可以是class表外键</li>
+<li>5.级联操作：操作主表时影响从表的外键信息</li>
+<li>6.事务：多条sql命令完成一件事，具有原子性，一致性，隔离性，持久性</li>
+<li>7.脏读：一个事务读取了另一个没提交的事务</li>
+<li>8.幻读：同一事务中，读取了其他插入的数据，导致前后结果不一致</li>
+</ul>
+<p>===常用sql命令=== | ===常用sql命令=== | ===常用sql命令=== |===常用sql命令=== |</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sql" data-lang="sql"><span style="color:#960050;background-color:#1e0010">数据库：登陆，查看，增删改查，事务；</span>
+
+<span style="color:#f92672">//</span><span style="color:#ae81ff">1</span>.<span style="color:#960050;background-color:#1e0010">登陆数据库</span>
+mysql <span style="color:#f92672">-</span>h localhost <span style="color:#f92672">-</span>u root <span style="color:#f92672">-</span>p
+
+
+<span style="color:#f92672">//</span><span style="color:#ae81ff">2</span>.<span style="color:#960050;background-color:#1e0010">查看信息</span>
+<span style="color:#66d9ef">show</span> databases;<span style="color:#f92672">//</span><span style="color:#960050;background-color:#1e0010">显示所有数据库</span>
+use <span style="color:#960050;background-color:#1e0010">数据库名字</span>;<span style="color:#f92672">//</span><span style="color:#960050;background-color:#1e0010">进入该数据库</span>
+<span style="color:#66d9ef">show</span> tables;<span style="color:#f92672">//</span><span style="color:#960050;background-color:#1e0010">显示该数据库下的锁哟表</span>
+<span style="color:#66d9ef">desc</span> t_student;<span style="color:#f92672">//</span><span style="color:#960050;background-color:#1e0010">列出该表的所有字段</span>
+<span style="color:#66d9ef">select</span> <span style="color:#f92672">*</span> <span style="color:#66d9ef">from</span> t_student;<span style="color:#f92672">//</span><span style="color:#960050;background-color:#1e0010">列出该表的所有数据</span>
+<span style="color:#66d9ef">show</span> <span style="color:#66d9ef">create</span> <span style="color:#66d9ef">table</span> t_student;<span style="color:#f92672">//</span><span style="color:#960050;background-color:#1e0010">显示创建该字段的</span>sql语句
+exit;<span style="color:#960050;background-color:#1e0010">或者\</span>q;<span style="color:#f92672">//</span><span style="color:#960050;background-color:#1e0010">退出数据库</span>
+
+<span style="color:#f92672">//</span><span style="color:#ae81ff">3</span>.<span style="color:#960050;background-color:#1e0010">操作数据</span>
+<span style="color:#f92672">##</span> <span style="color:#960050;background-color:#1e0010">创建表格</span>
+<span style="color:#66d9ef">create</span> <span style="color:#66d9ef">table</span> t_student(
+    sno int(<span style="color:#ae81ff">6</span>) <span style="color:#66d9ef">primary</span> <span style="color:#66d9ef">key</span> auto_increment,
+	sname varchar(<span style="color:#ae81ff">5</span>) <span style="color:#66d9ef">not</span> <span style="color:#66d9ef">null</span>,
+	sex char(<span style="color:#ae81ff">1</span>) <span style="color:#66d9ef">default</span> <span style="color:#e6db74">&#39;男&#39;</span> <span style="color:#66d9ef">check</span>(sex<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;男&#39;</span><span style="color:#f92672">||</span> sex<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;女&#39;</span>),
+	sage int(<span style="color:#ae81ff">3</span>) <span style="color:#66d9ef">check</span>(sage<span style="color:#f92672">&gt;=</span><span style="color:#ae81ff">18</span> <span style="color:#66d9ef">and</span> sage<span style="color:#f92672">&lt;=</span><span style="color:#ae81ff">50</span>),
+	enterdate date,
+	classname varchar(<span style="color:#ae81ff">10</span>),
+	email varchar(<span style="color:#ae81ff">15</span>) <span style="color:#66d9ef">unique</span>
+);
+
+<span style="color:#f92672">##</span> <span style="color:#960050;background-color:#1e0010">插入数据</span>
+<span style="color:#66d9ef">insert</span> <span style="color:#66d9ef">into</span> t_student <span style="color:#66d9ef">values</span>();
+<span style="color:#66d9ef">alter</span> <span style="color:#66d9ef">table</span> t_student <span style="color:#66d9ef">add</span> score double(<span style="color:#ae81ff">5</span>,<span style="color:#ae81ff">2</span>) <span style="color:#66d9ef">first</span><span style="color:#f92672">/</span><span style="color:#66d9ef">after</span>;
+<span style="color:#66d9ef">alter</span> <span style="color:#66d9ef">table</span> t_student <span style="color:#66d9ef">drop</span> score;
+
+
+<span style="color:#f92672">##</span> <span style="color:#960050;background-color:#1e0010">修改数据</span>
+<span style="color:#66d9ef">update</span> t_student <span style="color:#66d9ef">set</span> sex <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;女&#39;</span> <span style="color:#66d9ef">where</span> sno <span style="color:#f92672">=</span> <span style="color:#ae81ff">1</span>;
+
+
+<span style="color:#f92672">##</span> <span style="color:#960050;background-color:#1e0010">删除数据</span>
+<span style="color:#66d9ef">delete</span> <span style="color:#66d9ef">from</span> t_student <span style="color:#66d9ef">where</span> sno<span style="color:#f92672">=</span><span style="color:#ae81ff">1</span>; 
+<span style="color:#66d9ef">drop</span> <span style="color:#66d9ef">table</span> t_student;
+
+<span style="color:#f92672">##</span> <span style="color:#960050;background-color:#1e0010">外键</span>
+<span style="color:#f92672">##</span> <span style="color:#960050;background-color:#1e0010">班级表</span>
+<span style="color:#66d9ef">create</span> <span style="color:#66d9ef">table</span> t_class(
+  cno int(<span style="color:#ae81ff">6</span>) <span style="color:#66d9ef">primary</span> <span style="color:#66d9ef">key</span> auto_increment,
+	cname varchar(<span style="color:#ae81ff">10</span>) <span style="color:#66d9ef">not</span> <span style="color:#66d9ef">null</span>,
+	room char(<span style="color:#ae81ff">4</span>)
+);
+<span style="color:#66d9ef">insert</span> <span style="color:#66d9ef">into</span> t_class <span style="color:#66d9ef">values</span>(<span style="color:#66d9ef">null</span>,<span style="color:#e6db74">&#39;java001&#39;</span>,<span style="color:#e6db74">&#39;r803&#39;</span>);
+<span style="color:#66d9ef">insert</span> <span style="color:#66d9ef">into</span> t_class <span style="color:#66d9ef">values</span>(<span style="color:#66d9ef">null</span>,<span style="color:#e6db74">&#39;java002&#39;</span>,<span style="color:#e6db74">&#39;r416&#39;</span>);
+<span style="color:#66d9ef">insert</span> <span style="color:#66d9ef">into</span> t_class <span style="color:#66d9ef">values</span>(<span style="color:#66d9ef">null</span>,<span style="color:#e6db74">&#39;java002&#39;</span>,<span style="color:#e6db74">&#39;r103&#39;</span>);
+
+<span style="color:#f92672">##</span> <span style="color:#960050;background-color:#1e0010">学生表</span>
+<span style="color:#66d9ef">create</span> <span style="color:#66d9ef">table</span> t_student(
+  sno int(<span style="color:#ae81ff">6</span>) <span style="color:#66d9ef">primary</span> <span style="color:#66d9ef">key</span> auto_increment,
+	sname varchar(<span style="color:#ae81ff">5</span>) <span style="color:#66d9ef">not</span> <span style="color:#66d9ef">null</span>,
+	cno int(<span style="color:#ae81ff">4</span>),
+	<span style="color:#66d9ef">constraint</span> fk_stu_cno <span style="color:#66d9ef">foreign</span> <span style="color:#66d9ef">key</span>(cno) <span style="color:#66d9ef">references</span> t_class(cno)
+);
+
+<span style="color:#66d9ef">insert</span> <span style="color:#66d9ef">into</span> t_student <span style="color:#66d9ef">values</span>(<span style="color:#66d9ef">null</span>,<span style="color:#e6db74">&#39;章三&#39;</span>,<span style="color:#ae81ff">1</span>),(<span style="color:#66d9ef">null</span>,<span style="color:#e6db74">&#39;里斯&#39;</span>,<span style="color:#ae81ff">1</span>),(<span style="color:#66d9ef">null</span>,<span style="color:#e6db74">&#39;王武&#39;</span>,<span style="color:#ae81ff">2</span>);
+
+
+<span style="color:#f92672">##</span> <span style="color:#960050;background-color:#1e0010">事务</span>
+<span style="color:#66d9ef">commit</span>
+
+
+
+</code></pre></div><p>===JDBC=== | ===JDBC=== | ===JDBC=== | ===JDBC=== | ===JDBC=== |</p>
+<pre><code>//数据库配置信息
+db.properties
+driver=com.mysql.cj.jdbc.Driver
+url = jdbc:mysql://localhost:3306/first?
+useUnicode=true&amp;characterEncoding=UTF-8&amp;useSSL=true
+userName=root
+password = rootroot
+</code></pre><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#75715e">//数据库公共类
+</span><span style="color:#75715e"></span><span style="color:#f92672">package</span> wiki.mrx.utils<span style="color:#f92672">;</span>
+
+<span style="color:#f92672">import</span> javax.swing.plaf.nimbus.State<span style="color:#f92672">;</span>
+<span style="color:#f92672">import</span> java.io.InputStream<span style="color:#f92672">;</span>
+<span style="color:#f92672">import</span> java.sql.*<span style="color:#f92672">;</span>
+<span style="color:#f92672">import</span> java.util.Properties<span style="color:#f92672">;</span>
+
+<span style="color:#66d9ef">public</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">JdbcUtils</span> <span style="color:#f92672">{</span>
+    <span style="color:#66d9ef">private</span> <span style="color:#66d9ef">static</span> String driver <span style="color:#f92672">=</span> <span style="color:#66d9ef">null</span><span style="color:#f92672">;</span>
+    <span style="color:#66d9ef">private</span> <span style="color:#66d9ef">static</span> String url <span style="color:#f92672">=</span> <span style="color:#66d9ef">null</span><span style="color:#f92672">;</span>
+    <span style="color:#66d9ef">private</span> <span style="color:#66d9ef">static</span> String userName <span style="color:#f92672">=</span> <span style="color:#66d9ef">null</span><span style="color:#f92672">;</span>
+    <span style="color:#66d9ef">private</span> <span style="color:#66d9ef">static</span> String password <span style="color:#f92672">=</span> <span style="color:#66d9ef">null</span><span style="color:#f92672">;</span>
+
+    <span style="color:#66d9ef">static</span> <span style="color:#f92672">{</span>
+        <span style="color:#66d9ef">try</span><span style="color:#f92672">{</span>
+            <span style="color:#75715e">//1.获取数据库配置信息
+</span><span style="color:#75715e"></span>            InputStream is <span style="color:#f92672">=</span> JdbcUtils<span style="color:#f92672">.</span><span style="color:#a6e22e">class</span><span style="color:#f92672">.</span><span style="color:#a6e22e">getClassLoader</span><span style="color:#f92672">()</span>
+                          <span style="color:#f92672">.</span><span style="color:#a6e22e">getResourceAsStream</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#34;db.properties&#34;</span><span style="color:#f92672">);</span>
+            Properties properties <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> Properties<span style="color:#f92672">();</span>
+            properties<span style="color:#f92672">.</span><span style="color:#a6e22e">load</span><span style="color:#f92672">(</span>is<span style="color:#f92672">);</span>
+            driver <span style="color:#f92672">=</span> properties<span style="color:#f92672">.</span><span style="color:#a6e22e">getProperty</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#34;driver&#34;</span><span style="color:#f92672">);</span>
+            url <span style="color:#f92672">=</span> properties<span style="color:#f92672">.</span><span style="color:#a6e22e">getProperty</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#34;url&#34;</span><span style="color:#f92672">);</span>
+            userName <span style="color:#f92672">=</span> properties<span style="color:#f92672">.</span><span style="color:#a6e22e">getProperty</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#34;userName&#34;</span><span style="color:#f92672">);</span>
+            password <span style="color:#f92672">=</span> properties<span style="color:#f92672">.</span><span style="color:#a6e22e">getProperty</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#34;password&#34;</span><span style="color:#f92672">);</span>
+            <span style="color:#75715e">//2.加载驱动
+</span><span style="color:#75715e"></span>            Class<span style="color:#f92672">.</span><span style="color:#a6e22e">forName</span><span style="color:#f92672">(</span>driver<span style="color:#f92672">);</span>
+        <span style="color:#f92672">}</span><span style="color:#66d9ef">catch</span> <span style="color:#f92672">(</span>Exception e<span style="color:#f92672">){</span>
+            e<span style="color:#f92672">.</span><span style="color:#a6e22e">printStackTrace</span><span style="color:#f92672">();</span>
+        <span style="color:#f92672">}</span>
+    <span style="color:#f92672">}</span>
+
+    <span style="color:#75715e">//3.获取连接
+</span><span style="color:#75715e"></span>    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">static</span> Connection <span style="color:#a6e22e">getConnection</span><span style="color:#f92672">()</span> <span style="color:#66d9ef">throws</span> SQLException <span style="color:#f92672">{</span>
+        <span style="color:#66d9ef">return</span> DriverManager<span style="color:#f92672">.</span><span style="color:#a6e22e">getConnection</span><span style="color:#f92672">(</span>url<span style="color:#f92672">,</span>userName<span style="color:#f92672">,</span>password<span style="color:#f92672">);</span>
+    <span style="color:#f92672">}</span>
+
+    <span style="color:#75715e">//4.释放连接
+</span><span style="color:#75715e"></span>    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">static</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">release</span><span style="color:#f92672">(</span>Connection con<span style="color:#f92672">,</span> Statement st<span style="color:#f92672">,</span> ResultSet rs<span style="color:#f92672">){</span>
+        <span style="color:#75715e">//释放结果
+</span><span style="color:#75715e"></span>        <span style="color:#66d9ef">if</span><span style="color:#f92672">(</span>rs <span style="color:#f92672">!=</span><span style="color:#66d9ef">null</span><span style="color:#f92672">){</span>
+            <span style="color:#66d9ef">try</span> <span style="color:#f92672">{</span>
+                rs<span style="color:#f92672">.</span><span style="color:#a6e22e">close</span><span style="color:#f92672">();</span>
+            <span style="color:#f92672">}</span> <span style="color:#66d9ef">catch</span> <span style="color:#f92672">(</span>SQLException throwables<span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+                throwables<span style="color:#f92672">.</span><span style="color:#a6e22e">printStackTrace</span><span style="color:#f92672">();</span>
+            <span style="color:#f92672">}</span>
+        <span style="color:#f92672">}</span>
+        <span style="color:#75715e">//释放sql
+</span><span style="color:#75715e"></span>        <span style="color:#66d9ef">if</span><span style="color:#f92672">(</span>st <span style="color:#f92672">!=</span> <span style="color:#66d9ef">null</span><span style="color:#f92672">){</span>
+            <span style="color:#66d9ef">try</span> <span style="color:#f92672">{</span>
+                st<span style="color:#f92672">.</span><span style="color:#a6e22e">close</span><span style="color:#f92672">();</span>
+            <span style="color:#f92672">}</span> <span style="color:#66d9ef">catch</span> <span style="color:#f92672">(</span>SQLException throwables<span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+                throwables<span style="color:#f92672">.</span><span style="color:#a6e22e">printStackTrace</span><span style="color:#f92672">();</span>
+            <span style="color:#f92672">}</span>
+        <span style="color:#f92672">}</span>
+        <span style="color:#75715e">//释放连接
+</span><span style="color:#75715e"></span>        <span style="color:#66d9ef">if</span><span style="color:#f92672">(</span>con <span style="color:#f92672">!=</span><span style="color:#66d9ef">null</span><span style="color:#f92672">){</span>
+            <span style="color:#66d9ef">try</span> <span style="color:#f92672">{</span>
+                con<span style="color:#f92672">.</span><span style="color:#a6e22e">close</span><span style="color:#f92672">();</span>
+            <span style="color:#f92672">}</span> <span style="color:#66d9ef">catch</span> <span style="color:#f92672">(</span>SQLException throwables<span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+                throwables<span style="color:#f92672">.</span><span style="color:#a6e22e">printStackTrace</span><span style="color:#f92672">();</span>
+            <span style="color:#f92672">}</span>
+        <span style="color:#f92672">}</span>
+    <span style="color:#f92672">}</span>
+<span style="color:#f92672">}</span>
+</code></pre></div><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#f92672">package</span> wiki.mrx<span style="color:#f92672">;</span>
+
+<span style="color:#f92672">import</span> wiki.mrx.utils.JdbcUtils<span style="color:#f92672">;</span>
+
+<span style="color:#f92672">import</span> java.sql.*<span style="color:#f92672">;</span>
+
+<span style="color:#66d9ef">public</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">TestInsert</span> <span style="color:#f92672">{</span>
+    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">static</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">main</span><span style="color:#f92672">(</span>String<span style="color:#f92672">[]</span> args<span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+        Connection connection <span style="color:#f92672">=</span> <span style="color:#66d9ef">null</span><span style="color:#f92672">;</span>
+        PreparedStatement preparedStatement <span style="color:#f92672">=</span> <span style="color:#66d9ef">null</span><span style="color:#f92672">;</span>
+        ResultSet resultSet <span style="color:#f92672">=</span> <span style="color:#66d9ef">null</span><span style="color:#f92672">;</span>
+
+        <span style="color:#66d9ef">try</span> <span style="color:#f92672">{</span>
+            <span style="color:#75715e">//1.获取数据库连接
+</span><span style="color:#75715e"></span>            connection <span style="color:#f92672">=</span> JdbcUtils<span style="color:#f92672">.</span><span style="color:#a6e22e">getConnection</span><span style="color:#f92672">();</span>
+            <span style="color:#75715e">//2.获得sql执行对象并执行
+</span><span style="color:#75715e"></span>            String sql <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;insert into t_student values(null,&#39;莉丝&#39;,2)&#34;</span><span style="color:#f92672">;</span>
+            preparedStatement <span style="color:#f92672">=</span> connection<span style="color:#f92672">.</span><span style="color:#a6e22e">prepareStatement</span><span style="color:#f92672">(</span>sql<span style="color:#f92672">);</span>
+            <span style="color:#66d9ef">int</span> i <span style="color:#f92672">=</span> preparedStatement<span style="color:#f92672">.</span><span style="color:#a6e22e">executeUpdate</span><span style="color:#f92672">(</span>sql<span style="color:#f92672">);</span>
+
+            <span style="color:#75715e">//3.查看获取到的数据
+</span><span style="color:#75715e"></span>            <span style="color:#66d9ef">if</span><span style="color:#f92672">(</span>i<span style="color:#f92672">&gt;</span>0<span style="color:#f92672">){</span>
+                System<span style="color:#f92672">.</span><span style="color:#a6e22e">out</span><span style="color:#f92672">.</span><span style="color:#a6e22e">println</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#34;插入成功&#34;</span><span style="color:#f92672">);</span>
+            <span style="color:#f92672">}</span>
+
+        <span style="color:#f92672">}</span> <span style="color:#66d9ef">catch</span> <span style="color:#f92672">(</span>SQLException throwables<span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+            throwables<span style="color:#f92672">.</span><span style="color:#a6e22e">printStackTrace</span><span style="color:#f92672">();</span>
+        <span style="color:#f92672">}</span><span style="color:#66d9ef">finally</span> <span style="color:#f92672">{</span>
+            <span style="color:#75715e">//4.关闭资源
+</span><span style="color:#75715e"></span>            JdbcUtils<span style="color:#f92672">.</span><span style="color:#a6e22e">release</span><span style="color:#f92672">(</span>connection<span style="color:#f92672">,</span>preparedStatement<span style="color:#f92672">,</span><span style="color:#66d9ef">null</span><span style="color:#f92672">);</span>
+        <span style="color:#f92672">}</span>
+    <span style="color:#f92672">}</span>
+<span style="color:#f92672">}</span>
+</code></pre></div><p><img src="https://s3.bmp.ovh/imgs/2022/01/487f52b1324a1ea4.png" alt=""></p>
+
+    </div>
+    <video id="my_video" style="height: 300px;width:100%" controls="controls"></video>
+
+</article>
+<div class="pagination">
+    
+    <div class="prev"><a href="https://Apollo2light.github.io/Apollo2light/backend/6.java%E6%9D%82%E9%A1%B9/">Previous Post</a></div>
+    
+    
+    <div class="next"><a href="https://Apollo2light.github.io/Apollo2light/backend/8.javaweb/">Next Post</a></div>
+    
+</div>
+
+
+<script>
+    try {
+        
+        let src = document.getElementsByTagName('code')[0].innerText;
+        
+        if (src.indexOf("mp4") != -1) {
+            document.getElementById('my_video').setAttribute("src", src)
+        } else {
+            
+            let video = document.getElementById('my_video');
+            if (video != null) {
+                video.parentNode.removeChild(video);
+            }
+        }
+    } catch (e) {
+        
+        let video = document.getElementById('my_video');
+        if (video != null) {
+            video.parentNode.removeChild(video);
+        }
+    }
+</script>
+
+</main><footer class="site-footer">
+	<span class="right">
+		<em>Apollo&#39;s blog</em>
+	</span>
+</footer>
+</body>
+<script>
+
+</script>
+</html>

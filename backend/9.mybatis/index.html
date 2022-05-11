@@ -1,0 +1,1018 @@
+<!DOCTYPE html>
+<html lang=en-us><head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title> mybatis - Apollo&#39;s blog</title>
+    <meta name="description" content="mybatis简介|mybatis简介|mybatis简介|mybatis简介|mybatis简介|
+mybatis是持久层框架，免除了 JDBC 代码以及设置参数和获取结果集的工作，通过XML 或注解来映射为数据库中的记录，MyBatis有个 Resources的工具类帮助获取配置文件内容，获取顺序为：
+ 1.mybatis-config.xml中的configuration &mdash;&ndash;&gt; 配置文件 2.SqlSessionFactoryBuilder &mdash;&ndash;&gt; 读取配置的类 3.SqlSessionFactory&mdash;&ndash;&gt; 创建SqlSession的工厂类 4.SqlSession&mdash;&ndash;&gt; 包含了执行sql的所有方法  ===增删改查===| ===增删改查===| ===增删改查===| ===增删改查===|
+CREATE DATABASE `mybatis`; USE `mybatis`; CREATE TABLE `user`( `id` INT(20) NOT NULL PRIMARY KEY, `name` VARCHAR(30) DEFAULT NULL, `pwd` VARCHAR(30) DEFAULT NULL )ENGINE = INNODB DEFAULT CHARSET=utf8; INSERT INTO `user`(`id`,`name`,`pwd`) VALUES (1,&#34;sss&#34;,&#34;111111&#34;), (2,&#34;qq&#34;,&#34;134111&#34;), (3,&#34;rrrr&#34;,&#34;11111441&#34;), (4,&#34;ddd&#34;,&#34;11321111&#34;); SELECT * from `user`; 新建无模版的maven项目，删除src将其作为主工程，导入jar包
+&lt;?xml version=&#34;1.0&#34; encoding=&#34;UTF-8&#34;?&gt; &lt;project xmlns=&#34;http://maven.apache.org/POM/4.0.0&#34; xmlns:xsi=&#34;http://www.w3.org/2001/XMLSchema-instance&#34; xsi:schemaLocation=&#34;http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd&#34;&gt; &lt;modelVersion&gt;4.">
+    <link rel="canonical" href="https://Apollo2light.github.io/Apollo2light/backend/9.mybatis/">
+    <meta property="og:title" content="mybatis">
+    <meta property="og:type" content="article">
+    <meta property="og:url" content="https://Apollo2light.github.io/Apollo2light/backend/9.mybatis/">
+    <meta property="og:description" content="mybatis简介|mybatis简介|mybatis简介|mybatis简介|mybatis简介|
+mybatis是持久层框架，免除了 JDBC 代码以及设置参数和获取结果集的工作，通过XML 或注解来映射为数据库中的记录，MyBatis有个 Resources的工具类帮助获取配置文件内容，获取顺序为：
+ 1.mybatis-config.xml中的configuration &mdash;&ndash;&gt; 配置文件 2.SqlSessionFactoryBuilder &mdash;&ndash;&gt; 读取配置的类 3.SqlSessionFactory&mdash;&ndash;&gt; 创建SqlSession的工厂类 4.SqlSession&mdash;&ndash;&gt; 包含了执行sql的所有方法  ===增删改查===| ===增删改查===| ===增删改查===| ===增删改查===|
+CREATE DATABASE `mybatis`; USE `mybatis`; CREATE TABLE `user`( `id` INT(20) NOT NULL PRIMARY KEY, `name` VARCHAR(30) DEFAULT NULL, `pwd` VARCHAR(30) DEFAULT NULL )ENGINE = INNODB DEFAULT CHARSET=utf8; INSERT INTO `user`(`id`,`name`,`pwd`) VALUES (1,&#34;sss&#34;,&#34;111111&#34;), (2,&#34;qq&#34;,&#34;134111&#34;), (3,&#34;rrrr&#34;,&#34;11111441&#34;), (4,&#34;ddd&#34;,&#34;11321111&#34;); SELECT * from `user`; 新建无模版的maven项目，删除src将其作为主工程，导入jar包
+&lt;?xml version=&#34;1.0&#34; encoding=&#34;UTF-8&#34;?&gt; &lt;project xmlns=&#34;http://maven.apache.org/POM/4.0.0&#34; xmlns:xsi=&#34;http://www.w3.org/2001/XMLSchema-instance&#34; xsi:schemaLocation=&#34;http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd&#34;&gt; &lt;modelVersion&gt;4.">
+    <meta property="og:site_name" content="Apollo&#39;s blog">
+    <link rel="stylesheet" href="https://Apollo2light.github.io/Apollo2light/css/main.min.7fdf1d02dafd1a6eb5cfd0d707e17e33515b866f5d305a0ab01a4095577484fe.css" integrity="sha256-f98dAtr9Gm61z9DXB&#43;F&#43;M1Fbhm9dMFoKsBpAlVd0hP4=">
+    <meta name="generator" content="Hugo 0.73.0" />
+    <script type="module" src="https://unpkg.com/ionicons@5.1.2/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule="" src="https://unpkg.com/ionicons@5.1.2/dist/ionicons/ionicons.js"></script>
+    
+</head>
+<body><header class="site-header">
+    <nav class="site-nav" role="navigation" aria-label="breadcrumb">
+        <ol itemscope itemtype="https://schema.org/BreadcrumbList" class="breadcrumb"><li class="breadcrumb-item  " 
+    itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+    <a itemtype="https://schema.org/Thing" itemprop="item" href="https://Apollo2light.github.io/Apollo2light/">
+        <span itemprop="name">Apollo&#39;s blog</span>
+    </a>
+    <meta itemprop="position"
+          content="0"/>
+</li>/<li class="breadcrumb-item  " 
+    itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+    <a itemtype="https://schema.org/Thing" itemprop="item" href="https://Apollo2light.github.io/Apollo2light/backend/">
+        <span itemprop="name">backend</span>
+    </a>
+    <meta itemprop="position"
+          content="0"/>
+</li>/<li class="breadcrumb-item active hidden" aria-current="page"
+    itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+    <a itemtype="https://schema.org/Thing" itemprop="item" href="https://Apollo2light.github.io/Apollo2light/backend/9.mybatis/">
+        <span itemprop="name">9.mybatis</span>
+    </a>
+    <meta itemprop="position"
+          content="1"/>
+</li></ol>
+    </nav>
+    <h1 class="site-title hidden">
+        <a href="https://Apollo2light.github.io/Apollo2light/">Apollo&#39;s blog</a>
+    </h1>
+</header><main id="content">
+<article role="article" class="content post h-entry" itemscope="" itemtype="http://schema.org/BlogPosting">
+    <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">mybatis</h2>
+        <span class="post-meta">
+            <time class="date-published" datetime=" 2022-02-16T19:58:49&#43;07:00" itemprop="datePublished">
+                Wed, 16 Feb 2022
+            </time>
+            
+        </span>
+    </header>
+    <div class="post-content" itemprop="articleBody">
+        <p>mybatis简介|mybatis简介|mybatis简介|mybatis简介|mybatis简介|</p>
+<p><code>mybatis是持久层框架，免除了 JDBC 代码以及设置参数和获取结果集的工作，通过XML 或注解来映射为数据库中的记录，MyBatis有个 Resources的工具类帮助获取配置文件内容，获取顺序为：</code></p>
+<ul>
+<li>1.mybatis-config.xml中的configuration &mdash;&ndash;&gt;   配置文件</li>
+<li>2.SqlSessionFactoryBuilder  &mdash;&ndash;&gt;   读取配置的类</li>
+<li>3.SqlSessionFactory&mdash;&ndash;&gt;   创建SqlSession的工厂类</li>
+<li>4.SqlSession&mdash;&ndash;&gt;   包含了执行sql的所有方法</li>
+</ul>
+<p>===增删改查===| ===增删改查===| ===增删改查===| ===增删改查===|</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sql" data-lang="sql"><span style="color:#66d9ef">CREATE</span> <span style="color:#66d9ef">DATABASE</span> <span style="color:#f92672">`</span>mybatis<span style="color:#f92672">`</span>;
+USE <span style="color:#f92672">`</span>mybatis<span style="color:#f92672">`</span>;
+<span style="color:#66d9ef">CREATE</span> <span style="color:#66d9ef">TABLE</span> <span style="color:#f92672">`</span><span style="color:#66d9ef">user</span><span style="color:#f92672">`</span>(
+  <span style="color:#f92672">`</span>id<span style="color:#f92672">`</span> INT(<span style="color:#ae81ff">20</span>) <span style="color:#66d9ef">NOT</span> <span style="color:#66d9ef">NULL</span> <span style="color:#66d9ef">PRIMARY</span> <span style="color:#66d9ef">KEY</span>,
+    <span style="color:#f92672">`</span>name<span style="color:#f92672">`</span> VARCHAR(<span style="color:#ae81ff">30</span>) <span style="color:#66d9ef">DEFAULT</span> <span style="color:#66d9ef">NULL</span>,
+    <span style="color:#f92672">`</span>pwd<span style="color:#f92672">`</span> VARCHAR(<span style="color:#ae81ff">30</span>) <span style="color:#66d9ef">DEFAULT</span> <span style="color:#66d9ef">NULL</span>
+)ENGINE <span style="color:#f92672">=</span> INNODB <span style="color:#66d9ef">DEFAULT</span> CHARSET<span style="color:#f92672">=</span>utf8;
+
+<span style="color:#66d9ef">INSERT</span> <span style="color:#66d9ef">INTO</span> <span style="color:#f92672">`</span><span style="color:#66d9ef">user</span><span style="color:#f92672">`</span>(<span style="color:#f92672">`</span>id<span style="color:#f92672">`</span>,<span style="color:#f92672">`</span>name<span style="color:#f92672">`</span>,<span style="color:#f92672">`</span>pwd<span style="color:#f92672">`</span>) <span style="color:#66d9ef">VALUES</span>
+(<span style="color:#ae81ff">1</span>,<span style="color:#e6db74">&#34;sss&#34;</span>,<span style="color:#e6db74">&#34;111111&#34;</span>),
+(<span style="color:#ae81ff">2</span>,<span style="color:#e6db74">&#34;qq&#34;</span>,<span style="color:#e6db74">&#34;134111&#34;</span>),
+(<span style="color:#ae81ff">3</span>,<span style="color:#e6db74">&#34;rrrr&#34;</span>,<span style="color:#e6db74">&#34;11111441&#34;</span>),
+(<span style="color:#ae81ff">4</span>,<span style="color:#e6db74">&#34;ddd&#34;</span>,<span style="color:#e6db74">&#34;11321111&#34;</span>);
+
+<span style="color:#66d9ef">SELECT</span> <span style="color:#f92672">*</span> <span style="color:#66d9ef">from</span> <span style="color:#f92672">`</span><span style="color:#66d9ef">user</span><span style="color:#f92672">`</span>;
+</code></pre></div><p><code>新建无模版的maven项目，删除src将其作为主工程，导入jar包</code></p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-xml" data-lang="xml"><span style="color:#75715e">&lt;?xml version=&#34;1.0&#34; encoding=&#34;UTF-8&#34;?&gt;</span>
+<span style="color:#f92672">&lt;project</span> <span style="color:#a6e22e">xmlns=</span><span style="color:#e6db74">&#34;http://maven.apache.org/POM/4.0.0&#34;</span>
+         <span style="color:#a6e22e">xmlns:xsi=</span><span style="color:#e6db74">&#34;http://www.w3.org/2001/XMLSchema-instance&#34;</span>
+         <span style="color:#a6e22e">xsi:schemaLocation=</span><span style="color:#e6db74">&#34;http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd&#34;</span><span style="color:#f92672">&gt;</span>
+    <span style="color:#f92672">&lt;modelVersion&gt;</span>4.0.0<span style="color:#f92672">&lt;/modelVersion&gt;</span>
+
+    <span style="color:#f92672">&lt;groupId&gt;</span>wiki.mrx<span style="color:#f92672">&lt;/groupId&gt;</span>
+    <span style="color:#f92672">&lt;artifactId&gt;</span>mybatis-study<span style="color:#f92672">&lt;/artifactId&gt;</span>
+    <span style="color:#f92672">&lt;version&gt;</span>1.0-SNAPSHOT<span style="color:#f92672">&lt;/version&gt;</span>
+
+    <span style="color:#f92672">&lt;dependencies&gt;</span>
+        <span style="color:#f92672">&lt;dependency&gt;</span>
+            <span style="color:#f92672">&lt;groupId&gt;</span>mysql<span style="color:#f92672">&lt;/groupId&gt;</span>
+            <span style="color:#f92672">&lt;artifactId&gt;</span>mysql-connector-java<span style="color:#f92672">&lt;/artifactId&gt;</span>
+            <span style="color:#f92672">&lt;version&gt;</span>5.1.47<span style="color:#f92672">&lt;/version&gt;</span>
+        <span style="color:#f92672">&lt;/dependency&gt;</span>
+
+        <span style="color:#75715e">&lt;!-- https://mvnrepository.com/artifact/org.mybatis/mybatis --&gt;</span>
+        <span style="color:#f92672">&lt;dependency&gt;</span>
+            <span style="color:#f92672">&lt;groupId&gt;</span>org.mybatis<span style="color:#f92672">&lt;/groupId&gt;</span>
+            <span style="color:#f92672">&lt;artifactId&gt;</span>mybatis<span style="color:#f92672">&lt;/artifactId&gt;</span>
+            <span style="color:#f92672">&lt;version&gt;</span>3.5.9<span style="color:#f92672">&lt;/version&gt;</span>
+        <span style="color:#f92672">&lt;/dependency&gt;</span>
+
+        <span style="color:#f92672">&lt;dependency&gt;</span>
+            <span style="color:#f92672">&lt;groupId&gt;</span>junit<span style="color:#f92672">&lt;/groupId&gt;</span>
+            <span style="color:#f92672">&lt;artifactId&gt;</span>junit<span style="color:#f92672">&lt;/artifactId&gt;</span>
+            <span style="color:#f92672">&lt;version&gt;</span>4.12<span style="color:#f92672">&lt;/version&gt;</span>
+        <span style="color:#f92672">&lt;/dependency&gt;</span>
+
+    <span style="color:#f92672">&lt;/dependencies&gt;</span>
+<span style="color:#f92672">&lt;/project&gt;</span>
+</code></pre></div><p><code>3.新建无模版maven模块文件，避免多次导包</code></p>
+<p><code>4.编写核心配置文件</code></p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-xml" data-lang="xml">//resources/mybatis-config.xml
+<span style="color:#75715e">&lt;?xml version=&#34;1.0&#34; encoding=&#34;UTF-8&#34; ?&gt;</span>
+<span style="color:#75715e">&lt;!DOCTYPE configuration
+</span><span style="color:#75715e">        PUBLIC &#34;-//mybatis.org//DTD Config 3.0//EN&#34;
+</span><span style="color:#75715e">        &#34;http://mybatis.org/dtd/mybatis-3-config.dtd&#34;&gt;</span>
+<span style="color:#f92672">&lt;configuration&gt;</span>
+    <span style="color:#f92672">&lt;environments</span> <span style="color:#a6e22e">default=</span><span style="color:#e6db74">&#34;development&#34;</span><span style="color:#f92672">&gt;</span>
+        <span style="color:#f92672">&lt;environment</span> <span style="color:#a6e22e">id=</span><span style="color:#e6db74">&#34;development&#34;</span><span style="color:#f92672">&gt;</span>
+            <span style="color:#75715e">&lt;!--事务管理--&gt;</span>
+            <span style="color:#f92672">&lt;transactionManager</span> <span style="color:#a6e22e">type=</span><span style="color:#e6db74">&#34;JDBC&#34;</span><span style="color:#f92672">/&gt;</span>
+            <span style="color:#f92672">&lt;dataSource</span> <span style="color:#a6e22e">type=</span><span style="color:#e6db74">&#34;POOLED&#34;</span><span style="color:#f92672">&gt;</span>
+                <span style="color:#f92672">&lt;property</span> <span style="color:#a6e22e">name=</span><span style="color:#e6db74">&#34;driver&#34;</span> <span style="color:#a6e22e">value=</span><span style="color:#e6db74">&#34;com.mysql.jdbc.Driver&#34;</span><span style="color:#f92672">/&gt;</span>
+                <span style="color:#f92672">&lt;property</span> <span style="color:#a6e22e">name=</span><span style="color:#e6db74">&#34;url&#34;</span> <span style="color:#a6e22e">value=</span><span style="color:#e6db74">&#34;jdbc:mysql://localhost:3306/mybatis?useSSL=false&amp;amp;useUnicode=true&amp;amp;characterEncoding=UTF-8&#34;</span><span style="color:#f92672">/&gt;</span>
+                <span style="color:#f92672">&lt;property</span> <span style="color:#a6e22e">name=</span><span style="color:#e6db74">&#34;username&#34;</span> <span style="color:#a6e22e">value=</span><span style="color:#e6db74">&#34;root&#34;</span><span style="color:#f92672">/&gt;</span>
+                <span style="color:#f92672">&lt;property</span> <span style="color:#a6e22e">name=</span><span style="color:#e6db74">&#34;password&#34;</span> <span style="color:#a6e22e">value=</span><span style="color:#e6db74">&#34;rootroot&#34;</span><span style="color:#f92672">/&gt;</span>
+            <span style="color:#f92672">&lt;/dataSource&gt;</span>
+        <span style="color:#f92672">&lt;/environment&gt;</span>
+    <span style="color:#f92672">&lt;/environments&gt;</span>
+<span style="color:#f92672">&lt;/configuration&gt;</span>
+</code></pre></div><p><code>5.编写工具类</code></p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#f92672">package</span> wiki.mrx.utils<span style="color:#f92672">;</span>
+
+<span style="color:#f92672">import</span> org.apache.ibatis.io.Resources<span style="color:#f92672">;</span>
+<span style="color:#f92672">import</span> org.apache.ibatis.session.SqlSession<span style="color:#f92672">;</span>
+<span style="color:#f92672">import</span> org.apache.ibatis.session.SqlSessionFactory<span style="color:#f92672">;</span>
+<span style="color:#f92672">import</span> org.apache.ibatis.session.SqlSessionFactoryBuilder<span style="color:#f92672">;</span>
+
+<span style="color:#f92672">import</span> java.io.IOException<span style="color:#f92672">;</span>
+<span style="color:#f92672">import</span> java.io.InputStream<span style="color:#f92672">;</span>
+
+<span style="color:#66d9ef">public</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">MybatisUtils</span> <span style="color:#f92672">{</span>
+    <span style="color:#66d9ef">private</span> <span style="color:#66d9ef">static</span> SqlSessionFactory sqlSessionFactory<span style="color:#f92672">;</span>
+
+    <span style="color:#66d9ef">static</span><span style="color:#f92672">{</span>
+        <span style="color:#66d9ef">try</span> <span style="color:#f92672">{</span>
+            <span style="color:#75715e">//1.获取sqlSessionFactory对象
+</span><span style="color:#75715e"></span>            String resource <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;mybatis-config.xml&#34;</span><span style="color:#f92672">;</span>
+            InputStream inputStream <span style="color:#f92672">=</span> Resources<span style="color:#f92672">.</span><span style="color:#a6e22e">getResourceAsStream</span><span style="color:#f92672">(</span>resource<span style="color:#f92672">);</span>
+             sqlSessionFactory <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> SqlSessionFactoryBuilder<span style="color:#f92672">().</span><span style="color:#a6e22e">build</span><span style="color:#f92672">(</span>inputStream<span style="color:#f92672">);</span>
+        <span style="color:#f92672">}</span> <span style="color:#66d9ef">catch</span> <span style="color:#f92672">(</span>IOException e<span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+            e<span style="color:#f92672">.</span><span style="color:#a6e22e">printStackTrace</span><span style="color:#f92672">();</span>
+        <span style="color:#f92672">}</span>
+    <span style="color:#f92672">}</span>
+    <span style="color:#75715e">//2.获取sqlSession实例，它包含了执行sql的所有方法
+</span><span style="color:#75715e"></span>    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">static</span> SqlSession <span style="color:#a6e22e">getSqlSession</span><span style="color:#f92672">(){</span>
+        <span style="color:#66d9ef">return</span> sqlSessionFactory<span style="color:#f92672">.</span><span style="color:#a6e22e">openSession</span><span style="color:#f92672">();</span>
+    <span style="color:#f92672">}</span>
+<span style="color:#f92672">}</span>
+</code></pre></div><p><code>6.编写业务代码</code></p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#f92672">package</span> wiki.mrx.pojo<span style="color:#f92672">;</span>
+
+<span style="color:#66d9ef">public</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">User</span> <span style="color:#f92672">{</span>
+    <span style="color:#66d9ef">private</span> <span style="color:#66d9ef">int</span> id<span style="color:#f92672">;</span>
+    <span style="color:#66d9ef">private</span> String name<span style="color:#f92672">;</span>
+    <span style="color:#66d9ef">private</span>  String pwd<span style="color:#f92672">;</span>
+
+    <span style="color:#66d9ef">public</span> <span style="color:#a6e22e">User</span><span style="color:#f92672">()</span> <span style="color:#f92672">{</span>
+    <span style="color:#f92672">}</span>
+
+    <span style="color:#66d9ef">public</span> <span style="color:#a6e22e">User</span><span style="color:#f92672">(</span><span style="color:#66d9ef">int</span> id<span style="color:#f92672">,</span> String name<span style="color:#f92672">,</span> String pwd<span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+        <span style="color:#66d9ef">this</span><span style="color:#f92672">.</span><span style="color:#a6e22e">id</span> <span style="color:#f92672">=</span> id<span style="color:#f92672">;</span>
+        <span style="color:#66d9ef">this</span><span style="color:#f92672">.</span><span style="color:#a6e22e">name</span> <span style="color:#f92672">=</span> name<span style="color:#f92672">;</span>
+        <span style="color:#66d9ef">this</span><span style="color:#f92672">.</span><span style="color:#a6e22e">pwd</span> <span style="color:#f92672">=</span> pwd<span style="color:#f92672">;</span>
+    <span style="color:#f92672">}</span>
+
+    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">int</span> <span style="color:#a6e22e">getId</span><span style="color:#f92672">()</span> <span style="color:#f92672">{</span>
+        <span style="color:#66d9ef">return</span> id<span style="color:#f92672">;</span>
+    <span style="color:#f92672">}</span>
+
+    <span style="color:#a6e22e">@Override</span>
+    <span style="color:#66d9ef">public</span> String <span style="color:#a6e22e">toString</span><span style="color:#f92672">()</span> <span style="color:#f92672">{</span>
+        <span style="color:#66d9ef">return</span> <span style="color:#e6db74">&#34;User{&#34;</span> <span style="color:#f92672">+</span>
+                <span style="color:#e6db74">&#34;id=&#34;</span> <span style="color:#f92672">+</span> id <span style="color:#f92672">+</span>
+                <span style="color:#e6db74">&#34;, name=&#39;&#34;</span> <span style="color:#f92672">+</span> name <span style="color:#f92672">+</span> <span style="color:#e6db74">&#39;\&#39;&#39;</span> <span style="color:#f92672">+</span>
+                <span style="color:#e6db74">&#34;, pwd=&#39;&#34;</span> <span style="color:#f92672">+</span> pwd <span style="color:#f92672">+</span> <span style="color:#e6db74">&#39;\&#39;&#39;</span> <span style="color:#f92672">+</span>
+                <span style="color:#e6db74">&#39;}&#39;</span><span style="color:#f92672">;</span>
+    <span style="color:#f92672">}</span>
+
+    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">setId</span><span style="color:#f92672">(</span><span style="color:#66d9ef">int</span> id<span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+        <span style="color:#66d9ef">this</span><span style="color:#f92672">.</span><span style="color:#a6e22e">id</span> <span style="color:#f92672">=</span> id<span style="color:#f92672">;</span>
+    <span style="color:#f92672">}</span>
+
+    <span style="color:#66d9ef">public</span> String <span style="color:#a6e22e">getName</span><span style="color:#f92672">()</span> <span style="color:#f92672">{</span>
+        <span style="color:#66d9ef">return</span> name<span style="color:#f92672">;</span>
+    <span style="color:#f92672">}</span>
+
+    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">setName</span><span style="color:#f92672">(</span>String name<span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+        <span style="color:#66d9ef">this</span><span style="color:#f92672">.</span><span style="color:#a6e22e">name</span> <span style="color:#f92672">=</span> name<span style="color:#f92672">;</span>
+    <span style="color:#f92672">}</span>
+
+    <span style="color:#66d9ef">public</span> String <span style="color:#a6e22e">getPwd</span><span style="color:#f92672">()</span> <span style="color:#f92672">{</span>
+        <span style="color:#66d9ef">return</span> pwd<span style="color:#f92672">;</span>
+    <span style="color:#f92672">}</span>
+
+    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">setPwd</span><span style="color:#f92672">(</span>String pwd<span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+        <span style="color:#66d9ef">this</span><span style="color:#f92672">.</span><span style="color:#a6e22e">pwd</span> <span style="color:#f92672">=</span> pwd<span style="color:#f92672">;</span>
+    <span style="color:#f92672">}</span>
+<span style="color:#f92672">}</span>
+</code></pre></div><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#f92672">package</span> wiki.mrx.dao<span style="color:#f92672">;</span>
+
+<span style="color:#f92672">import</span> wiki.mrx.pojo.User<span style="color:#f92672">;</span>
+
+<span style="color:#f92672">import</span> java.util.List<span style="color:#f92672">;</span>
+
+<span style="color:#66d9ef">public</span> <span style="color:#66d9ef">interface</span> <span style="color:#a6e22e">UserDao</span> <span style="color:#f92672">{</span>
+    <span style="color:#75715e">//获取全部用户
+</span><span style="color:#75715e"></span>    List<span style="color:#f92672">&lt;</span>User<span style="color:#f92672">&gt;</span> <span style="color:#a6e22e">getUserList</span><span style="color:#f92672">();</span>
+
+    <span style="color:#75715e">//查询所有用户--注解方式
+</span><span style="color:#75715e"></span>    <span style="color:#a6e22e">@Select</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#34;select * from mybatis.user&#34;</span><span style="color:#f92672">)</span>
+    List<span style="color:#f92672">&lt;</span>User<span style="color:#f92672">&gt;</span> <span style="color:#a6e22e">getUserList</span><span style="color:#f92672">();</span>
+
+    <span style="color:#75715e">//根据id查询用户
+</span><span style="color:#75715e"></span>    User <span style="color:#a6e22e">getUserById</span><span style="color:#f92672">(</span><span style="color:#66d9ef">int</span> id<span style="color:#f92672">);</span>
+
+    <span style="color:#75715e">//增加用户
+</span><span style="color:#75715e"></span>    <span style="color:#66d9ef">int</span> <span style="color:#a6e22e">addUser</span><span style="color:#f92672">(</span>User user<span style="color:#f92672">);</span>
+
+    <span style="color:#75715e">//map的使用
+</span><span style="color:#75715e"></span>    <span style="color:#66d9ef">int</span> <span style="color:#a6e22e">addUser2</span><span style="color:#f92672">(</span>Map<span style="color:#f92672">&lt;</span>String<span style="color:#f92672">,</span>Object<span style="color:#f92672">&gt;</span> map<span style="color:#f92672">);</span>
+
+    <span style="color:#75715e">//修改用户
+</span><span style="color:#75715e"></span>    <span style="color:#66d9ef">int</span> <span style="color:#a6e22e">updateUser</span><span style="color:#f92672">(</span>User user<span style="color:#f92672">);</span>
+
+    <span style="color:#75715e">//删除用户
+</span><span style="color:#75715e"></span>    <span style="color:#66d9ef">int</span> <span style="color:#a6e22e">deleteUser</span><span style="color:#f92672">(</span><span style="color:#66d9ef">int</span> id<span style="color:#f92672">);</span>
+
+    <span style="color:#75715e">//模糊查询
+</span><span style="color:#75715e"></span>    List<span style="color:#f92672">&lt;</span>User<span style="color:#f92672">&gt;</span> <span style="color:#a6e22e">getUserLike</span><span style="color:#f92672">(</span>String value<span style="color:#f92672">);</span>
+
+    <span style="color:#75715e">//分页
+</span><span style="color:#75715e"></span>    List<span style="color:#f92672">&lt;</span>User<span style="color:#f92672">&gt;</span> <span style="color:#a6e22e">getUserByLimit</span><span style="color:#f92672">(</span>Map<span style="color:#f92672">&lt;</span>String<span style="color:#f92672">,</span>Integer<span style="color:#f92672">&gt;</span> map<span style="color:#f92672">);</span>
+<span style="color:#f92672">}</span>
+
+</code></pre></div><p><code>7.DaoImpl实现类~~ ----&gt; mapper文件</code></p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-xml" data-lang="xml">//UserMapper.xml
+<span style="color:#75715e">&lt;?xml version=&#34;1.0&#34; encoding=&#34;UTF-8&#34; ?&gt;</span>
+<span style="color:#75715e">&lt;!DOCTYPE mapper
+</span><span style="color:#75715e">        PUBLIC &#34;-//mybatis.org//DTD Mapper 3.0//EN&#34;
+</span><span style="color:#75715e">        &#34;http://mybatis.org/dtd/mybatis-3-mapper.dtd&#34;&gt;</span>
+<span style="color:#f92672">&lt;mapper</span> <span style="color:#a6e22e">namespace=</span><span style="color:#e6db74">&#34;wiki.mrx.dao.UserMapper&#34;</span><span style="color:#f92672">&gt;</span>
+    <span style="color:#75715e">&lt;!-- 获取所有用户 --&gt;</span>
+    <span style="color:#f92672">&lt;select</span> <span style="color:#a6e22e">id=</span><span style="color:#e6db74">&#34;getUserList&#34;</span> <span style="color:#a6e22e">resultType=</span><span style="color:#e6db74">&#34;user&#34;</span><span style="color:#f92672">&gt;</span>
+        select * from mybatis.user
+    <span style="color:#f92672">&lt;/select&gt;</span>
+
+    <span style="color:#75715e">&lt;!-- 根据id查询用户 --&gt;</span>
+    <span style="color:#f92672">&lt;select</span> <span style="color:#a6e22e">id=</span><span style="color:#e6db74">&#34;getUserById&#34;</span> <span style="color:#a6e22e">resultType=</span><span style="color:#e6db74">&#34;user&#34;</span> <span style="color:#a6e22e">parameterType=</span><span style="color:#e6db74">&#34;int&#34;</span><span style="color:#f92672">&gt;</span>
+        select * from mybatis.user where id=#{id};
+    <span style="color:#f92672">&lt;/select&gt;</span>
+
+    <span style="color:#75715e">&lt;!-- 模糊查询 --&gt;</span>
+    <span style="color:#f92672">&lt;select</span> <span style="color:#a6e22e">id=</span><span style="color:#e6db74">&#34;getUserLike&#34;</span> <span style="color:#a6e22e">resultType=</span><span style="color:#e6db74">&#34;user&#34;</span><span style="color:#f92672">&gt;</span>
+        select * from mybatis.user where name like #{value};
+    <span style="color:#f92672">&lt;/select&gt;</span>
+
+    <span style="color:#75715e">&lt;!-- 添加用户，普通模式 --&gt;</span>
+    <span style="color:#f92672">&lt;insert</span> <span style="color:#a6e22e">id=</span><span style="color:#e6db74">&#34;addUser&#34;</span> <span style="color:#a6e22e">parameterType=</span><span style="color:#e6db74">&#34;user&#34;</span><span style="color:#f92672">&gt;</span>
+        insert into mybatis.user (id,name,pwd) values (#{id},#{name},#{pwd});
+    <span style="color:#f92672">&lt;/insert&gt;</span>
+
+    <span style="color:#75715e">&lt;!-- 添加用户，map模式 --&gt;</span>
+    <span style="color:#f92672">&lt;insert</span> <span style="color:#a6e22e">id=</span><span style="color:#e6db74">&#34;addUser2&#34;</span> <span style="color:#a6e22e">parameterType=</span><span style="color:#e6db74">&#34;map&#34;</span><span style="color:#f92672">&gt;</span>
+        insert into mybatis.user (id,name,pwd) values (#{userId},#{userName},#{passWord});
+    <span style="color:#f92672">&lt;/insert&gt;</span>
+
+    <span style="color:#75715e">&lt;!-- 修改用户 --&gt;</span>
+    <span style="color:#f92672">&lt;update</span> <span style="color:#a6e22e">id=</span><span style="color:#e6db74">&#34;updateUser&#34;</span> <span style="color:#a6e22e">parameterType=</span><span style="color:#e6db74">&#34;user&#34;</span><span style="color:#f92672">&gt;</span>
+        update mybatis.user set name=#{name},pwd=#{pwd} where id=#{id};
+    <span style="color:#f92672">&lt;/update&gt;</span>
+
+    <span style="color:#75715e">&lt;!-- 删除用户 --&gt;</span>
+    <span style="color:#f92672">&lt;delete</span> <span style="color:#a6e22e">id=</span><span style="color:#e6db74">&#34;deleteUser&#34;</span> <span style="color:#a6e22e">parameterType=</span><span style="color:#e6db74">&#34;int&#34;</span><span style="color:#f92672">&gt;</span>
+        delete from mybatis.user where id=#{id};
+    <span style="color:#f92672">&lt;/delete&gt;</span>
+
+    <span style="color:#75715e">&lt;!-- 分页 --&gt;</span>
+    <span style="color:#f92672">&lt;select</span> <span style="color:#a6e22e">id=</span><span style="color:#e6db74">&#34;getUserByLimit&#34;</span> <span style="color:#a6e22e">parameterType=</span><span style="color:#e6db74">&#34;map&#34;</span> <span style="color:#a6e22e">resultMap=</span><span style="color:#e6db74">&#34;UserMap&#34;</span><span style="color:#f92672">&gt;</span>
+        select * from mybatis.user limit #{startIndex},#{pageSize};
+    <span style="color:#f92672">&lt;/select&gt;</span>
+<span style="color:#f92672">&lt;/mapper&gt;</span>
+
+</code></pre></div><p><code>8.注册mapper</code></p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">db.properties
+driver<span style="color:#f92672">=</span>com.mysql.jdbc.Driver
+url<span style="color:#f92672">=</span>jdbc:mysql://localhost:3306/mybatis?
+useSSL<span style="color:#f92672">=</span>false&amp;useUnicode<span style="color:#f92672">=</span>true&amp;characterEncoding<span style="color:#f92672">=</span>UTF8
+username<span style="color:#f92672">=</span>root
+password<span style="color:#f92672">=</span>rootroot
+</code></pre></div><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-xml" data-lang="xml">//resources/mybatis-config.xml
+
+<span style="color:#75715e">&lt;?xml version=&#34;1.0&#34; encoding=&#34;UTF-8&#34; ?&gt;</span>
+<span style="color:#75715e">&lt;!DOCTYPE configuration
+</span><span style="color:#75715e">        PUBLIC &#34;-//mybatis.org//DTD Config 3.0//EN&#34;
+</span><span style="color:#75715e">        &#34;http://mybatis.org/dtd/mybatis-3-config.dtd&#34;&gt;</span>
+<span style="color:#f92672">&lt;configuration&gt;</span>
+    <span style="color:#75715e">&lt;!--读取配置文件--&gt;</span>
+    <span style="color:#f92672">&lt;properties</span> <span style="color:#a6e22e">resource=</span><span style="color:#e6db74">&#34;db.properties&#34;</span><span style="color:#f92672">&gt;&lt;/properties&gt;</span>
+
+    <span style="color:#75715e">&lt;!--实体类起别名--&gt;</span>
+    <span style="color:#f92672">&lt;typeAliases&gt;</span>
+        <span style="color:#f92672">&lt;package</span> <span style="color:#a6e22e">name=</span><span style="color:#e6db74">&#34;wiki.mrx.pojo&#34;</span><span style="color:#f92672">/&gt;</span>
+    <span style="color:#f92672">&lt;/typeAliases&gt;</span>
+
+    <span style="color:#75715e">&lt;!--开发环境--&gt;</span>
+    <span style="color:#f92672">&lt;environments</span> <span style="color:#a6e22e">default=</span><span style="color:#e6db74">&#34;development&#34;</span><span style="color:#f92672">&gt;</span>
+        <span style="color:#f92672">&lt;environment</span> <span style="color:#a6e22e">id=</span><span style="color:#e6db74">&#34;development&#34;</span><span style="color:#f92672">&gt;</span>
+            <span style="color:#75715e">&lt;!--事务管理--&gt;</span>
+            <span style="color:#f92672">&lt;transactionManager</span> <span style="color:#a6e22e">type=</span><span style="color:#e6db74">&#34;JDBC&#34;</span><span style="color:#f92672">/&gt;</span>
+            <span style="color:#f92672">&lt;dataSource</span> <span style="color:#a6e22e">type=</span><span style="color:#e6db74">&#34;POOLED&#34;</span><span style="color:#f92672">&gt;</span>
+                <span style="color:#f92672">&lt;property</span> <span style="color:#a6e22e">name=</span><span style="color:#e6db74">&#34;driver&#34;</span> <span style="color:#a6e22e">value=</span><span style="color:#e6db74">&#34;${driver}&#34;</span><span style="color:#f92672">/&gt;</span>
+                <span style="color:#f92672">&lt;property</span> <span style="color:#a6e22e">name=</span><span style="color:#e6db74">&#34;url&#34;</span> <span style="color:#a6e22e">value=</span><span style="color:#e6db74">&#34;${url}&#34;</span><span style="color:#f92672">/&gt;</span>
+                <span style="color:#f92672">&lt;property</span> <span style="color:#a6e22e">name=</span><span style="color:#e6db74">&#34;username&#34;</span> <span style="color:#a6e22e">value=</span><span style="color:#e6db74">&#34;${username}&#34;</span><span style="color:#f92672">/&gt;</span>
+                <span style="color:#f92672">&lt;property</span> <span style="color:#a6e22e">name=</span><span style="color:#e6db74">&#34;password&#34;</span> <span style="color:#a6e22e">value=</span><span style="color:#e6db74">&#34;${password}&#34;</span><span style="color:#f92672">/&gt;</span>
+            <span style="color:#f92672">&lt;/dataSource&gt;</span>
+        <span style="color:#f92672">&lt;/environment&gt;</span>
+    <span style="color:#f92672">&lt;/environments&gt;</span>
+    <span style="color:#f92672">&lt;mappers&gt;</span>
+        <span style="color:#75715e">&lt;!-- 这2个mapper配置只能选一个留下 --&gt;</span>
+        <span style="color:#f92672">&lt;mapper</span> <span style="color:#a6e22e">resource=</span><span style="color:#e6db74">&#34;wiki/mrx/dao/UserMapper.xml&#34;</span><span style="color:#f92672">/&gt;</span>
+        <span style="color:#f92672">&lt;mapper</span> <span style="color:#a6e22e">class=</span><span style="color:#e6db74">&#34;wiki.mrx.dao.UserMapper&#34;</span> <span style="color:#f92672">/&gt;</span>
+    <span style="color:#f92672">&lt;/mappers&gt;</span>
+<span style="color:#f92672">&lt;/configuration&gt;</span>
+</code></pre></div><p><code>9.编写测试文件</code></p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">UserDaoTest</span> <span style="color:#f92672">{</span>
+    <span style="color:#a6e22e">@Test</span>
+    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">getUserList</span><span style="color:#f92672">(){</span>
+        SqlSession sqlSession <span style="color:#f92672">=</span> MybatisUtils<span style="color:#f92672">.</span><span style="color:#a6e22e">getSqlSession</span><span style="color:#f92672">();</span>
+        <span style="color:#75715e">//方式1
+</span><span style="color:#75715e"></span>        <span style="color:#75715e">//UserDao mapper = sqlSession.getMapper(UserDao.class);
+</span><span style="color:#75715e"></span>        <span style="color:#75715e">//方式2
+</span><span style="color:#75715e"></span>        UserMapper mapper <span style="color:#f92672">=</span> sqlSession<span style="color:#f92672">.</span><span style="color:#a6e22e">getMapper</span><span style="color:#f92672">(</span>UserMapper<span style="color:#f92672">.</span><span style="color:#a6e22e">class</span><span style="color:#f92672">);</span>
+
+        List<span style="color:#f92672">&lt;</span>User<span style="color:#f92672">&gt;</span> userList <span style="color:#f92672">=</span> mapper<span style="color:#f92672">.</span><span style="color:#a6e22e">getUserList</span><span style="color:#f92672">();</span>
+        <span style="color:#66d9ef">for</span> <span style="color:#f92672">(</span>User user <span style="color:#f92672">:</span> userList<span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+            System<span style="color:#f92672">.</span><span style="color:#a6e22e">out</span><span style="color:#f92672">.</span><span style="color:#a6e22e">println</span><span style="color:#f92672">(</span>user<span style="color:#f92672">);</span>
+        <span style="color:#f92672">}</span>
+        sqlSession<span style="color:#f92672">.</span><span style="color:#a6e22e">close</span><span style="color:#f92672">();</span>
+    <span style="color:#f92672">}</span>
+
+    <span style="color:#a6e22e">@Test</span>
+    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">getUserById</span><span style="color:#f92672">(){</span>
+        SqlSession sqlSession <span style="color:#f92672">=</span> MybatisUtils<span style="color:#f92672">.</span><span style="color:#a6e22e">getSqlSession</span><span style="color:#f92672">();</span>
+        UserMapper mapper <span style="color:#f92672">=</span> sqlSession<span style="color:#f92672">.</span><span style="color:#a6e22e">getMapper</span><span style="color:#f92672">(</span>UserMapper<span style="color:#f92672">.</span><span style="color:#a6e22e">class</span><span style="color:#f92672">);</span>
+
+        User user <span style="color:#f92672">=</span> mapper<span style="color:#f92672">.</span><span style="color:#a6e22e">getUserById</span><span style="color:#f92672">(</span>1<span style="color:#f92672">);</span>
+        System<span style="color:#f92672">.</span><span style="color:#a6e22e">out</span><span style="color:#f92672">.</span><span style="color:#a6e22e">println</span><span style="color:#f92672">(</span>user<span style="color:#f92672">);</span>
+
+        sqlSession<span style="color:#f92672">.</span><span style="color:#a6e22e">close</span><span style="color:#f92672">();</span>
+    <span style="color:#f92672">}</span>
+
+    <span style="color:#a6e22e">@Test</span>
+    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">getUserLike</span><span style="color:#f92672">(){</span>
+        SqlSession sqlSession <span style="color:#f92672">=</span> MybatisUtils<span style="color:#f92672">.</span><span style="color:#a6e22e">getSqlSession</span><span style="color:#f92672">();</span>
+        UserMapper mapper <span style="color:#f92672">=</span> sqlSession<span style="color:#f92672">.</span><span style="color:#a6e22e">getMapper</span><span style="color:#f92672">(</span>UserMapper<span style="color:#f92672">.</span><span style="color:#a6e22e">class</span><span style="color:#f92672">);</span>
+
+        List<span style="color:#f92672">&lt;</span>User<span style="color:#f92672">&gt;</span> userList <span style="color:#f92672">=</span> mapper<span style="color:#f92672">.</span><span style="color:#a6e22e">getUserLike</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#34;%d%&#34;</span><span style="color:#f92672">);</span>
+        <span style="color:#66d9ef">for</span> <span style="color:#f92672">(</span>User user <span style="color:#f92672">:</span> userList<span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+            System<span style="color:#f92672">.</span><span style="color:#a6e22e">out</span><span style="color:#f92672">.</span><span style="color:#a6e22e">println</span><span style="color:#f92672">(</span>user<span style="color:#f92672">);</span>
+        <span style="color:#f92672">}</span>
+
+        sqlSession<span style="color:#f92672">.</span><span style="color:#a6e22e">close</span><span style="color:#f92672">();</span>
+    <span style="color:#f92672">}</span>
+
+
+    <span style="color:#a6e22e">@Test</span>
+    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">addUser</span><span style="color:#f92672">(){</span>
+        SqlSession sqlSession <span style="color:#f92672">=</span> MybatisUtils<span style="color:#f92672">.</span><span style="color:#a6e22e">getSqlSession</span><span style="color:#f92672">();</span>
+        UserMapper mapper <span style="color:#f92672">=</span> sqlSession<span style="color:#f92672">.</span><span style="color:#a6e22e">getMapper</span><span style="color:#f92672">(</span>UserMapper<span style="color:#f92672">.</span><span style="color:#a6e22e">class</span><span style="color:#f92672">);</span>
+
+        <span style="color:#66d9ef">int</span> result <span style="color:#f92672">=</span> mapper<span style="color:#f92672">.</span><span style="color:#a6e22e">addUser</span><span style="color:#f92672">(</span><span style="color:#66d9ef">new</span> User<span style="color:#f92672">(</span>5<span style="color:#f92672">,</span> <span style="color:#e6db74">&#34;ss&#34;</span><span style="color:#f92672">,</span> <span style="color:#e6db74">&#34;ssss&#34;</span><span style="color:#f92672">));</span>
+        <span style="color:#66d9ef">if</span><span style="color:#f92672">(</span>result<span style="color:#f92672">&gt;</span>0<span style="color:#f92672">){</span>
+            System<span style="color:#f92672">.</span><span style="color:#a6e22e">out</span><span style="color:#f92672">.</span><span style="color:#a6e22e">println</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#34;插入成功！！！&#34;</span><span style="color:#f92672">);</span>
+        <span style="color:#f92672">}</span>
+        <span style="color:#75715e">//提交事务,增删改需要提交事务
+</span><span style="color:#75715e"></span>        sqlSession<span style="color:#f92672">.</span><span style="color:#a6e22e">commit</span><span style="color:#f92672">();</span>
+        <span style="color:#75715e">//关闭资源
+</span><span style="color:#75715e"></span>        sqlSession<span style="color:#f92672">.</span><span style="color:#a6e22e">close</span><span style="color:#f92672">();</span>
+    <span style="color:#f92672">}</span>
+
+    <span style="color:#a6e22e">@Test</span>
+    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">addUser2</span><span style="color:#f92672">(){</span>
+        SqlSession sqlSession <span style="color:#f92672">=</span> MybatisUtils<span style="color:#f92672">.</span><span style="color:#a6e22e">getSqlSession</span><span style="color:#f92672">();</span>
+        UserMapper mapper <span style="color:#f92672">=</span> sqlSession<span style="color:#f92672">.</span><span style="color:#a6e22e">getMapper</span><span style="color:#f92672">(</span>UserMapper<span style="color:#f92672">.</span><span style="color:#a6e22e">class</span><span style="color:#f92672">);</span>
+        HashMap<span style="color:#f92672">&lt;</span>String<span style="color:#f92672">,</span>Object<span style="color:#f92672">&gt;</span> map <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> HashMap<span style="color:#f92672">&lt;</span>String<span style="color:#f92672">,</span>Object<span style="color:#f92672">&gt;();</span>
+        map<span style="color:#f92672">.</span><span style="color:#a6e22e">put</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#34;userId&#34;</span><span style="color:#f92672">,</span>6<span style="color:#f92672">);</span>
+        map<span style="color:#f92672">.</span><span style="color:#a6e22e">put</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#34;userName&#34;</span><span style="color:#f92672">,</span><span style="color:#e6db74">&#34;dd&#34;</span><span style="color:#f92672">);</span>
+        map<span style="color:#f92672">.</span><span style="color:#a6e22e">put</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#34;passWord&#34;</span><span style="color:#f92672">,</span><span style="color:#e6db74">&#34;222222&#34;</span><span style="color:#f92672">);</span>
+        mapper<span style="color:#f92672">.</span><span style="color:#a6e22e">addUser2</span><span style="color:#f92672">(</span>map<span style="color:#f92672">);</span>
+        <span style="color:#75715e">//提交事务,增删改需要提交事务
+</span><span style="color:#75715e"></span>        sqlSession<span style="color:#f92672">.</span><span style="color:#a6e22e">commit</span><span style="color:#f92672">();</span>
+        <span style="color:#75715e">//关闭资源
+</span><span style="color:#75715e"></span>        sqlSession<span style="color:#f92672">.</span><span style="color:#a6e22e">close</span><span style="color:#f92672">();</span>
+    <span style="color:#f92672">}</span>
+
+    <span style="color:#a6e22e">@Test</span>
+    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">updateUser</span><span style="color:#f92672">(){</span>
+        SqlSession sqlSession <span style="color:#f92672">=</span> MybatisUtils<span style="color:#f92672">.</span><span style="color:#a6e22e">getSqlSession</span><span style="color:#f92672">();</span>
+        UserMapper mapper <span style="color:#f92672">=</span> sqlSession<span style="color:#f92672">.</span><span style="color:#a6e22e">getMapper</span><span style="color:#f92672">(</span>UserMapper<span style="color:#f92672">.</span><span style="color:#a6e22e">class</span><span style="color:#f92672">);</span>
+        mapper<span style="color:#f92672">.</span><span style="color:#a6e22e">updateUser</span><span style="color:#f92672">(</span><span style="color:#66d9ef">new</span> User<span style="color:#f92672">(</span>1<span style="color:#f92672">,</span><span style="color:#e6db74">&#34;sss&#34;</span><span style="color:#f92672">,</span><span style="color:#e6db74">&#34;ssssss&#34;</span><span style="color:#f92672">));</span>
+        <span style="color:#75715e">//提交事务,增删改需要提交事务
+</span><span style="color:#75715e"></span>        sqlSession<span style="color:#f92672">.</span><span style="color:#a6e22e">commit</span><span style="color:#f92672">();</span>
+        <span style="color:#75715e">//关闭资源
+</span><span style="color:#75715e"></span>        sqlSession<span style="color:#f92672">.</span><span style="color:#a6e22e">close</span><span style="color:#f92672">();</span>
+    <span style="color:#f92672">}</span>
+
+    <span style="color:#a6e22e">@Test</span>
+    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">deleteUser</span><span style="color:#f92672">(){</span>
+        SqlSession sqlSession <span style="color:#f92672">=</span> MybatisUtils<span style="color:#f92672">.</span><span style="color:#a6e22e">getSqlSession</span><span style="color:#f92672">();</span>
+        UserMapper mapper <span style="color:#f92672">=</span> sqlSession<span style="color:#f92672">.</span><span style="color:#a6e22e">getMapper</span><span style="color:#f92672">(</span>UserMapper<span style="color:#f92672">.</span><span style="color:#a6e22e">class</span><span style="color:#f92672">);</span>
+        mapper<span style="color:#f92672">.</span><span style="color:#a6e22e">deleteUser</span><span style="color:#f92672">(</span>1<span style="color:#f92672">);</span>
+        sqlSession<span style="color:#f92672">.</span><span style="color:#a6e22e">commit</span><span style="color:#f92672">();</span>
+        sqlSession<span style="color:#f92672">.</span><span style="color:#a6e22e">close</span><span style="color:#f92672">();</span>
+    <span style="color:#f92672">}</span>
+
+    <span style="color:#a6e22e">@Test</span>
+    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">getUserByLimit</span><span style="color:#f92672">(){</span>
+        SqlSession sqlSession <span style="color:#f92672">=</span> MybatisUtils<span style="color:#f92672">.</span><span style="color:#a6e22e">getSqlSession</span><span style="color:#f92672">();</span>
+        UserMapper mapper <span style="color:#f92672">=</span> sqlSession<span style="color:#f92672">.</span><span style="color:#a6e22e">getMapper</span><span style="color:#f92672">(</span>UserMapper<span style="color:#f92672">.</span><span style="color:#a6e22e">class</span><span style="color:#f92672">);</span>
+        HashMap<span style="color:#f92672">&lt;</span>String<span style="color:#f92672">,</span> Integer<span style="color:#f92672">&gt;</span> map <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> HashMap<span style="color:#f92672">&lt;</span>String<span style="color:#f92672">,</span> Integer<span style="color:#f92672">&gt;();</span>
+        map<span style="color:#f92672">.</span><span style="color:#a6e22e">put</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#34;startIndex&#34;</span><span style="color:#f92672">,</span>0<span style="color:#f92672">);</span>
+        map<span style="color:#f92672">.</span><span style="color:#a6e22e">put</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#34;pageSize&#34;</span><span style="color:#f92672">,</span>2<span style="color:#f92672">);</span>
+        List<span style="color:#f92672">&lt;</span>User<span style="color:#f92672">&gt;</span> userList <span style="color:#f92672">=</span> mapper<span style="color:#f92672">.</span><span style="color:#a6e22e">getUserByLimit</span><span style="color:#f92672">(</span>map<span style="color:#f92672">);</span>
+        <span style="color:#66d9ef">for</span> <span style="color:#f92672">(</span>User user <span style="color:#f92672">:</span> userList<span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+            System<span style="color:#f92672">.</span><span style="color:#a6e22e">out</span><span style="color:#f92672">.</span><span style="color:#a6e22e">println</span><span style="color:#f92672">(</span>user<span style="color:#f92672">);</span>
+        <span style="color:#f92672">}</span>
+
+        sqlSession<span style="color:#f92672">.</span><span style="color:#a6e22e">close</span><span style="color:#f92672">();</span>
+    <span style="color:#f92672">}</span>
+</code></pre></div><p>===日志工厂===｜===日志工厂===｜===日志工厂===｜===日志工厂===｜===日志工厂===｜</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-xml" data-lang="xml">mybatis-config.xml
+<span style="color:#75715e">&lt;!--添加日志工厂--&gt;</span>
+<span style="color:#f92672">&lt;settings&gt;</span>
+  <span style="color:#f92672">&lt;setting</span> <span style="color:#a6e22e">name=</span><span style="color:#e6db74">&#34;logImpl&#34;</span> <span style="color:#a6e22e">value=</span><span style="color:#e6db74">&#34;LOG4J&#34;</span><span style="color:#f92672">/&gt;</span>
+<span style="color:#f92672">&lt;/settings&gt;</span>
+</code></pre></div><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-xml" data-lang="xml">
+pom.xml
+<span style="color:#f92672">&lt;dependencies&gt;</span>
+  <span style="color:#75715e">&lt;!-- https://mvnrepository.com/artifact/log4j/log4j --&gt;</span>
+  <span style="color:#f92672">&lt;dependency&gt;</span>
+    <span style="color:#f92672">&lt;groupId&gt;</span>log4j<span style="color:#f92672">&lt;/groupId&gt;</span>
+    <span style="color:#f92672">&lt;artifactId&gt;</span>log4j<span style="color:#f92672">&lt;/artifactId&gt;</span>
+    <span style="color:#f92672">&lt;version&gt;</span>1.2.17<span style="color:#f92672">&lt;/version&gt;</span>
+  <span style="color:#f92672">&lt;/dependency&gt;</span>
+<span style="color:#f92672">&lt;/dependencies&gt;</span>
+
+</code></pre></div><pre><code>log4j.properties
+#DEBUG等级的日志输出到console和file目的地
+log4j.rootLogger=DEBUG,console,file
+
+#控制台输出设置
+log4j.appender.console=org.apache.log4j.ConsoleAppender
+log4j.appender.console.Target=System.out
+log4j.appender.console.Threshold=DEBUG
+log4j.appender.console.layout=org.apache.log4j.PatternLayout
+log4j.appender.console.layout.ConversionPattern=[%c]-%m%n
+
+
+#输出文件相关设置
+log4j.appender.file=org.apache.log4j.RollingFileAppender
+log4j.appender.file.File=./log/mrx.log
+log4j.appender.file.MaxFileSize=10mb
+log4j.appender.file.Threshold=DEBUG
+log4j.appender.file.layout=org.apache.log4j.PatternLayout
+log4j.appender.file.layout.ConversionPattern=[%p][%d{yy-MM-dd}][%c]%m%n
+
+
+#日志输出级别
+log4j.logger.org.mybatis=DEBUG
+log4j.logger.java.sql=DEBUG
+log4j.logger.java.sql.Statement=DEBUG
+log4j.logger.java.sql.ResultSet=DEBUG
+log4j.logger.java.sql.PreparedStatement=DEBUG
+</code></pre><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java">
+<span style="color:#66d9ef">public</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">UserDaoTest</span> <span style="color:#f92672">{</span>
+    <span style="color:#66d9ef">static</span> Logger logger <span style="color:#f92672">=</span> Logger<span style="color:#f92672">.</span><span style="color:#a6e22e">getLogger</span><span style="color:#f92672">(</span>String<span style="color:#f92672">.</span><span style="color:#a6e22e">valueOf</span><span style="color:#f92672">(</span>UserDaoTest<span style="color:#f92672">.</span><span style="color:#a6e22e">class</span><span style="color:#f92672">));</span>
+    <span style="color:#a6e22e">@Test</span>
+    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">log4jTZest</span><span style="color:#f92672">(){</span>
+        logger<span style="color:#f92672">.</span><span style="color:#a6e22e">info</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#34;info：进入了log4jTZest&#34;</span><span style="color:#f92672">);</span>
+        logger<span style="color:#f92672">.</span><span style="color:#a6e22e">debug</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#34;debuge:进入了log4j&#34;</span><span style="color:#f92672">);</span>
+        logger<span style="color:#f92672">.</span><span style="color:#a6e22e">error</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#34;error:进入了log4j&#34;</span><span style="color:#f92672">);</span>
+    <span style="color:#f92672">}</span>
+<span style="color:#f92672">}</span>
+
+</code></pre></div><p>lombook｜lombook｜lombook｜lombook｜lombook｜lombook｜lombook｜</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-xml" data-lang="xml"><span style="color:#75715e">&lt;!-- https://mvnrepository.com/artifact/org.projectlombok/lombok --&gt;</span>
+       <span style="color:#f92672">&lt;dependency&gt;</span>
+           <span style="color:#f92672">&lt;groupId&gt;</span>org.projectlombok<span style="color:#f92672">&lt;/groupId&gt;</span>
+           <span style="color:#f92672">&lt;artifactId&gt;</span>lombok<span style="color:#f92672">&lt;/artifactId&gt;</span>
+           <span style="color:#f92672">&lt;version&gt;</span>1.18.22<span style="color:#f92672">&lt;/version&gt;</span>
+       <span style="color:#f92672">&lt;/dependency&gt;</span>
+
+</code></pre></div><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#f92672">package</span> wiki.mrx.pojo<span style="color:#f92672">;</span>
+
+<span style="color:#f92672">import</span> lombok.AllArgsConstructor<span style="color:#f92672">;</span>
+<span style="color:#f92672">import</span> lombok.Data<span style="color:#f92672">;</span>
+<span style="color:#f92672">import</span> lombok.NoArgsConstructor<span style="color:#f92672">;</span>
+
+<span style="color:#a6e22e">@Data</span>
+<span style="color:#a6e22e">@AllArgsConstructor</span>
+<span style="color:#a6e22e">@NoArgsConstructor</span>
+<span style="color:#66d9ef">public</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">User</span> <span style="color:#f92672">{</span>
+    <span style="color:#66d9ef">private</span> <span style="color:#66d9ef">int</span> id<span style="color:#f92672">;</span>
+    <span style="color:#66d9ef">private</span> String name<span style="color:#f92672">;</span>
+    <span style="color:#66d9ef">private</span>  String password<span style="color:#f92672">;</span>
+<span style="color:#f92672">}</span>
+
+
+</code></pre></div><p>一对多｜一对多｜一对多｜一对多｜一对多｜一对多｜一对多｜一对多｜一对多｜一对多｜</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sql" data-lang="sql"><span style="color:#66d9ef">CREATE</span> <span style="color:#66d9ef">TABLE</span> <span style="color:#f92672">`</span>teacher<span style="color:#f92672">`</span> (
+  <span style="color:#f92672">`</span>id<span style="color:#f92672">`</span> INT(<span style="color:#ae81ff">10</span>) <span style="color:#66d9ef">NOT</span> <span style="color:#66d9ef">NULL</span>,
+  <span style="color:#f92672">`</span>name<span style="color:#f92672">`</span> VARCHAR(<span style="color:#ae81ff">30</span>) <span style="color:#66d9ef">DEFAULT</span> <span style="color:#66d9ef">NULL</span>,
+  <span style="color:#66d9ef">PRIMARY</span> <span style="color:#66d9ef">KEY</span> (<span style="color:#f92672">`</span>id<span style="color:#f92672">`</span>)
+) ENGINE<span style="color:#f92672">=</span>INNODB <span style="color:#66d9ef">DEFAULT</span> CHARSET<span style="color:#f92672">=</span>utf8
+
+<span style="color:#66d9ef">INSERT</span> <span style="color:#66d9ef">INTO</span> teacher(<span style="color:#f92672">`</span>id<span style="color:#f92672">`</span>, <span style="color:#f92672">`</span>name<span style="color:#f92672">`</span>) <span style="color:#66d9ef">VALUES</span> (<span style="color:#ae81ff">1</span>, <span style="color:#e6db74">&#39;秦老师&#39;</span>); 
+
+<span style="color:#66d9ef">CREATE</span> <span style="color:#66d9ef">TABLE</span> <span style="color:#f92672">`</span>student<span style="color:#f92672">`</span> (
+  <span style="color:#f92672">`</span>id<span style="color:#f92672">`</span> INT(<span style="color:#ae81ff">10</span>) <span style="color:#66d9ef">NOT</span> <span style="color:#66d9ef">NULL</span>,
+  <span style="color:#f92672">`</span>name<span style="color:#f92672">`</span> VARCHAR(<span style="color:#ae81ff">30</span>) <span style="color:#66d9ef">DEFAULT</span> <span style="color:#66d9ef">NULL</span>,
+  <span style="color:#f92672">`</span>tid<span style="color:#f92672">`</span> INT(<span style="color:#ae81ff">10</span>) <span style="color:#66d9ef">DEFAULT</span> <span style="color:#66d9ef">NULL</span>,
+  <span style="color:#66d9ef">PRIMARY</span> <span style="color:#66d9ef">KEY</span> (<span style="color:#f92672">`</span>id<span style="color:#f92672">`</span>),
+  <span style="color:#66d9ef">KEY</span> <span style="color:#f92672">`</span>fktid<span style="color:#f92672">`</span> (<span style="color:#f92672">`</span>tid<span style="color:#f92672">`</span>),
+  <span style="color:#66d9ef">CONSTRAINT</span> <span style="color:#f92672">`</span>fktid<span style="color:#f92672">`</span> <span style="color:#66d9ef">FOREIGN</span> <span style="color:#66d9ef">KEY</span> (<span style="color:#f92672">`</span>tid<span style="color:#f92672">`</span>) <span style="color:#66d9ef">REFERENCES</span> <span style="color:#f92672">`</span>teacher<span style="color:#f92672">`</span> (<span style="color:#f92672">`</span>id<span style="color:#f92672">`</span>)
+) ENGINE<span style="color:#f92672">=</span>INNODB <span style="color:#66d9ef">DEFAULT</span> CHARSET<span style="color:#f92672">=</span>utf8
+
+<span style="color:#66d9ef">INSERT</span> <span style="color:#66d9ef">INTO</span> <span style="color:#f92672">`</span>student<span style="color:#f92672">`</span> (<span style="color:#f92672">`</span>id<span style="color:#f92672">`</span>, <span style="color:#f92672">`</span>name<span style="color:#f92672">`</span>, <span style="color:#f92672">`</span>tid<span style="color:#f92672">`</span>) <span style="color:#66d9ef">VALUES</span> (<span style="color:#e6db74">&#39;1&#39;</span>, <span style="color:#e6db74">&#39;小明&#39;</span>, <span style="color:#e6db74">&#39;1&#39;</span>); 
+<span style="color:#66d9ef">INSERT</span> <span style="color:#66d9ef">INTO</span> <span style="color:#f92672">`</span>student<span style="color:#f92672">`</span> (<span style="color:#f92672">`</span>id<span style="color:#f92672">`</span>, <span style="color:#f92672">`</span>name<span style="color:#f92672">`</span>, <span style="color:#f92672">`</span>tid<span style="color:#f92672">`</span>) <span style="color:#66d9ef">VALUES</span> (<span style="color:#e6db74">&#39;2&#39;</span>, <span style="color:#e6db74">&#39;小红&#39;</span>, <span style="color:#e6db74">&#39;1&#39;</span>); 
+<span style="color:#66d9ef">INSERT</span> <span style="color:#66d9ef">INTO</span> <span style="color:#f92672">`</span>student<span style="color:#f92672">`</span> (<span style="color:#f92672">`</span>id<span style="color:#f92672">`</span>, <span style="color:#f92672">`</span>name<span style="color:#f92672">`</span>, <span style="color:#f92672">`</span>tid<span style="color:#f92672">`</span>) <span style="color:#66d9ef">VALUES</span> (<span style="color:#e6db74">&#39;3&#39;</span>, <span style="color:#e6db74">&#39;小张&#39;</span>, <span style="color:#e6db74">&#39;1&#39;</span>); 
+<span style="color:#66d9ef">INSERT</span> <span style="color:#66d9ef">INTO</span> <span style="color:#f92672">`</span>student<span style="color:#f92672">`</span> (<span style="color:#f92672">`</span>id<span style="color:#f92672">`</span>, <span style="color:#f92672">`</span>name<span style="color:#f92672">`</span>, <span style="color:#f92672">`</span>tid<span style="color:#f92672">`</span>) <span style="color:#66d9ef">VALUES</span> (<span style="color:#e6db74">&#39;4&#39;</span>, <span style="color:#e6db74">&#39;小李&#39;</span>, <span style="color:#e6db74">&#39;1&#39;</span>); 
+<span style="color:#66d9ef">INSERT</span> <span style="color:#66d9ef">INTO</span> <span style="color:#f92672">`</span>student<span style="color:#f92672">`</span> (<span style="color:#f92672">`</span>id<span style="color:#f92672">`</span>, <span style="color:#f92672">`</span>name<span style="color:#f92672">`</span>, <span style="color:#f92672">`</span>tid<span style="color:#f92672">`</span>) <span style="color:#66d9ef">VALUES</span> (<span style="color:#e6db74">&#39;5&#39;</span>, <span style="color:#e6db74">&#39;小王&#39;</span>, <span style="color:#e6db74">&#39;1&#39;</span>);
+</code></pre></div><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#f92672">package</span> wiki.mrx.pojo<span style="color:#f92672">;</span>
+
+<span style="color:#f92672">import</span> lombok.Data<span style="color:#f92672">;</span>
+
+<span style="color:#a6e22e">@Data</span>
+<span style="color:#66d9ef">public</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Student</span> <span style="color:#f92672">{</span>
+    <span style="color:#66d9ef">private</span> <span style="color:#66d9ef">int</span> id<span style="color:#f92672">;</span>
+    <span style="color:#66d9ef">private</span> String name<span style="color:#f92672">;</span>
+    <span style="color:#66d9ef">private</span> <span style="color:#66d9ef">int</span> tid<span style="color:#f92672">;</span>
+<span style="color:#f92672">}</span>
+</code></pre></div><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#f92672">package</span> wiki.mrx.pojo<span style="color:#f92672">;</span>
+
+
+<span style="color:#f92672">import</span> lombok.Data<span style="color:#f92672">;</span>
+
+<span style="color:#f92672">import</span> java.util.List<span style="color:#f92672">;</span>
+
+<span style="color:#a6e22e">@Data</span>
+<span style="color:#66d9ef">public</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Teacher</span> <span style="color:#f92672">{</span>
+    <span style="color:#66d9ef">private</span> <span style="color:#66d9ef">int</span> id<span style="color:#f92672">;</span>
+    <span style="color:#66d9ef">private</span> String name<span style="color:#f92672">;</span>
+
+    <span style="color:#66d9ef">private</span> List<span style="color:#f92672">&lt;</span>Student<span style="color:#f92672">&gt;</span> students<span style="color:#f92672">;</span>
+<span style="color:#f92672">}</span>
+</code></pre></div><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#f92672">package</span> wiki.mrx.dao<span style="color:#f92672">;</span>
+
+<span style="color:#f92672">import</span> org.apache.ibatis.annotations.Param<span style="color:#f92672">;</span>
+<span style="color:#f92672">import</span> org.apache.ibatis.annotations.Select<span style="color:#f92672">;</span>
+<span style="color:#f92672">import</span> wiki.mrx.pojo.Teacher<span style="color:#f92672">;</span>
+
+<span style="color:#66d9ef">public</span> <span style="color:#66d9ef">interface</span> <span style="color:#a6e22e">TeacherMapper</span> <span style="color:#f92672">{</span>
+    Teacher <span style="color:#a6e22e">getTeacher</span><span style="color:#f92672">(</span><span style="color:#a6e22e">@Param</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#34;tid&#34;</span><span style="color:#f92672">)</span> <span style="color:#66d9ef">int</span> id<span style="color:#f92672">);</span>
+<span style="color:#f92672">}</span>
+
+
+
+</code></pre></div><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-xml" data-lang="xml">resources/wiki/mrx/dao/StudentMapper.xml
+<span style="color:#75715e">&lt;?xml version=&#34;1.0&#34; encoding=&#34;UTF-8&#34; ?&gt;</span>
+<span style="color:#75715e">&lt;!DOCTYPE mapper
+</span><span style="color:#75715e">        PUBLIC &#34;-//mybatis.org//DTD Config 3.0//EN&#34;
+</span><span style="color:#75715e">        &#34;http://mybatis.org/dtd/mybatis-3-mapper.dtd&#34;&gt;</span>
+<span style="color:#f92672">&lt;mapper</span> <span style="color:#a6e22e">namespace=</span><span style="color:#e6db74">&#34;wiki.mrx.dao.TeacherMapper&#34;</span><span style="color:#f92672">&gt;</span>
+    <span style="color:#f92672">&lt;select</span> <span style="color:#a6e22e">id=</span><span style="color:#e6db74">&#34;getTeacher&#34;</span> <span style="color:#a6e22e">resultMap=</span><span style="color:#e6db74">&#34;TeacherStudent&#34;</span><span style="color:#f92672">&gt;</span>
+        select s.id sid, s.name sname, t.name tname, t.id tid
+        from student s,teacher t
+        where s.tid = t.id and t.id = #{tid};
+    <span style="color:#f92672">&lt;/select&gt;</span>
+    <span style="color:#f92672">&lt;resultMap</span> <span style="color:#a6e22e">id=</span><span style="color:#e6db74">&#34;TeacherStudent&#34;</span> <span style="color:#a6e22e">type=</span><span style="color:#e6db74">&#34;Teacher&#34;</span><span style="color:#f92672">&gt;</span>
+        <span style="color:#f92672">&lt;result</span> <span style="color:#a6e22e">property=</span><span style="color:#e6db74">&#34;id&#34;</span> <span style="color:#a6e22e">column=</span><span style="color:#e6db74">&#34;tid&#34;</span> <span style="color:#f92672">/&gt;</span>
+        <span style="color:#f92672">&lt;result</span> <span style="color:#a6e22e">property=</span><span style="color:#e6db74">&#34;name&#34;</span> <span style="color:#a6e22e">column=</span><span style="color:#e6db74">&#34;tname&#34;</span> <span style="color:#f92672">/&gt;</span>
+        <span style="color:#f92672">&lt;collection</span> <span style="color:#a6e22e">property=</span><span style="color:#e6db74">&#34;students&#34;</span> <span style="color:#a6e22e">ofType=</span><span style="color:#e6db74">&#34;Student&#34;</span><span style="color:#f92672">&gt;</span>
+            <span style="color:#f92672">&lt;result</span> <span style="color:#a6e22e">property=</span><span style="color:#e6db74">&#34;id&#34;</span> <span style="color:#a6e22e">column=</span><span style="color:#e6db74">&#34;sid&#34;</span> <span style="color:#f92672">/&gt;</span>
+            <span style="color:#f92672">&lt;result</span> <span style="color:#a6e22e">property=</span><span style="color:#e6db74">&#34;name&#34;</span> <span style="color:#a6e22e">column=</span><span style="color:#e6db74">&#34;sname&#34;</span> <span style="color:#f92672">/&gt;</span>
+            <span style="color:#f92672">&lt;result</span> <span style="color:#a6e22e">property=</span><span style="color:#e6db74">&#34;tid&#34;</span> <span style="color:#a6e22e">column=</span><span style="color:#e6db74">&#34;tid&#34;</span> <span style="color:#f92672">/&gt;</span>
+        <span style="color:#f92672">&lt;/collection&gt;</span>
+    <span style="color:#f92672">&lt;/resultMap&gt;</span>
+<span style="color:#f92672">&lt;/mapper&gt;</span>
+
+</code></pre></div><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#f92672">package</span> wiki.mrx<span style="color:#f92672">;</span>
+
+<span style="color:#f92672">import</span> org.apache.ibatis.session.SqlSession<span style="color:#f92672">;</span>
+<span style="color:#f92672">import</span> wiki.mrx.dao.TeacherMapper<span style="color:#f92672">;</span>
+<span style="color:#f92672">import</span> wiki.mrx.pojo.Teacher<span style="color:#f92672">;</span>
+<span style="color:#f92672">import</span> wiki.mrx.utils.MybatisUtils<span style="color:#f92672">;</span>
+
+<span style="color:#66d9ef">public</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">MyTest</span> <span style="color:#f92672">{</span>
+    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">static</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">main</span><span style="color:#f92672">(</span>String<span style="color:#f92672">[]</span> args<span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+        SqlSession sqlSession <span style="color:#f92672">=</span> MybatisUtils<span style="color:#f92672">.</span><span style="color:#a6e22e">getSqlSession</span><span style="color:#f92672">();</span>
+        TeacherMapper mapper <span style="color:#f92672">=</span> sqlSession<span style="color:#f92672">.</span><span style="color:#a6e22e">getMapper</span><span style="color:#f92672">(</span>TeacherMapper<span style="color:#f92672">.</span><span style="color:#a6e22e">class</span><span style="color:#f92672">);</span>
+        Teacher teacher <span style="color:#f92672">=</span> mapper<span style="color:#f92672">.</span><span style="color:#a6e22e">getTeacher</span><span style="color:#f92672">(</span>1<span style="color:#f92672">);</span>
+        System<span style="color:#f92672">.</span><span style="color:#a6e22e">out</span><span style="color:#f92672">.</span><span style="color:#a6e22e">println</span><span style="color:#f92672">(</span>teacher<span style="color:#f92672">);</span>
+        sqlSession<span style="color:#f92672">.</span><span style="color:#a6e22e">close</span><span style="color:#f92672">();</span>
+    <span style="color:#f92672">}</span>
+<span style="color:#f92672">}</span>
+
+</code></pre></div><p>多对一｜多对一｜多对一｜多对一｜多对一｜多对一｜多对一｜多对一｜多对一｜多对一｜多对一｜</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java">
+<span style="color:#f92672">package</span> wiki.mrx.pojo<span style="color:#f92672">;</span>
+
+<span style="color:#f92672">import</span> lombok.Data<span style="color:#f92672">;</span>
+
+<span style="color:#a6e22e">@Data</span>
+<span style="color:#66d9ef">public</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Student</span> <span style="color:#f92672">{</span>
+    <span style="color:#66d9ef">private</span> <span style="color:#66d9ef">int</span> id<span style="color:#f92672">;</span>
+    <span style="color:#66d9ef">private</span> String name<span style="color:#f92672">;</span>
+    <span style="color:#66d9ef">private</span> Teacher teacher<span style="color:#f92672">;</span>
+<span style="color:#f92672">}</span>
+
+</code></pre></div><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#f92672">package</span> wiki.mrx.pojo<span style="color:#f92672">;</span>
+
+<span style="color:#f92672">import</span> lombok.Data<span style="color:#f92672">;</span>
+
+<span style="color:#a6e22e">@Data</span>
+<span style="color:#66d9ef">public</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Teacher</span> <span style="color:#f92672">{</span>
+    <span style="color:#66d9ef">private</span> <span style="color:#66d9ef">int</span> id<span style="color:#f92672">;</span>
+    <span style="color:#66d9ef">private</span> String name<span style="color:#f92672">;</span>
+<span style="color:#f92672">}</span>
+
+
+
+</code></pre></div><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#f92672">package</span> wiki.mrx.dao<span style="color:#f92672">;</span>
+
+<span style="color:#f92672">import</span> wiki.mrx.pojo.Student<span style="color:#f92672">;</span>
+
+<span style="color:#f92672">import</span> java.util.List<span style="color:#f92672">;</span>
+
+<span style="color:#66d9ef">public</span> <span style="color:#66d9ef">interface</span> <span style="color:#a6e22e">StudentMapper</span> <span style="color:#f92672">{</span>
+    <span style="color:#66d9ef">public</span> List<span style="color:#f92672">&lt;</span>Student<span style="color:#f92672">&gt;</span> <span style="color:#a6e22e">getStudent</span><span style="color:#f92672">();</span>
+<span style="color:#f92672">}</span>
+
+</code></pre></div><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-xml" data-lang="xml"><span style="color:#75715e">&lt;?xml version=&#34;1.0&#34; encoding=&#34;UTF-8&#34; ?&gt;</span>
+<span style="color:#75715e">&lt;!DOCTYPE mapper
+</span><span style="color:#75715e">        PUBLIC &#34;-//mybatis.org//DTD Config 3.0//EN&#34;
+</span><span style="color:#75715e">        &#34;http://mybatis.org/dtd/mybatis-3-mapper.dtd&#34;&gt;</span>
+<span style="color:#f92672">&lt;mapper</span> <span style="color:#a6e22e">namespace=</span><span style="color:#e6db74">&#34;wiki.mrx.dao.StudentMapper&#34;</span><span style="color:#f92672">&gt;</span>
+    <span style="color:#f92672">&lt;select</span> <span style="color:#a6e22e">id=</span><span style="color:#e6db74">&#34;getStudent&#34;</span> <span style="color:#a6e22e">resultMap=</span><span style="color:#e6db74">&#34;StudentTeacher&#34;</span><span style="color:#f92672">&gt;</span>
+        select  s.id sid,s.name sname,t.name tname
+        from student s,teacher t
+        where s.tid = t.id;
+    <span style="color:#f92672">&lt;/select&gt;</span>
+    <span style="color:#f92672">&lt;resultMap</span> <span style="color:#a6e22e">id=</span><span style="color:#e6db74">&#34;StudentTeacher&#34;</span> <span style="color:#a6e22e">type=</span><span style="color:#e6db74">&#34;Student&#34;</span><span style="color:#f92672">&gt;</span>
+        <span style="color:#f92672">&lt;result</span> <span style="color:#a6e22e">property=</span><span style="color:#e6db74">&#34;id&#34;</span> <span style="color:#a6e22e">column=</span><span style="color:#e6db74">&#34;sid&#34;</span> <span style="color:#f92672">/&gt;</span>
+        <span style="color:#f92672">&lt;result</span> <span style="color:#a6e22e">property=</span><span style="color:#e6db74">&#34;name&#34;</span> <span style="color:#a6e22e">column=</span><span style="color:#e6db74">&#34;sname&#34;</span> <span style="color:#f92672">/&gt;</span>
+        <span style="color:#f92672">&lt;association</span> <span style="color:#a6e22e">property=</span><span style="color:#e6db74">&#34;teacher&#34;</span> <span style="color:#a6e22e">javaType=</span><span style="color:#e6db74">&#34;Teacher&#34;</span><span style="color:#f92672">&gt;</span>
+            <span style="color:#f92672">&lt;result</span> <span style="color:#a6e22e">property=</span><span style="color:#e6db74">&#34;name&#34;</span> <span style="color:#a6e22e">column=</span><span style="color:#e6db74">&#34;tname&#34;</span> <span style="color:#f92672">/&gt;</span>
+        <span style="color:#f92672">&lt;/association&gt;</span>
+    <span style="color:#f92672">&lt;/resultMap&gt;</span>
+<span style="color:#f92672">&lt;/mapper&gt;</span>
+</code></pre></div><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#a6e22e">@Test</span>
+    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">test2</span><span style="color:#f92672">(){</span>
+        SqlSession sqlSession <span style="color:#f92672">=</span> MybatisUtils<span style="color:#f92672">.</span><span style="color:#a6e22e">getSqlSession</span><span style="color:#f92672">();</span>
+        StudentMapper mapper <span style="color:#f92672">=</span> sqlSession<span style="color:#f92672">.</span><span style="color:#a6e22e">getMapper</span><span style="color:#f92672">(</span>StudentMapper<span style="color:#f92672">.</span><span style="color:#a6e22e">class</span><span style="color:#f92672">);</span>
+        List<span style="color:#f92672">&lt;</span>Student<span style="color:#f92672">&gt;</span> students <span style="color:#f92672">=</span> mapper<span style="color:#f92672">.</span><span style="color:#a6e22e">getStudent</span><span style="color:#f92672">();</span>
+        <span style="color:#66d9ef">for</span> <span style="color:#f92672">(</span>Student student <span style="color:#f92672">:</span> students<span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+            System<span style="color:#f92672">.</span><span style="color:#a6e22e">out</span><span style="color:#f92672">.</span><span style="color:#a6e22e">println</span><span style="color:#f92672">(</span>student<span style="color:#f92672">);</span>
+        <span style="color:#f92672">}</span>
+        sqlSession<span style="color:#f92672">.</span><span style="color:#a6e22e">close</span><span style="color:#f92672">();</span>
+    <span style="color:#f92672">}</span>
+</code></pre></div><p>动态sql｜动态sql｜动态sql｜动态sql｜动态sql｜动态sql｜动态sql｜动态sql｜动态sql｜</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sql" data-lang="sql"><span style="color:#66d9ef">CREATE</span> <span style="color:#66d9ef">TABLE</span> <span style="color:#f92672">`</span>blog<span style="color:#f92672">`</span>(
+<span style="color:#f92672">`</span>id<span style="color:#f92672">`</span> VARCHAR(<span style="color:#ae81ff">50</span>) <span style="color:#66d9ef">NOT</span> <span style="color:#66d9ef">NULL</span> <span style="color:#66d9ef">COMMENT</span> <span style="color:#e6db74">&#39;博客id&#39;</span>,
+<span style="color:#f92672">`</span>title<span style="color:#f92672">`</span> VARCHAR(<span style="color:#ae81ff">100</span>) <span style="color:#66d9ef">NOT</span> <span style="color:#66d9ef">NULL</span> <span style="color:#66d9ef">COMMENT</span> <span style="color:#e6db74">&#39;博客标题&#39;</span>,
+<span style="color:#f92672">`</span>author<span style="color:#f92672">`</span> VARCHAR(<span style="color:#ae81ff">30</span>) <span style="color:#66d9ef">NOT</span> <span style="color:#66d9ef">NULL</span> <span style="color:#66d9ef">COMMENT</span> <span style="color:#e6db74">&#39;博客作者&#39;</span>,
+<span style="color:#f92672">`</span>create_time<span style="color:#f92672">`</span> DATETIME <span style="color:#66d9ef">NOT</span> <span style="color:#66d9ef">NULL</span> <span style="color:#66d9ef">COMMENT</span> <span style="color:#e6db74">&#39;创建时间&#39;</span>,
+<span style="color:#f92672">`</span>views<span style="color:#f92672">`</span> INT(<span style="color:#ae81ff">30</span>) <span style="color:#66d9ef">NOT</span> <span style="color:#66d9ef">NULL</span> <span style="color:#66d9ef">COMMENT</span> <span style="color:#e6db74">&#39;浏览量&#39;</span>
+)ENGINE<span style="color:#f92672">=</span>INNODB <span style="color:#66d9ef">DEFAULT</span> CHARSET<span style="color:#f92672">=</span>utf8
+</code></pre></div><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#f92672">package</span> wiki.mrx.pojo<span style="color:#f92672">;</span>
+
+<span style="color:#f92672">import</span> lombok.Data<span style="color:#f92672">;</span>
+
+<span style="color:#f92672">import</span> java.util.Date<span style="color:#f92672">;</span>
+
+<span style="color:#a6e22e">@Data</span>
+<span style="color:#66d9ef">public</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Blog</span> <span style="color:#f92672">{</span>
+    <span style="color:#66d9ef">private</span> String id<span style="color:#f92672">;</span>
+    <span style="color:#66d9ef">private</span> String title<span style="color:#f92672">;</span>
+    <span style="color:#66d9ef">private</span> String author<span style="color:#f92672">;</span>
+    <span style="color:#66d9ef">private</span> Date createTime<span style="color:#f92672">;</span>
+    <span style="color:#66d9ef">private</span> <span style="color:#66d9ef">int</span> views<span style="color:#f92672">;</span>
+<span style="color:#f92672">}</span>
+
+</code></pre></div><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">IDutils</span> <span style="color:#f92672">{</span>
+
+    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">static</span> String <span style="color:#a6e22e">getId</span><span style="color:#f92672">(){</span>
+        <span style="color:#66d9ef">return</span> UUID<span style="color:#f92672">.</span><span style="color:#a6e22e">randomUUID</span><span style="color:#f92672">().</span><span style="color:#a6e22e">toString</span><span style="color:#f92672">().</span><span style="color:#a6e22e">replaceAll</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#34;-&#34;</span><span style="color:#f92672">,</span><span style="color:#e6db74">&#34;&#34;</span><span style="color:#f92672">);</span>
+    <span style="color:#f92672">}</span>
+
+    <span style="color:#a6e22e">@Test</span>
+    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">test</span><span style="color:#f92672">(){</span>
+        System<span style="color:#f92672">.</span><span style="color:#a6e22e">out</span><span style="color:#f92672">.</span><span style="color:#a6e22e">println</span><span style="color:#f92672">(</span>IDutils<span style="color:#f92672">.</span><span style="color:#a6e22e">getId</span><span style="color:#f92672">());</span>
+    <span style="color:#f92672">}</span>
+<span style="color:#f92672">}</span>
+</code></pre></div><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">interface</span> <span style="color:#a6e22e">BlogMapper</span> <span style="color:#f92672">{</span>
+    <span style="color:#75715e">//插入数据
+</span><span style="color:#75715e"></span>    <span style="color:#66d9ef">int</span> <span style="color:#a6e22e">addBlog</span><span style="color:#f92672">(</span>Blog blog<span style="color:#f92672">);</span>
+
+    <span style="color:#75715e">//查询博客
+</span><span style="color:#75715e"></span>    List<span style="color:#f92672">&lt;</span>Blog<span style="color:#f92672">&gt;</span> <span style="color:#a6e22e">queryBlog</span><span style="color:#f92672">(</span>Map map<span style="color:#f92672">);</span>
+    List<span style="color:#f92672">&lt;</span>Blog<span style="color:#f92672">&gt;</span> <span style="color:#a6e22e">queryBlogChoose</span><span style="color:#f92672">(</span>Map map<span style="color:#f92672">);</span>
+
+    <span style="color:#75715e">//遍历博客
+</span><span style="color:#75715e"></span>    List<span style="color:#f92672">&lt;</span>Blog<span style="color:#f92672">&gt;</span> <span style="color:#a6e22e">queryBlogForeach</span><span style="color:#f92672">(</span>Map map<span style="color:#f92672">);</span>
+<span style="color:#f92672">}</span>
+</code></pre></div><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-xml" data-lang="xml"><span style="color:#75715e">&lt;?xml version=&#34;1.0&#34; encoding=&#34;UTF-8&#34; ?&gt;</span>
+<span style="color:#75715e">&lt;!DOCTYPE mapper
+</span><span style="color:#75715e">        PUBLIC &#34;-//mybatis.org//DTD Config 3.0//EN&#34;
+</span><span style="color:#75715e">        &#34;http://mybatis.org/dtd/mybatis-3-mapper.dtd&#34;&gt;</span>
+<span style="color:#f92672">&lt;mapper</span> <span style="color:#a6e22e">namespace=</span><span style="color:#e6db74">&#34;wiki.mrx.dao.BlogMapper&#34;</span><span style="color:#f92672">&gt;</span>
+     <span style="color:#75715e">&lt;!-- =================1================ --&gt;</span>
+    <span style="color:#f92672">&lt;insert</span> <span style="color:#a6e22e">id=</span><span style="color:#e6db74">&#34;addBlog&#34;</span> <span style="color:#a6e22e">parameterType=</span><span style="color:#e6db74">&#34;blog&#34;</span><span style="color:#f92672">&gt;</span>
+        insert into mybatis.blog(id,title,author,create_time,views)
+        values (#{id},#{title},#{author},#{createTime},#{views})
+    <span style="color:#f92672">&lt;/insert&gt;</span>
+    <span style="color:#75715e">&lt;!-- ===================2============= --&gt;</span>
+    <span style="color:#f92672">&lt;sql</span> <span style="color:#a6e22e">id=</span><span style="color:#e6db74">&#34;if-title-author&#34;</span><span style="color:#f92672">&gt;</span>
+        <span style="color:#f92672">&lt;if</span> <span style="color:#a6e22e">test=</span><span style="color:#e6db74">&#34;title != null&#34;</span><span style="color:#f92672">&gt;</span>
+            title=#{title}
+        <span style="color:#f92672">&lt;/if&gt;</span>
+        <span style="color:#f92672">&lt;if</span> <span style="color:#a6e22e">test=</span><span style="color:#e6db74">&#34;author != null&#34;</span><span style="color:#f92672">&gt;</span>
+            and author=#{author}
+        <span style="color:#f92672">&lt;/if&gt;</span>
+    <span style="color:#f92672">&lt;/sql&gt;</span>
+    <span style="color:#f92672">&lt;select</span> <span style="color:#a6e22e">id=</span><span style="color:#e6db74">&#34;queryBlogIF&#34;</span> <span style="color:#a6e22e">parameterType=</span><span style="color:#e6db74">&#34;map&#34;</span> <span style="color:#a6e22e">resultType=</span><span style="color:#e6db74">&#34;blog&#34;</span><span style="color:#f92672">&gt;</span>
+        select * from mybatis.blog
+        <span style="color:#f92672">&lt;where&gt;</span>
+            <span style="color:#f92672">&lt;include</span> <span style="color:#a6e22e">refid=</span><span style="color:#e6db74">&#34;if-title-author&#34;</span><span style="color:#f92672">&gt;&lt;/include&gt;</span>
+        <span style="color:#f92672">&lt;/where&gt;</span>
+    <span style="color:#f92672">&lt;/select&gt;</span>
+     <span style="color:#75715e">&lt;!-- ===================3============== --&gt;</span>
+    <span style="color:#f92672">&lt;select</span> <span style="color:#a6e22e">id=</span><span style="color:#e6db74">&#34;queryBlogChoose&#34;</span> <span style="color:#a6e22e">parameterType=</span><span style="color:#e6db74">&#34;map&#34;</span> <span style="color:#a6e22e">resultType=</span><span style="color:#e6db74">&#34;blog&#34;</span><span style="color:#f92672">&gt;</span>
+        select * from mybatis.blog
+        <span style="color:#f92672">&lt;where&gt;</span>
+            <span style="color:#f92672">&lt;choose&gt;</span>
+                <span style="color:#f92672">&lt;when</span> <span style="color:#a6e22e">test=</span><span style="color:#e6db74">&#34;title!=null&#34;</span><span style="color:#f92672">&gt;</span>
+                    title=#{title}
+                <span style="color:#f92672">&lt;/when&gt;</span>
+                <span style="color:#f92672">&lt;when</span> <span style="color:#a6e22e">test=</span><span style="color:#e6db74">&#34;author!=null&#34;</span><span style="color:#f92672">&gt;</span>
+                    and author=#{author}
+                <span style="color:#f92672">&lt;/when&gt;</span>
+                <span style="color:#f92672">&lt;otherwise&gt;</span>
+                    and views=#{views}
+                <span style="color:#f92672">&lt;/otherwise&gt;</span>
+            <span style="color:#f92672">&lt;/choose&gt;</span>
+        <span style="color:#f92672">&lt;/where&gt;</span>
+    <span style="color:#f92672">&lt;/select&gt;</span>
+     <span style="color:#75715e">&lt;!-- ===============4================== --&gt;</span>
+     <span style="color:#f92672">&lt;update</span> <span style="color:#a6e22e">id=</span><span style="color:#e6db74">&#34;updateBlog&#34;</span> <span style="color:#a6e22e">parameterType=</span><span style="color:#e6db74">&#34;map&#34;</span><span style="color:#f92672">&gt;</span>
+        update mybatis.blog
+        <span style="color:#f92672">&lt;set&gt;</span>
+            <span style="color:#f92672">&lt;if</span> <span style="color:#a6e22e">test=</span><span style="color:#e6db74">&#34;title!=null&#34;</span><span style="color:#f92672">&gt;</span>
+                title=#{title},
+            <span style="color:#f92672">&lt;/if&gt;</span>
+            <span style="color:#f92672">&lt;if</span> <span style="color:#a6e22e">test=</span><span style="color:#e6db74">&#34;author!=null&#34;</span><span style="color:#f92672">&gt;</span>
+                author=#{author}
+            <span style="color:#f92672">&lt;/if&gt;</span>
+        <span style="color:#f92672">&lt;/set&gt;</span>
+        where id =#{id}
+    <span style="color:#f92672">&lt;/update&gt;</span>
+
+    <span style="color:#75715e">&lt;!-- ===============5================== --&gt;</span>
+    <span style="color:#f92672">&lt;select</span> <span style="color:#a6e22e">id=</span><span style="color:#e6db74">&#34;queryBlogForeach&#34;</span> <span style="color:#a6e22e">parameterType=</span><span style="color:#e6db74">&#34;map&#34;</span> <span style="color:#a6e22e">resultType=</span><span style="color:#e6db74">&#34;blog&#34;</span><span style="color:#f92672">&gt;</span>
+        select * from mybatis.blog
+        <span style="color:#f92672">&lt;where&gt;</span>
+            <span style="color:#f92672">&lt;foreach</span> <span style="color:#a6e22e">collection=</span><span style="color:#e6db74">&#34;ids&#34;</span> <span style="color:#a6e22e">item=</span><span style="color:#e6db74">&#34;id&#34;</span> <span style="color:#a6e22e">open=</span><span style="color:#e6db74">&#34;and (&#34;</span> <span style="color:#a6e22e">close=</span><span style="color:#e6db74">&#34;)&#34;</span> <span style="color:#a6e22e">separator=</span><span style="color:#e6db74">&#34;or&#34;</span><span style="color:#f92672">&gt;</span>
+                id=#{id}
+            <span style="color:#f92672">&lt;/foreach&gt;</span>
+        <span style="color:#f92672">&lt;/where&gt;</span>
+    <span style="color:#f92672">&lt;/select&gt;</span>
+<span style="color:#f92672">&lt;/mapper&gt;</span>
+
+</code></pre></div><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java">
+<span style="color:#f92672">package</span> wiki.mrx<span style="color:#f92672">;</span>
+
+<span style="color:#f92672">import</span> org.apache.ibatis.session.SqlSession<span style="color:#f92672">;</span>
+<span style="color:#f92672">import</span> org.junit.Test<span style="color:#f92672">;</span>
+<span style="color:#f92672">import</span> wiki.mrx.dao.BlogMapper<span style="color:#f92672">;</span>
+<span style="color:#f92672">import</span> wiki.mrx.pojo.Blog<span style="color:#f92672">;</span>
+<span style="color:#f92672">import</span> wiki.mrx.utils.IDutils<span style="color:#f92672">;</span>
+<span style="color:#f92672">import</span> wiki.mrx.utils.MybatisUtils<span style="color:#f92672">;</span>
+
+<span style="color:#f92672">import</span> java.util.Date<span style="color:#f92672">;</span>
+
+<span style="color:#66d9ef">public</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">MyTest</span> <span style="color:#f92672">{</span>
+        <span style="color:#a6e22e">@Test</span>
+    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">queryBlogForeachTest</span><span style="color:#f92672">(){</span>
+        SqlSession sqlSession <span style="color:#f92672">=</span> MybatisUtils<span style="color:#f92672">.</span><span style="color:#a6e22e">getSqlSession</span><span style="color:#f92672">();</span>
+        BlogMapper mapper <span style="color:#f92672">=</span> sqlSession<span style="color:#f92672">.</span><span style="color:#a6e22e">getMapper</span><span style="color:#f92672">(</span>BlogMapper<span style="color:#f92672">.</span><span style="color:#a6e22e">class</span><span style="color:#f92672">);</span>
+        HashMap map <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> HashMap<span style="color:#f92672">();</span>
+        ArrayList<span style="color:#f92672">&lt;</span>Integer<span style="color:#f92672">&gt;</span> ids <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> ArrayList<span style="color:#f92672">&lt;</span>Integer<span style="color:#f92672">&gt;();</span>
+        ids<span style="color:#f92672">.</span><span style="color:#a6e22e">add</span><span style="color:#f92672">(</span>1<span style="color:#f92672">);</span>
+        map<span style="color:#f92672">.</span><span style="color:#a6e22e">put</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#34;ids&#34;</span><span style="color:#f92672">,</span>ids<span style="color:#f92672">);</span>
+        List<span style="color:#f92672">&lt;</span>Blog<span style="color:#f92672">&gt;</span> blogs <span style="color:#f92672">=</span> mapper<span style="color:#f92672">.</span><span style="color:#a6e22e">queryBlogForeach</span><span style="color:#f92672">(</span>map<span style="color:#f92672">);</span>
+        <span style="color:#66d9ef">for</span> <span style="color:#f92672">(</span>Blog blog <span style="color:#f92672">:</span> blogs<span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+            System<span style="color:#f92672">.</span><span style="color:#a6e22e">out</span><span style="color:#f92672">.</span><span style="color:#a6e22e">println</span><span style="color:#f92672">(</span>blog<span style="color:#f92672">);</span>
+        <span style="color:#f92672">}</span>
+        sqlSession<span style="color:#f92672">.</span><span style="color:#a6e22e">close</span><span style="color:#f92672">();</span>
+    <span style="color:#f92672">}</span>
+    
+    <span style="color:#a6e22e">@Test</span>
+    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">updateBlogTest</span><span style="color:#f92672">(){</span>
+        SqlSession sqlSession <span style="color:#f92672">=</span> MybatisUtils<span style="color:#f92672">.</span><span style="color:#a6e22e">getSqlSession</span><span style="color:#f92672">();</span>
+        BlogMapper mapper <span style="color:#f92672">=</span> sqlSession<span style="color:#f92672">.</span><span style="color:#a6e22e">getMapper</span><span style="color:#f92672">(</span>BlogMapper<span style="color:#f92672">.</span><span style="color:#a6e22e">class</span><span style="color:#f92672">);</span>
+        HashMap map <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> HashMap<span style="color:#f92672">();</span>
+        map<span style="color:#f92672">.</span><span style="color:#a6e22e">put</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#34;title&#34;</span><span style="color:#f92672">,</span><span style="color:#e6db74">&#34;Mybatis如此简单2&#34;</span><span style="color:#f92672">);</span>
+        map<span style="color:#f92672">.</span><span style="color:#a6e22e">put</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#34;author&#34;</span><span style="color:#f92672">,</span><span style="color:#e6db74">&#34;狂神说&#34;</span><span style="color:#f92672">);</span>
+        map<span style="color:#f92672">.</span><span style="color:#a6e22e">put</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#34;id&#34;</span><span style="color:#f92672">,</span><span style="color:#e6db74">&#34;b5070949ba4e454da57a07e58aa788d6&#34;</span><span style="color:#f92672">);</span>
+
+        mapper<span style="color:#f92672">.</span><span style="color:#a6e22e">updateBlog</span><span style="color:#f92672">(</span>map<span style="color:#f92672">);</span>
+
+        sqlSession<span style="color:#f92672">.</span><span style="color:#a6e22e">close</span><span style="color:#f92672">();</span>
+
+    <span style="color:#f92672">}</span>
+
+    <span style="color:#a6e22e">@Test</span>
+    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">queryBlogChooseTest</span><span style="color:#f92672">(){</span>
+        SqlSession sqlSession <span style="color:#f92672">=</span> MybatisUtils<span style="color:#f92672">.</span><span style="color:#a6e22e">getSqlSession</span><span style="color:#f92672">();</span>
+        BlogMapper mapper <span style="color:#f92672">=</span> sqlSession<span style="color:#f92672">.</span><span style="color:#a6e22e">getMapper</span><span style="color:#f92672">(</span>BlogMapper<span style="color:#f92672">.</span><span style="color:#a6e22e">class</span><span style="color:#f92672">);</span>
+        HashMap map <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> HashMap<span style="color:#f92672">();</span>
+        map<span style="color:#f92672">.</span><span style="color:#a6e22e">put</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#34;title&#34;</span><span style="color:#f92672">,</span><span style="color:#e6db74">&#34;Mybatis如此简单&#34;</span><span style="color:#f92672">);</span>
+        map<span style="color:#f92672">.</span><span style="color:#a6e22e">put</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#34;author&#34;</span><span style="color:#f92672">,</span><span style="color:#e6db74">&#34;狂神说&#34;</span><span style="color:#f92672">);</span>
+        map<span style="color:#f92672">.</span><span style="color:#a6e22e">put</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#34;views&#34;</span><span style="color:#f92672">,</span>9999<span style="color:#f92672">);</span>
+        List<span style="color:#f92672">&lt;</span>Blog<span style="color:#f92672">&gt;</span> blogs <span style="color:#f92672">=</span> mapper<span style="color:#f92672">.</span><span style="color:#a6e22e">queryBlogChoose</span><span style="color:#f92672">(</span>map<span style="color:#f92672">);</span>
+        <span style="color:#66d9ef">for</span> <span style="color:#f92672">(</span>Blog blog <span style="color:#f92672">:</span> blogs<span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+            System<span style="color:#f92672">.</span><span style="color:#a6e22e">out</span><span style="color:#f92672">.</span><span style="color:#a6e22e">println</span><span style="color:#f92672">(</span>blog<span style="color:#f92672">);</span>
+        <span style="color:#f92672">}</span>
+
+        sqlSession<span style="color:#f92672">.</span><span style="color:#a6e22e">close</span><span style="color:#f92672">();</span>
+    <span style="color:#f92672">}</span>
+
+
+    <span style="color:#a6e22e">@Test</span>
+    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">queryBlogIFTest</span><span style="color:#f92672">(){</span>
+        SqlSession sqlSession <span style="color:#f92672">=</span> MybatisUtils<span style="color:#f92672">.</span><span style="color:#a6e22e">getSqlSession</span><span style="color:#f92672">();</span>
+        BlogMapper mapper <span style="color:#f92672">=</span> sqlSession<span style="color:#f92672">.</span><span style="color:#a6e22e">getMapper</span><span style="color:#f92672">(</span>BlogMapper<span style="color:#f92672">.</span><span style="color:#a6e22e">class</span><span style="color:#f92672">);</span>
+        HashMap map <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> HashMap<span style="color:#f92672">();</span>
+        map<span style="color:#f92672">.</span><span style="color:#a6e22e">put</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#34;title&#34;</span><span style="color:#f92672">,</span><span style="color:#e6db74">&#34;Mybatis如此简单&#34;</span><span style="color:#f92672">);</span>
+        map<span style="color:#f92672">.</span><span style="color:#a6e22e">put</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#34;author&#34;</span><span style="color:#f92672">,</span><span style="color:#e6db74">&#34;狂神说&#34;</span><span style="color:#f92672">);</span>
+        List<span style="color:#f92672">&lt;</span>Blog<span style="color:#f92672">&gt;</span> blogs <span style="color:#f92672">=</span> mapper<span style="color:#f92672">.</span><span style="color:#a6e22e">queryBlogIF</span><span style="color:#f92672">(</span>map<span style="color:#f92672">);</span>
+        <span style="color:#66d9ef">for</span> <span style="color:#f92672">(</span>Blog blog <span style="color:#f92672">:</span> blogs<span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+            System<span style="color:#f92672">.</span><span style="color:#a6e22e">out</span><span style="color:#f92672">.</span><span style="color:#a6e22e">println</span><span style="color:#f92672">(</span>blog<span style="color:#f92672">);</span>
+        <span style="color:#f92672">}</span>
+
+        sqlSession<span style="color:#f92672">.</span><span style="color:#a6e22e">close</span><span style="color:#f92672">();</span>
+    <span style="color:#f92672">}</span>
+
+
+    <span style="color:#a6e22e">@Test</span>
+    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">addBlogTest</span><span style="color:#f92672">(){</span>
+        SqlSession sqlSession <span style="color:#f92672">=</span> MybatisUtils<span style="color:#f92672">.</span><span style="color:#a6e22e">getSqlSession</span><span style="color:#f92672">();</span>
+        BlogMapper mapper <span style="color:#f92672">=</span> sqlSession<span style="color:#f92672">.</span><span style="color:#a6e22e">getMapper</span><span style="color:#f92672">(</span>BlogMapper<span style="color:#f92672">.</span><span style="color:#a6e22e">class</span><span style="color:#f92672">);</span>
+        Blog blog <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> Blog<span style="color:#f92672">();</span>
+        blog<span style="color:#f92672">.</span><span style="color:#a6e22e">setId</span><span style="color:#f92672">(</span>IDutils<span style="color:#f92672">.</span><span style="color:#a6e22e">getId</span><span style="color:#f92672">());</span>
+        blog<span style="color:#f92672">.</span><span style="color:#a6e22e">setTitle</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#34;Mybatis如此简单&#34;</span><span style="color:#f92672">);</span>
+        blog<span style="color:#f92672">.</span><span style="color:#a6e22e">setAuthor</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#34;狂神说&#34;</span><span style="color:#f92672">);</span>
+        blog<span style="color:#f92672">.</span><span style="color:#a6e22e">setCreateTime</span><span style="color:#f92672">(</span><span style="color:#66d9ef">new</span> Date<span style="color:#f92672">());</span>
+        blog<span style="color:#f92672">.</span><span style="color:#a6e22e">setViews</span><span style="color:#f92672">(</span>9999<span style="color:#f92672">);</span>
+        mapper<span style="color:#f92672">.</span><span style="color:#a6e22e">addBlog</span><span style="color:#f92672">(</span>blog<span style="color:#f92672">);</span>
+
+        blog<span style="color:#f92672">.</span><span style="color:#a6e22e">setId</span><span style="color:#f92672">(</span>IDutils<span style="color:#f92672">.</span><span style="color:#a6e22e">getId</span><span style="color:#f92672">());</span>
+        blog<span style="color:#f92672">.</span><span style="color:#a6e22e">setTitle</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#34;Spring如此简单&#34;</span><span style="color:#f92672">);</span>
+        mapper<span style="color:#f92672">.</span><span style="color:#a6e22e">addBlog</span><span style="color:#f92672">(</span>blog<span style="color:#f92672">);</span>
+
+        blog<span style="color:#f92672">.</span><span style="color:#a6e22e">setId</span><span style="color:#f92672">(</span>IDutils<span style="color:#f92672">.</span><span style="color:#a6e22e">getId</span><span style="color:#f92672">());</span>
+        blog<span style="color:#f92672">.</span><span style="color:#a6e22e">setTitle</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#34;java如此简单&#34;</span><span style="color:#f92672">);</span>
+        mapper<span style="color:#f92672">.</span><span style="color:#a6e22e">addBlog</span><span style="color:#f92672">(</span>blog<span style="color:#f92672">);</span>
+
+        blog<span style="color:#f92672">.</span><span style="color:#a6e22e">setId</span><span style="color:#f92672">(</span>IDutils<span style="color:#f92672">.</span><span style="color:#a6e22e">getId</span><span style="color:#f92672">());</span>
+        blog<span style="color:#f92672">.</span><span style="color:#a6e22e">setTitle</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#34;微服务如此简单&#34;</span><span style="color:#f92672">);</span>
+        mapper<span style="color:#f92672">.</span><span style="color:#a6e22e">addBlog</span><span style="color:#f92672">(</span>blog<span style="color:#f92672">);</span>
+
+        sqlSession<span style="color:#f92672">.</span><span style="color:#a6e22e">close</span><span style="color:#f92672">();</span>
+
+    <span style="color:#f92672">}</span>
+<span style="color:#f92672">}</span>
+
+
+</code></pre></div><p>==缓存== ｜ ==缓存== ｜ ==缓存== ｜ ==缓存== ｜ ==缓存== ｜ ==缓存== ｜</p>
+<p>缓存：减少数据库查询常用结果，在内存中开辟空间存放</p>
+<ul>
+<li>1.默认开启一级缓存(sqlSession级别),会话结束时该缓存失效</li>
+<li>2.手动开启二级缓存(mapper级别),一级缓存失效时被二级缓存接管</li>
+</ul>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-xml" data-lang="xml">
+<span style="color:#f92672">&lt;settings&gt;</span>
+        <span style="color:#f92672">&lt;setting</span> <span style="color:#a6e22e">name=</span><span style="color:#e6db74">&#34;logImpl&#34;</span> <span style="color:#a6e22e">value=</span><span style="color:#e6db74">&#34;LOG4J&#34;</span><span style="color:#f92672">/&gt;</span>
+        <span style="color:#f92672">&lt;setting</span> <span style="color:#a6e22e">name=</span><span style="color:#e6db74">&#34;cacheEnabled&#34;</span> <span style="color:#a6e22e">value=</span><span style="color:#e6db74">&#34;true&#34;</span> <span style="color:#f92672">/&gt;</span>
+<span style="color:#f92672">&lt;/settings&gt;</span>
+
+</code></pre></div><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-xml" data-lang="xml"><span style="color:#75715e">&lt;?xml version=&#34;1.0&#34; encoding=&#34;UTF-8&#34; ?&gt;</span>
+<span style="color:#75715e">&lt;!DOCTYPE mapper
+</span><span style="color:#75715e">        PUBLIC &#34;-//mybatis.org//DTD Config 3.0//EN&#34;
+</span><span style="color:#75715e">        &#34;http://mybatis.org/dtd/mybatis-3-mapper.dtd&#34;&gt;</span>
+<span style="color:#f92672">&lt;mapper</span> <span style="color:#a6e22e">namespace=</span><span style="color:#e6db74">&#34;wiki.mrx.dao.UserMapper&#34;</span><span style="color:#f92672">&gt;</span>
+    <span style="color:#f92672">&lt;cache</span>
+        <span style="color:#a6e22e">eviction=</span><span style="color:#e6db74">&#34;FIFO&#34;</span>
+        <span style="color:#a6e22e">flushInterval=</span><span style="color:#e6db74">&#34;60000&#34;</span>
+        <span style="color:#a6e22e">size=</span><span style="color:#e6db74">&#34;512&#34;</span>
+        <span style="color:#a6e22e">readOnly=</span><span style="color:#e6db74">&#34;true&#34;</span>
+    <span style="color:#f92672">/&gt;</span>
+    <span style="color:#f92672">&lt;select</span> <span style="color:#a6e22e">id=</span><span style="color:#e6db74">&#34;queryUsersById&#34;</span> <span style="color:#a6e22e">parameterType=</span><span style="color:#e6db74">&#34;_int&#34;</span> <span style="color:#a6e22e">resultType=</span><span style="color:#e6db74">&#34;user&#34;</span> <span style="color:#a6e22e">useCache=</span><span style="color:#e6db74">&#34;true&#34;</span><span style="color:#f92672">&gt;</span>
+        select * from mybatis.user where id=#{id};
+    <span style="color:#f92672">&lt;/select&gt;</span>
+<span style="color:#f92672">&lt;/mapper&gt;</span>
+
+</code></pre></div><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#f92672">package</span> wiki.mrx<span style="color:#f92672">;</span>
+
+
+<span style="color:#f92672">import</span> org.apache.ibatis.session.SqlSession<span style="color:#f92672">;</span>
+<span style="color:#f92672">import</span> org.junit.Test<span style="color:#f92672">;</span>
+<span style="color:#f92672">import</span> wiki.mrx.dao.UserMapper<span style="color:#f92672">;</span>
+<span style="color:#f92672">import</span> wiki.mrx.pojo.User<span style="color:#f92672">;</span>
+<span style="color:#f92672">import</span> wiki.mrx.utils.MybatisUtils<span style="color:#f92672">;</span>
+
+<span style="color:#66d9ef">public</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">MyTest</span> <span style="color:#f92672">{</span>
+    <span style="color:#a6e22e">@Test</span>
+    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">queryUsersByIdTest</span><span style="color:#f92672">(){</span>
+
+        SqlSession sqlSession <span style="color:#f92672">=</span> MybatisUtils<span style="color:#f92672">.</span><span style="color:#a6e22e">getSqlSession</span><span style="color:#f92672">();</span>
+        SqlSession sqlSession2 <span style="color:#f92672">=</span> MybatisUtils<span style="color:#f92672">.</span><span style="color:#a6e22e">getSqlSession</span><span style="color:#f92672">();</span>
+
+        UserMapper mapper <span style="color:#f92672">=</span> sqlSession<span style="color:#f92672">.</span><span style="color:#a6e22e">getMapper</span><span style="color:#f92672">(</span>UserMapper<span style="color:#f92672">.</span><span style="color:#a6e22e">class</span><span style="color:#f92672">);</span>
+        User user1 <span style="color:#f92672">=</span> mapper<span style="color:#f92672">.</span><span style="color:#a6e22e">queryUsersById</span><span style="color:#f92672">(</span>2<span style="color:#f92672">);</span>
+        System<span style="color:#f92672">.</span><span style="color:#a6e22e">out</span><span style="color:#f92672">.</span><span style="color:#a6e22e">println</span><span style="color:#f92672">(</span>user1<span style="color:#f92672">);</span>
+
+        UserMapper mapper2 <span style="color:#f92672">=</span> sqlSession<span style="color:#f92672">.</span><span style="color:#a6e22e">getMapper</span><span style="color:#f92672">(</span>UserMapper<span style="color:#f92672">.</span><span style="color:#a6e22e">class</span><span style="color:#f92672">);</span>
+        User user2 <span style="color:#f92672">=</span> mapper2<span style="color:#f92672">.</span><span style="color:#a6e22e">queryUsersById</span><span style="color:#f92672">(</span>2<span style="color:#f92672">);</span>
+        System<span style="color:#f92672">.</span><span style="color:#a6e22e">out</span><span style="color:#f92672">.</span><span style="color:#a6e22e">println</span><span style="color:#f92672">(</span>user2<span style="color:#f92672">);</span>
+
+        sqlSession2<span style="color:#f92672">.</span><span style="color:#a6e22e">close</span><span style="color:#f92672">();</span>
+        sqlSession<span style="color:#f92672">.</span><span style="color:#a6e22e">close</span><span style="color:#f92672">();</span>
+    <span style="color:#f92672">}</span>
+<span style="color:#f92672">}</span>
+</code></pre></div><p><img src="https://cdn.jsdelivr.net/gh/Apollo2light/apolloblogpicture/img/%E6%88%AA%E5%B1%8F2022-05-12%20%E4%B8%8A%E5%8D%881.26.58.png" alt="截屏2022-05-12 上午1.26.58"></p>
+
+    </div>
+    <video id="my_video" style="height: 300px;width:100%" controls="controls"></video>
+
+</article>
+<div class="pagination">
+    
+    <div class="prev"><a href="https://Apollo2light.github.io/Apollo2light/backend/8.javaweb/">Previous Post</a></div>
+    
+    
+    <div class="next"><a href="https://Apollo2light.github.io/Apollo2light/backend/10.spring/">Next Post</a></div>
+    
+</div>
+
+
+<script>
+    try {
+        
+        let src = document.getElementsByTagName('code')[0].innerText;
+        
+        if (src.indexOf("mp4") != -1) {
+            document.getElementById('my_video').setAttribute("src", src)
+        } else {
+            
+            let video = document.getElementById('my_video');
+            if (video != null) {
+                video.parentNode.removeChild(video);
+            }
+        }
+    } catch (e) {
+        
+        let video = document.getElementById('my_video');
+        if (video != null) {
+            video.parentNode.removeChild(video);
+        }
+    }
+</script>
+
+</main><footer class="site-footer">
+	<span class="right">
+		<em>Apollo&#39;s blog</em>
+	</span>
+</footer>
+</body>
+<script>
+
+</script>
+</html>

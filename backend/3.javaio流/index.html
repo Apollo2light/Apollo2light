@@ -1,0 +1,499 @@
+<!DOCTYPE html>
+<html lang=en-us><head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title> 3.javaio流 - Apollo&#39;s blog</title>
+    <meta name="description" content="1.文件外 java将文件抽象为file类可以操作盘符上的文件
+package wiki.mrx.www; import java.io.File; public class FileTest { public static void main(String[] args) { File f = new File(&#34;/Users/gyk/desktop/test.txt&#34;); System.out.println(f.canExecute() ); System.out.println(f.canRead()); System.out.println(f.getName()); System.out.println(f.canWrite()); System.out.println(f.exists()); System.out.println(f.getAbsoluteFile()); System.out.println(f.getAbsolutePath()); System.out.println(f.getParentFile()); System.out.println(f.getPath()); System.out.println(f.isDirectory()); System.out.println(f.isHidden()); System.out.println(f.lastModified()); System.out.println(f.length()); System.out.println(f.list()); } } 2.文件内 文件的本质是二进制的数据，可以把他们想像成水源和管道，他们都有进有出，根据传输的用途分为：
+  处理文本文件的字符流
+  处理非文本文件的字节流
+  减少硬盘操作次数的处理流
+  转换流
+  数据流操作基本数据类型和string
+  对象流操作引用类型数据
+  ===========================================
+处理文本文件的字符流
+用FileReader和FileWriter完成文本文件复制,缓冲数组 ===========================================
+//用FileReader和FileWriter完成文本文件复制 package wiki.mrx.www; import java.io.*; public class FileTest { public static void main(String[] args) throws IOException { //1.">
+    <link rel="canonical" href="https://Apollo2light.github.io/Apollo2light/backend/3.javaio%E6%B5%81/">
+    <meta property="og:title" content="3.javaio流">
+    <meta property="og:type" content="article">
+    <meta property="og:url" content="https://Apollo2light.github.io/Apollo2light/backend/3.javaio%E6%B5%81/">
+    <meta property="og:description" content="1.文件外 java将文件抽象为file类可以操作盘符上的文件
+package wiki.mrx.www; import java.io.File; public class FileTest { public static void main(String[] args) { File f = new File(&#34;/Users/gyk/desktop/test.txt&#34;); System.out.println(f.canExecute() ); System.out.println(f.canRead()); System.out.println(f.getName()); System.out.println(f.canWrite()); System.out.println(f.exists()); System.out.println(f.getAbsoluteFile()); System.out.println(f.getAbsolutePath()); System.out.println(f.getParentFile()); System.out.println(f.getPath()); System.out.println(f.isDirectory()); System.out.println(f.isHidden()); System.out.println(f.lastModified()); System.out.println(f.length()); System.out.println(f.list()); } } 2.文件内 文件的本质是二进制的数据，可以把他们想像成水源和管道，他们都有进有出，根据传输的用途分为：
+  处理文本文件的字符流
+  处理非文本文件的字节流
+  减少硬盘操作次数的处理流
+  转换流
+  数据流操作基本数据类型和string
+  对象流操作引用类型数据
+  ===========================================
+处理文本文件的字符流
+用FileReader和FileWriter完成文本文件复制,缓冲数组 ===========================================
+//用FileReader和FileWriter完成文本文件复制 package wiki.mrx.www; import java.io.*; public class FileTest { public static void main(String[] args) throws IOException { //1.">
+    <meta property="og:site_name" content="Apollo&#39;s blog">
+    <link rel="stylesheet" href="https://Apollo2light.github.io/Apollo2light/css/main.min.7fdf1d02dafd1a6eb5cfd0d707e17e33515b866f5d305a0ab01a4095577484fe.css" integrity="sha256-f98dAtr9Gm61z9DXB&#43;F&#43;M1Fbhm9dMFoKsBpAlVd0hP4=">
+    <meta name="generator" content="Hugo 0.73.0" />
+    <script type="module" src="https://unpkg.com/ionicons@5.1.2/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule="" src="https://unpkg.com/ionicons@5.1.2/dist/ionicons/ionicons.js"></script>
+    
+</head>
+<body><header class="site-header">
+    <nav class="site-nav" role="navigation" aria-label="breadcrumb">
+        <ol itemscope itemtype="https://schema.org/BreadcrumbList" class="breadcrumb"><li class="breadcrumb-item  " 
+    itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+    <a itemtype="https://schema.org/Thing" itemprop="item" href="https://Apollo2light.github.io/Apollo2light/">
+        <span itemprop="name">Apollo&#39;s blog</span>
+    </a>
+    <meta itemprop="position"
+          content="0"/>
+</li>/<li class="breadcrumb-item  " 
+    itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+    <a itemtype="https://schema.org/Thing" itemprop="item" href="https://Apollo2light.github.io/Apollo2light/backend/">
+        <span itemprop="name">backend</span>
+    </a>
+    <meta itemprop="position"
+          content="0"/>
+</li>/<li class="breadcrumb-item active hidden" aria-current="page"
+    itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+    <a itemtype="https://schema.org/Thing" itemprop="item" href="https://Apollo2light.github.io/Apollo2light/backend/3.javaio%E6%B5%81/">
+        <span itemprop="name">3.javaio%E6%B5%81</span>
+    </a>
+    <meta itemprop="position"
+          content="1"/>
+</li></ol>
+    </nav>
+    <h1 class="site-title hidden">
+        <a href="https://Apollo2light.github.io/Apollo2light/">Apollo&#39;s blog</a>
+    </h1>
+</header><main id="content">
+<article role="article" class="content post h-entry" itemscope="" itemtype="http://schema.org/BlogPosting">
+    <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">3.javaio流</h2>
+        <span class="post-meta">
+            <time class="date-published" datetime=" 2021-06-01T17:37:33&#43;07:00" itemprop="datePublished">
+                Tue, 1 Jun 2021
+            </time>
+            
+        </span>
+    </header>
+    <div class="post-content" itemprop="articleBody">
+        <h2 id="1文件外">1.文件外</h2>
+<p><code>java将文件抽象为file类可以操作盘符上的文件</code></p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#f92672">package</span> wiki.mrx.www<span style="color:#f92672">;</span>
+
+<span style="color:#f92672">import</span> java.io.File<span style="color:#f92672">;</span>
+
+<span style="color:#66d9ef">public</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">FileTest</span> <span style="color:#f92672">{</span>
+    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">static</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">main</span><span style="color:#f92672">(</span>String<span style="color:#f92672">[]</span> args<span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+        File f <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> File<span style="color:#f92672">(</span><span style="color:#e6db74">&#34;/Users/gyk/desktop/test.txt&#34;</span><span style="color:#f92672">);</span>
+        System<span style="color:#f92672">.</span><span style="color:#a6e22e">out</span><span style="color:#f92672">.</span><span style="color:#a6e22e">println</span><span style="color:#f92672">(</span>f<span style="color:#f92672">.</span><span style="color:#a6e22e">canExecute</span><span style="color:#f92672">()</span> <span style="color:#f92672">);</span>
+        System<span style="color:#f92672">.</span><span style="color:#a6e22e">out</span><span style="color:#f92672">.</span><span style="color:#a6e22e">println</span><span style="color:#f92672">(</span>f<span style="color:#f92672">.</span><span style="color:#a6e22e">canRead</span><span style="color:#f92672">());</span>
+        System<span style="color:#f92672">.</span><span style="color:#a6e22e">out</span><span style="color:#f92672">.</span><span style="color:#a6e22e">println</span><span style="color:#f92672">(</span>f<span style="color:#f92672">.</span><span style="color:#a6e22e">getName</span><span style="color:#f92672">());</span>
+        System<span style="color:#f92672">.</span><span style="color:#a6e22e">out</span><span style="color:#f92672">.</span><span style="color:#a6e22e">println</span><span style="color:#f92672">(</span>f<span style="color:#f92672">.</span><span style="color:#a6e22e">canWrite</span><span style="color:#f92672">());</span>
+        System<span style="color:#f92672">.</span><span style="color:#a6e22e">out</span><span style="color:#f92672">.</span><span style="color:#a6e22e">println</span><span style="color:#f92672">(</span>f<span style="color:#f92672">.</span><span style="color:#a6e22e">exists</span><span style="color:#f92672">());</span>
+        System<span style="color:#f92672">.</span><span style="color:#a6e22e">out</span><span style="color:#f92672">.</span><span style="color:#a6e22e">println</span><span style="color:#f92672">(</span>f<span style="color:#f92672">.</span><span style="color:#a6e22e">getAbsoluteFile</span><span style="color:#f92672">());</span>
+        System<span style="color:#f92672">.</span><span style="color:#a6e22e">out</span><span style="color:#f92672">.</span><span style="color:#a6e22e">println</span><span style="color:#f92672">(</span>f<span style="color:#f92672">.</span><span style="color:#a6e22e">getAbsolutePath</span><span style="color:#f92672">());</span>
+        System<span style="color:#f92672">.</span><span style="color:#a6e22e">out</span><span style="color:#f92672">.</span><span style="color:#a6e22e">println</span><span style="color:#f92672">(</span>f<span style="color:#f92672">.</span><span style="color:#a6e22e">getParentFile</span><span style="color:#f92672">());</span>
+        System<span style="color:#f92672">.</span><span style="color:#a6e22e">out</span><span style="color:#f92672">.</span><span style="color:#a6e22e">println</span><span style="color:#f92672">(</span>f<span style="color:#f92672">.</span><span style="color:#a6e22e">getPath</span><span style="color:#f92672">());</span>
+        System<span style="color:#f92672">.</span><span style="color:#a6e22e">out</span><span style="color:#f92672">.</span><span style="color:#a6e22e">println</span><span style="color:#f92672">(</span>f<span style="color:#f92672">.</span><span style="color:#a6e22e">isDirectory</span><span style="color:#f92672">());</span>
+        System<span style="color:#f92672">.</span><span style="color:#a6e22e">out</span><span style="color:#f92672">.</span><span style="color:#a6e22e">println</span><span style="color:#f92672">(</span>f<span style="color:#f92672">.</span><span style="color:#a6e22e">isHidden</span><span style="color:#f92672">());</span>
+        System<span style="color:#f92672">.</span><span style="color:#a6e22e">out</span><span style="color:#f92672">.</span><span style="color:#a6e22e">println</span><span style="color:#f92672">(</span>f<span style="color:#f92672">.</span><span style="color:#a6e22e">lastModified</span><span style="color:#f92672">());</span>
+        System<span style="color:#f92672">.</span><span style="color:#a6e22e">out</span><span style="color:#f92672">.</span><span style="color:#a6e22e">println</span><span style="color:#f92672">(</span>f<span style="color:#f92672">.</span><span style="color:#a6e22e">length</span><span style="color:#f92672">());</span>
+        System<span style="color:#f92672">.</span><span style="color:#a6e22e">out</span><span style="color:#f92672">.</span><span style="color:#a6e22e">println</span><span style="color:#f92672">(</span>f<span style="color:#f92672">.</span><span style="color:#a6e22e">list</span><span style="color:#f92672">());</span>
+    <span style="color:#f92672">}</span>
+<span style="color:#f92672">}</span>
+
+</code></pre></div><h2 id="2文件内">2.文件内</h2>
+<p><code>文件的本质是二进制的数据，可以把他们想像成水源和管道，他们都有进有出，根据传输的用途分为：</code></p>
+<ul>
+<li>
+<p>处理文本文件的字符流</p>
+</li>
+<li>
+<p>处理非文本文件的字节流</p>
+</li>
+<li>
+<p>减少硬盘操作次数的处理流</p>
+</li>
+<li>
+<p>转换流</p>
+</li>
+<li>
+<p>数据流操作基本数据类型和string</p>
+</li>
+<li>
+<p>对象流操作引用类型数据</p>
+</li>
+</ul>
+<p><code>===========================================</code></p>
+<p><code>处理文本文件的字符流</code></p>
+<p><code>用FileReader和FileWriter完成文本文件复制,缓冲数组</code>
+<code>===========================================</code></p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#75715e">//用FileReader和FileWriter完成文本文件复制
+</span><span style="color:#75715e"></span><span style="color:#f92672">package</span> wiki.mrx.www<span style="color:#f92672">;</span>
+
+<span style="color:#f92672">import</span> java.io.*<span style="color:#f92672">;</span>
+
+<span style="color:#66d9ef">public</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">FileTest</span> <span style="color:#f92672">{</span>
+    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">static</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">main</span><span style="color:#f92672">(</span>String<span style="color:#f92672">[]</span> args<span style="color:#f92672">)</span> <span style="color:#66d9ef">throws</span> IOException <span style="color:#f92672">{</span>
+        <span style="color:#75715e">//1.新建源文件和目标文件
+</span><span style="color:#75715e"></span>        File f1 <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> File<span style="color:#f92672">(</span><span style="color:#e6db74">&#34;/Users/gyk/desktop/test.txt&#34;</span><span style="color:#f92672">);</span>
+        File f2 <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> File<span style="color:#f92672">(</span><span style="color:#e6db74">&#34;/Users/gyk/desktop/demo.txt&#34;</span><span style="color:#f92672">);</span>
+
+        <span style="color:#75715e">//2.FileReader接源文件
+</span><span style="color:#75715e"></span>        FileReader fr <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> FileReader<span style="color:#f92672">(</span>f1<span style="color:#f92672">);</span>
+
+        <span style="color:#75715e">//3.FileWriter接目标文件
+</span><span style="color:#75715e"></span>        FileWriter fw <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> FileWriter<span style="color:#f92672">(</span>f2<span style="color:#f92672">);</span><span style="color:#75715e">//只覆盖不追加
+</span><span style="color:#75715e"></span>
+        <span style="color:#75715e">//4.开始复制
+</span><span style="color:#75715e"></span>        <span style="color:#66d9ef">char</span><span style="color:#f92672">[]</span> ch <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> <span style="color:#66d9ef">char</span><span style="color:#f92672">[</span>20<span style="color:#f92672">];</span>
+        <span style="color:#66d9ef">int</span> len <span style="color:#f92672">=</span> fr<span style="color:#f92672">.</span><span style="color:#a6e22e">read</span><span style="color:#f92672">(</span>ch<span style="color:#f92672">);</span>
+        <span style="color:#66d9ef">while</span> <span style="color:#f92672">(</span>len <span style="color:#f92672">!=-</span>1<span style="color:#f92672">){</span>
+            fw<span style="color:#f92672">.</span><span style="color:#a6e22e">write</span><span style="color:#f92672">(</span>ch<span style="color:#f92672">,</span>0<span style="color:#f92672">,</span>len<span style="color:#f92672">);</span>
+            len <span style="color:#f92672">=</span> fr<span style="color:#f92672">.</span><span style="color:#a6e22e">read</span><span style="color:#f92672">(</span>ch<span style="color:#f92672">);</span>
+        <span style="color:#f92672">}</span>
+        <span style="color:#75715e">//5.关闭流
+</span><span style="color:#75715e"></span>        fw<span style="color:#f92672">.</span><span style="color:#a6e22e">close</span><span style="color:#f92672">();</span>
+        fr<span style="color:#f92672">.</span><span style="color:#a6e22e">close</span><span style="color:#f92672">();</span>
+
+
+    <span style="color:#f92672">}</span>
+<span style="color:#f92672">}</span>
+</code></pre></div><p><code>===========================================</code></p>
+<p><code>处理文本文件的字符流</code></p>
+<p><code>用FileReader和FileWriter完成文本文件复制,加异常</code>
+<code>===========================================</code></p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#75715e">//用FileReader和FileWriter完成文本文件复制,加异常处理
+</span><span style="color:#75715e"></span><span style="color:#f92672">package</span> wiki.mrx.www<span style="color:#f92672">;</span>
+
+<span style="color:#f92672">import</span> java.io.*<span style="color:#f92672">;</span>
+
+<span style="color:#66d9ef">public</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">FileTest</span> <span style="color:#f92672">{</span>
+    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">static</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">main</span><span style="color:#f92672">(</span>String<span style="color:#f92672">[]</span> args<span style="color:#f92672">){</span>
+        <span style="color:#75715e">//1.新建源文件和目标文件
+</span><span style="color:#75715e"></span>        File f1 <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> File<span style="color:#f92672">(</span><span style="color:#e6db74">&#34;/Users/gyk/desktop/test.txt&#34;</span><span style="color:#f92672">);</span>
+        File f2 <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> File<span style="color:#f92672">(</span><span style="color:#e6db74">&#34;/Users/gyk/desktop/demo.txt&#34;</span><span style="color:#f92672">);</span>
+
+        <span style="color:#75715e">//2.FileReader接源文件
+</span><span style="color:#75715e"></span>        FileReader fr <span style="color:#f92672">=</span> <span style="color:#66d9ef">null</span><span style="color:#f92672">;</span>
+        FileWriter fw <span style="color:#f92672">=</span> <span style="color:#66d9ef">null</span><span style="color:#f92672">;</span>
+        <span style="color:#66d9ef">try</span> <span style="color:#f92672">{</span>
+            fr <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> FileReader<span style="color:#f92672">(</span>f1<span style="color:#f92672">);</span>
+            <span style="color:#75715e">//3.FileWriter接目标文件
+</span><span style="color:#75715e"></span>            fw <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> FileWriter<span style="color:#f92672">(</span>f2<span style="color:#f92672">);</span><span style="color:#75715e">//只覆盖不追加
+</span><span style="color:#75715e"></span>
+            <span style="color:#75715e">//4.开始复制
+</span><span style="color:#75715e"></span>            <span style="color:#66d9ef">char</span><span style="color:#f92672">[]</span> ch <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> <span style="color:#66d9ef">char</span><span style="color:#f92672">[</span>20<span style="color:#f92672">];</span>
+            <span style="color:#66d9ef">int</span> len <span style="color:#f92672">=</span> fr<span style="color:#f92672">.</span><span style="color:#a6e22e">read</span><span style="color:#f92672">(</span>ch<span style="color:#f92672">);</span>
+            <span style="color:#66d9ef">while</span> <span style="color:#f92672">(</span>len <span style="color:#f92672">!=-</span>1<span style="color:#f92672">){</span>
+                fw<span style="color:#f92672">.</span><span style="color:#a6e22e">write</span><span style="color:#f92672">(</span>ch<span style="color:#f92672">,</span>0<span style="color:#f92672">,</span>len<span style="color:#f92672">);</span>
+                len <span style="color:#f92672">=</span> fr<span style="color:#f92672">.</span><span style="color:#a6e22e">read</span><span style="color:#f92672">(</span>ch<span style="color:#f92672">);</span>
+            <span style="color:#f92672">}</span>
+        <span style="color:#f92672">}</span> <span style="color:#66d9ef">catch</span> <span style="color:#f92672">(</span>FileNotFoundException e<span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+            e<span style="color:#f92672">.</span><span style="color:#a6e22e">printStackTrace</span><span style="color:#f92672">();</span>
+        <span style="color:#f92672">}</span> <span style="color:#66d9ef">catch</span> <span style="color:#f92672">(</span>IOException e<span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+            e<span style="color:#f92672">.</span><span style="color:#a6e22e">printStackTrace</span><span style="color:#f92672">();</span>
+        <span style="color:#f92672">}</span> <span style="color:#66d9ef">finally</span> <span style="color:#f92672">{</span>
+            <span style="color:#75715e">//5.关闭流
+</span><span style="color:#75715e"></span>            <span style="color:#66d9ef">try</span> <span style="color:#f92672">{</span>
+                fw<span style="color:#f92672">.</span><span style="color:#a6e22e">close</span><span style="color:#f92672">();</span>
+            <span style="color:#f92672">}</span> <span style="color:#66d9ef">catch</span> <span style="color:#f92672">(</span>IOException e<span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+                e<span style="color:#f92672">.</span><span style="color:#a6e22e">printStackTrace</span><span style="color:#f92672">();</span>
+            <span style="color:#f92672">}</span>
+            <span style="color:#66d9ef">try</span> <span style="color:#f92672">{</span>
+                fr<span style="color:#f92672">.</span><span style="color:#a6e22e">close</span><span style="color:#f92672">();</span>
+            <span style="color:#f92672">}</span> <span style="color:#66d9ef">catch</span> <span style="color:#f92672">(</span>IOException e<span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+                e<span style="color:#f92672">.</span><span style="color:#a6e22e">printStackTrace</span><span style="color:#f92672">();</span>
+            <span style="color:#f92672">}</span>
+        <span style="color:#f92672">}</span>
+        
+    <span style="color:#f92672">}</span>
+<span style="color:#f92672">}</span>
+
+</code></pre></div><p><code>===========================================</code></p>
+<p><code>处理非文本文件的字节流</code></p>
+<p><code>用FileInputStream和FileOutputStream完成非文本文件的复制</code>
+<code>===========================================</code></p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#75715e">//用FileInputStream和FileOutputStream完成非文本文件的复制
+</span><span style="color:#75715e"></span><span style="color:#f92672">package</span> wiki.mrx.www<span style="color:#f92672">;</span>
+
+<span style="color:#f92672">import</span> java.io.*<span style="color:#f92672">;</span>
+
+<span style="color:#66d9ef">public</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">FileTest</span> <span style="color:#f92672">{</span>
+    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">static</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">main</span><span style="color:#f92672">(</span>String<span style="color:#f92672">[]</span> args<span style="color:#f92672">)</span> <span style="color:#66d9ef">throws</span> IOException <span style="color:#f92672">{</span>
+        <span style="color:#75715e">//1.新建源文件和目标文件
+</span><span style="color:#75715e"></span>        File f1 <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> File<span style="color:#f92672">(</span><span style="color:#e6db74">&#34;/Users/gyk/desktop/1.jpg&#34;</span><span style="color:#f92672">);</span>
+        File f2 <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> File<span style="color:#f92672">(</span><span style="color:#e6db74">&#34;/Users/gyk/desktop/2.jpg&#34;</span><span style="color:#f92672">);</span>
+
+        <span style="color:#75715e">//2.FileInputStream接源文件
+</span><span style="color:#75715e"></span>        FileInputStream fis <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> FileInputStream<span style="color:#f92672">(</span>f1<span style="color:#f92672">);</span>
+
+        <span style="color:#75715e">//3.FileOutputStream接目标文件
+</span><span style="color:#75715e"></span>        FileOutputStream fos <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> FileOutputStream<span style="color:#f92672">(</span>f2<span style="color:#f92672">);</span><span style="color:#75715e">//只覆盖不追加
+</span><span style="color:#75715e"></span>
+        <span style="color:#75715e">//4.开始复制
+</span><span style="color:#75715e"></span>        <span style="color:#66d9ef">int</span> n <span style="color:#f92672">=</span> fis<span style="color:#f92672">.</span><span style="color:#a6e22e">read</span><span style="color:#f92672">();</span>
+        <span style="color:#66d9ef">while</span> <span style="color:#f92672">(</span>n <span style="color:#f92672">!=-</span>1<span style="color:#f92672">){</span>
+            fos<span style="color:#f92672">.</span><span style="color:#a6e22e">write</span><span style="color:#f92672">(</span>n<span style="color:#f92672">);</span>
+            n <span style="color:#f92672">=</span> fis<span style="color:#f92672">.</span><span style="color:#a6e22e">read</span><span style="color:#f92672">();</span>
+        <span style="color:#f92672">}</span>
+        <span style="color:#75715e">//5.关闭流
+</span><span style="color:#75715e"></span>        fos<span style="color:#f92672">.</span><span style="color:#a6e22e">close</span><span style="color:#f92672">();</span>
+        fis<span style="color:#f92672">.</span><span style="color:#a6e22e">close</span><span style="color:#f92672">();</span>
+
+
+    <span style="color:#f92672">}</span>
+<span style="color:#f92672">}</span>
+</code></pre></div><p><code>===========================================</code></p>
+<p><code>处理非文本文件的字节流</code></p>
+<p><code>用FileInputStream和FileOutputStream完成非文本文件的复制,缓冲数组</code>
+<code>===========================================</code></p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#f92672">package</span> wiki.mrx.www<span style="color:#f92672">;</span>
+
+<span style="color:#f92672">import</span> java.io.*<span style="color:#f92672">;</span>
+
+<span style="color:#66d9ef">public</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">FileTest</span> <span style="color:#f92672">{</span>
+    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">static</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">main</span><span style="color:#f92672">(</span>String<span style="color:#f92672">[]</span> args<span style="color:#f92672">)</span> <span style="color:#66d9ef">throws</span> IOException <span style="color:#f92672">{</span>
+        <span style="color:#75715e">//1.新建源文件和目标文件
+</span><span style="color:#75715e"></span>        File f1 <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> File<span style="color:#f92672">(</span><span style="color:#e6db74">&#34;/Users/gyk/desktop/1.jpg&#34;</span><span style="color:#f92672">);</span>
+        File f2 <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> File<span style="color:#f92672">(</span><span style="color:#e6db74">&#34;/Users/gyk/desktop/2.jpg&#34;</span><span style="color:#f92672">);</span>
+
+        <span style="color:#75715e">//2.FileInputStream接源文件
+</span><span style="color:#75715e"></span>        FileInputStream fis <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> FileInputStream<span style="color:#f92672">(</span>f1<span style="color:#f92672">);</span>
+
+        <span style="color:#75715e">//3.FileOutputStream接目标文件
+</span><span style="color:#75715e"></span>        FileOutputStream fos <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> FileOutputStream<span style="color:#f92672">(</span>f2<span style="color:#f92672">);</span><span style="color:#75715e">//只覆盖不追加
+</span><span style="color:#75715e"></span>
+        <span style="color:#75715e">//4.开始复制
+</span><span style="color:#75715e"></span>        <span style="color:#66d9ef">byte</span><span style="color:#f92672">[]</span> b <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> <span style="color:#66d9ef">byte</span><span style="color:#f92672">[</span>1024<span style="color:#f92672">*</span>10<span style="color:#f92672">];</span>
+        <span style="color:#66d9ef">int</span> n <span style="color:#f92672">=</span> fis<span style="color:#f92672">.</span><span style="color:#a6e22e">read</span><span style="color:#f92672">(</span>b<span style="color:#f92672">);</span>
+        <span style="color:#66d9ef">while</span> <span style="color:#f92672">(</span>n <span style="color:#f92672">!=-</span>1<span style="color:#f92672">){</span>
+            fos<span style="color:#f92672">.</span><span style="color:#a6e22e">write</span><span style="color:#f92672">(</span>b<span style="color:#f92672">,</span>0<span style="color:#f92672">,</span>n<span style="color:#f92672">);</span>
+            n <span style="color:#f92672">=</span> fis<span style="color:#f92672">.</span><span style="color:#a6e22e">read</span><span style="color:#f92672">(</span>b<span style="color:#f92672">);</span>
+        <span style="color:#f92672">}</span>
+        <span style="color:#75715e">//5.关闭流
+</span><span style="color:#75715e"></span>        fos<span style="color:#f92672">.</span><span style="color:#a6e22e">close</span><span style="color:#f92672">();</span>
+        fis<span style="color:#f92672">.</span><span style="color:#a6e22e">close</span><span style="color:#f92672">();</span>
+
+
+    <span style="color:#f92672">}</span>
+<span style="color:#f92672">}</span>
+</code></pre></div><p><code>===========================================</code></p>
+<p><code>减少硬盘操作次数的处理流</code></p>
+<p><code>用BufferedInputStream和BufferedOutputStream完成非文本文件的复制,处理流</code>
+<code>===========================================</code></p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#f92672">package</span> wiki.mrx.www<span style="color:#f92672">;</span>
+
+<span style="color:#f92672">import</span> java.io.*<span style="color:#f92672">;</span>
+
+<span style="color:#66d9ef">public</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">FileTest</span> <span style="color:#f92672">{</span>
+    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">static</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">main</span><span style="color:#f92672">(</span>String<span style="color:#f92672">[]</span> args<span style="color:#f92672">)</span> <span style="color:#66d9ef">throws</span> IOException <span style="color:#f92672">{</span>
+        <span style="color:#75715e">//1.新建源文件和目标文件
+</span><span style="color:#75715e"></span>        File f1 <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> File<span style="color:#f92672">(</span><span style="color:#e6db74">&#34;/Users/gyk/desktop/1.jpg&#34;</span><span style="color:#f92672">);</span>
+        File f2 <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> File<span style="color:#f92672">(</span><span style="color:#e6db74">&#34;/Users/gyk/desktop/2.jpg&#34;</span><span style="color:#f92672">);</span>
+
+        <span style="color:#75715e">//2.FileInputStream接源文件
+</span><span style="color:#75715e"></span>        FileInputStream fis <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> FileInputStream<span style="color:#f92672">(</span>f1<span style="color:#f92672">);</span>
+
+        <span style="color:#75715e">//3.FileOutputStream接目标文件
+</span><span style="color:#75715e"></span>        FileOutputStream fos <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> FileOutputStream<span style="color:#f92672">(</span>f2<span style="color:#f92672">);</span><span style="color:#75715e">//只覆盖不追加
+</span><span style="color:#75715e"></span>
+        <span style="color:#75715e">//4.利用处理流降低操作硬盘的次数
+</span><span style="color:#75715e"></span>        BufferedInputStream bis <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> BufferedInputStream<span style="color:#f92672">(</span>fis<span style="color:#f92672">);</span>
+        BufferedOutputStream bos <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> BufferedOutputStream<span style="color:#f92672">(</span>fos<span style="color:#f92672">);</span>
+
+        <span style="color:#75715e">//5.开始复制
+</span><span style="color:#75715e"></span>        <span style="color:#66d9ef">byte</span><span style="color:#f92672">[]</span> b <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> <span style="color:#66d9ef">byte</span><span style="color:#f92672">[</span>1024<span style="color:#f92672">*</span>8<span style="color:#f92672">];</span>
+        <span style="color:#66d9ef">int</span> len <span style="color:#f92672">=</span> bis<span style="color:#f92672">.</span><span style="color:#a6e22e">read</span><span style="color:#f92672">(</span>b<span style="color:#f92672">);</span>
+        <span style="color:#66d9ef">while</span> <span style="color:#f92672">(</span>len <span style="color:#f92672">!=-</span>1<span style="color:#f92672">){</span>
+            bos<span style="color:#f92672">.</span><span style="color:#a6e22e">write</span><span style="color:#f92672">(</span>b<span style="color:#f92672">,</span>0<span style="color:#f92672">,</span>len<span style="color:#f92672">);</span>
+            len <span style="color:#f92672">=</span> bis<span style="color:#f92672">.</span><span style="color:#a6e22e">read</span><span style="color:#f92672">(</span>b<span style="color:#f92672">);</span>
+        <span style="color:#f92672">}</span>
+
+        <span style="color:#75715e">//6.关闭流
+</span><span style="color:#75715e"></span>        bos<span style="color:#f92672">.</span><span style="color:#a6e22e">close</span><span style="color:#f92672">();</span>
+        bis<span style="color:#f92672">.</span><span style="color:#a6e22e">close</span><span style="color:#f92672">();</span>
+
+
+    <span style="color:#f92672">}</span>
+<span style="color:#f92672">}</span>
+
+</code></pre></div><p><code>===========================================</code></p>
+<p><code>减少硬盘操作次数的处理流</code></p>
+<p><code>用BufferedReader和BufferedWriter完成文本文件的复制,处理流</code>
+<code>===========================================</code></p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#f92672">package</span> wiki.mrx.www<span style="color:#f92672">;</span>
+
+<span style="color:#f92672">import</span> java.io.*<span style="color:#f92672">;</span>
+
+<span style="color:#66d9ef">public</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">FileTest</span> <span style="color:#f92672">{</span>
+    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">static</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">main</span><span style="color:#f92672">(</span>String<span style="color:#f92672">[]</span> args<span style="color:#f92672">)</span> <span style="color:#66d9ef">throws</span> IOException <span style="color:#f92672">{</span>
+        <span style="color:#75715e">//1.新建源文件和目标文件
+</span><span style="color:#75715e"></span>        File f1 <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> File<span style="color:#f92672">(</span><span style="color:#e6db74">&#34;/Users/gyk/desktop/test.txt&#34;</span><span style="color:#f92672">);</span>
+        File f2 <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> File<span style="color:#f92672">(</span><span style="color:#e6db74">&#34;/Users/gyk/desktop/demo.txt&#34;</span><span style="color:#f92672">);</span>
+
+        <span style="color:#75715e">//2.FileReader接源文件
+</span><span style="color:#75715e"></span>        FileReader fr <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> FileReader<span style="color:#f92672">(</span>f1<span style="color:#f92672">);</span>
+
+        <span style="color:#75715e">//3.FileWriter接目标文件
+</span><span style="color:#75715e"></span>        FileWriter fw <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> FileWriter<span style="color:#f92672">(</span>f2<span style="color:#f92672">);</span><span style="color:#75715e">//只覆盖不追加
+</span><span style="color:#75715e"></span>
+        <span style="color:#75715e">//4.利用处理流降低操作硬盘的次数
+</span><span style="color:#75715e"></span>        BufferedReader br <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> BufferedReader<span style="color:#f92672">(</span>fr<span style="color:#f92672">);</span>
+        BufferedWriter bw <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> BufferedWriter<span style="color:#f92672">(</span>fw<span style="color:#f92672">);</span>
+
+        <span style="color:#75715e">//5.开始复制
+</span><span style="color:#75715e"></span>        <span style="color:#66d9ef">char</span><span style="color:#f92672">[]</span> ch <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> <span style="color:#66d9ef">char</span><span style="color:#f92672">[</span>30<span style="color:#f92672">];</span>
+        <span style="color:#66d9ef">int</span> len <span style="color:#f92672">=</span> br<span style="color:#f92672">.</span><span style="color:#a6e22e">read</span><span style="color:#f92672">(</span>ch<span style="color:#f92672">);</span>
+        <span style="color:#66d9ef">while</span> <span style="color:#f92672">(</span>len <span style="color:#f92672">!=-</span>1<span style="color:#f92672">){</span>
+            bw<span style="color:#f92672">.</span><span style="color:#a6e22e">write</span><span style="color:#f92672">(</span>ch<span style="color:#f92672">,</span>0<span style="color:#f92672">,</span>len<span style="color:#f92672">);</span>
+            len <span style="color:#f92672">=</span> br<span style="color:#f92672">.</span><span style="color:#a6e22e">read</span><span style="color:#f92672">(</span>ch<span style="color:#f92672">);</span>
+        <span style="color:#f92672">}</span>
+        <span style="color:#75715e">//逐行读取
+</span><span style="color:#75715e"></span>        String str <span style="color:#f92672">=</span> br<span style="color:#f92672">.</span><span style="color:#a6e22e">readLine</span><span style="color:#f92672">();</span>
+        <span style="color:#66d9ef">while</span> <span style="color:#f92672">(</span>str <span style="color:#f92672">!=</span> <span style="color:#66d9ef">null</span><span style="color:#f92672">){</span>
+            bw<span style="color:#f92672">.</span><span style="color:#a6e22e">write</span><span style="color:#f92672">(</span>str<span style="color:#f92672">);</span>
+            str <span style="color:#f92672">=</span> br<span style="color:#f92672">.</span><span style="color:#a6e22e">readLine</span><span style="color:#f92672">();</span>
+        <span style="color:#f92672">}</span>
+        <span style="color:#75715e">//6.关闭流
+</span><span style="color:#75715e"></span>        br<span style="color:#f92672">.</span><span style="color:#a6e22e">close</span><span style="color:#f92672">();</span>
+        bw<span style="color:#f92672">.</span><span style="color:#a6e22e">close</span><span style="color:#f92672">();</span>
+
+
+    <span style="color:#f92672">}</span>
+<span style="color:#f92672">}</span>
+
+</code></pre></div><p><code>===========================================</code></p>
+<p><code>减少硬盘操作次数的处理流</code></p>
+<p><code>用InputStreamReader和OutputStreamWriter完成文本文件的复制,处理流</code>
+<code>===========================================</code></p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#f92672">package</span> wiki.mrx.www<span style="color:#f92672">;</span>
+
+<span style="color:#f92672">import</span> java.io.*<span style="color:#f92672">;</span>
+
+<span style="color:#66d9ef">public</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">FileTest</span> <span style="color:#f92672">{</span>
+    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">static</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">main</span><span style="color:#f92672">(</span>String<span style="color:#f92672">[]</span> args<span style="color:#f92672">)</span> <span style="color:#66d9ef">throws</span> IOException <span style="color:#f92672">{</span>
+        <span style="color:#75715e">//1.新建源文件和目标文件
+</span><span style="color:#75715e"></span>        File f1 <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> File<span style="color:#f92672">(</span><span style="color:#e6db74">&#34;/Users/gyk/desktop/test.txt&#34;</span><span style="color:#f92672">);</span>
+        File f2 <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> File<span style="color:#f92672">(</span><span style="color:#e6db74">&#34;/Users/gyk/desktop/demo.txt&#34;</span><span style="color:#f92672">);</span>
+
+        <span style="color:#75715e">//2.FileReader接源文件
+</span><span style="color:#75715e"></span>        FileInputStream fis <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> FileInputStream<span style="color:#f92672">(</span>f1<span style="color:#f92672">);</span>
+        FileOutputStream fos <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> FileOutputStream<span style="color:#f92672">(</span>f2<span style="color:#f92672">);</span>
+
+        <span style="color:#75715e">//3.InputStreamReader包裹FileInputStream
+</span><span style="color:#75715e"></span>        InputStreamReader isr <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> InputStreamReader<span style="color:#f92672">(</span>fis<span style="color:#f92672">,</span><span style="color:#e6db74">&#34;utf-8&#34;</span><span style="color:#f92672">);</span>
+        OutputStreamWriter osw <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> OutputStreamWriter<span style="color:#f92672">(</span>fos<span style="color:#f92672">,</span><span style="color:#e6db74">&#34;utf-8&#34;</span><span style="color:#f92672">);</span>
+
+
+        <span style="color:#75715e">//5.开始复制
+</span><span style="color:#75715e"></span>        <span style="color:#66d9ef">char</span><span style="color:#f92672">[]</span> ch <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> <span style="color:#66d9ef">char</span><span style="color:#f92672">[</span>30<span style="color:#f92672">];</span>
+        <span style="color:#66d9ef">int</span> len <span style="color:#f92672">=</span> isr<span style="color:#f92672">.</span><span style="color:#a6e22e">read</span><span style="color:#f92672">(</span>ch<span style="color:#f92672">);</span>
+        <span style="color:#66d9ef">while</span> <span style="color:#f92672">(</span>len <span style="color:#f92672">!=-</span>1<span style="color:#f92672">){</span>
+            osw<span style="color:#f92672">.</span><span style="color:#a6e22e">write</span><span style="color:#f92672">(</span>ch<span style="color:#f92672">,</span>0<span style="color:#f92672">,</span>len<span style="color:#f92672">);</span>
+            len <span style="color:#f92672">=</span> isr<span style="color:#f92672">.</span><span style="color:#a6e22e">read</span><span style="color:#f92672">();</span>
+        <span style="color:#f92672">}</span>
+
+        <span style="color:#75715e">//6.关闭流
+</span><span style="color:#75715e"></span>        osw<span style="color:#f92672">.</span><span style="color:#a6e22e">close</span><span style="color:#f92672">();</span>
+        isr<span style="color:#f92672">.</span><span style="color:#a6e22e">close</span><span style="color:#f92672">();</span>
+    <span style="color:#f92672">}</span>
+<span style="color:#f92672">}</span>
+</code></pre></div><p><code>===========================================</code></p>
+<p><code>数据流</code></p>
+<p><code>DataInputStream和DataOutputStream</code>
+<code>===========================================</code></p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#f92672">package</span> wiki.mrx.www<span style="color:#f92672">;</span>
+
+<span style="color:#f92672">import</span> java.io.*<span style="color:#f92672">;</span>
+
+<span style="color:#66d9ef">public</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">FileTest</span> <span style="color:#f92672">{</span>
+    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">static</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">main</span><span style="color:#f92672">(</span>String<span style="color:#f92672">[]</span> args<span style="color:#f92672">)</span> <span style="color:#66d9ef">throws</span> IOException <span style="color:#f92672">{</span>
+        <span style="color:#75715e">//1.新建源文件和目标文件
+</span><span style="color:#75715e"></span>        <span style="color:#75715e">//DataInputStream接源文件
+</span><span style="color:#75715e"></span>        <span style="color:#75715e">//DataOutputStream接目标文件
+</span><span style="color:#75715e"></span>        DataInputStream dis <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> DataInputStream<span style="color:#f92672">(</span><span style="color:#66d9ef">new</span> FileInputStream<span style="color:#f92672">(</span><span style="color:#66d9ef">new</span> File<span style="color:#f92672">(</span><span style="color:#e6db74">&#34;/Users/gyk/desktop/test.txt&#34;</span><span style="color:#f92672">)));</span>
+        DataOutputStream dos <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> DataOutputStream<span style="color:#f92672">(</span><span style="color:#66d9ef">new</span> FileOutputStream<span style="color:#f92672">(</span><span style="color:#66d9ef">new</span> File<span style="color:#f92672">(</span><span style="color:#e6db74">&#34;/Users/gyk/desktop/demo.txt&#34;</span><span style="color:#f92672">)));</span>
+
+        <span style="color:#75715e">//5.开始复制
+</span><span style="color:#75715e"></span>        dos<span style="color:#f92672">.</span><span style="color:#a6e22e">writeUTF</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#34;nihao&#34;</span><span style="color:#f92672">);</span>
+        System<span style="color:#f92672">.</span><span style="color:#a6e22e">out</span><span style="color:#f92672">.</span><span style="color:#a6e22e">println</span><span style="color:#f92672">(</span>dis<span style="color:#f92672">.</span><span style="color:#a6e22e">readUTF</span><span style="color:#f92672">());</span>
+        <span style="color:#75715e">//6.关闭流
+</span><span style="color:#75715e"></span>        dos<span style="color:#f92672">.</span><span style="color:#a6e22e">close</span><span style="color:#f92672">();</span>
+        dis<span style="color:#f92672">.</span><span style="color:#a6e22e">close</span><span style="color:#f92672">();</span>
+    <span style="color:#f92672">}</span>
+<span style="color:#f92672">}</span>
+
+</code></pre></div><p><code>===========================================</code></p>
+<p><code>对象流:序列化和反序列化，如果是自定义的数据需要实现 serializable接口，添加序列号uid</code></p>
+<p><code>ObjectOutputStream和ObjectInputStream</code>
+<code>===========================================</code></p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#f92672">package</span> wiki.mrx.www<span style="color:#f92672">;</span>
+
+<span style="color:#f92672">import</span> java.io.*<span style="color:#f92672">;</span>
+
+<span style="color:#66d9ef">public</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">FileTest</span> <span style="color:#f92672">{</span>
+    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">static</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">main</span><span style="color:#f92672">(</span>String<span style="color:#f92672">[]</span> args<span style="color:#f92672">)</span> <span style="color:#66d9ef">throws</span> IOException<span style="color:#f92672">,</span> ClassNotFoundException <span style="color:#f92672">{</span>
+        ObjectOutputStream oos <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> ObjectOutputStream<span style="color:#f92672">(</span><span style="color:#66d9ef">new</span> FileOutputStream<span style="color:#f92672">(</span><span style="color:#66d9ef">new</span> File<span style="color:#f92672">(</span><span style="color:#e6db74">&#34;/Users/gyk/desktop/test.txt&#34;</span><span style="color:#f92672">)));</span>
+        oos<span style="color:#f92672">.</span><span style="color:#a6e22e">writeObject</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#34;你好&#34;</span><span style="color:#f92672">);</span>
+
+        ObjectInputStream ois <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> ObjectInputStream<span style="color:#f92672">(</span><span style="color:#66d9ef">new</span> FileInputStream<span style="color:#f92672">(</span><span style="color:#66d9ef">new</span> File<span style="color:#f92672">(</span><span style="color:#e6db74">&#34;/Users/gyk/desktop/test.txt&#34;</span><span style="color:#f92672">)));</span>
+        String s <span style="color:#f92672">=</span> <span style="color:#f92672">(</span>String<span style="color:#f92672">)(</span>ois<span style="color:#f92672">.</span><span style="color:#a6e22e">readObject</span><span style="color:#f92672">());</span>
+        System<span style="color:#f92672">.</span><span style="color:#a6e22e">out</span><span style="color:#f92672">.</span><span style="color:#a6e22e">println</span><span style="color:#f92672">(</span>s<span style="color:#f92672">);</span>
+
+        ois<span style="color:#f92672">.</span><span style="color:#a6e22e">close</span><span style="color:#f92672">();</span>
+        oos<span style="color:#f92672">.</span><span style="color:#a6e22e">close</span><span style="color:#f92672">();</span>
+    <span style="color:#f92672">}</span>
+<span style="color:#f92672">}</span>
+
+</code></pre></div>
+    </div>
+    <video id="my_video" style="height: 300px;width:100%" controls="controls"></video>
+
+</article>
+<div class="pagination">
+    
+    <div class="prev"><a href="https://Apollo2light.github.io/Apollo2light/backend/2.java%E5%A4%9A%E7%BA%BF%E7%A8%8B/">Previous Post</a></div>
+    
+    
+    <div class="next"><a href="https://Apollo2light.github.io/Apollo2light/backend/4.java%E7%BD%91%E7%BB%9C%E7%BC%96%E7%A8%8B/">Next Post</a></div>
+    
+</div>
+
+
+<script>
+    try {
+        
+        let src = document.getElementsByTagName('code')[0].innerText;
+        
+        if (src.indexOf("mp4") != -1) {
+            document.getElementById('my_video').setAttribute("src", src)
+        } else {
+            
+            let video = document.getElementById('my_video');
+            if (video != null) {
+                video.parentNode.removeChild(video);
+            }
+        }
+    } catch (e) {
+        
+        let video = document.getElementById('my_video');
+        if (video != null) {
+            video.parentNode.removeChild(video);
+        }
+    }
+</script>
+
+</main><footer class="site-footer">
+	<span class="right">
+		<em>Apollo&#39;s blog</em>
+	</span>
+</footer>
+</body>
+<script>
+
+</script>
+</html>
